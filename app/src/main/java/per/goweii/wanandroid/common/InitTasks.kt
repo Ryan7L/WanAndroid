@@ -5,9 +5,9 @@ import android.app.Application
 import android.os.Bundle
 import com.scwang.smart.refresh.footer.ClassicsFooter
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
-import com.tencent.bugly.crashreport.CrashReport
-import com.tencent.bugly.crashreport.CrashReport.CrashHandleCallback
-import com.tencent.bugly.crashreport.CrashReport.UserStrategy
+//import com.tencent.bugly.crashreport.CrashReport
+//import com.tencent.bugly.crashreport.CrashReport.CrashHandleCallback
+//import com.tencent.bugly.crashreport.CrashReport.UserStrategy
 import com.tencent.smtt.sdk.QbSdk
 import com.tencent.smtt.sdk.QbSdk.PreInitCallback
 import com.tencent.smtt.sdk.WebView
@@ -272,51 +272,51 @@ class ReadingModeTask : AsyncInitTask() {
     }
 }
 
-class BuglyInitTask : SyncInitTask() {
-    override fun init(application: Application) {
-        if (DebugUtils.isDebug()) return
-        CrashReport.setIsDevelopmentDevice(application, DebugUtils.isDebug())
-        val strategy = UserStrategy(application)
-        strategy.setCrashHandleCallback(object : CrashHandleCallback() {
-            override fun onCrashHandleStart(
-                crashType: Int,
-                errorType: String,
-                errorMessage: String,
-                errorStack: String
-            ): Map<String, String> {
-                val map = LinkedHashMap<String, String>()
-                val x5CrashInfo = WebView.getCrashExtraMessage(application)
-                map["x5crashInfo"] = x5CrashInfo
-                return map
-            }
-
-            override fun onCrashHandleStart2GetExtraDatas(
-                crashType: Int,
-                errorType: String,
-                errorMessage: String,
-                errorStack: String
-            ): ByteArray? {
-                return try {
-                    "Extra data.".toByteArray(charset("UTF-8"))
-                } catch (e: Exception) {
-                    null
-                }
-            }
-        })
-        strategy.isUploadProcess = WanApp.isMainProcess()
-        CrashReport.initCrashReport(
-            application,
-            BuildConfig.APPID_BUGLY,
-            DebugUtils.isDebug(),
-            strategy
-        )
-    }
-
-    override fun onlyMainProcess(): Boolean {
-        return false
-    }
-
-    override fun level(): Int {
-        return 3
-    }
-}
+//class BuglyInitTask : SyncInitTask() {
+//    override fun init(application: Application) {
+//        if (DebugUtils.isDebug()) return
+//        CrashReport.setIsDevelopmentDevice(application, DebugUtils.isDebug())
+//        val strategy = UserStrategy(application)
+//        strategy.setCrashHandleCallback(object : CrashHandleCallback() {
+//            override fun onCrashHandleStart(
+//                crashType: Int,
+//                errorType: String,
+//                errorMessage: String,
+//                errorStack: String
+//            ): Map<String, String> {
+//                val map = LinkedHashMap<String, String>()
+//                val x5CrashInfo = WebView.getCrashExtraMessage(application)
+//                map["x5crashInfo"] = x5CrashInfo
+//                return map
+//            }
+//
+//            override fun onCrashHandleStart2GetExtraDatas(
+//                crashType: Int,
+//                errorType: String,
+//                errorMessage: String,
+//                errorStack: String
+//            ): ByteArray? {
+//                return try {
+//                    "Extra data.".toByteArray(charset("UTF-8"))
+//                } catch (e: Exception) {
+//                    null
+//                }
+//            }
+//        })
+//        strategy.isUploadProcess = WanApp.isMainProcess()
+//        CrashReport.initCrashReport(
+//            application,
+//            BuildConfig.APPID_BUGLY,
+//            DebugUtils.isDebug(),
+//            strategy
+//        )
+//    }
+//
+//    override fun onlyMainProcess(): Boolean {
+//        return false
+//    }
+//
+//    override fun level(): Int {
+//        return 3
+//    }
+//}

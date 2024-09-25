@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <paths>
-    <root-path
-        name="root"
-        path="" />
+    <!-- files-path	/data/data/<包名>/files   content.getFileDir()-->
     <files-path
         name="files"
-        path="" />
+        path="." />
+    <!--  cache-path	/data/data/<包名>/cache  content.getCacheDir()-->
     <cache-path
         name="cache"
-        path="" />
+        path="." />
+    <!--  external-path	/storage/emulate/0   Environment.getExternalStorageDirectory() -->
     <external-path
         name="external"
-        path="" />
+        path="." />
+    <!--    external-files-path	/storage/emulate/0/Android/data/<包名>/files  ContextCompat.getExternalFilesDirs()-->
     <external-files-path
         name="name"
         path="path" />
+    <!--    external-cache-path	/storage/emulate/0/Android/data/<包名>/cache  ContextCompat.getExternalCacheDirs()-->
     <external-cache-path
         name="name"
         path="path" />
