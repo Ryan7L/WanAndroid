@@ -27,9 +27,9 @@ import kotlin.math.max
  * @date 2020/3/7
  */
 class ImageMenuDialog(
-        private val context: Context,
-        private val bitmap: Bitmap,
-        private val qrcode: String?
+    private val context: Context,
+    private val bitmap: Bitmap,
+    private val qrcode: String?
 ) : DialogLayer(context) {
 
     companion object {
@@ -38,7 +38,8 @@ class ImageMenuDialog(
                 val drawable = iv.drawable ?: return
                 val bd = drawable as BitmapDrawable
                 val bitmap = bd.bitmap ?: return
-                val scale: Float = max(720F / bitmap.width.toFloat(), 720F / bitmap.height.toFloat())
+                val scale: Float =
+                    max(720F / bitmap.width.toFloat(), 720F / bitmap.height.toFloat())
                 val newBitmap = if (scale < 1F) {
                     val w = (bitmap.width * scale).toInt()
                     val h = (bitmap.height * scale).toInt()
@@ -95,7 +96,11 @@ class ImageMenuDialog(
     private fun saveBitmap(bitmap: Bitmap) {
         PermissionUtils.request(object : RequestListener {
             override fun onSuccess() {
-                if (BitmapUtils.saveGallery(bitmap, "wanandroid_article_image_${System.currentTimeMillis()}")) {
+                if (BitmapUtils.saveGallery(
+                        bitmap,
+                        "wanandroid_article_image_${System.currentTimeMillis()}"
+                    )
+                ) {
                     ToastMaker.showShort("以保存到相册")
                 } else {
                     ToastMaker.showShort("保存失败")

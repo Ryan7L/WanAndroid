@@ -34,10 +34,10 @@ import per.goweii.wanandroid.module.main.activity.InstallApkActivity;
 public class DownloadDialog {
 
     private final Activity mActivity;
-    private Layer mAnyLayer = null;
     private final boolean isForce;
     private final String url;
     private final String urlBackup;
+    private Layer mAnyLayer = null;
     private boolean isAutoInstall = true;
 
     private ProgressBar progressBar;
@@ -53,14 +53,6 @@ public class DownloadDialog {
 
     private OnDismissListener mOnDismissListener;
 
-    public static DownloadDialog with(Activity activity,
-                                      boolean isForce,
-                                      String url,
-                                      String urlBackup,
-                                      OnDismissListener onDismissListener) {
-        return new DownloadDialog(activity, isForce, url, urlBackup, onDismissListener);
-    }
-
     private DownloadDialog(Activity activity,
                            boolean isForce,
                            String url,
@@ -73,6 +65,14 @@ public class DownloadDialog {
         this.mOnDismissListener = onDismissListener;
         showDialog();
         startDownload(this.url);
+    }
+
+    public static DownloadDialog with(Activity activity,
+                                      boolean isForce,
+                                      String url,
+                                      String urlBackup,
+                                      OnDismissListener onDismissListener) {
+        return new DownloadDialog(activity, isForce, url, urlBackup, onDismissListener);
     }
 
     public DownloadDialog setAutoInstall(boolean autoInstall) {

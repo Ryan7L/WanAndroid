@@ -21,16 +21,12 @@ public class UserUtils {
 
     private UserEntity mUserEntity = null;
 
-    private static class Holder {
-        private static final UserUtils INSTANCE = new UserUtils();
+    private UserUtils() {
+        getLoginUser();
     }
 
     public static UserUtils getInstance() {
         return Holder.INSTANCE;
-    }
-
-    private UserUtils() {
-        getLoginUser();
     }
 
     public UserEntity getLoginUser() {
@@ -92,6 +88,10 @@ public class UserUtils {
             AuthActivity.startQuickLogin(context);
             return false;
         }
+    }
+
+    private static class Holder {
+        private static final UserUtils INSTANCE = new UserUtils();
     }
 
 }

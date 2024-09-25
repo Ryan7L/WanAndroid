@@ -18,23 +18,27 @@ import per.goweii.wanandroid.module.mine.view.MessageReadedView
 class MessageReadedPresenter : BasePresenter<MessageReadedView>() {
 
     fun getMessageReadList(page: Int) {
-        addToRxLife(MineRequest.getMessageReadList(page, object : RequestListener<ListBean<MessageBean>> {
-            override fun onStart() {}
-            override fun onSuccess(code: Int, data: ListBean<MessageBean>) {
-                if (isAttach) {
-                    baseView.getMessageReadListSuccess(code, data)
-                }
-            }
+        addToRxLife(
+            MineRequest.getMessageReadList(
+                page,
+                object : RequestListener<ListBean<MessageBean>> {
+                    override fun onStart() {}
+                    override fun onSuccess(code: Int, data: ListBean<MessageBean>) {
+                        if (isAttach) {
+                            baseView.getMessageReadListSuccess(code, data)
+                        }
+                    }
 
-            override fun onFailed(code: Int, msg: String) {
-                if (isAttach) {
-                    baseView.getMessageReadListFail(code, msg)
-                }
-            }
+                    override fun onFailed(code: Int, msg: String) {
+                        if (isAttach) {
+                            baseView.getMessageReadListFail(code, msg)
+                        }
+                    }
 
-            override fun onError(handle: ExceptionHandle) {}
-            override fun onFinish() {}
-        }))
+                    override fun onError(handle: ExceptionHandle) {}
+                    override fun onFinish() {}
+                })
+        )
     }
 
     fun delete(item: MessageBean) {

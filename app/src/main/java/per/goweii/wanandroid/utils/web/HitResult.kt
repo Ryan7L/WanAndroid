@@ -7,7 +7,7 @@ import com.tencent.smtt.sdk.WebView
  * @date 2020/3/14
  */
 data class HitResult(
-        private val result: WebView.HitTestResult
+    private val result: WebView.HitTestResult
 ) {
 
     fun getType(): Type {

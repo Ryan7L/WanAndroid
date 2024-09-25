@@ -20,15 +20,11 @@ public class GuideSPUtils {
     private boolean articleGuideShown = false;
     private boolean privacyPolicyShown = false;
 
-    private static class Holder {
-        private static final GuideSPUtils INSTANCE = new GuideSPUtils();
+    private GuideSPUtils() {
     }
 
     public static GuideSPUtils getInstance() {
         return Holder.INSTANCE;
-    }
-
-    private GuideSPUtils() {
     }
 
     public boolean isWebGuideShown() {
@@ -62,6 +58,10 @@ public class GuideSPUtils {
     public void setPrivacyPolicyShown() {
         privacyPolicyShown = true;
         mSPUtils.save(KEY_PRIVACY_POLICY, true);
+    }
+
+    private static class Holder {
+        private static final GuideSPUtils INSTANCE = new GuideSPUtils();
     }
 
 }

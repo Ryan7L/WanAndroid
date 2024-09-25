@@ -23,7 +23,7 @@ import per.goweii.wanandroid.R
 
 @Suppress("DEPRECATION")
 class ParallaxStackLayout @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
     private val sensorManager: SensorManager? = context.getSystemService()
     private val gyroscopeSensor: Sensor? = sensorManager?.getDefaultSensor(Sensor.TYPE_ORIENTATION)
@@ -158,9 +158,9 @@ class ParallaxStackLayout @JvmOverloads constructor(
             if (sensorEventListener == null) {
                 sensorEventListener = SensorEventListenerImpl()
                 sensorManager?.registerListener(
-                        sensorEventListener,
-                        gyroscopeSensor,
-                        SensorManager.SENSOR_DELAY_UI
+                    sensorEventListener,
+                    gyroscopeSensor,
+                    SensorManager.SENSOR_DELAY_UI
                 )
             }
         }
@@ -193,7 +193,7 @@ class ParallaxStackLayout @JvmOverloads constructor(
             }
         }
         return context?.activity()
-                ?: rootView?.context?.activity()
+            ?: rootView?.context?.activity()
     }
 
     private inner class SensorEventListenerImpl : SensorEventListener {
@@ -239,24 +239,24 @@ class ParallaxStackLayout @JvmOverloads constructor(
         constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
             context.obtainStyledAttributes(attrs, R.styleable.ParallaxStackLayout_Layout).use {
                 deviationX = it.getDimension(
-                        R.styleable.ParallaxStackLayout_Layout_layout_parallaxDeviationX,
-                        deviationX
+                    R.styleable.ParallaxStackLayout_Layout_layout_parallaxDeviationX,
+                    deviationX
                 )
                 deviationY = it.getDimension(
-                        R.styleable.ParallaxStackLayout_Layout_layout_parallaxDeviationY,
-                        deviationY
+                    R.styleable.ParallaxStackLayout_Layout_layout_parallaxDeviationY,
+                    deviationY
                 )
                 rotationX = it.getFloat(
-                        R.styleable.ParallaxStackLayout_Layout_layout_parallaxRotationX,
-                        rotationX
+                    R.styleable.ParallaxStackLayout_Layout_layout_parallaxRotationX,
+                    rotationX
                 )
                 rotationY = it.getFloat(
-                        R.styleable.ParallaxStackLayout_Layout_layout_parallaxRotationY,
-                        rotationY
+                    R.styleable.ParallaxStackLayout_Layout_layout_parallaxRotationY,
+                    rotationY
                 )
                 rotationZ = it.getFloat(
-                        R.styleable.ParallaxStackLayout_Layout_layout_parallaxRotationZ,
-                        rotationZ
+                    R.styleable.ParallaxStackLayout_Layout_layout_parallaxRotationZ,
+                    rotationZ
                 )
             }
         }

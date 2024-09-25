@@ -41,8 +41,8 @@ import per.goweii.wanandroid.module.main.presenter.WebPresenter;
 import per.goweii.wanandroid.utils.GuideSPUtils;
 import per.goweii.wanandroid.utils.router.Router;
 import per.goweii.wanandroid.utils.web.WebHolder;
-import per.goweii.wanandroid.widget.CollectView;
 import per.goweii.wanandroid.utils.web.view.WebContainer;
+import per.goweii.wanandroid.widget.CollectView;
 
 /**
  * @author CuiZhen

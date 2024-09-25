@@ -22,11 +22,11 @@ public class SearchHistoryUtils {
     private final SPUtils mSPUtils = SPUtils.newInstance(SP_NAME);
     private final Gson mGson = new Gson();
 
-    public static SearchHistoryUtils newInstance() {
-        return new SearchHistoryUtils();
+    private SearchHistoryUtils() {
     }
 
-    private SearchHistoryUtils() {
+    public static SearchHistoryUtils newInstance() {
+        return new SearchHistoryUtils();
     }
 
     public void save(List<String> historys) {

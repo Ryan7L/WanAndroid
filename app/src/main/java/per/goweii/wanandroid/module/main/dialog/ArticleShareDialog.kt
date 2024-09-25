@@ -38,14 +38,13 @@ import per.goweii.codex.encoder.CodeEncoder
 import per.goweii.codex.processor.zxing.ZXingEncodeQRCodeProcessor
 import per.goweii.wanandroid.R
 import per.goweii.wanandroid.utils.ImageLoader
-import java.util.*
 
 class ArticleShareDialog(
-        context: Context,
-        covers: List<String?>?,
-        private var title: String,
-        private var desc: String,
-        private var url: String
+    context: Context,
+    covers: List<String?>?,
+    private var title: String,
+    private var desc: String,
+    private var url: String
 ) : DialogLayer(context), Layer.AnimatorCreator {
     private val reqCodePermission = 99
     private var runtimeRequester: RuntimeRequester? = null
@@ -54,7 +53,7 @@ class ArticleShareDialog(
     private val allCovers = arrayListOf<String?>().apply {
         add(null)
         covers?.filter { !it.isNullOrBlank() }
-                ?.forEach { add(it) }
+            ?.forEach { add(it) }
     }
 
     private val hasCover: Boolean
@@ -81,8 +80,8 @@ class ArticleShareDialog(
         val ll_bottom = requireView<View>(R.id.dialog_article_share_ll_bottom)
         val animator = AnimatorSet()
         animator.playTogether(
-                AnimatorHelper.createZoomAlphaInAnim(srl_content),
-                AnimatorHelper.createBottomInAnim(ll_bottom)
+            AnimatorHelper.createZoomAlphaInAnim(srl_content),
+            AnimatorHelper.createBottomInAnim(ll_bottom)
         )
         return animator
     }
@@ -92,8 +91,8 @@ class ArticleShareDialog(
         val ll_bottom = requireView<View>(R.id.dialog_article_share_ll_bottom)
         val animator = AnimatorSet()
         animator.playTogether(
-                AnimatorHelper.createZoomAlphaOutAnim(srl_content),
-                AnimatorHelper.createBottomOutAnim(ll_bottom)
+            AnimatorHelper.createZoomAlphaOutAnim(srl_content),
+            AnimatorHelper.createBottomOutAnim(ll_bottom)
         )
         return animator
     }
@@ -107,7 +106,8 @@ class ArticleShareDialog(
 
         if (hasCover) {
             rv_covers.isVisible = true
-            rv_covers.layoutManager = LinearLayoutManager(rv_covers.context, LinearLayoutManager.HORIZONTAL, false)
+            rv_covers.layoutManager =
+                LinearLayoutManager(rv_covers.context, LinearLayoutManager.HORIZONTAL, false)
             rv_covers.adapter = CoverAdapter()
             LinearSnapHelper().attachToRecyclerView(rv_covers)
         } else {
@@ -162,7 +162,11 @@ class ArticleShareDialog(
     private fun saveBitmap(bitmap: Bitmap) {
         runtimeRequester = PermissionUtils.request(object : RequestListener {
             override fun onSuccess() {
-                if (BitmapUtils.saveGallery(bitmap, "wanandroid_app_" + System.currentTimeMillis())) {
+                if (BitmapUtils.saveGallery(
+                        bitmap,
+                        "wanandroid_app_" + System.currentTimeMillis()
+                    )
+                ) {
                     ToastMaker.showShort("保存成功")
                 } else {
                     ToastMaker.showShort("保存失败")
@@ -186,7 +190,7 @@ class ArticleShareDialog(
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CoverHolder {
             val view = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.rv_item_article_share_cover, parent, false)
+                .inflate(R.layout.rv_item_article_share_cover, parent, false)
             return CoverHolder(view)
         }
 
@@ -229,7 +233,7 @@ class ArticleShareDialog(
             fun findOrAddToActivity(activity: Activity): PermissionFragment {
                 activity as AppCompatActivity
                 activity.supportFragmentManager.findFragmentByTag(PermissionFragment::class.java.name)
-                        ?.let { return it as PermissionFragment }
+                    ?.let { return it as PermissionFragment }
                 return PermissionFragment().also { fg ->
                     activity.supportFragmentManager.beginTransaction().apply {
                         add(fg, PermissionFragment::class.java.name)

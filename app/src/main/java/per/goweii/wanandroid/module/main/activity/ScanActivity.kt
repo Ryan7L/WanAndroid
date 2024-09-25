@@ -8,7 +8,16 @@ import android.app.Activity
 import android.content.Intent
 import android.view.View
 import android.view.animation.DecelerateInterpolator
-import kotlinx.android.synthetic.main.activity_scan.*
+import kotlinx.android.synthetic.main.activity_scan.code_scanner
+import kotlinx.android.synthetic.main.activity_scan.finder_view
+import kotlinx.android.synthetic.main.activity_scan.frozen_view
+import kotlinx.android.synthetic.main.activity_scan.ivAlbum
+import kotlinx.android.synthetic.main.activity_scan.ivClose
+import kotlinx.android.synthetic.main.activity_scan.ivTorch
+import kotlinx.android.synthetic.main.activity_scan.llTip
+import kotlinx.android.synthetic.main.activity_scan.tvTipBtnCancel
+import kotlinx.android.synthetic.main.activity_scan.tvTipBtnSure
+import kotlinx.android.synthetic.main.activity_scan.tvTipText
 import per.goweii.anypermission.AnyPermission
 import per.goweii.anypermission.RequestListener
 import per.goweii.anypermission.RuntimeRequester
@@ -39,7 +48,8 @@ import per.goweii.wanandroid.utils.UrlOpenUtils
  * @author CuiZhen
  * @date 2020/2/26
  */
-class ScanActivity : BaseActivity<ScanPresenter>(), ScanView, SwipeBackAbility.Direction, SwipeBackAbility.Transformer {
+class ScanActivity : BaseActivity<ScanPresenter>(), ScanView, SwipeBackAbility.Direction,
+    SwipeBackAbility.Transformer {
 
     companion object {
         private const val REQ_CODE_PERMISSION_CAMERA = 1
@@ -51,8 +61,8 @@ class ScanActivity : BaseActivity<ScanPresenter>(), ScanView, SwipeBackAbility.D
             val intent = Intent(activity, ScanActivity::class.java)
             activity.startActivity(intent)
             activity.overridePendingTransition(
-                    R.anim.swipeback_activity_open_bottom_in,
-                    R.anim.swipeback_activity_open_alpha_out
+                R.anim.swipeback_activity_open_bottom_in,
+                R.anim.swipeback_activity_open_alpha_out
             )
         }
 
@@ -61,8 +71,8 @@ class ScanActivity : BaseActivity<ScanPresenter>(), ScanView, SwipeBackAbility.D
             val intent = Intent(activity, ScanActivity::class.java)
             activity.startActivityForResult(intent, requestCode)
             activity.overridePendingTransition(
-                    R.anim.swipeback_activity_open_bottom_in,
-                    R.anim.swipeback_activity_open_alpha_out
+                R.anim.swipeback_activity_open_bottom_in,
+                R.anim.swipeback_activity_open_alpha_out
             )
         }
     }
@@ -102,11 +112,11 @@ class ScanActivity : BaseActivity<ScanPresenter>(), ScanView, SwipeBackAbility.D
             }
             addProcessor(ZXingMultiScanQRCodeProcessor())
             addDecorator(
-                    frozen_view,
-                    finder_view,
-                    BeepDecorator(),
-                    VibrateDecorator(),
-                    GestureDecorator()
+                frozen_view,
+                finder_view,
+                BeepDecorator(),
+                VibrateDecorator(),
+                GestureDecorator()
             )
             onFound {
                 onScanQRCodeSuccess(it.first().text)
@@ -127,48 +137,48 @@ class ScanActivity : BaseActivity<ScanPresenter>(), ScanView, SwipeBackAbility.D
     override fun finish() {
         super.finish()
         overridePendingTransition(
-                R.anim.swipeback_activity_close_alpha_in,
-                R.anim.swipeback_activity_close_bottom_out
+            R.anim.swipeback_activity_close_alpha_in,
+            R.anim.swipeback_activity_close_bottom_out
         )
     }
 
     private fun startScan() {
         mRuntimeRequester = AnyPermission.with(context)
-                .runtime(REQ_CODE_PERMISSION_CAMERA)
-                .permissions(Manifest.permission.CAMERA)
-                .onBeforeRequest { _, executor ->
-                    showTip("扫二维码需要相机权限", "点击申请", {
-                        hideTip()
-                        executor.execute()
-                    })
-                }
-                .onBeenDenied { _, executor ->
-                    showTip("拒绝相机权限将无法扫码", "重新申请", {
-                        hideTip()
-                        executor.execute()
-                    })
-                }
-                .onGoSetting { _, executor ->
-                    showTip("相机权限已被拒绝", "去设置", {
-                        hideTip()
-                        executor.execute()
-                    })
-                }
-                .request(object : RequestListener {
-                    @SuppressLint("MissingPermission")
-                    override fun onSuccess() {
-                        ivTorch.visible()
-                        finder_view.visible()
-                        codeScanner?.startScan()
-                    }
-
-                    override fun onFailed() {
-                        showTip("无法获取相机权限", "点击获取", {
-                            hideTip()
-                            startScan()
-                        })
-                    }
+            .runtime(REQ_CODE_PERMISSION_CAMERA)
+            .permissions(Manifest.permission.CAMERA)
+            .onBeforeRequest { _, executor ->
+                showTip("扫二维码需要相机权限", "点击申请", {
+                    hideTip()
+                    executor.execute()
                 })
+            }
+            .onBeenDenied { _, executor ->
+                showTip("拒绝相机权限将无法扫码", "重新申请", {
+                    hideTip()
+                    executor.execute()
+                })
+            }
+            .onGoSetting { _, executor ->
+                showTip("相机权限已被拒绝", "去设置", {
+                    hideTip()
+                    executor.execute()
+                })
+            }
+            .request(object : RequestListener {
+                @SuppressLint("MissingPermission")
+                override fun onSuccess() {
+                    ivTorch.visible()
+                    finder_view.visible()
+                    codeScanner?.startScan()
+                }
+
+                override fun onFailed() {
+                    showTip("无法获取相机权限", "点击获取", {
+                        hideTip()
+                        startScan()
+                    })
+                }
+            })
     }
 
     private fun stopScan() {
@@ -180,44 +190,44 @@ class ScanActivity : BaseActivity<ScanPresenter>(), ScanView, SwipeBackAbility.D
     private fun startAlbum() {
         stopScan()
         mRuntimeRequester = AnyPermission.with(context)
-                .runtime(REQ_CODE_PERMISSION_ALBUM)
-                .permissions(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .onBeforeRequest { _, executor ->
-                    showTip("选择图片需要存储权限", "点击申请", {
-                        hideTip()
-                        executor.execute()
-                    }, "返回扫码", {
-                        hideTip()
-                        executor.cancel()
-                    })
-                }
-                .onBeenDenied { _, executor ->
-                    showTip("拒绝存储权限将无法选择图片", "重新申请", {
-                        hideTip()
-                        executor.execute()
-                    }, "返回扫码", {
-                        hideTip()
-                        executor.cancel()
-                    })
-                }
-                .onGoSetting { _, executor ->
-                    showTip("存储权限已被拒绝", "去设置", {
-                        hideTip()
-                        executor.execute()
-                    }, "返回扫码", {
-                        hideTip()
-                        executor.cancel()
-                    })
-                }
-                .request(object : RequestListener {
-                    override fun onSuccess() {
-                        PictureSelector.select(this@ScanActivity, REQ_CODE_SELECT_PIC)
-                    }
-
-                    override fun onFailed() {
-                        startScan()
-                    }
+            .runtime(REQ_CODE_PERMISSION_ALBUM)
+            .permissions(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            .onBeforeRequest { _, executor ->
+                showTip("选择图片需要存储权限", "点击申请", {
+                    hideTip()
+                    executor.execute()
+                }, "返回扫码", {
+                    hideTip()
+                    executor.cancel()
                 })
+            }
+            .onBeenDenied { _, executor ->
+                showTip("拒绝存储权限将无法选择图片", "重新申请", {
+                    hideTip()
+                    executor.execute()
+                }, "返回扫码", {
+                    hideTip()
+                    executor.cancel()
+                })
+            }
+            .onGoSetting { _, executor ->
+                showTip("存储权限已被拒绝", "去设置", {
+                    hideTip()
+                    executor.execute()
+                }, "返回扫码", {
+                    hideTip()
+                    executor.cancel()
+                })
+            }
+            .request(object : RequestListener {
+                override fun onSuccess() {
+                    PictureSelector.select(this@ScanActivity, REQ_CODE_SELECT_PIC)
+                }
+
+                override fun onFailed() {
+                    startScan()
+                }
+            })
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -226,9 +236,11 @@ class ScanActivity : BaseActivity<ScanPresenter>(), ScanView, SwipeBackAbility.D
             REQ_CODE_PERMISSION_CAMERA -> {
                 mRuntimeRequester?.onActivityResult(requestCode)
             }
+
             REQ_CODE_PERMISSION_ALBUM -> {
                 mRuntimeRequester?.onActivityResult(requestCode)
             }
+
             REQ_CODE_SELECT_PIC -> {
                 PictureSelector.result(resultCode, data)?.let {
                     BitmapUtils.getBitmapFromUri(context, it)?.let { bitmap ->
@@ -271,7 +283,13 @@ class ScanActivity : BaseActivity<ScanPresenter>(), ScanView, SwipeBackAbility.D
         tvTipAnim = null
     }
 
-    private fun showTip(text: String, btnSure: String, onSure: View.OnClickListener, btnCancel: String? = null, onCancel: View.OnClickListener? = null) {
+    private fun showTip(
+        text: String,
+        btnSure: String,
+        onSure: View.OnClickListener,
+        btnCancel: String? = null,
+        onCancel: View.OnClickListener? = null
+    ) {
         llTip ?: return
         tvTipText.text = text
         tvTipBtnSure.text = btnSure

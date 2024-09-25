@@ -27,20 +27,6 @@ public class DateRangeEntity extends BaseEntity {
         }
     }
 
-    public boolean containsNow() {
-        return contains(new Date(System.currentTimeMillis()));
-    }
-
-    public boolean contains(@NonNull Date date) {
-        if (date.before(from)) {
-            return false;
-        }
-        if (date.after(to)) {
-            return false;
-        }
-        return true;
-    }
-
     /**
      * 202001010000
      * or
@@ -78,5 +64,19 @@ public class DateRangeEntity extends BaseEntity {
             }
         }
         return dateRangeList;
+    }
+
+    public boolean containsNow() {
+        return contains(new Date(System.currentTimeMillis()));
+    }
+
+    public boolean contains(@NonNull Date date) {
+        if (date.before(from)) {
+            return false;
+        }
+        if (date.after(to)) {
+            return false;
+        }
+        return true;
     }
 }

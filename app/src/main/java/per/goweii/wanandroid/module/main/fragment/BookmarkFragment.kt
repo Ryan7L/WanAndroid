@@ -3,7 +3,9 @@ package per.goweii.wanandroid.module.main.fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.scwang.smart.refresh.layout.api.RefreshFooter
 import com.scwang.smart.refresh.layout.constant.RefreshState
-import kotlinx.android.synthetic.main.fragment_bookmark.*
+import kotlinx.android.synthetic.main.fragment_bookmark.msv
+import kotlinx.android.synthetic.main.fragment_bookmark.rv
+import kotlinx.android.synthetic.main.fragment_bookmark.srl
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import per.goweii.basic.core.base.BaseFragment
@@ -38,8 +40,22 @@ class BookmarkFragment : BaseFragment<BookmarkPresenter>(), BookmarkView {
     override fun initView() {
         SmartRefreshUtils.with(srl).pureScrollMode()
         srl.setOnMultiListener(object : SimpleOnMultiListener() {
-            override fun onFooterMoving(footer: RefreshFooter?, isDragging: Boolean, percent: Float, offset: Int, footerHeight: Int, maxDragHeight: Int) {
-                super.onFooterMoving(footer, isDragging, percent, offset, footerHeight, maxDragHeight)
+            override fun onFooterMoving(
+                footer: RefreshFooter?,
+                isDragging: Boolean,
+                percent: Float,
+                offset: Int,
+                footerHeight: Int,
+                maxDragHeight: Int
+            ) {
+                super.onFooterMoving(
+                    footer,
+                    isDragging,
+                    percent,
+                    offset,
+                    footerHeight,
+                    maxDragHeight
+                )
                 if (srl.state != RefreshState.PullUpCanceled && isDragging && percent > 1.2F) {
                     srl.closeHeaderOrFooter()
                     CloseSecondFloorEvent().post()

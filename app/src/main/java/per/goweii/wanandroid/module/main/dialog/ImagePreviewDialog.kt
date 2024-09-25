@@ -10,7 +10,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import per.goweii.anylayer.dialog.DialogLayer
-import per.goweii.anylayer.ktx.interceptKeyEvent
 import per.goweii.anylayer.utils.AnimatorHelper
 import per.goweii.anylayer.widget.SwipeLayout
 import per.goweii.basic.core.glide.GlideHelper
@@ -25,8 +24,8 @@ import per.goweii.wanandroid.widget.ImagePreviewView
  * @date 2020/3/7
  */
 class ImagePreviewDialog(
-        context: Context,
-        private val imageUrl: String
+    context: Context,
+    private val imageUrl: String
 ) : DialogLayer(context) {
 
     private var imageMenuDialog: ImageMenuDialog? = null
@@ -42,8 +41,8 @@ class ImagePreviewDialog(
                 val dl = requireView<SwipeLayout>(R.id.dialog_image_preview_dl)
                 return AnimatorSet().apply {
                     playTogether(
-                            AnimatorHelper.createTopInAnim(ll_bar),
-                            AnimatorHelper.createZoomAlphaInAnim(dl)
+                        AnimatorHelper.createTopInAnim(ll_bar),
+                        AnimatorHelper.createZoomAlphaInAnim(dl)
                     )
                 }
             }
@@ -53,8 +52,8 @@ class ImagePreviewDialog(
                 val dl = requireView<SwipeLayout>(R.id.dialog_image_preview_dl)
                 return AnimatorSet().apply {
                     playTogether(
-                            AnimatorHelper.createTopOutAnim(ll_bar),
-                            AnimatorHelper.createZoomAlphaOutAnim(dl)
+                        AnimatorHelper.createTopOutAnim(ll_bar),
+                        AnimatorHelper.createZoomAlphaOutAnim(dl)
                     )
                 }
             }
@@ -107,32 +106,45 @@ class ImagePreviewDialog(
             }
         }
         GlideHelper.with(ipv.context)
-                .cache(true)
-                .placeHolder(ContextCompat.getDrawable(ipv.context, R.drawable.shape_image_perview_place_holder))
-                .errorHolder(ContextCompat.getDrawable(ipv.context, R.drawable.shape_image_perview_place_holder))
-                .load(imageUrl)
-                .onProgressListener { progress ->
-                    when {
-                        progress >= 1F -> {
-                            tv_tip.gone()
-                            tv_tip.text = "加载成功"
-                        }
-                        progress < 0F -> {
-                            tv_tip.visible()
-                            tv_tip.text = "加载失败"
-                        }
-                        progress == 0F -> {
-                            tv_tip.visible()
-                            tv_tip.text = "加载中"
-                        }
-                        else -> {
-                            tv_tip.visible()
-                            tv_tip.text = "加载中(${(progress * 100).toInt()}%)"
-                        }
+            .cache(true)
+            .placeHolder(
+                ContextCompat.getDrawable(
+                    ipv.context,
+                    R.drawable.shape_image_perview_place_holder
+                )
+            )
+            .errorHolder(
+                ContextCompat.getDrawable(
+                    ipv.context,
+                    R.drawable.shape_image_perview_place_holder
+                )
+            )
+            .load(imageUrl)
+            .onProgressListener { progress ->
+                when {
+                    progress >= 1F -> {
+                        tv_tip.gone()
+                        tv_tip.text = "加载成功"
+                    }
+
+                    progress < 0F -> {
+                        tv_tip.visible()
+                        tv_tip.text = "加载失败"
+                    }
+
+                    progress == 0F -> {
+                        tv_tip.visible()
+                        tv_tip.text = "加载中"
+                    }
+
+                    else -> {
+                        tv_tip.visible()
+                        tv_tip.text = "加载中(${(progress * 100).toInt()}%)"
                     }
                 }
-                .transformation(ScaleDownTransformation())
-                .into(ipv)
+            }
+            .transformation(ScaleDownTransformation())
+            .into(ipv)
         dl.setSwipeDirection(SwipeLayout.Direction.BOTTOM)
         dl.setOnSwipeListener(object : SwipeLayout.OnSwipeListener {
             override fun onStart(direction: Int, fraction: Float) {

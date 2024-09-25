@@ -2,7 +2,10 @@ package per.goweii.wanandroid.module.mine.activity
 
 import android.content.Context
 import android.content.Intent
-import kotlinx.android.synthetic.main.activity_user_info.*
+import kotlinx.android.synthetic.main.activity_user_info.civ_user_icon
+import kotlinx.android.synthetic.main.activity_user_info.iv_blur
+import kotlinx.android.synthetic.main.activity_user_info.tv_user_id
+import kotlinx.android.synthetic.main.activity_user_info.tv_user_name
 import per.goweii.basic.core.base.BaseActivity
 import per.goweii.wanandroid.R
 import per.goweii.wanandroid.event.UserInfoUpdateEvent

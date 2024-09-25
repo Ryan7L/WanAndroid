@@ -26,10 +26,6 @@ public class CopiedTextProcessor {
     private String mLastCopiedText = null;
     private String mCurrProcessText = null;
 
-    private static class Holder {
-        private static CopiedTextProcessor sInstance = new CopiedTextProcessor();
-    }
-
     private CopiedTextProcessor() {
         mClipboardManager = (ClipboardManager) Utils.getAppContext().getSystemService(Context.CLIPBOARD_SERVICE);
     }
@@ -106,6 +102,10 @@ public class CopiedTextProcessor {
         void isWanPwd(WanPwdParser pwd);
 
         void ignored();
+    }
+
+    private static class Holder {
+        private static CopiedTextProcessor sInstance = new CopiedTextProcessor();
     }
 
 }

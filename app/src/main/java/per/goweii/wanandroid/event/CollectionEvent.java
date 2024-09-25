@@ -11,6 +11,12 @@ public class CollectionEvent extends BaseEvent {
     private int articleId;
     private int collectId;
 
+    private CollectionEvent(boolean collect, int articleId, int collectId) {
+        this.collect = collect;
+        this.articleId = articleId;
+        this.collectId = collectId;
+    }
+
     public static void postCollectWithCollectId(int collectId) {
         new CollectionEvent(true, -1, collectId).post();
     }
@@ -29,12 +35,6 @@ public class CollectionEvent extends BaseEvent {
 
     public static void postUncollect(int articleId, int collectId) {
         new CollectionEvent(false, articleId, collectId).post();
-    }
-
-    private CollectionEvent(boolean collect, int articleId, int collectId) {
-        this.collect = collect;
-        this.articleId = articleId;
-        this.collectId = collectId;
     }
 
     public boolean isCollect() {

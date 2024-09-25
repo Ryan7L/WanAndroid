@@ -25,9 +25,9 @@ import per.goweii.basic.utils.bitmap.BitmapUtils
 import per.goweii.wanandroid.R
 
 class CardShareDialog(
-        context: Context,
-        private var layoutId: Int,
-        private var bindData: (View) -> Unit
+    context: Context,
+    private var layoutId: Int,
+    private var bindData: (View) -> Unit
 ) : DialogLayer(context), Layer.AnimatorCreator {
     private val reqCodePermission = 99
     private var runtimeRequester: RuntimeRequester? = null
@@ -60,10 +60,10 @@ class CardShareDialog(
         val ll_share = requireView<View>(R.id.dialog_card_share_ll_share)
         val animator = AnimatorSet()
         animator.playTogether(
-                AnimatorHelper.createAlphaInAnim(nsv_card),
-                AnimatorHelper.createAlphaInAnim(ll_btn),
-                AnimatorHelper.createZoomAlphaInAnim(ll_album, 0.6F),
-                AnimatorHelper.createZoomAlphaInAnim(ll_share, 0.6F)
+            AnimatorHelper.createAlphaInAnim(nsv_card),
+            AnimatorHelper.createAlphaInAnim(ll_btn),
+            AnimatorHelper.createZoomAlphaInAnim(ll_album, 0.6F),
+            AnimatorHelper.createZoomAlphaInAnim(ll_share, 0.6F)
         )
         return animator
     }
@@ -75,10 +75,10 @@ class CardShareDialog(
         val ll_share = requireView<View>(R.id.dialog_card_share_ll_share)
         val animator = AnimatorSet()
         animator.playTogether(
-                AnimatorHelper.createAlphaOutAnim(nsv_card),
-                AnimatorHelper.createAlphaOutAnim(ll_btn),
-                AnimatorHelper.createZoomAlphaOutAnim(ll_album, 0.6F),
-                AnimatorHelper.createZoomAlphaOutAnim(ll_share, 0.6F)
+            AnimatorHelper.createAlphaOutAnim(nsv_card),
+            AnimatorHelper.createAlphaOutAnim(ll_btn),
+            AnimatorHelper.createZoomAlphaOutAnim(ll_album, 0.6F),
+            AnimatorHelper.createZoomAlphaOutAnim(ll_share, 0.6F)
         )
         return animator
     }
@@ -117,7 +117,11 @@ class CardShareDialog(
     private fun saveBitmap(bitmap: Bitmap) {
         runtimeRequester = PermissionUtils.request(object : RequestListener {
             override fun onSuccess() {
-                if (BitmapUtils.saveGallery(bitmap, "wanandroid_app_" + System.currentTimeMillis())) {
+                if (BitmapUtils.saveGallery(
+                        bitmap,
+                        "wanandroid_app_" + System.currentTimeMillis()
+                    )
+                ) {
                     ToastMaker.showShort("保存成功")
                 } else {
                     ToastMaker.showShort("保存失败")
@@ -143,7 +147,7 @@ class CardShareDialog(
             fun findOrAddToActivity(activity: Activity): PermissionFragment {
                 activity as AppCompatActivity
                 activity.supportFragmentManager.findFragmentByTag(PermissionFragment::class.java.name)
-                        ?.let { return it as PermissionFragment }
+                    ?.let { return it as PermissionFragment }
                 return PermissionFragment().also { fg ->
                     activity.supportFragmentManager.beginTransaction().apply {
                         add(fg, PermissionFragment::class.java.name)

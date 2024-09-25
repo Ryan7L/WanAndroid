@@ -9,15 +9,15 @@ object ReadingModeManager {
 
     fun setup() {
         RxRequest.create(WanApi.api().webArticleUrlRegex)
-                .request(object : RxRequest.ResultCallback<List<WebArticleUrlRegexBean>> {
-                    override fun onSuccess(code: Int, data: List<WebArticleUrlRegexBean>) {
-                        urlRegexList.clear()
-                        urlRegexList.addAll(data)
-                    }
+            .request(object : RxRequest.ResultCallback<List<WebArticleUrlRegexBean>> {
+                override fun onSuccess(code: Int, data: List<WebArticleUrlRegexBean>) {
+                    urlRegexList.clear()
+                    urlRegexList.addAll(data)
+                }
 
-                    override fun onFailed(code: Int, msg: String) {
-                    }
-                })
+                override fun onFailed(code: Int, msg: String) {
+                }
+            })
     }
 
     fun getUrlRegexBeanForHost(host: String?): WebArticleUrlRegexBean? {

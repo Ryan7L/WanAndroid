@@ -12,12 +12,12 @@ import per.goweii.wanandroid.db.model.ReadRecordModel
  * @date 2020/3/21
  */
 @Database(
-        entities = [
-            ReadLaterModel::class,
-            ReadRecordModel::class
-        ],
-        version = WanRoom.VERSION,
-        exportSchema = false,
+    entities = [
+        ReadLaterModel::class,
+        ReadRecordModel::class
+    ],
+    version = WanRoom.VERSION,
+    exportSchema = false,
 )
 abstract class WanRoom : RoomDatabase() {
     companion object {

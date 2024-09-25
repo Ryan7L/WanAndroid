@@ -23,12 +23,12 @@ import per.goweii.wanandroid.R;
  */
 public class InputView extends FrameLayout implements View.OnFocusChangeListener, TextWatcher, SubmitView.EditTextWrapper {
 
+    protected int mViewColorFocus;
+    protected int mViewColorNormal;
     private EditText mEditText;
     private View mBottomLine;
     private int mViewHeightFocus;
-    protected int mViewColorFocus;
     private int mViewHeightNormal;
-    protected int mViewColorNormal;
     private boolean isEmpty = true;
 
     public InputView(Context context) {

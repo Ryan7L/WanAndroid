@@ -9,12 +9,12 @@ public class MessageCountEvent extends BaseEvent {
 
     private int count;
 
-    public static void post(int count) {
-        new MessageCountEvent(count).post();
-    }
-
     private MessageCountEvent(int count) {
         this.count = count;
+    }
+
+    public static void post(int count) {
+        new MessageCountEvent(count).post();
     }
 
     public int getCount() {

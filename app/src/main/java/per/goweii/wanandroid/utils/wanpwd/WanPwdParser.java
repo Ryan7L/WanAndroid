@@ -56,24 +56,6 @@ public class WanPwdParser {
         }
     }
 
-    @NonNull
-    public IWanPwd getWanPwd() {
-        return mWanPwd;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        WanPwdParser parser = (WanPwdParser) o;
-        return Objects.equals(mPwd, parser.mPwd);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(mPwd);
-    }
-
     public static WanPwdParser match(String text) {
         List<String> ps = findPasswords(text);
         if (ps == null || ps.size() != 1) {
@@ -109,31 +91,22 @@ public class WanPwdParser {
         return new WanPwdParser.Pwd(type, content);
     }
 
-    public static class Pwd {
-        public final WanPwdParser.Type type;
-        public final String content;
+    @NonNull
+    public IWanPwd getWanPwd() {
+        return mWanPwd;
+    }
 
-        Pwd() {
-            this(null, null);
-        }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        WanPwdParser parser = (WanPwdParser) o;
+        return Objects.equals(mPwd, parser.mPwd);
+    }
 
-        Pwd(String type, String content) {
-            this.type = WanPwdParser.Type.find(type);
-            this.content = content;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            Pwd pwd = (Pwd) o;
-            return type == pwd.type && TextUtils.equals(content, pwd.content);
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(type, content);
-        }
+    @Override
+    public int hashCode() {
+        return Objects.hash(mPwd);
     }
 
     public enum Type {
@@ -159,6 +132,33 @@ public class WanPwdParser {
                 }
             }
             return UNKNOWN;
+        }
+    }
+
+    public static class Pwd {
+        public final WanPwdParser.Type type;
+        public final String content;
+
+        Pwd() {
+            this(null, null);
+        }
+
+        Pwd(String type, String content) {
+            this.type = WanPwdParser.Type.find(type);
+            this.content = content;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Pwd pwd = (Pwd) o;
+            return type == pwd.type && TextUtils.equals(content, pwd.content);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(type, content);
         }
     }
 }

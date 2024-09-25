@@ -24,11 +24,11 @@ public class UpdateUtils {
 
     private final SPUtils mSPUtils = SPUtils.newInstance(SP_NAME);
 
-    public static UpdateUtils newInstance() {
-        return new UpdateUtils();
+    private UpdateUtils() {
     }
 
-    private UpdateUtils() {
+    public static UpdateUtils newInstance() {
+        return new UpdateUtils();
     }
 
     public void ignore(int versionCode) {

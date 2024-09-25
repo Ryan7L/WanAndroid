@@ -85,6 +85,10 @@ public class ArticleBean extends BaseBean {
         return "匿名";
     }
 
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
     public String getShareUser() {
         return shareUser;
     }
@@ -99,10 +103,6 @@ public class ArticleBean extends BaseBean {
 
     public void setOriginId(int originId) {
         this.originId = originId;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
     }
 
     public int getChapterId() {

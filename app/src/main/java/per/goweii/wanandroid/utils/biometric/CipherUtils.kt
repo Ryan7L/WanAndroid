@@ -16,7 +16,8 @@ object CipherUtils {
     private const val ENCRYPTION_BLOCK_MODE = KeyProperties.BLOCK_MODE_CBC
     private const val ENCRYPTION_PADDING = KeyProperties.ENCRYPTION_PADDING_PKCS7
     private const val ENCRYPTION_ALGORITHM = KeyProperties.KEY_ALGORITHM_AES
-    private const val TRANSFORMATION = "$ENCRYPTION_ALGORITHM/$ENCRYPTION_BLOCK_MODE/$ENCRYPTION_PADDING"
+    private const val TRANSFORMATION =
+        "$ENCRYPTION_ALGORITHM/$ENCRYPTION_BLOCK_MODE/$ENCRYPTION_PADDING"
 
     fun getEncryptCipher(keyAlias: String): Cipher {
         val key = getKey(keyAlias)
@@ -37,11 +38,13 @@ object CipherUtils {
         keyStore.load(null)
         keyStore.getKey(keyAlias, null)?.let { return it }
         val keyGenerator = KeyGenerator.getInstance(ENCRYPTION_ALGORITHM, ANDROID_KEYSTORE)
-        val builder = KeyGenParameterSpec.Builder(keyAlias,
-                KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT)
-                .setBlockModes(ENCRYPTION_BLOCK_MODE)
-                .setUserAuthenticationRequired(false)
-                .setEncryptionPaddings(ENCRYPTION_PADDING)
+        val builder = KeyGenParameterSpec.Builder(
+            keyAlias,
+            KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT
+        )
+            .setBlockModes(ENCRYPTION_BLOCK_MODE)
+            .setUserAuthenticationRequired(false)
+            .setEncryptionPaddings(ENCRYPTION_PADDING)
         keyGenerator.init(builder.build())
         return keyGenerator.generateKey()
     }

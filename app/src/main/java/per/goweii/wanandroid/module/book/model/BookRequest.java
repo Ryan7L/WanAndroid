@@ -10,9 +10,7 @@ import per.goweii.wanandroid.http.BaseRequest;
 import per.goweii.wanandroid.http.RequestListener;
 import per.goweii.wanandroid.http.WanApi;
 import per.goweii.wanandroid.http.WanCache;
-import per.goweii.wanandroid.module.knowledge.model.KnowledgeRequest;
 import per.goweii.wanandroid.module.main.model.ArticleListBean;
-import per.goweii.wanandroid.module.main.model.ChapterBean;
 
 public class BookRequest extends BaseRequest {
     public static void getBookList(RxLife rxLife, @NonNull RequestListener<List<BookBean>> listener) {

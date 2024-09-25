@@ -23,18 +23,16 @@ import per.goweii.wanandroid.R;
  */
 public class InfoEditDialog {
 
-    public static InfoEditDialog with(Context context) {
-        return new InfoEditDialog(context);
-    }
-
     private final Context mContext;
-
     private String mTitle = null;
     private String mHint = null;
     private String mText = null;
-
     private InfoEditDialog(Context context) {
         mContext = context;
+    }
+
+    public static InfoEditDialog with(Context context) {
+        return new InfoEditDialog(context);
     }
 
     public InfoEditDialog title(String title) {

@@ -26,6 +26,7 @@ import per.goweii.wanandroid.utils.UrlOpenUtils;
 public class RouterActivity extends BaseActivity implements SwipeBackAbility.Direction, Runnable {
 
     private static final String TAG = RouterActivity.class.getSimpleName();
+    private Handler mHandler = null;
 
     @NonNull
     @Override
@@ -75,8 +76,6 @@ public class RouterActivity extends BaseActivity implements SwipeBackAbility.Dir
         }
         super.onDestroy();
     }
-
-    private Handler mHandler = null;
 
     private void afterMainActivityStarted() {
         mHandler = new Handler();

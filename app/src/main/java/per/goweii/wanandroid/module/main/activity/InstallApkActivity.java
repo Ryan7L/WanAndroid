@@ -18,14 +18,13 @@ import per.goweii.wanandroid.utils.ThemeUtils;
 
 public class InstallApkActivity extends BaseActivity {
     private static final String APK_PATH = "apk_path";
+    private File apkFile;
 
     public static void start(Context context, File apk) {
         Intent intent = new Intent(context, InstallApkActivity.class);
         intent.putExtra(APK_PATH, apk.getPath());
         context.startActivity(intent);
     }
-
-    private File apkFile;
 
     @Override
     protected int getLayoutId() {

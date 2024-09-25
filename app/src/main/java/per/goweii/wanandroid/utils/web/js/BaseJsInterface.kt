@@ -54,12 +54,14 @@ abstract class BaseJsInterface(val jsName: String) {
         }
         if (!jsInitCode.isNullOrEmpty()) {
             val name = this::class.java.simpleName
-            webView.loadUrl("""
+            webView.loadUrl(
+                """
                 javascript: var init$name = document.createElement("script");
                 init$name.id= "init$name";
                 init$name.text= "$jsInitCode";
                 document.body.appendChild(init$name);
-            """.trimIndent())
+            """.trimIndent()
+            )
         }
     }
 }

@@ -70,7 +70,12 @@ import per.goweii.wanandroid.utils.web.view.WebContainer;
  */
 public class WebHolder {
     private static final String TAG = WebHolder.class.getSimpleName();
-
+    private final Activity mActivity;
+    private final WebContainer mWebContainer;
+    private final WebView mWebView;
+    private final ProgressBar mProgressBar;
+    private final String mUserAgentString;
+    private final JsInjector jsInjector;
     private OnPageScrollChangeListener mOnPageScrollChangeListener = null;
     private OnPageScrollEndListener mOnPageScrollEndListener = null;
     private OnPageTitleCallback mOnPageTitleCallback = null;
@@ -79,64 +84,12 @@ public class WebHolder {
     private OnHistoryUpdateCallback mOnHistoryUpdateCallback = null;
     private OverrideUrlInterceptor mOverrideUrlInterceptor = null;
     private InterceptUrlInterceptor mInterceptUrlInterceptor = null;
-
-    private final Activity mActivity;
-    private final WebContainer mWebContainer;
-    private final WebView mWebView;
-    private final ProgressBar mProgressBar;
-    private final String mUserAgentString;
-
     private boolean allowOpenOtherApp = true;
     private boolean allowOpenDownload = true;
     private boolean allowRedirect = true;
-
-    private final JsInjector jsInjector;
-
     private boolean useInstanceCache = false;
     private boolean isProgressShown = false;
     private boolean isPageScrollEnd = false;
-
-    public static WebHolder with(Activity activity, WebContainer container, ProgressBar progressBar) {
-        return new WebHolder(activity, container, progressBar);
-    }
-
-    public static WebHolder with(Activity activity, WebContainer container) {
-        return new WebHolder(activity, container, null);
-    }
-
-    private static void syncCookiesForWanAndroid(String url) {
-        if (TextUtils.isEmpty(url)) {
-            return;
-        }
-        String host = Uri.parse(url).getHost();
-        if (!TextUtils.equals(host, "www.wanandroid.com")) {
-            return;
-        }
-        List<Cookie> cookies = CookieUtils.INSTANCE.loadForUrl(url);
-        if (cookies.isEmpty()) {
-            return;
-        }
-        CookieManager cookieManager = CookieManager.getInstance();
-        cookieManager.setAcceptCookie(true);
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            cookieManager.removeSessionCookie();
-            cookieManager.removeExpiredCookie();
-        } else {
-            cookieManager.removeSessionCookies(null);
-        }
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            for (Cookie cookie : cookies) {
-                cookieManager.setCookie(url, cookie.name() + "=" + cookie.value());
-            }
-            CookieSyncManager.createInstance(WanApp.getAppContext());
-            CookieSyncManager.getInstance().sync();
-        } else {
-            for (Cookie cookie : cookies) {
-                cookieManager.setCookie(url, cookie.name() + "=" + cookie.value());
-            }
-            cookieManager.flush();
-        }
-    }
 
     @SuppressLint("SetJavaScriptEnabled")
     private WebHolder(Activity activity, WebContainer container, ProgressBar progressBar) {
@@ -238,6 +191,48 @@ public class WebHolder {
         }
         jsInjector = new JsInjector(mWebView);
         jsInjector.attach();
+    }
+
+    public static WebHolder with(Activity activity, WebContainer container, ProgressBar progressBar) {
+        return new WebHolder(activity, container, progressBar);
+    }
+
+    public static WebHolder with(Activity activity, WebContainer container) {
+        return new WebHolder(activity, container, null);
+    }
+
+    private static void syncCookiesForWanAndroid(String url) {
+        if (TextUtils.isEmpty(url)) {
+            return;
+        }
+        String host = Uri.parse(url).getHost();
+        if (!TextUtils.equals(host, "www.wanandroid.com")) {
+            return;
+        }
+        List<Cookie> cookies = CookieUtils.INSTANCE.loadForUrl(url);
+        if (cookies.isEmpty()) {
+            return;
+        }
+        CookieManager cookieManager = CookieManager.getInstance();
+        cookieManager.setAcceptCookie(true);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            cookieManager.removeSessionCookie();
+            cookieManager.removeExpiredCookie();
+        } else {
+            cookieManager.removeSessionCookies(null);
+        }
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            for (Cookie cookie : cookies) {
+                cookieManager.setCookie(url, cookie.name() + "=" + cookie.value());
+            }
+            CookieSyncManager.createInstance(WanApp.getAppContext());
+            CookieSyncManager.getInstance().sync();
+        } else {
+            for (Cookie cookie : cookies) {
+                cookieManager.setCookie(url, cookie.name() + "=" + cookie.value());
+            }
+            cookieManager.flush();
+        }
     }
 
     public WebHolder loadUrl(String url) {
@@ -523,7 +518,63 @@ public class WebHolder {
         return this;
     }
 
+    public interface OnShareInfoCallback {
+        void onShareInfo(@NonNull String url,
+                         @NonNull List<String> covers,
+                         @NonNull String title,
+                         @NonNull String desc);
+    }
+
+    public interface OnPageScrollChangeListener {
+        void onPageScrolled(@FloatRange(from = 0.0, to = 1.0) float percent);
+    }
+
+    public interface OnPageScrollEndListener {
+        void onPageScrollEnd();
+    }
+
+    public interface OnLongClickHitTestResult {
+        boolean onHitTestResult(@NonNull HitResult result);
+    }
+
+    public interface OnPageTitleCallback {
+        void onReceivedTitle(@NonNull String title);
+    }
+
+    public interface OnPageLoadCallback {
+        void onPageStarted();
+
+        void onPageFinished();
+    }
+
+    public interface OnPageProgressCallback {
+        void onShowProgress();
+
+        void onProgressChanged(int progress);
+
+        void onHideProgress();
+    }
+
+    public interface OnHistoryUpdateCallback {
+        void onHistoryUpdate(boolean isReload);
+    }
+
+    public interface OverrideUrlInterceptor {
+        boolean onOverrideUrl(String url);
+    }
+
+    public interface InterceptUrlInterceptor {
+        @Nullable
+        WebResourceResponse onInterceptUrl(@NonNull Uri reqUri,
+                                           @Nullable Map<String, String> reqHeaders,
+                                           @Nullable String reqMethod);
+    }
+
     public class WanWebChromeClient extends WebChromeClient {
+        private DecorLayer mCustomViewLayer = null;
+        private IX5WebChromeClient.CustomViewCallback mCustomViewCallback = null;
+        private int mOldActivityOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
+
         @Override
         public void onReceivedTitle(WebView view, String title) {
             super.onReceivedTitle(view, title);
@@ -635,10 +686,6 @@ public class WebHolder {
                         }
                     }).start();
         }
-
-        private DecorLayer mCustomViewLayer = null;
-        private IX5WebChromeClient.CustomViewCallback mCustomViewCallback = null;
-        private int mOldActivityOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
 
         @Override
         public void onShowCustomView(View view, IX5WebChromeClient.CustomViewCallback customViewCallback) {
@@ -804,57 +851,5 @@ public class WebHolder {
                 mOnHistoryUpdateCallback.onHistoryUpdate(isReload);
             }
         }
-    }
-
-    public interface OnShareInfoCallback {
-        void onShareInfo(@NonNull String url,
-                         @NonNull List<String> covers,
-                         @NonNull String title,
-                         @NonNull String desc);
-    }
-
-    public interface OnPageScrollChangeListener {
-        void onPageScrolled(@FloatRange(from = 0.0, to = 1.0) float percent);
-    }
-
-    public interface OnPageScrollEndListener {
-        void onPageScrollEnd();
-    }
-
-    public interface OnLongClickHitTestResult {
-        boolean onHitTestResult(@NonNull HitResult result);
-    }
-
-    public interface OnPageTitleCallback {
-        void onReceivedTitle(@NonNull String title);
-    }
-
-    public interface OnPageLoadCallback {
-        void onPageStarted();
-
-        void onPageFinished();
-    }
-
-    public interface OnPageProgressCallback {
-        void onShowProgress();
-
-        void onProgressChanged(int progress);
-
-        void onHideProgress();
-    }
-
-    public interface OnHistoryUpdateCallback {
-        void onHistoryUpdate(boolean isReload);
-    }
-
-    public interface OverrideUrlInterceptor {
-        boolean onOverrideUrl(String url);
-    }
-
-    public interface InterceptUrlInterceptor {
-        @Nullable
-        WebResourceResponse onInterceptUrl(@NonNull Uri reqUri,
-                                           @Nullable Map<String, String> reqHeaders,
-                                           @Nullable String reqMethod);
     }
 }

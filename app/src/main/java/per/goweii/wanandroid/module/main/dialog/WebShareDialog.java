@@ -38,8 +38,8 @@ public class WebShareDialog {
                                                              listener.onQrcode();
                                                              break;
                                                      }
-                                      }
-                                  },
+                                                 }
+                                             },
                         R.id.dialog_web_share_iv_capture,
                         R.id.dialog_web_share_iv_qrcode,
                         R.id.dialog_web_share_iv_dismiss)

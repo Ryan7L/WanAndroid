@@ -10,7 +10,7 @@ import per.goweii.wanandroid.module.main.model.ArticleBean
  * @date 2020/2/23
  */
 class UrlOpenUtils(
-        private val url: String
+    private val url: String
 ) {
     private var title: String = ""
 

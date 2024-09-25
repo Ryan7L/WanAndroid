@@ -6,7 +6,6 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-import per.goweii.basic.utils.listener.SimpleCallback;
 import per.goweii.rxhttp.core.RxLife;
 import per.goweii.rxhttp.request.exception.ExceptionHandle;
 import per.goweii.wanandroid.http.RequestListener;
@@ -16,11 +15,9 @@ import per.goweii.wanandroid.module.main.model.RecommendBean;
 public class RecommendManager {
     private static volatile RecommendManager sInstance;
     private final RxLife mRxLife;
-
+    private final List<Callback> mCallbacks = new ArrayList<>();
     private volatile boolean mLoading = false;
     private volatile RecommendBean mRecommendBean;
-
-    private final List<Callback> mCallbacks = new ArrayList<>();
 
     private RecommendManager() {
         mRxLife = RxLife.create();

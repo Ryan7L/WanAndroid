@@ -5,7 +5,17 @@ import android.content.Intent
 import android.os.Parcelable
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
-import kotlinx.android.synthetic.main.activity_book_details.*
+import kotlinx.android.synthetic.main.activity_book_details.abc
+import kotlinx.android.synthetic.main.activity_book_details.abl
+import kotlinx.android.synthetic.main.activity_book_details.ctbl
+import kotlinx.android.synthetic.main.activity_book_details.ll_top
+import kotlinx.android.synthetic.main.activity_book_details.msv
+import kotlinx.android.synthetic.main.activity_book_details.riv_book_img
+import kotlinx.android.synthetic.main.activity_book_details.rv
+import kotlinx.android.synthetic.main.activity_book_details.tv_book_author
+import kotlinx.android.synthetic.main.activity_book_details.tv_book_copyright
+import kotlinx.android.synthetic.main.activity_book_details.tv_book_desc
+import kotlinx.android.synthetic.main.activity_book_details.tv_book_name
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import per.goweii.basic.core.base.BaseActivity
@@ -55,9 +65,9 @@ class BookDetailsActivity : BaseActivity<BookDetailsPresenter>(), BookDetailsVie
         tv_book_name.text = bookBean.name
         tv_book_author.text = bookBean.author
         tv_book_desc.text = bookBean.desc
-        tv_book_copyright.text = bookBean.lisense
+        tv_book_copyright.text = bookBean.license
         tv_book_copyright.setOnClickListener {
-            UrlOpenUtils.with(bookBean.lisenseLink).open(this)
+            UrlOpenUtils.with(bookBean.licenseLink).open(this)
         }
 
         rv.layoutManager = LinearLayoutManager(context)

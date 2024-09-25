@@ -10,7 +10,11 @@ import android.view.ViewConfiguration
 import android.view.animation.DecelerateInterpolator
 import android.widget.FrameLayout
 import android.widget.Scroller
-import androidx.core.view.*
+import androidx.core.view.NestedScrollingChild
+import androidx.core.view.NestedScrollingParent2
+import androidx.core.view.NestedScrollingParentHelper
+import androidx.core.view.ScrollingView
+import androidx.core.view.ViewCompat
 import per.goweii.statusbarcompat.StatusBarCompat
 import per.goweii.wanandroid.R
 import java.lang.ref.WeakReference
@@ -22,7 +26,8 @@ class BottomDrawerLayout : FrameLayout, NestedScrollingParent2 {
     private val _dismissVelocity = 1000F
     private val _dismissFraction = 0.1F
 
-    private val mDragHelper: androidx.customview.widget.ViewDragHelper = androidx.customview.widget.ViewDragHelper.create(this, DragCallback())
+    private val mDragHelper: androidx.customview.widget.ViewDragHelper =
+        androidx.customview.widget.ViewDragHelper.create(this, DragCallback())
     private val mNestedHelper: NestedScrollingParentHelper = NestedScrollingParentHelper(this)
     private val mScroller: Scroller = Scroller(context, DecelerateInterpolator())
 
@@ -60,16 +65,29 @@ class BottomDrawerLayout : FrameLayout, NestedScrollingParent2 {
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    ) {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.BottomDrawerLayout)
         enable = typedArray.getBoolean(R.styleable.BottomDrawerLayout_bdl_enable, enable)
         open = typedArray.getBoolean(R.styleable.BottomDrawerLayout_bdl_open, open)
-        closeHeight = typedArray.getDimension(R.styleable.BottomDrawerLayout_bdl_closeHeight, closeHeight.toFloat()).toInt()
-        openTopMarginStatusBarHeight = typedArray.getBoolean(R.styleable.BottomDrawerLayout_bdl_openTopMarginStatusBarHeight, openTopMarginStatusBarHeight)
+        closeHeight = typedArray.getDimension(
+            R.styleable.BottomDrawerLayout_bdl_closeHeight,
+            closeHeight.toFloat()
+        ).toInt()
+        openTopMarginStatusBarHeight = typedArray.getBoolean(
+            R.styleable.BottomDrawerLayout_bdl_openTopMarginStatusBarHeight,
+            openTopMarginStatusBarHeight
+        )
         openTopMargin = if (openTopMarginStatusBarHeight) {
             StatusBarCompat.getHeight(context)
         } else {
-            typedArray.getDimension(R.styleable.BottomDrawerLayout_bdl_openTopMargin, openTopMargin.toFloat()).toInt()
+            typedArray.getDimension(
+                R.styleable.BottomDrawerLayout_bdl_openTopMargin,
+                openTopMargin.toFloat()
+            ).toInt()
         }
         mDragFraction = if (open) 0F else 1F
         typedArray.recycle()
@@ -195,8 +213,10 @@ class BottomDrawerLayout : FrameLayout, NestedScrollingParent2 {
         if (duration > 0) {
             usingNested = true
             mScroller.abortAnimation()
-            mScroller.startScroll(-getDragX().toInt(), -getDragY().toInt(),
-                    -getDragX().toInt(), -(getMinDragY() - getDragY()).toInt(), duration)
+            mScroller.startScroll(
+                -getDragX().toInt(), -getDragY().toInt(),
+                -getDragX().toInt(), -(getMinDragY() - getDragY()).toInt(), duration
+            )
             invalidate()
         } else {
             initStateImmediately(true)
@@ -209,8 +229,10 @@ class BottomDrawerLayout : FrameLayout, NestedScrollingParent2 {
         if (duration > 0) {
             usingNested = true
             mScroller.abortAnimation()
-            mScroller.startScroll(-getDragX().toInt(), -getDragY().toInt(),
-                    -getDragX().toInt(), -(getMaxDragY() - getDragY()).toInt(), duration)
+            mScroller.startScroll(
+                -getDragX().toInt(), -getDragY().toInt(),
+                -getDragX().toInt(), -(getMaxDragY() - getDragY()).toInt(), duration
+            )
             invalidate()
         } else {
             initStateImmediately(false)
@@ -235,8 +257,8 @@ class BottomDrawerLayout : FrameLayout, NestedScrollingParent2 {
         val hs = MeasureSpec.getSize(heightMeasureSpec)
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
         dragView.measure(
-                MeasureSpec.makeMeasureSpec(ws, MeasureSpec.EXACTLY),
-                MeasureSpec.makeMeasureSpec(hs - openTopMargin, MeasureSpec.EXACTLY)
+            MeasureSpec.makeMeasureSpec(ws, MeasureSpec.EXACTLY),
+            MeasureSpec.makeMeasureSpec(hs - openTopMargin, MeasureSpec.EXACTLY)
         )
     }
 
@@ -266,6 +288,7 @@ class BottomDrawerLayout : FrameLayout, NestedScrollingParent2 {
                 moveDownY = ev.rawY
                 moveUpOrDown = null
             }
+
             MotionEvent.ACTION_MOVE -> {
                 moveUpOrDown = when {
                     ev.rawY - moveDownY > 0F -> false
@@ -273,6 +296,7 @@ class BottomDrawerLayout : FrameLayout, NestedScrollingParent2 {
                     else -> null
                 }
             }
+
             MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                 moveDownY = 0F
                 moveUpOrDown = null
@@ -316,9 +340,11 @@ class BottomDrawerLayout : FrameLayout, NestedScrollingParent2 {
                     }
                 }
             }
+
             MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                 if (abs(ev.rawX - mDownX) < ViewConfiguration.getTouchSlop() &&
-                        abs(ev.rawY - mDownY) < ViewConfiguration.getTouchSlop()) {
+                    abs(ev.rawY - mDownY) < ViewConfiguration.getTouchSlop()
+                ) {
                     judgeDragEnd()
                 }
             }
@@ -348,7 +374,8 @@ class BottomDrawerLayout : FrameLayout, NestedScrollingParent2 {
         when (ev.action and MotionEvent.ACTION_MASK) {
             MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                 if (abs(ev.rawX - mDownX) < ViewConfiguration.getTouchSlop() &&
-                        abs(ev.rawY - mDownY) < ViewConfiguration.getTouchSlop()) {
+                    abs(ev.rawY - mDownY) < ViewConfiguration.getTouchSlop()
+                ) {
                     judgeDragEnd()
                 }
             }
@@ -497,7 +524,12 @@ class BottomDrawerLayout : FrameLayout, NestedScrollingParent2 {
 
     private var velocity: Float = 0F
 
-    override fun onNestedFling(target: View, velocityX: Float, velocityY: Float, consumed: Boolean): Boolean {
+    override fun onNestedFling(
+        target: View,
+        velocityX: Float,
+        velocityY: Float,
+        consumed: Boolean
+    ): Boolean {
         return if (nestedScrollStopped) {
             false
         } else {
@@ -552,7 +584,14 @@ class BottomDrawerLayout : FrameLayout, NestedScrollingParent2 {
         scrollBy(consumed[0], consumed[1])
     }
 
-    override fun onNestedScroll(target: View, dxConsumed: Int, dyConsumed: Int, dxUnconsumed: Int, dyUnconsumed: Int, type: Int/*, consumed: IntArray*/) {
+    override fun onNestedScroll(
+        target: View,
+        dxConsumed: Int,
+        dyConsumed: Int,
+        dxUnconsumed: Int,
+        dyUnconsumed: Int,
+        type: Int/*, consumed: IntArray*/
+    ) {
         val scrollY: Int = -getDragY().toInt()
         val consumedx = 0
         val consumedy = if (scrollY + dyUnconsumed > 0) {
@@ -668,7 +707,13 @@ class BottomDrawerLayout : FrameLayout, NestedScrollingParent2 {
             return pv
         }
 
-        override fun onViewPositionChanged(changedView: View, left: Int, top: Int, dx: Int, dy: Int) {
+        override fun onViewPositionChanged(
+            changedView: View,
+            left: Int,
+            top: Int,
+            dx: Int,
+            dy: Int
+        ) {
             super.onViewPositionChanged(changedView, left, top, dx, dy)
             refreshDragFraction()
             onDragging()

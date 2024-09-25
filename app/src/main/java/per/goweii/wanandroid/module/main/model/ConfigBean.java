@@ -22,13 +22,13 @@ public class ConfigBean extends BaseBean {
     private String secondFloorBgImageUrl;
     private float secondFloorBgImageBlurPercent;
 
-    public void setEnableAtDate(@Nullable List<String> enableAtDate) {
-        this.enableAtDate = enableAtDate;
-    }
-
     @Nullable
     public List<String> getEnableAtDate() {
         return enableAtDate;
+    }
+
+    public void setEnableAtDate(@Nullable List<String> enableAtDate) {
+        this.enableAtDate = enableAtDate;
     }
 
     public boolean isEnableAtNow() {

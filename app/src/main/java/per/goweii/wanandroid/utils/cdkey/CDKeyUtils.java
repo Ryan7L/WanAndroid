@@ -18,20 +18,15 @@ public class CDKeyUtils {
     private static final String SP_NAME = "cdkey";
     private static final String KEY_USERID = "userid";
     private static final String KEY_CDKEY = "cdkey";
-
-    private static class Holder {
-        private static final CDKeyUtils sInstance = new CDKeyUtils();
-    }
-
-    public static CDKeyUtils getInstance() {
-        return Holder.sInstance;
-    }
-
     @Nullable
     private final CDKey mCDKey;
 
     private CDKeyUtils() {
         mCDKey = newCDKey();
+    }
+
+    public static CDKeyUtils getInstance() {
+        return Holder.sInstance;
     }
 
     public boolean isActive() {
@@ -78,5 +73,9 @@ public class CDKeyUtils {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private static class Holder {
+        private static final CDKeyUtils sInstance = new CDKeyUtils();
     }
 }

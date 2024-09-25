@@ -3,7 +3,7 @@ package per.goweii.wanandroid.module.mine.model
 import android.annotation.SuppressLint
 import android.net.Uri
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
 
 data class MessageBean(
     val category: Int,
@@ -25,12 +25,17 @@ data class MessageBean(
         get() = Uri.parse(fullLink)
             .buildUpon()
             .appendQueryParameter("fid", fromUserId.toString())
-            .appendQueryParameter("date", SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(Date(date)))
+            .appendQueryParameter(
+                "date",
+                SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(Date(date))
+            )
             .appendQueryParameter("message", message)
-            .appendQueryParameter("scrollToKeywords", message
-                .substring(0, message.length.coerceAtMost(20))
-                .split(Regex("[ ]"))
-                .joinToString(","))
+            .appendQueryParameter(
+                "scrollToKeywords", message
+                    .substring(0, message.length.coerceAtMost(20))
+                    .split(Regex("[ ]"))
+                    .joinToString(",")
+            )
             .build()
             .toString()
 }

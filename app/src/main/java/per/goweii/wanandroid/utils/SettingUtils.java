@@ -38,25 +38,16 @@ public class SettingUtils {
     private static final String KEY_UPDATE_IGNORE_DURATION = "KEY_UPDATE_IGNORE_DURATION";
 
     private final SPUtils mSPUtils = SPUtils.newInstance(SP_NAME);
-
+    private final List<HostEntity> mHostWhite = new ArrayList<>();
+    private final List<HostEntity> mHostBlack = new ArrayList<>();
     private boolean mSystemTheme = true;
     private boolean mDarkTheme = false;
     private boolean mShowReadLaterNotification = true;
     private boolean mShowTop = true;
     private boolean mShowBanner = true;
     private int mUrlInterceptType = HostInterceptUtils.TYPE_NOTHING;
-    private final List<HostEntity> mHostWhite = new ArrayList<>();
-    private final List<HostEntity> mHostBlack = new ArrayList<>();
     private int mSearchHistoryMaxCount = 100;
     private long mUpdateIgnoreDuration = 1 * 24 * 60 * 60 * 1000L;
-
-    private static class Holder {
-        private static final SettingUtils INSTANCE = new SettingUtils();
-    }
-
-    public static SettingUtils getInstance() {
-        return Holder.INSTANCE;
-    }
 
     private SettingUtils() {
         mSystemTheme = mSPUtils.get(KEY_SYSTEM_THEME, mSystemTheme);
@@ -92,13 +83,21 @@ public class SettingUtils {
         }
     }
 
+    public static SettingUtils getInstance() {
+        return Holder.INSTANCE;
+    }
+
+    public boolean isSystemTheme() {
+        return mSystemTheme;
+    }
+
     public void setSystemTheme(boolean systemTheme) {
         mSystemTheme = systemTheme;
         mSPUtils.save(KEY_SYSTEM_THEME, systemTheme);
     }
 
-    public boolean isSystemTheme() {
-        return mSystemTheme;
+    public boolean isDarkTheme() {
+        return mDarkTheme;
     }
 
     public void setDarkTheme(boolean darkTheme) {
@@ -106,8 +105,8 @@ public class SettingUtils {
         mSPUtils.save(KEY_DARK_THEME, darkTheme);
     }
 
-    public boolean isDarkTheme() {
-        return mDarkTheme;
+    public boolean isShowReadLaterNotification() {
+        return mShowReadLaterNotification;
     }
 
     public void setShowReadLaterNotification(boolean showReadLaterNotification) {
@@ -115,8 +114,8 @@ public class SettingUtils {
         mSPUtils.save(KEY_SHOW_READ_LATER_NOTIFICATION, showReadLaterNotification);
     }
 
-    public boolean isShowReadLaterNotification() {
-        return mShowReadLaterNotification;
+    public boolean isShowTop() {
+        return mShowTop;
     }
 
     public void setShowTop(boolean showTop) {
@@ -124,8 +123,8 @@ public class SettingUtils {
         mSPUtils.save(KEY_SHOW_TOP, showTop);
     }
 
-    public boolean isShowTop() {
-        return mShowTop;
+    public boolean isShowBanner() {
+        return mShowBanner;
     }
 
     public void setShowBanner(boolean showBanner) {
@@ -133,8 +132,8 @@ public class SettingUtils {
         mSPUtils.save(KEY_SHOW_BANNER, showBanner);
     }
 
-    public boolean isShowBanner() {
-        return mShowBanner;
+    public int getUrlInterceptType() {
+        return mUrlInterceptType;
     }
 
     public void setUrlInterceptType(int type) {
@@ -142,8 +141,9 @@ public class SettingUtils {
         mSPUtils.save(KEY_URL_INTERCEPT_TYPE, type);
     }
 
-    public int getUrlInterceptType() {
-        return mUrlInterceptType;
+    @NonNull
+    public List<HostEntity> getHostWhiteIntercept() {
+        return mHostWhite;
     }
 
     public void setHostWhiteIntercept(@NonNull List<HostEntity> hosts) {
@@ -153,8 +153,8 @@ public class SettingUtils {
     }
 
     @NonNull
-    public List<HostEntity> getHostWhiteIntercept() {
-        return mHostWhite;
+    public List<HostEntity> getHostBlackIntercept() {
+        return mHostBlack;
     }
 
     public void setHostBlackIntercept(@NonNull List<HostEntity> hosts) {
@@ -163,9 +163,8 @@ public class SettingUtils {
         mSPUtils.save(KEY_HOST_BLACK, new Gson().toJson(mHostBlack));
     }
 
-    @NonNull
-    public List<HostEntity> getHostBlackIntercept() {
-        return mHostBlack;
+    public int getSearchHistoryMaxCount() {
+        return mSearchHistoryMaxCount;
     }
 
     public void setSearchHistoryMaxCount(int count) {
@@ -173,8 +172,8 @@ public class SettingUtils {
         mSPUtils.save(KEY_SEARCH_HISTORY_MAX_COUNT, count);
     }
 
-    public int getSearchHistoryMaxCount() {
-        return mSearchHistoryMaxCount;
+    public long getUpdateIgnoreDuration() {
+        return mUpdateIgnoreDuration;
     }
 
     public void setUpdateIgnoreDuration(long dur) {
@@ -182,7 +181,7 @@ public class SettingUtils {
         mSPUtils.save(KEY_UPDATE_IGNORE_DURATION, dur);
     }
 
-    public long getUpdateIgnoreDuration() {
-        return mUpdateIgnoreDuration;
+    private static class Holder {
+        private static final SettingUtils INSTANCE = new SettingUtils();
     }
 }

@@ -40,19 +40,16 @@ public class WebContainer extends FrameLayout implements IConsecutiveScroller {
     private final float mTouchSlop;
     private final long mTapTimeout;
     private final long mDoubleTapTimeout;
-
+    private final Random mRandom = new Random();
     private long mDownTime = 0L;
     private float mDownX = 0;
     private float mDownY = 0;
     private float mLastDownX = 0;
     private float mLastDownY = 0;
     private long mLastTouchTime = 0L;
-
     private OnDoubleClickListener mOnDoubleClickListener = null;
     private OnTouchDownListener mOnTouchDownListener = null;
-
     private List<Animator> mHeartAnimators = new LinkedList<>();
-
     private boolean doubleClicked = false;
     private Runnable doubleClickTimeoutRunnable = new Runnable() {
         @Override
@@ -185,8 +182,6 @@ public class WebContainer extends FrameLayout implements IConsecutiveScroller {
         });
         addView(heartView);
     }
-
-    private final Random mRandom = new Random();
 
     public Animator createHeartAnim(final View heartView) {
         final float rotation;

@@ -16,15 +16,11 @@ public class ADUtils {
 
     private final SPUtils mSPUtils = SPUtils.newInstance(SP_NAME);
 
-    private static class Holder {
-        private static final ADUtils INSTANCE = new ADUtils();
+    private ADUtils() {
     }
 
     public static ADUtils getInstance() {
         return Holder.INSTANCE;
-    }
-
-    private ADUtils() {
     }
 
     public boolean shouldShowAD(AdvertBean advertBean) {
@@ -69,5 +65,9 @@ public class ADUtils {
 
     public void setAdShown() {
         mSPUtils.save(KEY_AD, System.currentTimeMillis());
+    }
+
+    private static class Holder {
+        private static final ADUtils INSTANCE = new ADUtils();
     }
 }

@@ -19,9 +19,9 @@ import per.goweii.wanandroid.widget.ImagePreviewView
  * @date 2020/3/7
  */
 class ImageListPreviewDialog(
-        context: Context,
-        private val imgs: List<String>,
-        private val index: Int
+    context: Context,
+    private val imgs: List<String>,
+    private val index: Int
 ) : DialogLayer(context) {
 
     private var imageMenuDialog: ImageMenuDialog? = null
@@ -32,22 +32,24 @@ class ImageListPreviewDialog(
         setContentAnimator(object : AnimatorCreator {
             override fun createInAnimator(target: View): Animator {
                 val abc = requireView<ActionBarCommon>(R.id.dialog_image_list_preview_abc)
-                val vp = requireView<androidx.viewpager.widget.ViewPager>(R.id.dialog_image_list_preview_vp)
+                val vp =
+                    requireView<androidx.viewpager.widget.ViewPager>(R.id.dialog_image_list_preview_vp)
                 return AnimatorSet().apply {
                     playTogether(
-                            AnimatorHelper.createTopInAnim(abc),
-                            AnimatorHelper.createZoomAlphaInAnim(vp)
+                        AnimatorHelper.createTopInAnim(abc),
+                        AnimatorHelper.createZoomAlphaInAnim(vp)
                     )
                 }
             }
 
             override fun createOutAnimator(target: View): Animator {
                 val abc = requireView<ActionBarCommon>(R.id.dialog_image_list_preview_abc)
-                val vp = requireView<androidx.viewpager.widget.ViewPager>(R.id.dialog_image_list_preview_vp)
+                val vp =
+                    requireView<androidx.viewpager.widget.ViewPager>(R.id.dialog_image_list_preview_vp)
                 return AnimatorSet().apply {
                     playTogether(
-                            AnimatorHelper.createTopOutAnim(abc),
-                            AnimatorHelper.createZoomAlphaOutAnim(vp)
+                        AnimatorHelper.createTopOutAnim(abc),
+                        AnimatorHelper.createZoomAlphaOutAnim(vp)
                     )
                 }
             }
@@ -64,11 +66,13 @@ class ImageListPreviewDialog(
         abc.setOnLeftIconClickListener {
             dismiss()
         }
-        vp.addOnPageChangeListener(object : androidx.viewpager.widget.ViewPager.OnPageChangeListener {
+        vp.addOnPageChangeListener(object :
+            androidx.viewpager.widget.ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(p0: Int) {
                 when (p0) {
                     androidx.viewpager.widget.ViewPager.SCROLL_STATE_DRAGGING -> {
                     }
+
                     else -> {
                     }
                 }

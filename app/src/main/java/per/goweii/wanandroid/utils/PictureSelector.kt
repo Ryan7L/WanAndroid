@@ -90,8 +90,18 @@ class PictureSelector {
             return when (uri.scheme) {
                 "file" -> {
                     val buff = StringBuffer()
-                    buff.append("(").append(MediaStore.Images.ImageColumns.DATA).append("=").append("'$path'").append(")")
-                    context.contentResolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, arrayOf(MediaStore.Images.ImageColumns._ID, MediaStore.Images.ImageColumns.DATA), buff.toString(), null, null)?.use { cursor ->
+                    buff.append("(").append(MediaStore.Images.ImageColumns.DATA).append("=")
+                        .append("'$path'").append(")")
+                    context.contentResolver.query(
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                        arrayOf(
+                            MediaStore.Images.ImageColumns._ID,
+                            MediaStore.Images.ImageColumns.DATA
+                        ),
+                        buff.toString(),
+                        null,
+                        null
+                    )?.use { cursor ->
                         var dataIdx: Int
                         while (!cursor.isAfterLast) {
                             dataIdx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA)
@@ -101,15 +111,24 @@ class PictureSelector {
                         File(path)
                     }
                 }
+
                 "content" -> {
-                    context.contentResolver.query(uri, arrayOf(MediaStore.Images.Media.DATA), null, null, null)?.use { cursor ->
+                    context.contentResolver.query(
+                        uri,
+                        arrayOf(MediaStore.Images.Media.DATA),
+                        null,
+                        null,
+                        null
+                    )?.use { cursor ->
                         if (cursor.moveToFirst()) {
-                            val columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+                            val columnIndex =
+                                cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
                             path = cursor.getString(columnIndex)
                         }
                         File(path)
                     }
                 }
+
                 else -> {
                     null
                 }
@@ -120,10 +139,11 @@ class PictureSelector {
         fun getUriFromFile(context: Context, imageFile: File): Uri? {
             val filePath = imageFile.absolutePath
             val cursor = context.contentResolver.query(
-                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                    arrayOf(MediaStore.Images.Media._ID),
-                    MediaStore.Images.Media.DATA + "=? ",
-                    arrayOf(filePath), null)
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                arrayOf(MediaStore.Images.Media._ID),
+                MediaStore.Images.Media.DATA + "=? ",
+                arrayOf(filePath), null
+            )
             cursor.use {
                 return if (cursor != null && cursor.moveToFirst()) {
                     val id = cursor.getInt(cursor.getColumnIndex(MediaStore.MediaColumns._ID))
@@ -134,7 +154,8 @@ class PictureSelector {
                         val values = ContentValues()
                         values.put(MediaStore.Images.Media.DATA, filePath)
                         context.contentResolver.insert(
-                                MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values
+                        )
                     } else {
                         null
                     }

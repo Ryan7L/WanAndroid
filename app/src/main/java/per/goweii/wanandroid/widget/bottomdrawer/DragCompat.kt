@@ -8,7 +8,6 @@ import android.widget.AbsListView
 import android.widget.HorizontalScrollView
 import android.widget.ScrollView
 import androidx.core.view.ScrollingView
-import java.util.*
 
 object DragCompat {
     private val localRect = Rect()
@@ -19,7 +18,12 @@ object DragCompat {
         } else view.canScrollVertically(-1)
     }
 
-    fun canViewScrollUp(views: List<View>?, x: Float, y: Float, defaultValueForNull: Boolean): Boolean {
+    fun canViewScrollUp(
+        views: List<View>?,
+        x: Float,
+        y: Float,
+        defaultValueForNull: Boolean
+    ): Boolean {
         if (views == null) {
             return defaultValueForNull
         }
@@ -59,7 +63,12 @@ object DragCompat {
         } else view.canScrollVertically(1)
     }
 
-    fun canViewScrollDown(views: List<View>?, x: Float, y: Float, defaultValueForNull: Boolean): Boolean {
+    fun canViewScrollDown(
+        views: List<View>?,
+        x: Float,
+        y: Float,
+        defaultValueForNull: Boolean
+    ): Boolean {
         if (views == null) {
             return defaultValueForNull
         }
@@ -101,7 +110,12 @@ object DragCompat {
         } else view.canScrollHorizontally(-1)
     }
 
-    fun canViewScrollRight(views: List<View>?, x: Float, y: Float, defaultValueForNull: Boolean): Boolean {
+    fun canViewScrollRight(
+        views: List<View>?,
+        x: Float,
+        y: Float,
+        defaultValueForNull: Boolean
+    ): Boolean {
         if (views == null) {
             return defaultValueForNull
         }
@@ -143,7 +157,12 @@ object DragCompat {
         } else view.canScrollHorizontally(1)
     }
 
-    fun canViewScrollLeft(views: List<View>?, x: Float, y: Float, defaultValueForNull: Boolean): Boolean {
+    fun canViewScrollLeft(
+        views: List<View>?,
+        x: Float,
+        y: Float,
+        defaultValueForNull: Boolean
+    ): Boolean {
         if (views == null) {
             return defaultValueForNull
         }

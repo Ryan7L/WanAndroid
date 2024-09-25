@@ -1,7 +1,11 @@
 package per.goweii.wanandroid.utils.web.cache
 
 import com.jakewharton.disklrucache.DiskLruCache
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import per.goweii.basic.utils.coder.MD5Coder
 import per.goweii.basic.utils.file.CacheUtils
 import per.goweii.wanandroid.utils.web.interceptor.WebHttpClient
@@ -39,7 +43,12 @@ object HtmlCacheManager : CoroutineScope by GlobalScope {
         synchronized(this) {
             launch(Dispatchers.IO) {
                 if (!hasSaved(url)) {
-                    val html = WebHttpClient.request(url, "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Mobile Safari/537.36", null, "GET")
+                    val html = WebHttpClient.request(
+                        url,
+                        "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Mobile Safari/537.36",
+                        null,
+                        "GET"
+                    )
                         .stringRespBody()
                     if (html != null) {
                         save(url, html)

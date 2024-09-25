@@ -8,7 +8,7 @@ import androidx.fragment.app.FragmentActivity
 import javax.crypto.Cipher
 
 class BiometricHelper(
-        private val activity: FragmentActivity
+    private val activity: FragmentActivity
 ) {
     private val biometricPrompt = BiometricPrompt(activity, AuthCallback())
     private var keyAlias = "keyForLogin"
@@ -20,14 +20,15 @@ class BiometricHelper(
     @RequiresApi(Build.VERSION_CODES.M)
     fun canAuth(): Boolean {
         val biometricManager = BiometricManager.from(activity)
-        val canAuthenticate = biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_WEAK)
+        val canAuthenticate =
+            biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_WEAK)
         return canAuthenticate == BiometricManager.BIOMETRIC_SUCCESS
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
     fun authForEncode(
-            title: String = "开启生物认证登录",
-            cancelBtn: String = "取消"
+        title: String = "开启生物认证登录",
+        cancelBtn: String = "取消"
     ) {
         val promptInfo = BiometricPrompt.PromptInfo.Builder().apply {
             setTitle(title)
@@ -42,9 +43,9 @@ class BiometricHelper(
 
     @RequiresApi(Build.VERSION_CODES.M)
     fun authForDecode(
-            iv: ByteArray,
-            title: String = "使用生物认证登录",
-            cancelBtn: String = "取消"
+        iv: ByteArray,
+        title: String = "使用生物认证登录",
+        cancelBtn: String = "取消"
     ) {
         val promptInfo = BiometricPrompt.PromptInfo.Builder().apply {
             setTitle(title)

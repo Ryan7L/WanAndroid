@@ -13,7 +13,11 @@ import com.github.chrisbanes.photoview.PhotoView
 class ImagePreviewView : PhotoView, ScrollingView {
     constructor(context: Context) : super(context)
     constructor(context: Context, attr: AttributeSet?) : super(context, attr)
-    constructor(context: Context, attr: AttributeSet?, defStyle: Int) : super(context, attr, defStyle)
+    constructor(context: Context, attr: AttributeSet?, defStyle: Int) : super(
+        context,
+        attr,
+        defStyle
+    )
 
     init {
         setOnViewTapListener { view, x, y ->
@@ -36,6 +40,7 @@ class ImagePreviewView : PhotoView, ScrollingView {
                     onImagePreviewListener?.onTouching1()
                 }
             }
+
             MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                 onImagePreviewListener?.onTouchingUp()
             }

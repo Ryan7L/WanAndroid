@@ -44,110 +44,6 @@ public class ArticleAdapter extends BaseQuickAdapter<ArticleBean, BaseViewHolder
         mLayoutResId = getArticleLayoutId();
     }
 
-    protected int getArticleLayoutId() {
-        return R.layout.rv_item_article;
-    }
-
-    public void setOnItemChildViewClickListener(OnItemChildViewClickListener onItemChildViewClickListener) {
-        mOnItemChildViewClickListener = onItemChildViewClickListener;
-    }
-
-    @Override
-    public void setNewData(@Nullable List<ArticleBean> data) {
-        if (data == null || data.isEmpty()) {
-            setNewData(null, false);
-        } else {
-            setNewData(data, true);
-        }
-    }
-
-    public void setNewData(@Nullable List<ArticleBean> data, boolean useDiff) {
-        if (useDiff) {
-            boolean top = getRecyclerView().canScrollVertically(-1);
-            setNewDiffData(data);
-            if (!top) getRecyclerView().scrollToPosition(0);
-        } else {
-            super.setNewData(data);
-        }
-    }
-
-    private void setNewDiffData(@Nullable List<ArticleBean> data) {
-        setNewDiffData(new ArticleDiffCallback(data));
-    }
-
-    @Override
-    public void addData(@NonNull Collection<? extends ArticleBean> newData) {
-        super.addData(newData);
-    }
-
-    public void notifyAllUnCollect() {
-        forEach(new ArticleAdapter.ArticleForEach() {
-            @Override
-            public boolean forEach(int dataPos, int adapterPos, ArticleBean bean) {
-                if (bean.isCollect()) {
-                    bean.setCollect(false);
-                    notifyItemChanged(adapterPos);
-                }
-                return false;
-            }
-        });
-    }
-
-    public void notifyCollectionEvent(CollectionEvent event) {
-        forEach(new ArticleAdapter.ArticleForEach() {
-            @Override
-            public boolean forEach(int dataPos, int adapterPos, ArticleBean bean) {
-                if (bean.getId() == event.getArticleId()) {
-                    if (bean.isCollect() != event.isCollect()) {
-                        bean.setCollect(event.isCollect());
-                        notifyItemChanged(adapterPos);
-                    }
-                    return true;
-                }
-                return false;
-            }
-        });
-    }
-
-    public void forEach(@NonNull ArticleForEach articleForEach) {
-        List<ArticleBean> list = getData();
-        for (int i = 0; i < list.size(); i++) {
-            ArticleBean item = list.get(i);
-            if (articleForEach.forEach(i, i + getHeaderLayoutCount(), item)) {
-                break;
-            }
-        }
-    }
-
-    @Override
-    protected void convert(@NonNull BaseViewHolder helper, ArticleBean item) {
-        bindArticle(helper.itemView, item, new OnCollectListener() {
-            @Override
-            public void collect(ArticleBean item, CollectView v) {
-                if (mOnItemChildViewClickListener != null) {
-                    mOnItemChildViewClickListener.onCollectClick(helper, v, helper.getAdapterPosition() - getHeaderLayoutCount());
-                }
-            }
-
-            @Override
-            public void uncollect(ArticleBean item, CollectView v) {
-                if (mOnItemChildViewClickListener != null) {
-                    mOnItemChildViewClickListener.onCollectClick(helper, v, helper.getAdapterPosition() - getHeaderLayoutCount());
-                }
-            }
-        });
-    }
-
-    public interface OnItemChildViewClickListener {
-        void onCollectClick(BaseViewHolder helper, CollectView v, int position);
-    }
-
-    public interface OnCollectListener {
-        void collect(ArticleBean item, CollectView v);
-
-        void uncollect(ArticleBean item, CollectView v);
-    }
-
     public static void bindArticle(View view, ArticleBean item, OnCollectListener onCollectListener) {
         HtmlCacheManager.INSTANCE.submit(item.getLink());
         TextView tv_top = view.findViewById(R.id.tv_top);
@@ -254,6 +150,110 @@ public class ArticleAdapter extends BaseQuickAdapter<ArticleBean, BaseViewHolder
             }
         }
         return format.toString();
+    }
+
+    protected int getArticleLayoutId() {
+        return R.layout.rv_item_article;
+    }
+
+    public void setOnItemChildViewClickListener(OnItemChildViewClickListener onItemChildViewClickListener) {
+        mOnItemChildViewClickListener = onItemChildViewClickListener;
+    }
+
+    @Override
+    public void setNewData(@Nullable List<ArticleBean> data) {
+        if (data == null || data.isEmpty()) {
+            setNewData(null, false);
+        } else {
+            setNewData(data, true);
+        }
+    }
+
+    public void setNewData(@Nullable List<ArticleBean> data, boolean useDiff) {
+        if (useDiff) {
+            boolean top = getRecyclerView().canScrollVertically(-1);
+            setNewDiffData(data);
+            if (!top) getRecyclerView().scrollToPosition(0);
+        } else {
+            super.setNewData(data);
+        }
+    }
+
+    private void setNewDiffData(@Nullable List<ArticleBean> data) {
+        setNewDiffData(new ArticleDiffCallback(data));
+    }
+
+    @Override
+    public void addData(@NonNull Collection<? extends ArticleBean> newData) {
+        super.addData(newData);
+    }
+
+    public void notifyAllUnCollect() {
+        forEach(new ArticleAdapter.ArticleForEach() {
+            @Override
+            public boolean forEach(int dataPos, int adapterPos, ArticleBean bean) {
+                if (bean.isCollect()) {
+                    bean.setCollect(false);
+                    notifyItemChanged(adapterPos);
+                }
+                return false;
+            }
+        });
+    }
+
+    public void notifyCollectionEvent(CollectionEvent event) {
+        forEach(new ArticleAdapter.ArticleForEach() {
+            @Override
+            public boolean forEach(int dataPos, int adapterPos, ArticleBean bean) {
+                if (bean.getId() == event.getArticleId()) {
+                    if (bean.isCollect() != event.isCollect()) {
+                        bean.setCollect(event.isCollect());
+                        notifyItemChanged(adapterPos);
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
+    }
+
+    public void forEach(@NonNull ArticleForEach articleForEach) {
+        List<ArticleBean> list = getData();
+        for (int i = 0; i < list.size(); i++) {
+            ArticleBean item = list.get(i);
+            if (articleForEach.forEach(i, i + getHeaderLayoutCount(), item)) {
+                break;
+            }
+        }
+    }
+
+    @Override
+    protected void convert(@NonNull BaseViewHolder helper, ArticleBean item) {
+        bindArticle(helper.itemView, item, new OnCollectListener() {
+            @Override
+            public void collect(ArticleBean item, CollectView v) {
+                if (mOnItemChildViewClickListener != null) {
+                    mOnItemChildViewClickListener.onCollectClick(helper, v, helper.getAdapterPosition() - getHeaderLayoutCount());
+                }
+            }
+
+            @Override
+            public void uncollect(ArticleBean item, CollectView v) {
+                if (mOnItemChildViewClickListener != null) {
+                    mOnItemChildViewClickListener.onCollectClick(helper, v, helper.getAdapterPosition() - getHeaderLayoutCount());
+                }
+            }
+        });
+    }
+
+    public interface OnItemChildViewClickListener {
+        void onCollectClick(BaseViewHolder helper, CollectView v, int position);
+    }
+
+    public interface OnCollectListener {
+        void collect(ArticleBean item, CollectView v);
+
+        void uncollect(ArticleBean item, CollectView v);
     }
 
     public interface ArticleForEach {

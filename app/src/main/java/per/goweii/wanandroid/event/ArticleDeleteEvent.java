@@ -9,12 +9,12 @@ public class ArticleDeleteEvent extends BaseEvent {
 
     private int articleId;
 
-    public static void postWithArticleId(int articleId) {
-        new ArticleDeleteEvent(articleId).post();
-    }
-
     private ArticleDeleteEvent(int articleId) {
         this.articleId = articleId;
+    }
+
+    public static void postWithArticleId(int articleId) {
+        new ArticleDeleteEvent(articleId).post();
     }
 
     public int getArticleId() {

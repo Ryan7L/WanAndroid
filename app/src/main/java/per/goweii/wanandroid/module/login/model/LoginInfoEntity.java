@@ -11,6 +11,11 @@ public class LoginInfoEntity extends BaseEntity {
     private final String username;
     private final String password;
 
+    public LoginInfoEntity(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
     public static LoginInfoEntity fromJson(String json) {
         try {
             JSONObject o = new JSONObject(json);
@@ -20,11 +25,6 @@ public class LoginInfoEntity extends BaseEntity {
         } catch (JSONException e) {
             return null;
         }
-    }
-
-    public LoginInfoEntity(String username, String password) {
-        this.username = username;
-        this.password = password;
     }
 
     public boolean isEmpty() {

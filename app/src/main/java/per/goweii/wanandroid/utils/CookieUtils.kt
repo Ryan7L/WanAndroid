@@ -11,8 +11,10 @@ object CookieUtils {
     lateinit var cookieJar: PersistentCookieJar
 
     fun init(context: Context) {
-        cookieJar = PersistentCookieJar(SetCookieCache(),
-                SharedPrefsCookiePersistor(context.applicationContext))
+        cookieJar = PersistentCookieJar(
+            SetCookieCache(),
+            SharedPrefsCookiePersistor(context.applicationContext)
+        )
     }
 
     fun loadForUrl(url: String): MutableList<Cookie> {

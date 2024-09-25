@@ -14,7 +14,8 @@ class GoweiiHostInterceptor : Interceptor {
         private const val GOWEII_HOST = "goweii"
 
         private const val GITEE_PAGE_SERVER_BASE_URL = "https://goweii.gitee.io/wanandroidserver"
-        private const val GITEE_RAW_SERVER_BASE_URL = "https://gitee.com/goweii/WanAndroidServer/raw/master"
+        private const val GITEE_RAW_SERVER_BASE_URL =
+            "https://gitee.com/goweii/WanAndroidServer/raw/master"
     }
 
     override fun intercept(chain: Interceptor.Chain): Response {

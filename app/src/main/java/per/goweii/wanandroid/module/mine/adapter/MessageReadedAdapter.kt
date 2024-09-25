@@ -10,14 +10,13 @@ import com.daimajia.swipe.SwipeLayout.SwipeListener
 import per.goweii.basic.utils.StringUtils
 import per.goweii.wanandroid.R
 import per.goweii.wanandroid.module.mine.model.MessageBean
-import java.util.*
 
 /**
  * @author CuiZhen
  * @date 2020/5/16
  */
 class MessageReadedAdapter : BaseQuickAdapter<MessageBean, BaseViewHolder>(
-        R.layout.rv_item_message_readed
+    R.layout.rv_item_message_readed
 ) {
 
     private val mUnCloseList: ArrayList<SwipeLayout> = ArrayList()

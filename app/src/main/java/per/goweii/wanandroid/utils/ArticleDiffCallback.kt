@@ -9,7 +9,7 @@ import per.goweii.wanandroid.module.main.model.ArticleBean
  * @date 2020/3/7
  */
 class ArticleDiffCallback(
-        newList: List<ArticleBean>?
+    newList: List<ArticleBean>?
 ) : BaseQuickDiffCallback<ArticleBean>(newList) {
     private val gson by lazy { Gson() }
 

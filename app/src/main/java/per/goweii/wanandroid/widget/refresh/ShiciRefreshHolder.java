@@ -14,23 +14,21 @@ import per.goweii.wanandroid.module.main.model.MainRequest;
  */
 public class ShiciRefreshHolder {
 
-    private static ShiciRefreshHolder instance = null;
     private static final int MAX_SIZE = 3;
+    private static ShiciRefreshHolder instance = null;
+    private final RxLife mRxLife;
+    private final List<String> mCache = new ArrayList<>(MAX_SIZE);
+
+    private ShiciRefreshHolder() {
+        mRxLife = RxLife.create();
+        request();
+    }
 
     public static ShiciRefreshHolder instance() {
         if (instance == null) {
             instance = new ShiciRefreshHolder();
         }
         return instance;
-    }
-
-    private final RxLife mRxLife;
-
-    private final List<String> mCache = new ArrayList<>(MAX_SIZE);
-
-    private ShiciRefreshHolder() {
-        mRxLife = RxLife.create();
-        request();
     }
 
     private void request() {

@@ -17,45 +17,6 @@ public class HostInterceptUtils {
     public static final int TYPE_NOTHING = 0;
     public static final int TYPE_ONLY_WHITE = 1;
     public static final int TYPE_INTERCEPT_BLACK = 2;
-
-    public static String getName(int type) {
-        String name = "";
-        switch (type) {
-            default:
-                break;
-            case TYPE_NOTHING:
-                name = "不拦截";
-                break;
-            case TYPE_ONLY_WHITE:
-                name = "仅白名单";
-                break;
-            case TYPE_INTERCEPT_BLACK:
-                name = "拦截黑名单";
-                break;
-        }
-        return name;
-    }
-
-    public static boolean isWhiteHost(String host) {
-        List<HostEntity> list = SettingUtils.getInstance().getHostWhiteIntercept();
-        for (HostEntity entity : list) {
-            if (TextUtils.equals(entity.getHost(), host)) {
-                return entity.isEnable();
-            }
-        }
-        return false;
-    }
-
-    public static boolean isBlackHost(String host) {
-        List<HostEntity> list = SettingUtils.getInstance().getHostBlackIntercept();
-        for (HostEntity entity : list) {
-            if (TextUtils.equals(entity.getHost(), host)) {
-                return entity.isEnable();
-            }
-        }
-        return false;
-    }
-
     public static final String[] WHITE_HOST = new String[]{
             "www.wanandroid.com",
             "study.163.com",
@@ -204,10 +165,47 @@ public class HostInterceptUtils {
             "weixin.sogou.com",
             "sug.so.360.cn"
     };
-
     public static final String[] BLACK_HOST = new String[]{
             "www.taobao.com",
             "www.jd.com",
             "yun.tuisnake.com"
     };
+
+    public static String getName(int type) {
+        String name = "";
+        switch (type) {
+            default:
+                break;
+            case TYPE_NOTHING:
+                name = "不拦截";
+                break;
+            case TYPE_ONLY_WHITE:
+                name = "仅白名单";
+                break;
+            case TYPE_INTERCEPT_BLACK:
+                name = "拦截黑名单";
+                break;
+        }
+        return name;
+    }
+
+    public static boolean isWhiteHost(String host) {
+        List<HostEntity> list = SettingUtils.getInstance().getHostWhiteIntercept();
+        for (HostEntity entity : list) {
+            if (TextUtils.equals(entity.getHost(), host)) {
+                return entity.isEnable();
+            }
+        }
+        return false;
+    }
+
+    public static boolean isBlackHost(String host) {
+        List<HostEntity> list = SettingUtils.getInstance().getHostBlackIntercept();
+        for (HostEntity entity : list) {
+            if (TextUtils.equals(entity.getHost(), host)) {
+                return entity.isEnable();
+            }
+        }
+        return false;
+    }
 }

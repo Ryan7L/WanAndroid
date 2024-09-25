@@ -12,15 +12,6 @@ import per.goweii.wanandroid.widget.BravhLoadMoreView;
  */
 public class RvConfigUtils {
 
-    public static class RvAnim {
-        public static final int NONE = 0;
-        public static final int ALPHAIN = 1;
-        public static final int SCALEIN = 2;
-        public static final int SLIDEIN_BOTTOM = 3;
-        public static final int SLIDEIN_LEFT = 4;
-        public static final int SLIDEIN_RIGHT = 5;
-    }
-
     public static String getName(int anim) {
         String name = "";
         switch (anim) {
@@ -75,5 +66,14 @@ public class RvConfigUtils {
                 adapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_RIGHT);
                 break;
         }
+    }
+
+    public static class RvAnim {
+        public static final int NONE = 0;
+        public static final int ALPHAIN = 1;
+        public static final int SCALEIN = 2;
+        public static final int SLIDEIN_BOTTOM = 3;
+        public static final int SLIDEIN_LEFT = 4;
+        public static final int SLIDEIN_RIGHT = 5;
     }
 }

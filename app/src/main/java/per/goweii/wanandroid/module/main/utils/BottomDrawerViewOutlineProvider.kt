@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewOutlineProvider
 
 class BottomDrawerViewOutlineProvider(
-        private val radius: Float
+    private val radius: Float
 ) : ViewOutlineProvider() {
     private var view: View? = null
     private var faction: Float = 0F

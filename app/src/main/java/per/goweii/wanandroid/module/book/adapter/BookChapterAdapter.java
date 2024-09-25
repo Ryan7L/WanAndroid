@@ -18,7 +18,6 @@ import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
 import per.goweii.basic.utils.ResUtils;
 import per.goweii.wanandroid.R;
 import per.goweii.wanandroid.module.book.model.BookChapterBean;
-import per.goweii.wanandroid.module.main.model.ArticleBean;
 
 public class BookChapterAdapter extends BaseQuickAdapter<BookChapterBean, BaseViewHolder> {
     @SuppressLint("SimpleDateFormat")

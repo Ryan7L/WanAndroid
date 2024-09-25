@@ -11,7 +11,11 @@ import per.goweii.wanandroid.db.model.ReadLaterModel
  */
 class ReadLaterExecutor : DbExecutor() {
 
-    fun findByLink(link: String, success: SimpleCallback<List<ReadLaterModel>>, error: SimpleListener) {
+    fun findByLink(
+        link: String,
+        success: SimpleCallback<List<ReadLaterModel>>,
+        error: SimpleListener
+    ) {
         execute({
             db().readLaterDao().findByLink(link)
         }, {
@@ -21,7 +25,12 @@ class ReadLaterExecutor : DbExecutor() {
         })
     }
 
-    fun add(link: String, title: String, success: SimpleCallback<ReadLaterModel>, error: SimpleListener) {
+    fun add(
+        link: String,
+        title: String,
+        success: SimpleCallback<ReadLaterModel>,
+        error: SimpleListener
+    ) {
         execute({
             val model = ReadLaterModel(link, title, System.currentTimeMillis())
             db().readLaterDao().insert(model)
@@ -53,7 +62,12 @@ class ReadLaterExecutor : DbExecutor() {
         })
     }
 
-    fun getList(from: Int, count: Int, success: SimpleCallback<List<ReadLaterModel>>, error: SimpleListener) {
+    fun getList(
+        from: Int,
+        count: Int,
+        success: SimpleCallback<List<ReadLaterModel>>,
+        error: SimpleListener
+    ) {
         execute({
             db().readLaterDao().findAll(from, count)
         }, {
@@ -63,7 +77,11 @@ class ReadLaterExecutor : DbExecutor() {
         })
     }
 
-    fun findLately(count: Int, success: SimpleCallback<List<ReadLaterModel>>, error: SimpleListener) {
+    fun findLately(
+        count: Int,
+        success: SimpleCallback<List<ReadLaterModel>>,
+        error: SimpleListener
+    ) {
         execute({
             db().readLaterDao().findLately(count)
         }, {

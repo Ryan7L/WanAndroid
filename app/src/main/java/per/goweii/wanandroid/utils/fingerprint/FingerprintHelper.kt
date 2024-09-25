@@ -16,7 +16,7 @@ import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
 
 class FingerprintHelper(
-        private val activity: Activity
+    private val activity: Activity
 ) {
     private val fingerprintManager = FingerprintManagerCompat.from(activity)
 
@@ -31,12 +31,15 @@ class FingerprintHelper(
             !fingerprintManager.isHardwareDetected -> {
                 "不支持指纹"
             }
+
             !km.isKeyguardSecure -> {
                 "未设置锁屏"
             }
+
             !fingerprintManager.hasEnrolledFingerprints() -> {
                 "未注册有效指纹"
             }
+
             else -> {
                 ""
             }
@@ -56,27 +59,27 @@ class FingerprintHelper(
         }
         val cryptoObject = FingerprintManagerCompat.CryptoObject(loadCipher())
         fingerprintManager.authenticate(
-                cryptoObject, // 包装了 Cipher 对象的 FingerprintManagerCompat.CryptoObject 对象，用于加解密
-                0, // 可选 flag，建议为 0
-                cancellationSignal, // CancellationSignal 对象，用于取消指纹认证，可空，但不建议为 null
-                object : FingerprintManagerCompat.AuthenticationCallback() {
-                    override fun onAuthenticationError(errMsgId: Int, errString: CharSequence?) {
-                        super.onAuthenticationError(errMsgId, errString)
-                    }
+            cryptoObject, // 包装了 Cipher 对象的 FingerprintManagerCompat.CryptoObject 对象，用于加解密
+            0, // 可选 flag，建议为 0
+            cancellationSignal, // CancellationSignal 对象，用于取消指纹认证，可空，但不建议为 null
+            object : FingerprintManagerCompat.AuthenticationCallback() {
+                override fun onAuthenticationError(errMsgId: Int, errString: CharSequence?) {
+                    super.onAuthenticationError(errMsgId, errString)
+                }
 
-                    override fun onAuthenticationHelp(helpMsgId: Int, helpString: CharSequence?) {
-                        super.onAuthenticationHelp(helpMsgId, helpString)
-                    }
+                override fun onAuthenticationHelp(helpMsgId: Int, helpString: CharSequence?) {
+                    super.onAuthenticationHelp(helpMsgId, helpString)
+                }
 
-                    override fun onAuthenticationSucceeded(result: FingerprintManagerCompat.AuthenticationResult?) {
-                        super.onAuthenticationSucceeded(result)
-                    }
+                override fun onAuthenticationSucceeded(result: FingerprintManagerCompat.AuthenticationResult?) {
+                    super.onAuthenticationSucceeded(result)
+                }
 
-                    override fun onAuthenticationFailed() {
-                        super.onAuthenticationFailed()
-                    }
-                }, // 认证回调接口
-                Handler(Looper.getMainLooper()) // 回调所在 Handler，一般为 null
+                override fun onAuthenticationFailed() {
+                    super.onAuthenticationFailed()
+                }
+            }, // 认证回调接口
+            Handler(Looper.getMainLooper()) // 回调所在 Handler，一般为 null
         )
     }
 
@@ -101,26 +104,26 @@ class FingerprintHelper(
         }
         val cryptoObject = BiometricPrompt.CryptoObject(loadCipher())
         prompt.authenticate(
-                cryptoObject, // 包装了 Cipher 对象的 BiometricPrompt.CryptoObject 对象，用于加解密
-                cancellationSignal, // CancellationSignal 对象，用于取消指纹认证，不能为空
-                activity.mainExecutor, // 回调 Executor，不能为空，可使用 activity.mainExecutor
-                object : BiometricPrompt.AuthenticationCallback() {
-                    override fun onAuthenticationError(errorCode: Int, errString: CharSequence?) {
-                        super.onAuthenticationError(errorCode, errString)
-                    }
+            cryptoObject, // 包装了 Cipher 对象的 BiometricPrompt.CryptoObject 对象，用于加解密
+            cancellationSignal, // CancellationSignal 对象，用于取消指纹认证，不能为空
+            activity.mainExecutor, // 回调 Executor，不能为空，可使用 activity.mainExecutor
+            object : BiometricPrompt.AuthenticationCallback() {
+                override fun onAuthenticationError(errorCode: Int, errString: CharSequence?) {
+                    super.onAuthenticationError(errorCode, errString)
+                }
 
-                    override fun onAuthenticationHelp(helpCode: Int, helpString: CharSequence?) {
-                        super.onAuthenticationHelp(helpCode, helpString)
-                    }
+                override fun onAuthenticationHelp(helpCode: Int, helpString: CharSequence?) {
+                    super.onAuthenticationHelp(helpCode, helpString)
+                }
 
-                    override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult?) {
-                        super.onAuthenticationSucceeded(result)
-                    }
+                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult?) {
+                    super.onAuthenticationSucceeded(result)
+                }
 
-                    override fun onAuthenticationFailed() {
-                        super.onAuthenticationFailed()
-                    }
-                }// 认证回调
+                override fun onAuthenticationFailed() {
+                    super.onAuthenticationFailed()
+                }
+            }// 认证回调
         )
     }
 
@@ -135,21 +138,25 @@ class FingerprintHelper(
         if (!keyStore.containsAlias(keyAlias)) {
             // 不包含改别名，重新生成
             // 秘钥生成器
-            val keyGenerator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, "AndroidKeyStore")
+            val keyGenerator =
+                KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, "AndroidKeyStore")
             val builder = KeyGenParameterSpec.Builder(
-                    keyAlias,
-                    KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT)
-                    .setBlockModes(KeyProperties.BLOCK_MODE_CBC)
-                    .setUserAuthenticationRequired(false)
-                    .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_PKCS7)
+                keyAlias,
+                KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT
+            )
+                .setBlockModes(KeyProperties.BLOCK_MODE_CBC)
+                .setUserAuthenticationRequired(false)
+                .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_PKCS7)
             keyGenerator.init(builder.build())
             keyGenerator.generateKey()
         }
         // 根据别名获取密钥
         val key = keyStore.getKey(keyAlias, null)
-        val cipher = Cipher.getInstance(KeyProperties.KEY_ALGORITHM_AES + "/"
-                + KeyProperties.BLOCK_MODE_CBC + "/"
-                + KeyProperties.ENCRYPTION_PADDING_PKCS7)
+        val cipher = Cipher.getInstance(
+            KeyProperties.KEY_ALGORITHM_AES + "/"
+                    + KeyProperties.BLOCK_MODE_CBC + "/"
+                    + KeyProperties.ENCRYPTION_PADDING_PKCS7
+        )
         // 开启登录时用于加密，使用 Cipher.ENCRYPT_MODE 初始化
         cipher.init(Cipher.ENCRYPT_MODE, key)
         return cipher

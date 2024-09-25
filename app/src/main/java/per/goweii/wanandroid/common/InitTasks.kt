@@ -27,10 +27,13 @@ import per.goweii.wanandroid.db.WanDb
 import per.goweii.wanandroid.http.RxHttpRequestSetting
 import per.goweii.wanandroid.http.WanCache
 import per.goweii.wanandroid.module.main.activity.CrashActivity
-import per.goweii.wanandroid.utils.*
+import per.goweii.wanandroid.utils.ConfigUtils
+import per.goweii.wanandroid.utils.CookieUtils
+import per.goweii.wanandroid.utils.DarkModeUtils
+import per.goweii.wanandroid.utils.GrayFilterHelper
+import per.goweii.wanandroid.utils.UserUtils
 import per.goweii.wanandroid.utils.web.cache.ReadingModeManager
 import per.goweii.wanandroid.widget.refresh.ShiciRefreshHeader
-import java.util.*
 
 
 class SmartRefreshInitTask : SyncInitTask() {
@@ -275,14 +278,24 @@ class BuglyInitTask : SyncInitTask() {
         CrashReport.setIsDevelopmentDevice(application, DebugUtils.isDebug())
         val strategy = UserStrategy(application)
         strategy.setCrashHandleCallback(object : CrashHandleCallback() {
-            override fun onCrashHandleStart(crashType: Int, errorType: String, errorMessage: String, errorStack: String): Map<String, String> {
+            override fun onCrashHandleStart(
+                crashType: Int,
+                errorType: String,
+                errorMessage: String,
+                errorStack: String
+            ): Map<String, String> {
                 val map = LinkedHashMap<String, String>()
                 val x5CrashInfo = WebView.getCrashExtraMessage(application)
                 map["x5crashInfo"] = x5CrashInfo
                 return map
             }
 
-            override fun onCrashHandleStart2GetExtraDatas(crashType: Int, errorType: String, errorMessage: String, errorStack: String): ByteArray? {
+            override fun onCrashHandleStart2GetExtraDatas(
+                crashType: Int,
+                errorType: String,
+                errorMessage: String,
+                errorStack: String
+            ): ByteArray? {
                 return try {
                     "Extra data.".toByteArray(charset("UTF-8"))
                 } catch (e: Exception) {
@@ -291,7 +304,12 @@ class BuglyInitTask : SyncInitTask() {
             }
         })
         strategy.isUploadProcess = WanApp.isMainProcess()
-        CrashReport.initCrashReport(application, BuildConfig.APPID_BUGLY, DebugUtils.isDebug(), strategy)
+        CrashReport.initCrashReport(
+            application,
+            BuildConfig.APPID_BUGLY,
+            DebugUtils.isDebug(),
+            strategy
+        )
     }
 
     override fun onlyMainProcess(): Boolean {

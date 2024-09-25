@@ -39,7 +39,7 @@ class TaskQueen {
     }
 
     abstract class Task(
-            val level: Int = 0
+        val level: Int = 0
     ) {
         internal var onFinished: (() -> Unit)? = null
 

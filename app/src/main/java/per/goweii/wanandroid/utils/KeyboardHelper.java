@@ -37,7 +37,9 @@ public class KeyboardHelper implements ViewTreeObserver.OnGlobalFocusChangeListe
     private boolean isOpened = false;
     private int moveHeight = 0;
     private boolean isFocusChange = false;
-
+    private int mBottomViewBottom = -1;
+    private KeyboardCompat mKeyboardCompat;
+    private int mKeyboardNowHeight;
     private Runnable moveRunnable = new Runnable() {
         @Override
         public void run() {
@@ -54,9 +56,6 @@ public class KeyboardHelper implements ViewTreeObserver.OnGlobalFocusChangeListe
             }
         }
     };
-    private int mBottomViewBottom = -1;
-    private KeyboardCompat mKeyboardCompat;
-    private int mKeyboardNowHeight;
 
     private KeyboardHelper(@NonNull Activity activity) {
         this.window = activity.getWindow();

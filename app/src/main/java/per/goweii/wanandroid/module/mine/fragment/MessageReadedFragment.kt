@@ -4,7 +4,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.chad.library.adapter.base.BaseQuickAdapter
-import kotlinx.android.synthetic.main.fragment_message_readed.*
+import kotlinx.android.synthetic.main.fragment_message_readed.msv
+import kotlinx.android.synthetic.main.fragment_message_readed.rv
+import kotlinx.android.synthetic.main.fragment_message_readed.srl
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import per.goweii.basic.core.base.BaseFragment
@@ -72,18 +74,20 @@ class MessageReadedFragment : BaseFragment<MessageReadedPresenter>(), MessageRea
         mAdapter.setOnLoadMoreListener({
             presenter.getMessageReadList(currPage)
         }, rv)
-        mAdapter.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { _, view, position ->
-            mAdapter.closeAll(null)
-            val item = mAdapter.getItem(position) ?: return@OnItemChildClickListener
-            when (view.id) {
-                R.id.rl_message -> {
-                    UrlOpenUtils.with(item.realLink).open(context)
-                }
-                R.id.tv_delete -> {
-                    presenter.delete(item)
+        mAdapter.onItemChildClickListener =
+            BaseQuickAdapter.OnItemChildClickListener { _, view, position ->
+                mAdapter.closeAll(null)
+                val item = mAdapter.getItem(position) ?: return@OnItemChildClickListener
+                when (view.id) {
+                    R.id.rl_message -> {
+                        UrlOpenUtils.with(item.realLink).open(context)
+                    }
+
+                    R.id.tv_delete -> {
+                        presenter.delete(item)
+                    }
                 }
             }
-        }
         rv.adapter = mAdapter
         MultiStateUtils.setEmptyAndErrorClick(msv, SimpleListener {
             MultiStateUtils.toLoading(msv)

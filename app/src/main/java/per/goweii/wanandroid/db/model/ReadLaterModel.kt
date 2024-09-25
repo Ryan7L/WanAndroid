@@ -10,11 +10,11 @@ import androidx.room.PrimaryKey
  */
 @Entity
 data class ReadLaterModel(
-        @PrimaryKey
-        @ColumnInfo(name = "link")
-        val link: String,
-        @ColumnInfo(name = "title")
-        val title: String,
-        @ColumnInfo(name = "time")
-        val time: Long
+    @PrimaryKey
+    @ColumnInfo(name = "link")
+    val link: String,
+    @ColumnInfo(name = "title")
+    val title: String,
+    @ColumnInfo(name = "time")
+    val time: Long
 )

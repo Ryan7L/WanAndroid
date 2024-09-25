@@ -15,8 +15,8 @@ import kotlin.math.abs
  */
 @SuppressLint("ClickableViewAccessibility")
 class FloatIconTouchListener(
-        private val icons: List<Icon>,
-        private val onFloatTouchedListener: OnFloatTouchedListener
+    private val icons: List<Icon>,
+    private val onFloatTouchedListener: OnFloatTouchedListener
 ) : View.OnTouchListener, Runnable {
 
     data class Icon(val view: View, var touched: Boolean = false)
@@ -49,6 +49,7 @@ class FloatIconTouchListener(
                 currTouchIcon = null
                 icon.view.postDelayed(this, longPressTimeout.toLong())
             }
+
             MotionEvent.ACTION_MOVE -> {
                 if (abs(e.rawX - touchPoint.x) > touchSlop || abs(e.rawY - touchPoint.y) > touchSlop) {
                     touchMoved = true
@@ -58,7 +59,12 @@ class FloatIconTouchListener(
                 icon.touched = rect.contains(e.x.toInt(), e.y.toInt())
                 icons.forEach {
                     it.view.getLocationOnScreen(location)
-                    rect.set(location[0], location[1], location[0] + it.view.width, location[1] + it.view.height)
+                    rect.set(
+                        location[0],
+                        location[1],
+                        location[0] + it.view.width,
+                        location[1] + it.view.height
+                    )
                     if (rect.contains(e.rawX.toInt(), e.rawY.toInt())) {
                         if (!it.touched) {
                             it.touched = true
@@ -101,6 +107,7 @@ class FloatIconTouchListener(
                     }
                 }
             }
+
             MotionEvent.ACTION_UP -> {
                 icon.view.removeCallbacks(this)
                 if (!touchMoved) {

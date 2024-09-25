@@ -50,20 +50,6 @@ public class WanApi extends Api {
         return api(ApiService.class);
     }
 
-    public static class ApiConfig {
-        public static final String BASE_URL = "https://www.wanandroid.com/";
-    }
-
-    public static class ApiCode {
-        public static final int ERROR = 1000;
-
-        public static final int SUCCESS = 0;
-
-        public static final int FAILED_NO_CACHE = -9000;  //没有缓存
-
-        public static final int FAILED_NOT_LOGIN = -1001; //请先登录
-    }
-
     public interface ApiService {
 
         @GET("https://v2.jinrishici.com/token")
@@ -449,6 +435,20 @@ public class WanApi extends Api {
          */
         @GET("chapter/547/sublist/json")
         Observable<WanResponse<List<BookBean>>> getBooks();
+    }
+
+    public static class ApiConfig {
+        public static final String BASE_URL = "https://www.wanandroid.com/";
+    }
+
+    public static class ApiCode {
+        public static final int ERROR = 1000;
+
+        public static final int SUCCESS = 0;
+
+        public static final int FAILED_NO_CACHE = -9000;  //没有缓存
+
+        public static final int FAILED_NOT_LOGIN = -1001; //请先登录
     }
 
 }

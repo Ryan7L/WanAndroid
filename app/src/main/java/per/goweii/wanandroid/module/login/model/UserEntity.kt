@@ -6,11 +6,11 @@ package per.goweii.wanandroid.module.login.model
  * GitHub: https://github.com/goweii
  */
 data class UserEntity(
-        val email: String?,
-        val username: String?,
-        val wanid: Int,
-        val sex: Int,
-        val signature: String?,
-        val avatar: String?,
-        val cover: String?
+    val email: String?,
+    val username: String?,
+    val wanid: Int,
+    val sex: Int,
+    val signature: String?,
+    val avatar: String?,
+    val cover: String?
 )

@@ -25,15 +25,11 @@ public class ConfigUtils {
 
     private ConfigBean mConfigBean = null;
 
-    private static class Holder {
-        private static final ConfigUtils INSTANCE = new ConfigUtils();
+    private ConfigUtils() {
     }
 
     public static ConfigUtils getInstance() {
         return Holder.INSTANCE;
-    }
-
-    private ConfigUtils() {
     }
 
     @NonNull
@@ -74,6 +70,10 @@ public class ConfigUtils {
 
     public int getTheme() {
         return ThemeUtils.getTheme(getThemeName());
+    }
+
+    private static class Holder {
+        private static final ConfigUtils INSTANCE = new ConfigUtils();
     }
 
 }

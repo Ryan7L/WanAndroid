@@ -2,7 +2,9 @@ package per.goweii.wanandroid.module.mine.fragment
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
-import kotlinx.android.synthetic.main.fragment_message_unread.*
+import kotlinx.android.synthetic.main.fragment_message_unread.msv
+import kotlinx.android.synthetic.main.fragment_message_unread.rv
+import kotlinx.android.synthetic.main.fragment_message_unread.srl
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import per.goweii.basic.core.base.BaseFragment

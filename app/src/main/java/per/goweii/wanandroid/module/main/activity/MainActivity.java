@@ -70,17 +70,14 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
     private static final String sTaskWanPwd = "WanPwd";
     private static final String sTaskCopiedLink = "CopiedLink";
     private static final String sTaskReadLater = "ReadLater";
-
+    private final PredefinedTaskQueen mPredefinedTaskQueen = new PredefinedTaskQueen();
     @BindView(R.id.vp)
     ViewPager vp;
-
     private FixedFragmentPagerAdapter mPagerAdapter;
     private RuntimeRequester mRuntimeRequester;
     private UpdateUtils mUpdateUtils;
     private CopiedLinkDialog mCopiedLinkDialog = null;
     private PasswordDialog mPasswordDialog = null;
-
-    private final PredefinedTaskQueen mPredefinedTaskQueen = new PredefinedTaskQueen();
 
     public static void start(Context context) {
         Intent intent = new Intent(context, MainActivity.class);

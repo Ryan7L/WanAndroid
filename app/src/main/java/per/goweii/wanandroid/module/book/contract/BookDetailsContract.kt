@@ -1,6 +1,12 @@
 package per.goweii.wanandroid.module.book.contract
 
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.withContext
 import per.goweii.basic.core.base.BasePresenter
 import per.goweii.basic.core.base.BaseView
 import per.goweii.rxhttp.request.exception.ExceptionHandle

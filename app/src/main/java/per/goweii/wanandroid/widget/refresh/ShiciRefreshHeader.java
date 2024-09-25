@@ -29,18 +29,44 @@ public class ShiciRefreshHeader extends SimpleComponent implements RefreshHeader
     public static String REFRESH_HEADER_RELEASE = "释放刷新";
     public static String REFRESH_HEADER_FINISH = "刷新完成";
     public static String REFRESH_HEADER_FAILED = "刷新失败";
+
+    static {
+        ShiciRefreshHolder.instance().refresh();
+    }
+
     private final ImageView imageView;
     private final TextView textView;
-    private int color;
     private final ArrowDrawable arrowDrawable;
     private final ProgressDrawable progressDrawable;
     private final Drawable successDrawable;
     private final Drawable failureDrawable;
-
+    private int color;
     private RefreshState mCurState = RefreshState.None;
 
-    static {
-        ShiciRefreshHolder.instance().refresh();
+    public ShiciRefreshHeader(Context context) {
+        this(context, null);
+    }
+
+    public ShiciRefreshHeader(Context context, AttributeSet attrs) {
+        super(context, attrs, 0);
+        int padding = (int) DisplayInfoUtils.getInstance().dp2px(20);
+        setPadding(0, padding, 0, padding);
+        View.inflate(context, R.layout.layout_shici_refresh_header, this);
+        color = ResUtils.getThemeColor(context, R.attr.colorTextSecond);
+        imageView = findViewById(R.id.iv_shici_refresh_header_state);
+        textView = findViewById(R.id.tv_shici_refresh_header_content);
+        imageView.animate().setInterpolator(null);
+        textView.setTextColor(color);
+        arrowDrawable = new ArrowDrawable();
+        arrowDrawable.setColor(color);
+        progressDrawable = new ProgressDrawable();
+        progressDrawable.setColor(color);
+        successDrawable = ResUtils.getDrawable(R.drawable.ic_success);
+        successDrawable.setTint(color);
+        failureDrawable = ResUtils.getDrawable(R.drawable.ic_failure);
+        failureDrawable.setTint(color);
+        setColor(color);
+        setAlpha(0.4F);
     }
 
     private String textPulling() {
@@ -71,32 +97,6 @@ public class ShiciRefreshHeader extends SimpleComponent implements RefreshHeader
         String shici = ShiciRefreshHolder.instance().get();
         if (!TextUtils.isEmpty(shici)) return shici;
         return REFRESH_HEADER_FAILED;
-    }
-
-    public ShiciRefreshHeader(Context context) {
-        this(context, null);
-    }
-
-    public ShiciRefreshHeader(Context context, AttributeSet attrs) {
-        super(context, attrs, 0);
-        int padding = (int) DisplayInfoUtils.getInstance().dp2px(20);
-        setPadding(0, padding, 0, padding);
-        View.inflate(context, R.layout.layout_shici_refresh_header, this);
-        color = ResUtils.getThemeColor(context, R.attr.colorTextSecond);
-        imageView = findViewById(R.id.iv_shici_refresh_header_state);
-        textView = findViewById(R.id.tv_shici_refresh_header_content);
-        imageView.animate().setInterpolator(null);
-        textView.setTextColor(color);
-        arrowDrawable = new ArrowDrawable();
-        arrowDrawable.setColor(color);
-        progressDrawable = new ProgressDrawable();
-        progressDrawable.setColor(color);
-        successDrawable = ResUtils.getDrawable(R.drawable.ic_success);
-        successDrawable.setTint(color);
-        failureDrawable = ResUtils.getDrawable(R.drawable.ic_failure);
-        failureDrawable.setTint(color);
-        setColor(color);
-        setAlpha(0.4F);
     }
 
     @Override

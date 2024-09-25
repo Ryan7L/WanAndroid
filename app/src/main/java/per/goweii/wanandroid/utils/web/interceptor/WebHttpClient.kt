@@ -3,7 +3,6 @@ package per.goweii.wanandroid.utils.web.interceptor
 import okhttp3.Call
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import per.goweii.rxhttp.core.RxHttp
 import per.goweii.wanandroid.http.GoweiiHostInterceptor
 
 /**
@@ -25,7 +24,8 @@ object WebHttpClient {
         method?.let {
             requestBuilder.method(method, null)
         }
-        requestBuilder.addHeader("USER-AGENT",
+        requestBuilder.addHeader(
+            "USER-AGENT",
             userAgent
                 ?: "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Mobile Safari/537.36"
         )

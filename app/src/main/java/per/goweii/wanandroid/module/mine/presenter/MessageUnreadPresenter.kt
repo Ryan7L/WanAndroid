@@ -18,23 +18,27 @@ import per.goweii.wanandroid.module.mine.view.MessageUnreadView
 class MessageUnreadPresenter : BasePresenter<MessageUnreadView>(), CoroutineScope by MainScope() {
 
     fun getMessageUnreadList(page: Int) {
-        addToRxLife(MineRequest.getMessageUnreadList(page, object : RequestListener<ListBean<MessageBean>> {
-            override fun onStart() {}
-            override fun onSuccess(code: Int, data: ListBean<MessageBean>) {
-                if (isAttach) {
-                    baseView.getMessageUnreadListSuccess(code, data)
-                }
-            }
+        addToRxLife(
+            MineRequest.getMessageUnreadList(
+                page,
+                object : RequestListener<ListBean<MessageBean>> {
+                    override fun onStart() {}
+                    override fun onSuccess(code: Int, data: ListBean<MessageBean>) {
+                        if (isAttach) {
+                            baseView.getMessageUnreadListSuccess(code, data)
+                        }
+                    }
 
-            override fun onFailed(code: Int, msg: String) {
-                if (isAttach) {
-                    baseView.getMessageUnreadListFail(code, msg)
-                }
-            }
+                    override fun onFailed(code: Int, msg: String) {
+                        if (isAttach) {
+                            baseView.getMessageUnreadListFail(code, msg)
+                        }
+                    }
 
-            override fun onError(handle: ExceptionHandle) {}
-            override fun onFinish() {}
-        }))
+                    override fun onError(handle: ExceptionHandle) {}
+                    override fun onFinish() {}
+                })
+        )
     }
 
 }

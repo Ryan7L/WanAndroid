@@ -133,6 +133,10 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements RvScrol
     private SmartRefreshUtils mSmartRefreshUtils;
     private List<Object> mBannerDatas;
     private WebDialog mWebDialog;
+    private BookFragment bookFragment = null;
+    private OnBackPressedCallback onBackPressedCallback = null;
+    private BottomDrawerViewOutlineProvider secondFloorOutlineProvider = null;
+    private Animator abcAnim = null;
 
     public static HomeFragment create() {
         return new HomeFragment();
@@ -311,11 +315,6 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements RvScrol
             }
         });
     }
-
-    private BookFragment bookFragment = null;
-    private OnBackPressedCallback onBackPressedCallback = null;
-    private BottomDrawerViewOutlineProvider secondFloorOutlineProvider = null;
-    private Animator abcAnim = null;
 
     private void initSecondFloor() {
         if (getActivity() == null) return;

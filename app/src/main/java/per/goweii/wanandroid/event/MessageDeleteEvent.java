@@ -11,12 +11,12 @@ public class MessageDeleteEvent extends BaseEvent {
 
     private MessageBean bean;
 
-    public static void post(MessageBean bean) {
-        new MessageDeleteEvent(bean).post();
-    }
-
     private MessageDeleteEvent(MessageBean bean) {
         this.bean = bean;
+    }
+
+    public static void post(MessageBean bean) {
+        new MessageDeleteEvent(bean).post();
     }
 
     public MessageBean getMessageBean() {

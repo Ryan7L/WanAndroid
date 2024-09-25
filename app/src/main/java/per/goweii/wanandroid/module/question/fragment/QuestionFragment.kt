@@ -1,7 +1,9 @@
 package per.goweii.wanandroid.module.question.fragment
 
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.fragment_question.*
+import kotlinx.android.synthetic.main.fragment_question.msv
+import kotlinx.android.synthetic.main.fragment_question.rv
+import kotlinx.android.synthetic.main.fragment_question.srl
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import per.goweii.basic.core.base.BaseFragment

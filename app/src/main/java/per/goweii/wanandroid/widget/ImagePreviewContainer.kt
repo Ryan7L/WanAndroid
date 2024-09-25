@@ -15,7 +15,11 @@ class ImagePreviewContainer : FrameLayout, ScrollingView {
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attr: AttributeSet?) : super(context, attr)
-    constructor(context: Context, attr: AttributeSet?, defStyle: Int) : super(context, attr, defStyle)
+    constructor(context: Context, attr: AttributeSet?, defStyle: Int) : super(
+        context,
+        attr,
+        defStyle
+    )
 
     override fun onFinishInflate() {
         super.onFinishInflate()

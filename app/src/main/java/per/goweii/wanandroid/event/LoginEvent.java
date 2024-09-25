@@ -13,11 +13,11 @@ public class LoginEvent extends BaseEvent {
         this.login = login;
     }
 
-    public void setLogin(boolean login) {
-        this.login = login;
-    }
-
     public boolean isLogin() {
         return login;
+    }
+
+    public void setLogin(boolean login) {
+        this.login = login;
     }
 }

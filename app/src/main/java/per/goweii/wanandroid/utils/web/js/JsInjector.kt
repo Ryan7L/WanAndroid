@@ -10,7 +10,7 @@ import com.tencent.smtt.sdk.WebView
  * @date 2020/3/7
  */
 class JsInjector(
-        private val webView: WebView
+    private val webView: WebView
 ) : Handler() {
     private val JS_NAME = JsInjector::class.java.simpleName
 
@@ -44,9 +44,11 @@ class JsInjector(
     }
 
     private fun checkHtmlLoadFinish() {
-        webView.loadUrl("""
+        webView.loadUrl(
+            """
                 javascript: window.$JS_NAME.htmlBody(document.getElementsByTagName('body')[0].innerHTML);
-            """.trimIndent())
+            """.trimIndent()
+        )
     }
 
     @JavascriptInterface

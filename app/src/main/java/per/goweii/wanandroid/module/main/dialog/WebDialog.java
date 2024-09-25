@@ -42,18 +42,6 @@ public class WebDialog extends DialogLayer implements WebDialogView {
     private OnPageChangedListener mOnPageChangedListener = null;
     private WebDialogPagerAdapter mAdapter;
 
-    public static WebDialog create(Context context, String url) {
-        List<ArticleBean> urls = new ArrayList<>(1);
-        ArticleBean bean = new ArticleBean();
-        bean.setLink(url);
-        urls.add(bean);
-        return new WebDialog(context, urls, null, 0, true);
-    }
-
-    public static WebDialog create(Context context, final List<ArticleBean> topUrls, final List<ArticleBean> urls, final int currPos) {
-        return new WebDialog(context, topUrls, urls, currPos, false);
-    }
-
     private WebDialog(final Context context,
                       final List<ArticleBean> topUrls,
                       final List<ArticleBean> urls,
@@ -123,6 +111,18 @@ public class WebDialog extends DialogLayer implements WebDialogView {
             }
         });
         mAdapter = new WebDialogPagerAdapter(getActivity(), topUrls, urls);
+    }
+
+    public static WebDialog create(Context context, String url) {
+        List<ArticleBean> urls = new ArrayList<>(1);
+        ArticleBean bean = new ArticleBean();
+        bean.setLink(url);
+        urls.add(bean);
+        return new WebDialog(context, urls, null, 0, true);
+    }
+
+    public static WebDialog create(Context context, final List<ArticleBean> topUrls, final List<ArticleBean> urls, final int currPos) {
+        return new WebDialog(context, topUrls, urls, currPos, false);
     }
 
     public void notifyDataSetChanged() {

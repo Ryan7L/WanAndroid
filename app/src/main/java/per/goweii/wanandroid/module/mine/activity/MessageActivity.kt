@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.view.View
 import butterknife.BindView
-import kotlinx.android.synthetic.main.activity_message.*
+import kotlinx.android.synthetic.main.activity_message.vp
 import per.goweii.actionbarex.ActionBarEx
 import per.goweii.actionbarex.common.ActionIconView
 import per.goweii.basic.core.adapter.FixedFragmentPagerAdapter
@@ -48,8 +48,8 @@ class MessageActivity : BaseActivity<BasePresenter<BaseView>>() {
         val adapter = FixedFragmentPagerAdapter(supportFragmentManager)
         adapter.setTitles("新消息", "历史消息")
         adapter.setFragmentList(
-                MessageUnreadFragment.create(),
-                MessageReadedFragment.create()
+            MessageUnreadFragment.create(),
+            MessageReadedFragment.create()
         )
         vp.adapter = adapter
         MagicIndicatorUtils.commonNavigator(ab.getView(R.id.mi), vp, adapter, null)

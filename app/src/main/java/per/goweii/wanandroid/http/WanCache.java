@@ -33,13 +33,16 @@ import per.goweii.wanandroid.utils.UserUtils;
  */
 public class WanCache {
 
-    private static final int MAX_SIZE = 10 * 1024 * 1024;
     public static final String DIR_NAME = "rx-cache";
-
+    private static final int MAX_SIZE = 10 * 1024 * 1024;
     private static WanCache INSTANCE;
 
     private DiskLruCache mDiskLruCache = null;
     private Gson mGson = new Gson();
+
+    private WanCache() {
+        openDiskLruCache();
+    }
 
     public static void init() {
         if (INSTANCE == null) {
@@ -52,10 +55,6 @@ public class WanCache {
             throw new RuntimeException("WanCache未初始化");
         }
         return INSTANCE;
-    }
-
-    private WanCache() {
-        openDiskLruCache();
     }
 
     private DiskLruCache getDiskLruCache() {
@@ -212,26 +211,26 @@ public class WanCache {
         public static final String UPDATE = "update/update.json";
         public static final String ABOUT_ME = "about/about_me.json";
         public static final String WXARTICLE_CHAPTERS = "wxarticle/chapters/json";
-        private static final String WXARTICLE_LIST = "wxarticle/list/%d/%d/json";//id+page
-        private static final String WXARTICLE_LIST_SEARCH = "wxarticle/list/%d/%d/json?key=%s";//id+page+key
         public static final String PROJECT_CHAPTERS = "project/tree/json";
-        private static final String PROJECT_ARTICLE_LIST = "project/list/%d/json?cid=%d";//page+id
         public static final String TOP_ARTICLE_LIST = "article/top/json";
-        private static final String ARTICLE_LIST = "article/list/%d/json";//page
-        private static final String QUESTION_LIST = "wenda/list/%d/json";//page
         public static final String BANNER = "banner/json";
         public static final String USEFUL_WEB_LIST = "friend/json";
         public static final String HOT_KEY_LIST = "hotkey/json";
-        private static final String SEARCH = "article/query/%d/json?key=%s";//page+key
         public static final String NAVI_LIST = "navi/json";
         public static final String KNOWLEDGE_LIST = "tree/json";
+        public static final String BOOK_LIST = "chapter/547/sublist/json";
+        private static final String WXARTICLE_LIST = "wxarticle/list/%d/%d/json";//id+page
+        private static final String WXARTICLE_LIST_SEARCH = "wxarticle/list/%d/%d/json?key=%s";//id+page+key
+        private static final String PROJECT_ARTICLE_LIST = "project/list/%d/json?cid=%d";//page+id
+        private static final String ARTICLE_LIST = "article/list/%d/json";//page
+        private static final String QUESTION_LIST = "wenda/list/%d/json";//page
+        private static final String SEARCH = "article/query/%d/json?key=%s";//page+key
         private static final String CHAPTER_ARTICLE_LIST = "article/list/%d/json?cid=%d&order_type=%d";//page+id+orderType
         private static final String COLLECT_ARTICLE_LIST = "lg/collect/list/%d/json";//page
         private static final String COLLECT_LINK_LIST = "lg/collect/usertools/json";
         private static final String USER_ARTICLE_LIST = "user_article/list/%d/json";//page
         private static final String USER_PAGE = "user/%d/share_articles/%d/json";//userId+page
         private static final String MINE_SHARE_ARTICLE_LIST = "user/lg/private_articles/%d/json";//page
-        public static final String BOOK_LIST = "chapter/547/sublist/json";
 
         private static String addUserId(String key) {
             int userId = UserUtils.getInstance().getWanId();

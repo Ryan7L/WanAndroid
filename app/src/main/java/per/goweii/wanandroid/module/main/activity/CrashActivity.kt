@@ -9,7 +9,10 @@ import android.os.Process
 import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_crash.*
+import kotlinx.android.synthetic.main.activity_crash.btn_exit
+import kotlinx.android.synthetic.main.activity_crash.btn_restart
+import kotlinx.android.synthetic.main.activity_crash.tv_copy_log
+import kotlinx.android.synthetic.main.activity_crash.tv_error
 import per.goweii.ponyo.crash.Crash
 import per.goweii.statusbarcompat.StatusBarCompat
 import per.goweii.wanandroid.R
@@ -24,7 +27,7 @@ class CrashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         window.decorView.systemUiVisibility =
-                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+            View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.statusBarColor = Color.TRANSPARENT
         DarkModeUtils.initDarkMode()

@@ -19,7 +19,8 @@ import per.goweii.wanandroid.module.login.presenter.QuickLoginPresenter
 import per.goweii.wanandroid.module.login.view.QuickLoginView
 import per.goweii.wanandroid.utils.biometric.BiometricHelper
 
-class QuickLoginActivity : BaseActivity<QuickLoginPresenter>(), QuickLoginView, SwipeBackAbility.Direction {
+class QuickLoginActivity : BaseActivity<QuickLoginPresenter>(), QuickLoginView,
+    SwipeBackAbility.Direction {
     companion object {
         private const val PARAMS_OPEN_OR_USE = "openOrUse"
         private const val PARAMS_START_PASSWORD_LOGIN_ON_FAIL = "startPasswordLoginOnFail"
@@ -79,7 +80,8 @@ class QuickLoginActivity : BaseActivity<QuickLoginPresenter>(), QuickLoginView, 
 
     override fun initView() {
         openOrUse = intent.getBooleanExtra(PARAMS_OPEN_OR_USE, openOrUse)
-        startPasswordLoginOnFail = intent.getBooleanExtra(PARAMS_START_PASSWORD_LOGIN_ON_FAIL, startPasswordLoginOnFail)
+        startPasswordLoginOnFail =
+            intent.getBooleanExtra(PARAMS_START_PASSWORD_LOGIN_ON_FAIL, startPasswordLoginOnFail)
         biometricHelper = BiometricHelper(this)
     }
 
@@ -93,7 +95,8 @@ class QuickLoginActivity : BaseActivity<QuickLoginPresenter>(), QuickLoginView, 
             return
         }
         if (openOrUse) {
-            val loginInfoEntity = intent.getSerializableExtra(PARAMS_LOGIN_INFO) as? LoginInfoEntity?
+            val loginInfoEntity =
+                intent.getSerializableExtra(PARAMS_LOGIN_INFO) as? LoginInfoEntity?
             tryOpenLoginByBiometric(loginInfoEntity)
         } else {
             tryLoginByBiometric()

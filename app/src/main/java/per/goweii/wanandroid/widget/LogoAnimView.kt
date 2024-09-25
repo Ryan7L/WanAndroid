@@ -22,7 +22,11 @@ import kotlin.random.Random
 class LogoAnimView : FrameLayout, Runnable {
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    )
 
     private val logo: ImageView = ImageView(context).apply {
         setImageResource(R.drawable.logo)
@@ -39,9 +43,12 @@ class LogoAnimView : FrameLayout, Runnable {
     }
 
     init {
-        addViewInLayout(logo, childCount, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT).apply {
-            gravity = Gravity.CENTER
-        })
+        addViewInLayout(
+            logo,
+            childCount,
+            LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT).apply {
+                gravity = Gravity.CENTER
+            })
         addViewInLayout(eyeLeft, childCount, LayoutParams(0, 0).apply {
             gravity = Gravity.LEFT
         })
@@ -84,8 +91,18 @@ class LogoAnimView : FrameLayout, Runnable {
         removeCallbacks(this)
         AnimatorSet().apply {
             playTogether(
-                    ObjectAnimator.ofFloat(eyeLeft, "translationY", eyeLeft.translationY, eyeLeft.height.toFloat()),
-                    ObjectAnimator.ofFloat(eyeRight, "translationY", eyeRight.translationY, eyeRight.height.toFloat())
+                ObjectAnimator.ofFloat(
+                    eyeLeft,
+                    "translationY",
+                    eyeLeft.translationY,
+                    eyeLeft.height.toFloat()
+                ),
+                ObjectAnimator.ofFloat(
+                    eyeRight,
+                    "translationY",
+                    eyeRight.translationY,
+                    eyeRight.height.toFloat()
+                )
             )
             interpolator = DecelerateInterpolator()
             duration = 200
@@ -100,8 +117,8 @@ class LogoAnimView : FrameLayout, Runnable {
         removeCallbacks(this)
         AnimatorSet().apply {
             playTogether(
-                    ObjectAnimator.ofFloat(eyeLeft, "translationY", eyeLeft.translationY, 0F),
-                    ObjectAnimator.ofFloat(eyeRight, "translationY", eyeRight.translationY, 0F)
+                ObjectAnimator.ofFloat(eyeLeft, "translationY", eyeLeft.translationY, 0F),
+                ObjectAnimator.ofFloat(eyeRight, "translationY", eyeRight.translationY, 0F)
             )
             interpolator = AccelerateInterpolator()
             duration = 200
@@ -116,10 +133,12 @@ class LogoAnimView : FrameLayout, Runnable {
         removeCallbacks(this)
         AnimatorSet().apply {
             playTogether(
-                    ObjectAnimator.ofFloat(eyeLeft, "translationY", 0F, eyeLeft.height.toFloat(), 0F).apply {
+                ObjectAnimator.ofFloat(eyeLeft, "translationY", 0F, eyeLeft.height.toFloat(), 0F)
+                    .apply {
                         repeatCount = times
                     },
-                    ObjectAnimator.ofFloat(eyeRight, "translationY", 0F, eyeRight.height.toFloat(), 0F).apply {
+                ObjectAnimator.ofFloat(eyeRight, "translationY", 0F, eyeRight.height.toFloat(), 0F)
+                    .apply {
                         repeatCount = times
                     }
             )

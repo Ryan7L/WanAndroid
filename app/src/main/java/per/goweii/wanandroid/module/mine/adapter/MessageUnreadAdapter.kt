@@ -12,7 +12,8 @@ import per.goweii.wanandroid.module.mine.model.MessageBean
  * @author CuiZhen
  * @date 2020/5/16
  */
-class MessageUnreadAdapter : BaseQuickAdapter<MessageBean, BaseViewHolder>(R.layout.rv_item_message_unread) {
+class MessageUnreadAdapter :
+    BaseQuickAdapter<MessageBean, BaseViewHolder>(R.layout.rv_item_message_unread) {
     override fun convert(helper: BaseViewHolder, item: MessageBean) {
         if (TextUtils.isEmpty(item.tag)) {
             helper.setGone(R.id.tv_tag, false)

@@ -27,16 +27,6 @@ import per.goweii.wanandroid.utils.UrlOpenUtils;
  */
 public class PrivacyPolicyDialog extends DialogLayer {
 
-    public static void showIfFirst(Context context, CompleteCallback callback) {
-        if (GuideSPUtils.getInstance().isPrivacyPolicyShown()) {
-            if (callback != null) {
-                callback.onComplete();
-            }
-            return;
-        }
-        new PrivacyPolicyDialog(context, callback).show();
-    }
-
     private PrivacyPolicyDialog(Context context, CompleteCallback callback) {
         super(context);
         addOnDismissListener(new OnDismissListener() {
@@ -70,6 +60,16 @@ public class PrivacyPolicyDialog extends DialogLayer {
         }, R.id.dialog_privacy_policy_tv_no);
     }
 
+    public static void showIfFirst(Context context, CompleteCallback callback) {
+        if (GuideSPUtils.getInstance().isPrivacyPolicyShown()) {
+            if (callback != null) {
+                callback.onComplete();
+            }
+            return;
+        }
+        new PrivacyPolicyDialog(context, callback).show();
+    }
+
     @Override
     public void onAttach() {
         super.onAttach();
@@ -91,6 +91,10 @@ public class PrivacyPolicyDialog extends DialogLayer {
         content.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
+    public interface CompleteCallback {
+        void onComplete();
+    }
+
     private class Clickable extends ClickableSpan implements View.OnClickListener {
         private final View.OnClickListener mListener;
 
@@ -108,9 +112,5 @@ public class PrivacyPolicyDialog extends DialogLayer {
             ds.setColor(ResUtils.getThemeColor(getActivity(), R.attr.colorMain));
             ds.setUnderlineText(false);
         }
-    }
-
-    public interface CompleteCallback {
-        void onComplete();
     }
 }
