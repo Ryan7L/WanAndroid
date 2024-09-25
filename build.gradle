@@ -1,5 +1,3 @@
-apply from: "${rootDir.path}/gradle/config.gradle"
-apply from: "${rootDir.path}/gradle/version.gradle"
 
 buildscript {
     ext.kotlin_version = '1.6.21'
@@ -8,7 +6,6 @@ buildscript {
         maven { url "https://maven.aliyun.com/repository/google" }
         maven { url "https://maven.aliyun.com/repository/jcenter" }
         google()
-        jcenter()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:7.4.2'
@@ -22,13 +19,11 @@ allprojects {
         maven { url "https://maven.aliyun.com/repository/google" }
         maven { url "https://maven.aliyun.com/repository/jcenter" }
         maven { url "https://jitpack.io" }
-        //maven { url "https://raw.githubusercontent.com/goweii/maven-repository/master/releases/" }
         maven { url "https://gitee.com/goweii/maven-repository/raw/master/releases/" }
         google()
-        jcenter()
     }
 }
 
-task clean(type: Delete) {
+tasks.register('clean', Delete) {
     delete rootProject.buildDir
 }

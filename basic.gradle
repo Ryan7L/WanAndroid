@@ -30,11 +30,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility rootProject.ext.compileOptions.sourceCompatibility
-        targetCompatibility rootProject.ext.compileOptions.targetCompatibility
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = rootProject.ext.kotlinOptions.jvmTarget
+        jvmTarget = JavaVersion.VERSION_1_8
     }
     resourcePrefix project.name + "_"
     lintOptions {

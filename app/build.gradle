@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 apply plugin: 'bugly'
 
-apply from: "${rootDir.path}/gradle/module.gradle"
-apply from: "${rootDir.path}/gradle/flavor.gradle"
+apply from: "${rootDir.path}/basic.gradle"
+apply from: "${rootDir.path}/flavor.gradle"
 
 android {
     defaultConfig {
-        renderscriptTargetApi rootProject.ext.android.minSdkVersion
+        renderscriptTargetApi 21
         renderscriptSupportModeEnabled true
         ndk {
             abiFilters /*'armeabi',*/ 'armeabi-v7a', 'arm64-v8a'
@@ -41,40 +41,42 @@ repositories {
 }
 
 dependencies {
-    kapt rootProject.ext.dependencies.butterknifeCompiler
-    implementation rootProject.ext.dependencies.startup
-    implementation rootProject.ext.dependencies.cardview
-    implementation rootProject.ext.dependencies.flexbox
-    implementation rootProject.ext.dependencies.realtimeBlurView
-    implementation rootProject.ext.dependencies.banner
-    implementation rootProject.ext.dependencies.persistentCookieJar
-    implementation rootProject.ext.dependencies.revealLayout
-    implementation rootProject.ext.dependencies.keyboardCompat
-    implementation rootProject.ext.dependencies.swipelayout
-    implementation rootProject.ext.dependencies.disklrucache
-    implementation rootProject.ext.dependencies.multiStateView
-    implementation rootProject.ext.dependencies.buglyCrashreport
-    implementation rootProject.ext.dependencies.buglyNativeCrashreport
-    implementation rootProject.ext.dependencies.heartView
-    implementation rootProject.ext.dependencies.tbs
-    implementation rootProject.ext.dependencies.webkit
-    implementation rootProject.ext.dependencies.photoView
-    implementation rootProject.ext.dependencies.roomRuntime
-    kapt rootProject.ext.dependencies.roomCompiler
-    implementation rootProject.ext.dependencies.roomKtx
-    implementation rootProject.ext.dependencies.jsoup
-    implementation rootProject.ext.dependencies.codex_core
-    implementation rootProject.ext.dependencies.codex_decorator_gesture
-    implementation rootProject.ext.dependencies.codex_decorator_beep
-    implementation rootProject.ext.dependencies.codex_decorator_finder_wechat
-    implementation rootProject.ext.dependencies.codex_decorator_frozen
-    implementation rootProject.ext.dependencies.codex_decorator_vibrate
-    implementation rootProject.ext.dependencies.codex_processor_zxing
-    implementation rootProject.ext.dependencies.lifecycle
-    kapt rootProject.ext.dependencies.lifecycle_compiler
-    implementation rootProject.ext.dependencies.palette
-    implementation rootProject.ext.dependencies.cropImageView
-    implementation rootProject.ext.dependencies.biometric
+
+    kapt "com.jakewharton:butterknife-compiler:10.0.0"
+    implementation "androidx.startup:startup-runtime:1.0.0"
+    implementation "androidx.cardview:cardview:1.0.0"
+    implementation "com.google.android:flexbox:1.0.0"
+    implementation "com.github.mmin18:realtimeblurview:1.1.2"
+    implementation "com.youth.banner:banner:1.4.10"
+    implementation "com.github.franmontiel:PersistentCookieJar:v1.0.1"
+    implementation "com.github.goweii:RevealLayout:1.3.4"
+    implementation "com.github.goweii:KeyboardCompat:1.0.0"
+    implementation "com.daimajia.swipelayout:library:1.2.0@aar"
+    implementation "com.jakewharton:disklrucache:2.0.2"
+    implementation "com.github.Kennyc1012:MultiStateView:1.3.2"
+    implementation "com.tencent.bugly:crashreport:3.3.3"
+    implementation "com.tencent.bugly:nativecrashreport:3.7.7"
+    implementation "com.github.goweii:HeartView:1.0.0"
+    implementation "com.tencent.tbs.tbssdk:sdk:43697"
+    implementation "androidx.webkit:webkit:1.2.0"
+    implementation "com.github.chrisbanes:PhotoView:2.1.3"
+    implementation "androidx.room:room-runtime:2.2.5"
+    kapt "androidx.room:room-compiler:2.2.5"
+    implementation "androidx.room:room-ktx:2.2.5"
+    implementation "org.jsoup:jsoup:1.13.1"
+    implementation "per.goweii.codex:core:1.0.0"
+    implementation "per.goweii.codex:decorator-gesture:1.0.0"
+    implementation "per.goweii.codex:decorator-beep:1.0.0"
+    implementation "per.goweii.codex:decorator-finder-wechat:1.0.0"
+    implementation "per.goweii.codex:decorator-frozen:1.0.0"
+    implementation "per.goweii.codex:decorator-vibrate:1.0.0"
+    implementation "per.goweii.codex:processor-zxing:1.0.0"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0"
+    kapt "androidx.lifecycle:lifecycle-compiler:2.2.0"
+    implementation "androidx.palette:palette:1.0.0"
+    implementation "com.github.goweii:CropImageView:1.2.1"
+    implementation "androidx.biometric:biometric:1.2.0-alpha01"
     implementation 'com.github.donkingliang:ConsecutiveScroller:4.6.4'
     implementation 'androidx.room:room-rxjava2:2.2.5'
+    implementation project(':basic_core')
 }
