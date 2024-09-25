@@ -1,67 +1,52 @@
 package per.goweii.basic.utils
 
 import android.app.Application
-import android.os.AsyncTask
 import android.os.Process
+import kotlinx.coroutines.*
 import java.io.BufferedReader
 import java.io.File
 import java.io.FileReader
 
-/**
- * @author CuiZhen
- */
 class InitTaskRunner(private val application: Application) {
 
-    private val mTasks: ArrayList<InitTask> = arrayListOf()
+    private val tasks: MutableList<InitTask> = mutableListOf()
 
     fun add(task: InitTask): InitTaskRunner {
-        mTasks.add(task)
+        tasks.add(task)
         return this
     }
 
     fun run() {
         val isMainProcess = isMainProcess()
-        val syncTasks: ArrayList<InitTask> = arrayListOf()
-        val asyncTasks: ArrayList<InitTask> = arrayListOf()
-        for (task in mTasks) {
-            if (!isMainProcess && task.onlyMainProcess()) {
-                continue
-            }
-            if (task.sync()) {
-                syncTasks.add(task)
-            } else {
-                asyncTasks.add(task)
-            }
-        }
+        val syncTasks = tasks.filter { !(!isMainProcess && it.onlyMainProcess()) && it.sync() }
+        val asyncTasks = tasks.filter { !(!isMainProcess && it.onlyMainProcess()) && !it.sync() }
+
         runSync(syncTasks)
         runAsync(asyncTasks)
     }
 
-    private fun runSync(tasks: ArrayList<InitTask>) {
-        tasks.sortBy { it.level() }
-        for (task in tasks) {
+    private fun runSync(tasks: List<InitTask>) {
+        tasks.sortedBy { it.level() }.forEach {
             try {
-                task.init(application)
+                it.init(application)
             } catch (e: Throwable) {
                 e.printStackTrace()
             }
         }
     }
 
-    private fun runAsync(tasks: ArrayList<InitTask>) {
-        val tasksMap = hashMapOf<String, ArrayList<InitTask>>()
-        for (task in tasks) {
-            val name = task.asyncTaskName()
-            var list = tasksMap[name]
-            if (list == null) {
-                list = arrayListOf()
-                tasksMap[name] = list
+    private fun runAsync(tasks: List<InitTask>) {
+        val tasksMap = tasks.groupBy { it.asyncTaskName() }
+        tasksMap.values.forEach { taskList ->
+            CoroutineScope(Dispatchers.IO).launch {
+                taskList.sortedBy { it.level() }.forEach {
+                    try {
+                        it.init(application)
+                    } catch (e: Throwable) {
+                        e.printStackTrace()
+                    }
+                }
             }
-            list.add(task)
-        }
-        for (map in tasksMap) {
-            val task = map.value
-            AsyncRunner(application, task).execute()
         }
     }
 
@@ -72,10 +57,9 @@ class InitTaskRunner(private val application: Application) {
     private fun getCurrentProcessName(): String? {
         return try {
             val file = File("/proc/" + Process.myPid() + "/" + "cmdline")
-            val mBufferedReader = BufferedReader(FileReader(file))
-            val processName = mBufferedReader.readLine().trim { it <= ' ' }
-            mBufferedReader.close()
-            processName
+            BufferedReader(FileReader(file)).use { reader ->
+                reader.readLine().trim { it <= ' ' }
+            }
         } catch (e: Exception) {
             e.printStackTrace()
             null
@@ -83,53 +67,18 @@ class InitTaskRunner(private val application: Application) {
     }
 }
 
-class AsyncRunner(private val application: Application, private val tasks: ArrayList<InitTask>) : AsyncTask<Unit, Unit, Unit>() {
-    override fun doInBackground(vararg params: Unit?) {
-        tasks.sortBy { it.level() }
-        for (task in tasks) {
-            try {
-                task.init(application)
-            } catch (e: Throwable) {
-                e.printStackTrace()
-            }
-        }
-    }
-}
-
 abstract class AsyncInitTask : InitTask {
-    override fun sync(): Boolean {
-        return false
-    }
-
-    override fun level(): Int {
-        return 0
-    }
-
-    override fun onlyMainProcess(): Boolean {
-        return true
-    }
-
-    override fun asyncTaskName(): String {
-        return toString()
-    }
+    override fun sync(): Boolean = false
+    override fun level(): Int = 0
+    override fun onlyMainProcess(): Boolean = true
+    override fun asyncTaskName(): String = this.toString()
 }
 
 abstract class SyncInitTask : InitTask {
-    override fun sync(): Boolean {
-        return true
-    }
-
-    override fun level(): Int {
-        return 0
-    }
-
-    override fun onlyMainProcess(): Boolean {
-        return true
-    }
-
-    override fun asyncTaskName(): String {
-        return ""
-    }
+    override fun sync(): Boolean = true
+    override fun level(): Int = 0
+    override fun onlyMainProcess(): Boolean = true
+    override fun asyncTaskName(): String = ""
 }
 
 interface InitTask {
