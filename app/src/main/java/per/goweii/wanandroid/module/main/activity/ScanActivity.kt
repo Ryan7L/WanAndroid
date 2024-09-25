@@ -8,16 +8,15 @@ import android.app.Activity
 import android.content.Intent
 import android.view.View
 import android.view.animation.DecelerateInterpolator
-import kotlinx.android.synthetic.main.activity_scan.code_scanner
-import kotlinx.android.synthetic.main.activity_scan.finder_view
-import kotlinx.android.synthetic.main.activity_scan.frozen_view
-import kotlinx.android.synthetic.main.activity_scan.ivAlbum
-import kotlinx.android.synthetic.main.activity_scan.ivClose
-import kotlinx.android.synthetic.main.activity_scan.ivTorch
-import kotlinx.android.synthetic.main.activity_scan.llTip
-import kotlinx.android.synthetic.main.activity_scan.tvTipBtnCancel
-import kotlinx.android.synthetic.main.activity_scan.tvTipBtnSure
-import kotlinx.android.synthetic.main.activity_scan.tvTipText
+//import kotlinx.android.synthetic.main.activity_scan.finder_view
+//import kotlinx.android.synthetic.main.activity_scan.frozen_view
+//import kotlinx.android.synthetic.main.activity_scan.ivAlbum
+//import kotlinx.android.synthetic.main.activity_scan.ivClose
+//import kotlinx.android.synthetic.main.activity_scan.ivTorch
+//import kotlinx.android.synthetic.main.activity_scan.llTip
+//import kotlinx.android.synthetic.main.activity_scan.tvTipBtnCancel
+//import kotlinx.android.synthetic.main.activity_scan.tvTipBtnSure
+//import kotlinx.android.synthetic.main.activity_scan.tvTipText
 import per.goweii.anypermission.AnyPermission
 import per.goweii.anypermission.RequestListener
 import per.goweii.anypermission.RuntimeRequester
@@ -39,6 +38,7 @@ import per.goweii.swipeback.SwipeBackAbility
 import per.goweii.swipeback.SwipeBackDirection
 import per.goweii.swipeback.SwipeBackTransformer
 import per.goweii.wanandroid.R
+import per.goweii.wanandroid.databinding.ActivityScanBinding
 import per.goweii.wanandroid.module.main.presenter.ScanPresenter
 import per.goweii.wanandroid.module.main.view.ScanView
 import per.goweii.wanandroid.utils.PictureSelector
@@ -50,6 +50,7 @@ import per.goweii.wanandroid.utils.UrlOpenUtils
  */
 class ScanActivity : BaseActivity<ScanPresenter>(), ScanView, SwipeBackAbility.Direction,
     SwipeBackAbility.Transformer {
+    private lateinit var binding: ActivityScanBinding
 
     companion object {
         private const val REQ_CODE_PERMISSION_CAMERA = 1
@@ -77,6 +78,12 @@ class ScanActivity : BaseActivity<ScanPresenter>(), ScanView, SwipeBackAbility.D
         }
     }
 
+    override fun initRootView() {
+        binding = ActivityScanBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+    }
+
     private var mRuntimeRequester: RuntimeRequester? = null
     private var tvTipAnim: Animator? = null
 
@@ -91,29 +98,29 @@ class ScanActivity : BaseActivity<ScanPresenter>(), ScanView, SwipeBackAbility.D
     override fun initPresenter(): ScanPresenter = ScanPresenter()
 
     override fun initView() {
-        ivClose.setOnClickListener {
+        binding.ivClose.setOnClickListener {
             finish()
         }
-        ivTorch.invisible()
-        ivAlbum.setOnClickListener {
+        binding.ivTorch.invisible()
+        binding.ivAlbum.setOnClickListener {
             startAlbum()
         }
-        ivTorch.setOnClickListener {
-            codeScanner?.enableTorch(!ivTorch.isSelected)
+        binding.ivTorch.setOnClickListener {
+            codeScanner?.enableTorch(!binding.ivTorch.isSelected)
         }
-        codeScanner = code_scanner.apply {
+        codeScanner = binding.codeScanner.apply {
             cameraProxyLiveData.observe(this@ScanActivity) { cameraProxy ->
                 cameraProxy?.torchState?.observe(this@ScanActivity) { torchState ->
                     when (torchState) {
-                        CameraProxy.TORCH_ON -> ivTorch.isSelected = true
-                        CameraProxy.TORCH_OFF -> ivTorch.isSelected = false
+                        CameraProxy.TORCH_ON -> binding.ivTorch.isSelected = true
+                        CameraProxy.TORCH_OFF -> binding.ivTorch.isSelected = false
                     }
                 }
             }
             addProcessor(ZXingMultiScanQRCodeProcessor())
             addDecorator(
-                frozen_view,
-                finder_view,
+                binding.frozenView,
+                binding.finderView,
                 BeepDecorator(),
                 VibrateDecorator(),
                 GestureDecorator()
@@ -167,8 +174,8 @@ class ScanActivity : BaseActivity<ScanPresenter>(), ScanView, SwipeBackAbility.D
             .request(object : RequestListener {
                 @SuppressLint("MissingPermission")
                 override fun onSuccess() {
-                    ivTorch.visible()
-                    finder_view.visible()
+                    binding.ivTorch.visible()
+                    binding.finderView.visible()
                     codeScanner?.startScan()
                 }
 
@@ -182,8 +189,8 @@ class ScanActivity : BaseActivity<ScanPresenter>(), ScanView, SwipeBackAbility.D
     }
 
     private fun stopScan() {
-        ivTorch.invisible()
-        finder_view.invisible()
+        binding.ivTorch.invisible()
+        binding.finderView.invisible()
         codeScanner?.stopScan()
     }
 
@@ -290,19 +297,19 @@ class ScanActivity : BaseActivity<ScanPresenter>(), ScanView, SwipeBackAbility.D
         btnCancel: String? = null,
         onCancel: View.OnClickListener? = null
     ) {
-        llTip ?: return
-        tvTipText.text = text
-        tvTipBtnSure.text = btnSure
+        binding.llTip ?: return
+        binding.tvTipText.text = text
+        binding.tvTipBtnSure.text = btnSure
         if (btnCancel.isNullOrEmpty()) {
-            tvTipBtnCancel.gone()
+            binding.tvTipBtnCancel.gone()
         } else {
-            tvTipBtnCancel.visible()
-            tvTipBtnCancel.text = btnCancel
-            tvTipBtnCancel.setOnClickListener(onCancel)
+            binding.tvTipBtnCancel.visible()
+            binding.tvTipBtnCancel.text = btnCancel
+            binding.tvTipBtnCancel.setOnClickListener(onCancel)
         }
-        llTip.setOnClickListener(onSure)
+        binding.llTip.setOnClickListener(onSure)
         cancelTipAnim()
-        tvTipAnim = ObjectAnimator.ofFloat(llTip, "alpha", 0F, 1F).apply {
+        tvTipAnim = ObjectAnimator.ofFloat(binding.llTip, "alpha", 0F, 1F).apply {
             duration = 300
             interpolator = DecelerateInterpolator()
             addListener(object : Animator.AnimatorListener {
@@ -316,8 +323,8 @@ class ScanActivity : BaseActivity<ScanPresenter>(), ScanView, SwipeBackAbility.D
                 }
 
                 override fun onAnimationStart(animation: Animator?) {
-                    llTip ?: return
-                    llTip.visible()
+                    binding.llTip ?: return
+                    binding.llTip.visible()
                 }
             })
             start()
@@ -325,18 +332,18 @@ class ScanActivity : BaseActivity<ScanPresenter>(), ScanView, SwipeBackAbility.D
     }
 
     private fun hideTip() {
-        llTip ?: return
+        binding.llTip ?: return
         cancelTipAnim()
-        if (llTip.visibility != View.VISIBLE) {
+        if (binding.llTip.visibility != View.VISIBLE) {
             return
         }
-        tvTipText.text = ""
-        tvTipBtnSure.text = ""
-        tvTipBtnCancel.text = ""
-        tvTipBtnCancel.gone()
-        tvTipBtnCancel.setOnClickListener(null)
-        llTip.setOnClickListener(null)
-        tvTipAnim = ObjectAnimator.ofFloat(llTip, "alpha", 1F, 0F).apply {
+        binding.tvTipText.text = ""
+        binding.tvTipBtnSure.text = ""
+        binding.tvTipBtnCancel.text = ""
+        binding.tvTipBtnCancel.gone()
+        binding.tvTipBtnCancel.setOnClickListener(null)
+        binding.llTip.setOnClickListener(null)
+        tvTipAnim = ObjectAnimator.ofFloat(binding.llTip, "alpha", 1F, 0F).apply {
             duration = 300
             interpolator = DecelerateInterpolator()
             addListener(object : Animator.AnimatorListener {
@@ -344,16 +351,16 @@ class ScanActivity : BaseActivity<ScanPresenter>(), ScanView, SwipeBackAbility.D
                 }
 
                 override fun onAnimationEnd(animation: Animator?) {
-                    llTip ?: return
-                    llTip.gone()
+                    binding.llTip ?: return
+                    binding.llTip.gone()
                 }
 
                 override fun onAnimationCancel(animation: Animator?) {
                 }
 
                 override fun onAnimationStart(animation: Animator?) {
-                    llTip ?: return
-                    llTip.visible()
+                    binding.llTip ?: return
+                    binding.llTip.visible()
                 }
             })
             start()

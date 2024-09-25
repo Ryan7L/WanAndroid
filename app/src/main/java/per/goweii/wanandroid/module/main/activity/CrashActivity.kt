@@ -9,22 +9,19 @@ import android.os.Process
 import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_crash.btn_exit
-import kotlinx.android.synthetic.main.activity_crash.btn_restart
-import kotlinx.android.synthetic.main.activity_crash.tv_copy_log
-import kotlinx.android.synthetic.main.activity_crash.tv_error
 import per.goweii.ponyo.crash.Crash
 import per.goweii.statusbarcompat.StatusBarCompat
-import per.goweii.wanandroid.R
+import per.goweii.wanandroid.databinding.ActivityCrashBinding
 import per.goweii.wanandroid.utils.DarkModeUtils
 import java.io.PrintWriter
 import java.io.StringWriter
 import kotlin.system.exitProcess
 
 class CrashActivity : AppCompatActivity() {
-
+    private lateinit var binding: ActivityCrashBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityCrashBinding.inflate(layoutInflater)
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         window.decorView.systemUiVisibility =
             View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
@@ -32,18 +29,18 @@ class CrashActivity : AppCompatActivity() {
         window.statusBarColor = Color.TRANSPARENT
         DarkModeUtils.initDarkMode()
         StatusBarCompat.setIconMode(this, !DarkModeUtils.isDarkMode(this))
-        setContentView(R.layout.activity_crash)
-        tv_copy_log.setOnClickListener {
+        setContentView(binding.root)
+        binding.tvCopyLog.setOnClickListener {
             val cm = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            cm.setPrimaryClip(ClipData.newPlainText("error", tv_error.text))
-            tv_copy_log.text = "已复制"
+            cm.setPrimaryClip(ClipData.newPlainText("error", binding.tvError.text))
+            binding.tvCopyLog.text = "已复制"
         }
-        btn_exit.setOnClickListener {
+        binding.btnExit.setOnClickListener {
             finish()
             Process.killProcess(Process.myPid())
             exitProcess(10)
         }
-        btn_restart.setOnClickListener {
+        binding.btnRestart.setOnClickListener {
             Crash.restartApp(applicationContext)
             finish()
             Process.killProcess(Process.myPid())
@@ -51,12 +48,13 @@ class CrashActivity : AppCompatActivity() {
         showLog()
     }
 
+
     private fun showLog() {
         val e = intent.getSerializableExtra("error") as Throwable
         val stringWriter = StringWriter()
         val printWriter = PrintWriter(stringWriter)
         e.printStackTrace(printWriter)
-        tv_error.text = stringWriter.toString().toDBC()
+        binding.tvError.text = stringWriter.toString().toDBC()
     }
 
     private fun String.toDBC(): String {

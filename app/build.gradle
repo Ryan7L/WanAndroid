@@ -26,6 +26,9 @@ android {
             output.outputFileName = "${applicationId}-${versionName}-${versionCode}-${buildType}.apk"
         }
     }
+    viewBinding {
+        enable true
+    }
 }
 
 kapt {
@@ -42,7 +45,7 @@ repositories {
 
 dependencies {
 
-    kapt "com.jakewharton:butterknife-compiler:10.0.0"
+//    kapt "com.jakewharton:butterknife-compiler:10.0.0"
     implementation "androidx.startup:startup-runtime:1.0.0"
     implementation "androidx.cardview:cardview:1.0.0"
     implementation "com.google.android:flexbox:1.0.0"

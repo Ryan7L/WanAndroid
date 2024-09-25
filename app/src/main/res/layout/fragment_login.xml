@@ -18,10 +18,10 @@
             android:layout_width="15dp"
             android:layout_height="15dp"
             android:rotation="180"
-            android:visibility="invisible"
             android:scaleType="fitCenter"
-            android:tint="?colorIconMain"
             android:src="@drawable/ic_next"
+            android:tint="?colorIconMain"
+            android:visibility="invisible"
             tools:ignore="UseAppTint" />
 
         <TextView
@@ -29,17 +29,17 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/margin_small"
             android:layout_marginRight="@dimen/margin_small"
-            android:textSize="@dimen/text_content"
+            android:text="去注册"
             android:textColor="?colorTextMain"
-            android:text="去注册"/>
+            android:textSize="@dimen/text_content" />
 
         <ImageView
             android:layout_width="15dp"
             android:layout_height="15dp"
             android:rotation="0"
             android:scaleType="fitCenter"
-            android:tint="?colorIconMain"
             android:src="@drawable/ic_next"
+            android:tint="?colorIconMain"
             tools:ignore="UseAppTint" />
 
     </LinearLayout>

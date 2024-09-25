@@ -32,7 +32,6 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.Random;
 
-import butterknife.BindView;
 import per.goweii.actionbarex.common.ActionBarCommon;
 import per.goweii.actionbarex.common.OnActionBarChildClickListener;
 import per.goweii.basic.core.base.BaseActivity;
@@ -45,6 +44,7 @@ import per.goweii.basic.utils.ResUtils;
 import per.goweii.basic.utils.listener.SimpleListener;
 import per.goweii.wanandroid.BuildConfig;
 import per.goweii.wanandroid.R;
+import per.goweii.wanandroid.databinding.ActivityUserPageBinding;
 import per.goweii.wanandroid.event.CollectionEvent;
 import per.goweii.wanandroid.event.LoginEvent;
 import per.goweii.wanandroid.module.home.presenter.UserPagePresenter;
@@ -66,41 +66,38 @@ import per.goweii.wanandroid.widget.CollectView;
 public class UserPageActivity extends BaseActivity<UserPagePresenter> implements UserPageView {
 
     private static final int PAGE_START = 1;
-
-    @BindView(R.id.msv)
+    //@BindView(R.id.msv)
     MultiStateView msv;
-    @BindView(R.id.msv_list)
+    //@BindView(R.id.msv_list)
     MultiStateView msv_list;
-    @BindView(R.id.cl)
+    //@BindView(R.id.cl)
     CoordinatorLayout cl;
-    @BindView(R.id.ctbl)
+    //@BindView(R.id.ctbl)
     CollapsingToolbarLayout ctbl;
-    @BindView(R.id.abl)
+    //@BindView(R.id.abl)
     AppBarLayout abl;
-    @BindView(R.id.abc)
+    //@BindView(R.id.abc)
     ActionBarCommon abc;
-    @BindView(R.id.srl)
+    //@BindView(R.id.srl)
     SmartRefreshLayout srl;
-    @BindView(R.id.iv_blur)
+    //@BindView(R.id.iv_blur)
     ImageView iv_blur;
-    @BindView(R.id.rl_user_info)
+    //@BindView(R.id.rl_user_info)
     RelativeLayout rl_user_info;
-    @BindView(R.id.rv)
+    //@BindView(R.id.rv)
     RecyclerView rv;
-    @BindView(R.id.civ_user_icon)
+    //@BindView(R.id.civ_user_icon)
     ImageView civ_user_icon;
-    @BindView(R.id.tv_user_name)
+    //@BindView(R.id.tv_user_name)
     TextView tv_user_name;
-    @BindView(R.id.tv_user_id)
+    //@BindView(R.id.tv_user_id)
     TextView tv_user_id;
-    @BindView(R.id.tv_user_coin)
+    //@BindView(R.id.tv_user_coin)
     TextView tv_user_coin;
-    @BindView(R.id.tv_user_ranking)
+    //@BindView(R.id.tv_user_ranking)
     TextView tv_user_ranking;
-
     private SmartRefreshUtils mSmartRefreshUtils;
     private ArticleAdapter mAdapter;
-
     private int currPage = PAGE_START;
     private int mUserId = -1;
 
@@ -108,6 +105,28 @@ public class UserPageActivity extends BaseActivity<UserPagePresenter> implements
         Intent intent = new Intent(context, UserPageActivity.class);
         intent.putExtra("id", userId);
         context.startActivity(intent);
+    }
+
+    @Override
+    public void initRootView() {
+        ActivityUserPageBinding binding = ActivityUserPageBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        msv = binding.msv;
+        msv_list = binding.msvList;
+        cl = binding.cl;
+        ctbl = binding.ctbl;
+        abl = binding.abl;
+        abc = binding.abc;
+        srl = binding.srl;
+        iv_blur = binding.ivBlur;
+        rl_user_info = binding.rlUserInfo;
+        rv = binding.rv;
+        civ_user_icon = binding.civUserIcon;
+        tv_user_name = binding.tvUserName;
+        tv_user_id = binding.tvUserId;
+        tv_user_coin = binding.tvUserCoin;
+        tv_user_ranking = binding.tvUserRanking;
+
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

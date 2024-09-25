@@ -18,7 +18,6 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
-import butterknife.BindView;
 import per.goweii.actionbarex.common.ActionBarCommon;
 import per.goweii.actionbarex.common.OnActionBarChildClickListener;
 import per.goweii.basic.core.base.BaseActivity;
@@ -30,6 +29,7 @@ import per.goweii.basic.utils.IntentUtils;
 import per.goweii.basic.utils.listener.SimpleCallback;
 import per.goweii.basic.utils.listener.SimpleListener;
 import per.goweii.wanandroid.R;
+import per.goweii.wanandroid.databinding.ActivityReadLaterBinding;
 import per.goweii.wanandroid.db.model.ReadLaterModel;
 import per.goweii.wanandroid.event.ReadLaterEvent;
 import per.goweii.wanandroid.module.mine.adapter.ReadLaterAdapter;
@@ -46,13 +46,13 @@ import per.goweii.wanandroid.utils.UrlOpenUtils;
  */
 public class ReadLaterActivity extends BaseActivity<ReadLaterPresenter> implements ReadLaterView {
 
-    @BindView(R.id.abc)
+    //@BindView(R.id.abc)
     ActionBarCommon abc;
-    @BindView(R.id.msv)
+    //@BindView(R.id.msv)
     MultiStateView msv;
-    @BindView(R.id.srl)
+    //@BindView(R.id.srl)
     SmartRefreshLayout srl;
-    @BindView(R.id.rv)
+    //@BindView(R.id.rv)
     RecyclerView rv;
 
     private SmartRefreshUtils mSmartRefreshUtils;
@@ -64,6 +64,16 @@ public class ReadLaterActivity extends BaseActivity<ReadLaterPresenter> implemen
     public static void start(Context context) {
         Intent intent = new Intent(context, ReadLaterActivity.class);
         context.startActivity(intent);
+    }
+
+    @Override
+    public void initRootView() {
+        ActivityReadLaterBinding binding = ActivityReadLaterBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        abc = binding.abc;
+        msv = binding.msv;
+        srl = binding.srl;
+        rv = binding.rv;
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

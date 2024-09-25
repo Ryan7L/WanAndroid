@@ -10,8 +10,6 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
 import per.goweii.actionbarex.common.ActionBarCommon;
@@ -22,6 +20,7 @@ import per.goweii.basic.utils.AppInfoUtils;
 import per.goweii.codex.encoder.CodeEncoder;
 import per.goweii.codex.processor.zxing.ZXingEncodeQRCodeProcessor;
 import per.goweii.wanandroid.R;
+import per.goweii.wanandroid.databinding.ActivityAboutBinding;
 import per.goweii.wanandroid.module.main.dialog.CardShareDialog;
 import per.goweii.wanandroid.module.main.model.UpdateBean;
 import per.goweii.wanandroid.module.mine.presenter.AboutPresenter;
@@ -36,22 +35,38 @@ import per.goweii.wanandroid.widget.LogoAnimView;
  */
 public class AboutActivity extends BaseActivity<AboutPresenter> implements AboutView {
 
-    @BindView(R.id.abc)
+    //@BindView(R.id.abc)
     ActionBarCommon abc;
-    @BindView(R.id.tv_version_name)
+    //@BindView(R.id.tv_version_name)
     TextView tv_version_name;
-    @BindView(R.id.tv_web)
+    //@BindView(R.id.tv_web)
     TextView tv_web;
-    @BindView(R.id.tv_about)
+    //@BindView(R.id.tv_about)
     TextView tv_about;
-    @BindView(R.id.tv_github)
+    //@BindView(R.id.tv_github)
     TextView tv_github;
-    @BindView(R.id.lav)
+    //@BindView(R.id.lav)
     LogoAnimView lav;
 
     public static void start(Context context) {
         Intent intent = new Intent(context, AboutActivity.class);
         context.startActivity(intent);
+    }
+
+    @Override
+    public void initRootView() {
+        ActivityAboutBinding binding = ActivityAboutBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        abc = binding.abc;
+        tv_version_name = binding.tvVersionName;
+        tv_web = binding.tvWeb;
+        tv_about = binding.tvAbout;
+        tv_github = binding.tvGithub;
+        lav = binding.lav;
+        binding.llWeb.setOnClickListener(this);
+        binding.llAbout.setOnClickListener(this);
+        binding.llGithub.setOnClickListener(this);
+        binding.llBeta.setOnClickListener(this);
     }
 
     @Override
@@ -87,9 +102,6 @@ public class AboutActivity extends BaseActivity<AboutPresenter> implements About
         lav.randomBlink();
     }
 
-    @OnClick({
-            R.id.ll_web, R.id.ll_about, R.id.ll_github, R.id.ll_beta
-    })
     @Override
     public void onClick(View v) {
         super.onClick(v);

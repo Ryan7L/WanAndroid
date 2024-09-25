@@ -24,24 +24,24 @@
             android:id="@+id/abc"
             style="@style/ActionBar.Super.Back"
             android:background="?colorTransparent"
-            app:absuper_titleText="我的积分"
             app:absuper_right1Icon="@drawable/ic_rule"
-            app:absuper_right2Icon="@drawable/ic_rank" />
+            app:absuper_right2Icon="@drawable/ic_rank"
+            app:absuper_titleText="我的积分" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_coin"
-            app:autoSizeMinTextSize="@dimen/text_title"
-            app:autoSizeMaxTextSize="80sp"
-            app:autoSizeTextType="uniform"
             android:layout_width="match_parent"
-            android:padding="@dimen/margin_def"
             android:layout_height="wrap_content"
             android:layout_below="@+id/abc"
             android:layout_alignBottom="@+id/iv_bg"
             android:gravity="center"
             android:lines="1"
+            android:padding="@dimen/margin_def"
             android:textColor="?colorOnMainOrSurface"
             android:textSize="80sp"
+            app:autoSizeMaxTextSize="80sp"
+            app:autoSizeMinTextSize="@dimen/text_title"
+            app:autoSizeTextType="uniform"
             tools:text="520" />
 
     </RelativeLayout>

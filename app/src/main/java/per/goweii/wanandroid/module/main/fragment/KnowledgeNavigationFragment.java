@@ -1,10 +1,15 @@
 package per.goweii.wanandroid.module.main.fragment;
 
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
-import butterknife.BindView;
 import per.goweii.actionbarex.ActionBarEx;
 import per.goweii.basic.core.adapter.FixedFragmentPagerAdapter;
 import per.goweii.basic.core.base.BaseFragment;
@@ -12,6 +17,7 @@ import per.goweii.basic.core.mvp.MvpPresenter;
 import per.goweii.basic.utils.listener.SimpleCallback;
 import per.goweii.wanandroid.R;
 import per.goweii.wanandroid.common.Config;
+import per.goweii.wanandroid.databinding.FragmentKnowledgeNavigationBinding;
 import per.goweii.wanandroid.module.knowledge.fragment.KnowledgeFragment;
 import per.goweii.wanandroid.module.navigation.fragment.NaviFragment;
 import per.goweii.wanandroid.utils.MagicIndicatorUtils;
@@ -24,17 +30,29 @@ import per.goweii.wanandroid.utils.RvScrollTopUtils;
  */
 public class KnowledgeNavigationFragment extends BaseFragment implements RvScrollTopUtils.ScrollTop {
 
-    @BindView(R.id.ab)
+    //    @BindView(R.id.ab)
     ActionBarEx ab;
-    @BindView(R.id.vp)
+    //    @BindView(R.id.vp)
     ViewPager vp;
 
     private FixedFragmentPagerAdapter mAdapter;
     private long lastClickTime = 0L;
     private int lastClickPos = 0;
+    private FragmentKnowledgeNavigationBinding binding;
 
     public static KnowledgeNavigationFragment create() {
         return new KnowledgeNavigationFragment();
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = FragmentKnowledgeNavigationBinding.inflate(inflater, container, false);
+        mRootView = binding.getRoot();
+        mViewCreated = true;
+        ab = binding.ab;
+        vp = binding.vp;
+        return mRootView;
     }
 
     @Override

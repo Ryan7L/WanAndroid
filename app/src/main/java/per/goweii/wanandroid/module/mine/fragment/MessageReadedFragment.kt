@@ -1,18 +1,20 @@
 package per.goweii.wanandroid.module.mine.fragment
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.chad.library.adapter.base.BaseQuickAdapter
-import kotlinx.android.synthetic.main.fragment_message_readed.msv
-import kotlinx.android.synthetic.main.fragment_message_readed.rv
-import kotlinx.android.synthetic.main.fragment_message_readed.srl
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import per.goweii.basic.core.base.BaseFragment
 import per.goweii.basic.core.utils.SmartRefreshUtils
 import per.goweii.basic.utils.listener.SimpleListener
 import per.goweii.wanandroid.R
+import per.goweii.wanandroid.databinding.FragmentMessageReadedBinding
 import per.goweii.wanandroid.event.MessageDeleteEvent
 import per.goweii.wanandroid.module.main.model.ListBean
 import per.goweii.wanandroid.module.mine.adapter.MessageReadedAdapter
@@ -31,6 +33,18 @@ class MessageReadedFragment : BaseFragment<MessageReadedPresenter>(), MessageRea
     companion object {
         const val PAGE_START = 1
         fun create() = MessageReadedFragment()
+    }
+
+    private lateinit var binding: FragmentMessageReadedBinding
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentMessageReadedBinding.inflate(inflater, container, false)
+        mRootView = binding.root
+        mViewCreated = true
+        return mRootView
     }
 
     private lateinit var mSmartRefreshUtils: SmartRefreshUtils
@@ -62,18 +76,18 @@ class MessageReadedFragment : BaseFragment<MessageReadedPresenter>(), MessageRea
     override fun initPresenter() = MessageReadedPresenter()
 
     override fun initView() {
-        mSmartRefreshUtils = SmartRefreshUtils.with(srl)
+        mSmartRefreshUtils = SmartRefreshUtils.with(binding.srl)
         mSmartRefreshUtils.pureScrollMode()
         mSmartRefreshUtils.setRefreshListener {
             currPage = PAGE_START
             presenter.getMessageReadList(currPage)
         }
-        rv.layoutManager = LinearLayoutManager(context)
+        binding.rv.layoutManager = LinearLayoutManager(context)
         mAdapter = MessageReadedAdapter()
         mAdapter.setEnableLoadMore(false)
         mAdapter.setOnLoadMoreListener({
             presenter.getMessageReadList(currPage)
-        }, rv)
+        }, binding.rv)
         mAdapter.onItemChildClickListener =
             BaseQuickAdapter.OnItemChildClickListener { _, view, position ->
                 mAdapter.closeAll(null)
@@ -88,9 +102,9 @@ class MessageReadedFragment : BaseFragment<MessageReadedPresenter>(), MessageRea
                     }
                 }
             }
-        rv.adapter = mAdapter
-        MultiStateUtils.setEmptyAndErrorClick(msv, SimpleListener {
-            MultiStateUtils.toLoading(msv)
+        binding.rv.adapter = mAdapter
+        MultiStateUtils.setEmptyAndErrorClick(binding.msv, SimpleListener {
+            MultiStateUtils.toLoading(binding.msv)
             currPage = PAGE_START
             presenter.getMessageReadList(currPage)
         })
@@ -114,7 +128,7 @@ class MessageReadedFragment : BaseFragment<MessageReadedPresenter>(), MessageRea
     override fun onVisible(isFirstVisible: Boolean) {
         super.onVisible(isFirstVisible)
         if (isFirstVisible) {
-            MultiStateUtils.toLoading(msv)
+            MultiStateUtils.toLoading(binding.msv)
             currPage = PAGE_START
             presenter.getMessageReadList(currPage)
         }
@@ -125,9 +139,9 @@ class MessageReadedFragment : BaseFragment<MessageReadedPresenter>(), MessageRea
             mAdapter.setNewData(data.datas)
             mAdapter.setEnableLoadMore(true)
             if (data.datas == null || data.datas.isEmpty()) {
-                MultiStateUtils.toEmpty(msv)
+                MultiStateUtils.toEmpty(binding.msv)
             } else {
-                MultiStateUtils.toContent(msv)
+                MultiStateUtils.toContent(binding.msv)
             }
         } else {
             mAdapter.addData(data.datas)

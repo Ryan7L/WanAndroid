@@ -11,9 +11,6 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SwitchCompat;
 
-import butterknife.BindView;
-import butterknife.OnClick;
-import butterknife.OnLongClick;
 import per.goweii.anypermission.RequestListener;
 import per.goweii.anypermission.RuntimeRequester;
 import per.goweii.basic.core.base.BaseActivity;
@@ -29,6 +26,7 @@ import per.goweii.rxhttp.request.base.BaseBean;
 import per.goweii.wanandroid.R;
 import per.goweii.wanandroid.common.Constant;
 import per.goweii.wanandroid.common.WanApp;
+import per.goweii.wanandroid.databinding.ActivitySettingBinding;
 import per.goweii.wanandroid.event.LoginEvent;
 import per.goweii.wanandroid.event.SettingChangeEvent;
 import per.goweii.wanandroid.module.main.dialog.DownloadDialog;
@@ -51,33 +49,32 @@ public class SettingActivity extends BaseActivity<SettingPresenter> implements S
 
     private static final int REQ_CODE_PERMISSION = 1;
 
-    @BindView(R.id.sc_system_theme)
+    //@BindView(R.id.sc_system_theme)
     SwitchCompat sc_system_theme;
-    @BindView(R.id.tv_dark_theme_title)
+    //@BindView(R.id.tv_dark_theme_title)
     TextView tv_dark_theme_title;
-    @BindView(R.id.tv_show_read_later_notification_title)
+    //@BindView(R.id.tv_show_read_later_notification_title)
     TextView tv_show_read_later_notification_title;
-    @BindView(R.id.tv_show_read_later_notification_desc)
+    //@BindView(R.id.tv_show_read_later_notification_desc)
     TextView tv_show_read_later_notification_desc;
-    @BindView(R.id.sc_dark_theme)
+    //@BindView(R.id.sc_dark_theme)
     SwitchCompat sc_dark_theme;
-    @BindView(R.id.sc_show_read_later_notification)
+    //@BindView(R.id.sc_show_read_later_notification)
     SwitchCompat sc_show_read_later_notification;
-    @BindView(R.id.sc_show_top)
+    //@BindView(R.id.sc_show_top)
     SwitchCompat sc_show_top;
-    @BindView(R.id.sc_show_banner)
+    //@BindView(R.id.sc_show_banner)
     SwitchCompat sc_show_banner;
-    @BindView(R.id.tv_intercept_host)
+    //@BindView(R.id.tv_intercept_host)
     TextView tv_intercept_host;
-    @BindView(R.id.tv_cache)
+    //@BindView(R.id.tv_cache)
     TextView tv_cache;
-    @BindView(R.id.tv_has_update)
+    //@BindView(R.id.tv_has_update)
     TextView tv_has_update;
-    @BindView(R.id.tv_curr_version)
+    //@BindView(R.id.tv_curr_version)
     TextView tv_curr_version;
-    @BindView(R.id.ll_logout)
+    //@BindView(R.id.ll_logout)
     LinearLayout ll_logout;
-
     private RuntimeRequester mRuntimeRequester;
     private UpdateUtils mUpdateUtils;
     private boolean mSystemTheme;
@@ -90,6 +87,32 @@ public class SettingActivity extends BaseActivity<SettingPresenter> implements S
     public static void start(Context context) {
         Intent intent = new Intent(context, SettingActivity.class);
         context.startActivity(intent);
+    }
+
+    @Override
+    public void initRootView() {
+        ActivitySettingBinding binding = ActivitySettingBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        sc_system_theme = binding.scSystemTheme;
+        tv_dark_theme_title = binding.tvDarkThemeTitle;
+        tv_show_read_later_notification_title = binding.tvShowReadLaterNotificationTitle;
+        tv_show_read_later_notification_desc = binding.tvShowReadLaterNotificationDesc;
+        sc_dark_theme = binding.scDarkTheme;
+        sc_show_read_later_notification = binding.scShowReadLaterNotification;
+        sc_show_top = binding.scShowTop;
+        sc_show_banner = binding.scShowBanner;
+        tv_intercept_host = binding.tvInterceptHost;
+        tv_cache = binding.tvCache;
+        tv_has_update = binding.tvHasUpdate;
+        tv_curr_version = binding.tvCurrVersion;
+        ll_logout = binding.llLogout;
+        binding.rlInterceptHost.setOnClickListener(this);
+        binding.llUpdate.setOnClickListener(this);
+        binding.llCache.setOnClickListener(this);
+        binding.llAbout.setOnClickListener(this);
+        binding.llPrivacyPolicy.setOnClickListener(this);
+        binding.llLogout.setOnClickListener(this);
+        binding.rlInterceptHost.setOnLongClickListener(this::onLongClick);
     }
 
     @Override
@@ -213,7 +236,6 @@ public class SettingActivity extends BaseActivity<SettingPresenter> implements S
         }
     }
 
-    @OnLongClick({R.id.rl_intercept_host})
     public boolean onLongClick(View v) {
         switch (v.getId()) {
             default:
@@ -226,11 +248,6 @@ public class SettingActivity extends BaseActivity<SettingPresenter> implements S
     }
 
 
-    @OnClick({
-            R.id.rl_intercept_host, R.id.ll_update,
-            R.id.ll_cache, R.id.ll_about,
-            R.id.ll_privacy_policy, R.id.ll_logout
-    })
     @Override
     public void onClick(View v) {
         super.onClick(v);

@@ -1,12 +1,16 @@
 package per.goweii.wanandroid.module.home.fragment;
 
+import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,12 +20,11 @@ import com.google.android.flexbox.FlexboxLayoutManager;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 import per.goweii.basic.core.base.BaseFragment;
 import per.goweii.basic.ui.dialog.TipDialog;
 import per.goweii.basic.utils.listener.SimpleCallback;
 import per.goweii.wanandroid.R;
+import per.goweii.wanandroid.databinding.FragmentSearchHistoryBinding;
 import per.goweii.wanandroid.module.home.activity.SearchActivity;
 import per.goweii.wanandroid.module.home.model.HotKeyBean;
 import per.goweii.wanandroid.module.home.presenter.SearchHistoryPresenter;
@@ -36,25 +39,39 @@ import per.goweii.wanandroid.utils.SettingUtils;
  */
 public class SearchHistoryFragment extends BaseFragment<SearchHistoryPresenter> implements SearchHistoryView {
 
-    @BindView(R.id.rv_hot)
+    //@BindView(R.id.rv_hot)
     RecyclerView rv_hot;
-    @BindView(R.id.ll_history)
+    //@BindView(R.id.ll_history)
     LinearLayout ll_history;
-    @BindView(R.id.rv_history)
+    //@BindView(R.id.rv_history)
     RecyclerView rv_history;
-    @BindView(R.id.tv_clean)
+    //@BindView(R.id.tv_clean)
     TextView tv_clean;
-    @BindView(R.id.tv_down)
+    //@BindView(R.id.tv_down)
     TextView tv_down;
-
     private BaseQuickAdapter<HotKeyBean, BaseViewHolder> mHotAdapter;
     private BaseQuickAdapter<String, BaseViewHolder> mHistoryAdapter;
-
     private boolean mRemoveMode = false;
     private boolean mRemoveModeChanging = false;
 
     public static SearchHistoryFragment create() {
         return new SearchHistoryFragment();
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        FragmentSearchHistoryBinding binding = FragmentSearchHistoryBinding.inflate(inflater, container, false);
+        mRootView = binding.getRoot();
+        mViewCreated = true;
+        rv_hot = binding.rvHot;
+        ll_history = binding.llHistory;
+        rv_history = binding.rvHistory;
+        tv_clean = binding.tvClean;
+        tv_clean.setOnClickListener(this);
+        tv_down = binding.tvDown;
+        tv_down.setOnClickListener(this);
+        return mRootView;
     }
 
     @Override
@@ -217,7 +234,7 @@ public class SearchHistoryFragment extends BaseFragment<SearchHistoryPresenter> 
         }
     }
 
-    @OnClick({R.id.tv_clean, R.id.tv_down})
+    //    @OnClick({R.id.tv_clean, R.id.tv_down})
     @Override
     public void onClick(View v) {
         super.onClick(v);

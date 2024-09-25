@@ -8,8 +8,10 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.HapticFeedbackConstants;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -42,7 +44,6 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function0;
 import kotlin.jvm.functions.Function1;
@@ -63,6 +64,7 @@ import per.goweii.basic.utils.listener.SimpleListener;
 import per.goweii.cropimageview.CropImageView;
 import per.goweii.statusbarcompat.utils.LuminanceUtils;
 import per.goweii.wanandroid.R;
+import per.goweii.wanandroid.databinding.FragmentHomeBinding;
 import per.goweii.wanandroid.event.BannerAutoSwitchEnableEvent;
 import per.goweii.wanandroid.event.CloseSecondFloorEvent;
 import per.goweii.wanandroid.event.CollectionEvent;
@@ -104,31 +106,29 @@ import per.goweii.wanandroid.widget.refresh.SimpleOnMultiListener;
 public class HomeFragment extends BaseFragment<HomePresenter> implements RvScrollTopUtils.ScrollTop, HomeView {
 
     private static final int PAGE_START = 0;
-
-    @BindView(R.id.msv)
+    //@BindView(R.id.msv)
     MultiStateView msv;
-    @BindView(R.id.abc)
+    //@BindView(R.id.abc)
     ActionBarCommon abc;
-    @BindView(R.id.dl)
+    //@BindView(R.id.dl)
     BottomDrawerLayout dl;
-    @BindView(R.id.srl)
+    //@BindView(R.id.srl)
     SmartRefreshLayout srl;
-    @BindView(R.id.rv)
+    //@BindView(R.id.rv)
     RecyclerView rv;
-    @BindView(R.id.fl_dl_second_floor)
+    //@BindView(R.id.fl_dl_second_floor)
     FrameLayout fl_dl_second_floor;
-    @BindView(R.id.fl_dl_content)
+    //@BindView(R.id.fl_dl_content)
     FrameLayout fl_dl_content;
-    @BindView(R.id.v_dl_content_handle)
+    //@BindView(R.id.v_dl_content_handle)
     FrameLayout v_dl_content_handle;
-    @BindView(R.id.v_dl_content_mask)
+    //@BindView(R.id.v_dl_content_mask)
     View v_dl_content_mask;
-    @BindView(R.id.iv_second_floor_background)
+    //@BindView(R.id.iv_second_floor_background)
     CropImageView iv_second_floor_background;
-
+    private FragmentHomeBinding binding;
     private Banner mBanner;
     private ArticleAdapter mAdapter;
-
     private int currPage = PAGE_START;
     private SmartRefreshUtils mSmartRefreshUtils;
     private List<Object> mBannerDatas;
@@ -140,6 +140,25 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements RvScrol
 
     public static HomeFragment create() {
         return new HomeFragment();
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        mRootView = binding.getRoot();
+        mViewCreated = true;
+        msv = binding.msv;
+        abc = binding.abc;
+        dl = binding.dl;
+        srl = binding.srl;
+        rv = binding.rv;
+        fl_dl_second_floor = binding.flDlSecondFloor;
+        fl_dl_content = binding.flDlContent;
+        v_dl_content_handle = binding.vDlContentHandle;
+        v_dl_content_mask = binding.vDlContentMask;
+        iv_second_floor_background = binding.ivSecondFloorBackground;
+        return mRootView;
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

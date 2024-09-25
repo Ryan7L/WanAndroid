@@ -2,17 +2,19 @@ package per.goweii.wanandroid.module.login.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 import per.goweii.basic.core.base.BaseFragment;
 import per.goweii.basic.ui.toast.ToastMaker;
 import per.goweii.basic.utils.InputMethodUtils;
 import per.goweii.wanandroid.R;
+import per.goweii.wanandroid.databinding.FragmentLoginBinding;
 import per.goweii.wanandroid.event.LoginEvent;
 import per.goweii.wanandroid.module.login.activity.AuthActivity;
 import per.goweii.wanandroid.module.login.model.UserEntity;
@@ -29,19 +31,34 @@ import per.goweii.wanandroid.widget.SubmitView;
  */
 public class LoginFragment extends BaseFragment<LoginPresenter> implements LoginView {
 
-    @BindView(R.id.ll_go_register)
+    //@BindView(R.id.ll_go_register)
     LinearLayout ll_go_register;
-    @BindView(R.id.piv_login_account)
+    //@BindView(R.id.piv_login_account)
     InputView piv_account;
-    @BindView(R.id.piv_login_password)
+    //@BindView(R.id.piv_login_password)
     PasswordInputView piv_password;
-    @BindView(R.id.sv_login)
+    //@BindView(R.id.sv_login)
     SubmitView sv_login;
 
     private AuthActivity mActivity;
 
     public static LoginFragment create() {
         return new LoginFragment();
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        FragmentLoginBinding binding = FragmentLoginBinding.inflate(inflater, container, false);
+        mRootView = binding.getRoot();
+        mViewCreated = true;
+        ll_go_register = binding.llGoRegister;
+        piv_account = binding.pivLoginAccount;
+        piv_password = binding.pivLoginPassword;
+        sv_login = binding.svLogin;
+        ll_go_register.setOnClickListener(this);
+        sv_login.setOnClickListener(this);
+        return mRootView;
     }
 
     @Override
@@ -97,7 +114,7 @@ public class LoginFragment extends BaseFragment<LoginPresenter> implements Login
         super.onDestroyView();
     }
 
-    @OnClick({R.id.ll_go_register, R.id.sv_login})
+    //    @OnClick({R.id.ll_go_register, R.id.sv_login})
     @Override
     public void onClick(View v) {
         super.onClick(v);

@@ -18,7 +18,6 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
-import butterknife.BindView;
 import per.goweii.actionbarex.common.ActionBarCommon;
 import per.goweii.actionbarex.common.OnActionBarChildClickListener;
 import per.goweii.basic.core.base.BaseActivity;
@@ -30,6 +29,7 @@ import per.goweii.basic.utils.IntentUtils;
 import per.goweii.basic.utils.listener.SimpleCallback;
 import per.goweii.basic.utils.listener.SimpleListener;
 import per.goweii.wanandroid.R;
+import per.goweii.wanandroid.databinding.ActivityReadRecordBinding;
 import per.goweii.wanandroid.db.model.ReadRecordModel;
 import per.goweii.wanandroid.event.ReadRecordAddedEvent;
 import per.goweii.wanandroid.module.mine.adapter.ReadRecordAdapter;
@@ -46,26 +46,33 @@ import per.goweii.wanandroid.utils.UrlOpenUtils;
  */
 public class ReadRecordActivity extends BaseActivity<ReadRecordPresenter> implements ReadRecordView {
 
-    @BindView(R.id.abc)
+    //@BindView(R.id.abc)
     ActionBarCommon abc;
-    @BindView(R.id.msv)
+    //@BindView(R.id.msv)
     MultiStateView msv;
-    @BindView(R.id.srl)
+    //@BindView(R.id.srl)
     SmartRefreshLayout srl;
-    @BindView(R.id.rv)
+    //@BindView(R.id.rv)
     RecyclerView rv;
-
     private SmartRefreshUtils mSmartRefreshUtils;
     private ReadRecordAdapter mAdapter;
-
     private int offset = 0;
     private int perPageCount = 20;
-
     private boolean loading = false;
 
     public static void start(Context context) {
         Intent intent = new Intent(context, ReadRecordActivity.class);
         context.startActivity(intent);
+    }
+
+    @Override
+    public void initRootView() {
+        ActivityReadRecordBinding binding = ActivityReadRecordBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        abc = binding.abc;
+        msv = binding.msv;
+        srl = binding.srl;
+        rv = binding.rv;
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

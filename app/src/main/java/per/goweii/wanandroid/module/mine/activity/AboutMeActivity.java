@@ -24,8 +24,6 @@ import com.daimajia.swipe.SwipeLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 import per.goweii.actionbarex.common.ActionBarCommon;
 import per.goweii.actionbarex.common.OnActionBarChildClickListener;
 import per.goweii.anypermission.RequestListener;
@@ -41,6 +39,7 @@ import per.goweii.basic.utils.listener.SimpleCallback;
 import per.goweii.percentimageview.percentimageview.PercentImageView;
 import per.goweii.wanandroid.BuildConfig;
 import per.goweii.wanandroid.R;
+import per.goweii.wanandroid.databinding.ActivityAboutMeBinding;
 import per.goweii.wanandroid.module.mine.model.AboutMeBean;
 import per.goweii.wanandroid.module.mine.presenter.AboutMePresenter;
 import per.goweii.wanandroid.module.mine.view.AboutMeView;
@@ -57,48 +56,79 @@ public class AboutMeActivity extends BaseActivity<AboutMePresenter> implements A
 
     private static final int REQUEST_CODE_PERMISSION = 1;
 
-    @BindView(R.id.abc)
+    //@BindView(R.id.abc)
     ActionBarCommon abc;
-    @BindView(R.id.sl)
+    //@BindView(R.id.sl)
     SwipeLayout sl;
-    @BindView(R.id.iv_blur)
+    //@BindView(R.id.iv_blur)
     ImageView iv_blur;
-    @BindView(R.id.civ_icon)
+    //@BindView(R.id.civ_icon)
     ImageView civ_icon;
-    @BindView(R.id.tv_name)
+    //@BindView(R.id.tv_name)
     TextView tv_name;
-    @BindView(R.id.tv_sign)
+    //@BindView(R.id.tv_sign)
     TextView tv_sign;
-    @BindView(R.id.ll_github)
+    //@BindView(R.id.ll_github)
     LinearLayout ll_github;
-    @BindView(R.id.ll_jianshu)
+    //@BindView(R.id.ll_jianshu)
     LinearLayout ll_jianshu;
-    @BindView(R.id.ll_qq)
+    //@BindView(R.id.ll_qq)
     LinearLayout ll_qq;
-    @BindView(R.id.ll_qq_group)
+    //@BindView(R.id.ll_qq_group)
     LinearLayout ll_qq_group;
-    @BindView(R.id.tv_github)
+    //@BindView(R.id.tv_github)
     TextView tv_github;
-    @BindView(R.id.tv_jianshu)
+    //@BindView(R.id.tv_jianshu)
     TextView tv_jianshu;
-    @BindView(R.id.tv_qq)
+    //@BindView(R.id.tv_qq)
     TextView tv_qq;
-    @BindView(R.id.tv_qq_group)
+    //@BindView(R.id.tv_qq_group)
     TextView tv_qq_group;
-    @BindView(R.id.rl_info)
+    //@BindView(R.id.rl_info)
     RelativeLayout rl_info;
-    @BindView(R.id.rl_reward)
+    //@BindView(R.id.rl_reward)
     RelativeLayout rl_reward;
-    @BindView(R.id.piv_zfb_qrcode)
+    //@BindView(R.id.piv_zfb_qrcode)
     PercentImageView piv_zfb_qrcode;
-    @BindView(R.id.piv_wx_qrcode)
+    //@BindView(R.id.piv_wx_qrcode)
     PercentImageView piv_wx_qrcode;
-
     private RuntimeRequester mRuntimeRequester;
 
     public static void start(Context context) {
         Intent intent = new Intent(context, AboutMeActivity.class);
         context.startActivity(intent);
+    }
+
+    @Override
+    public void initRootView() {
+        ActivityAboutMeBinding binding = ActivityAboutMeBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        abc = binding.abc;
+        sl = binding.sl;
+        iv_blur = binding.ivBlur;
+        civ_icon = binding.infoLayout.civIcon;
+        tv_name = binding.infoLayout.tvName;
+        tv_sign = binding.infoLayout.tvSign;
+        ll_github = binding.infoLayout.llGithub;
+        ll_jianshu = binding.infoLayout.llJianshu;
+        ll_qq = binding.infoLayout.llQq;
+        ll_qq_group = binding.infoLayout.llQqGroup;
+        tv_github = binding.infoLayout.tvGithub;
+        tv_jianshu = binding.infoLayout.tvJianshu;
+        tv_qq = binding.infoLayout.tvQq;
+        tv_qq_group = binding.infoLayout.tvQqGroup;
+        rl_info = binding.infoLayout.rlInfo;
+        rl_reward = binding.sponsorLayout.rlReward;
+        piv_zfb_qrcode = binding.sponsorLayout.pivZfbQrcode;
+        piv_wx_qrcode = binding.sponsorLayout.pivWxQrcode;
+
+        ll_github.setOnClickListener(this);
+        ll_jianshu.setOnClickListener(this);
+        ll_qq.setOnClickListener(this);
+        ll_qq_group.setOnClickListener(this);
+        piv_zfb_qrcode.setOnClickListener(this);
+        piv_wx_qrcode.setOnClickListener(this);
+
     }
 
     @Override
@@ -148,10 +178,7 @@ public class AboutMeActivity extends BaseActivity<AboutMePresenter> implements A
         }
     }
 
-    @OnClick({
-            R.id.ll_github, R.id.ll_jianshu, R.id.ll_qq, R.id.ll_qq_group,
-            R.id.piv_zfb_qrcode, R.id.piv_wx_qrcode
-    })
+
     @Override
     public void onClick(View v) {
         super.onClick(v);

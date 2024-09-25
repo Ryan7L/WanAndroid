@@ -6,8 +6,8 @@ import android.os.Bundle;
 
 import org.greenrobot.eventbus.EventBus;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+//import butterknife.ButterKnife;
+//import butterknife.Unbinder;
 import per.goweii.basic.core.CoreInit;
 import per.goweii.basic.core.mvp.MvpActivity;
 import per.goweii.basic.core.receiver.LoginReceiver;
@@ -23,7 +23,7 @@ import per.goweii.basic.utils.listener.SimpleCallback;
 public abstract class BaseActivity<P extends BasePresenter> extends MvpActivity<P> {
     private LoadingDialog mLoadingDialog = null;
     private LoadingBarManager mLoadingBarManager = null;
-    private Unbinder mUnbinder = null;
+//    private Unbinder mUnbinder = null;
     private LoginReceiver mLoginReceiver;
 
     /**
@@ -40,7 +40,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends MvpActivity<
 
     @Override
     protected void initialize() {
-        mUnbinder = ButterKnife.bind(this);
+//        mUnbinder = ButterKnife.bind(this);
         if (isRegisterEventBus()) {
             EventBus.getDefault().register(this);
         }
@@ -79,9 +79,9 @@ public abstract class BaseActivity<P extends BasePresenter> extends MvpActivity<
         if (isRegisterEventBus()) {
             EventBus.getDefault().unregister(this);
         }
-        if (mUnbinder != null) {
-            mUnbinder.unbind();
-        }
+//        if (mUnbinder != null) {
+//            mUnbinder.unbind();
+//        }
     }
 
     @Override

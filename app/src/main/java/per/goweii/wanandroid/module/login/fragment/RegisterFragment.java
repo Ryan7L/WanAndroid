@@ -3,17 +3,19 @@ package per.goweii.wanandroid.module.login.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 import per.goweii.basic.core.base.BaseFragment;
 import per.goweii.basic.ui.toast.ToastMaker;
 import per.goweii.basic.utils.InputMethodUtils;
 import per.goweii.wanandroid.R;
+import per.goweii.wanandroid.databinding.FragmentRegisterBinding;
 import per.goweii.wanandroid.event.LoginEvent;
 import per.goweii.wanandroid.module.login.activity.AuthActivity;
 import per.goweii.wanandroid.module.login.model.UserEntity;
@@ -30,21 +32,37 @@ import per.goweii.wanandroid.widget.SubmitView;
  */
 public class RegisterFragment extends BaseFragment<RegisterPresenter> implements RegisterView {
 
-    @BindView(R.id.ll_go_login)
+    //@BindView(R.id.ll_go_login)
     LinearLayout ll_go_login;
-    @BindView(R.id.piv_register_account)
+    //@BindView(R.id.piv_register_account)
     InputView piv_account;
-    @BindView(R.id.piv_register_password)
+    //@BindView(R.id.piv_register_password)
     PasswordInputView piv_password;
-    @BindView(R.id.piv_register_password_again)
+    //@BindView(R.id.piv_register_password_again)
     PasswordInputView piv_password_again;
-    @BindView(R.id.sv_register)
+    //@BindView(R.id.sv_register)
     SubmitView sv_register;
 
     private AuthActivity mActivity;
 
     public static RegisterFragment create() {
         return new RegisterFragment();
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        FragmentRegisterBinding binding = FragmentRegisterBinding.inflate(inflater, container, false);
+        mRootView = binding.getRoot();
+        mViewCreated = true;
+        ll_go_login = binding.llGoLogin;
+        piv_account = binding.pivRegisterAccount;
+        piv_password = binding.pivRegisterPassword;
+        piv_password_again = binding.pivRegisterPasswordAgain;
+        sv_register = binding.svRegister;
+        ll_go_login.setOnClickListener(this);
+        sv_register.setOnClickListener(this);
+        return mRootView;
     }
 
     @Override
@@ -109,7 +127,6 @@ public class RegisterFragment extends BaseFragment<RegisterPresenter> implements
         super.onDestroyView();
     }
 
-    @OnClick({R.id.ll_go_login, R.id.sv_register})
     @Override
     public void onClick(View v) {
         super.onClick(v);

@@ -11,8 +11,8 @@
         android:layout_height="wrap_content"
         android:background="@drawable/bg_solid_round_color_surface_radius_max"
         android:padding="@dimen/margin_common"
-        tools:text="长按返回按钮有惊喜哦~"
         android:textColor="?colorTextSurface"
-        android:textSize="@dimen/text_content" />
+        android:textSize="@dimen/text_content"
+        tools:text="长按返回按钮有惊喜哦~" />
 
 </FrameLayout>

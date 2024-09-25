@@ -16,13 +16,13 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigat
 
 import java.util.List;
 
-import butterknife.BindView;
 import per.goweii.actionbarex.common.ActionBarCommon;
 import per.goweii.basic.core.adapter.MultiFragmentPagerAdapter;
 import per.goweii.basic.core.base.BaseActivity;
 import per.goweii.basic.utils.listener.SimpleCallback;
 import per.goweii.wanandroid.R;
 import per.goweii.wanandroid.common.Config;
+import per.goweii.wanandroid.databinding.ActivityKnowledgeArticleBinding;
 import per.goweii.wanandroid.event.ScrollTopEvent;
 import per.goweii.wanandroid.module.knowledge.fragment.KnowledgeArticleFragment;
 import per.goweii.wanandroid.module.knowledge.presenter.KnowledgePresenter;
@@ -40,13 +40,13 @@ import per.goweii.wanandroid.utils.router.Router;
  */
 public class KnowledgeArticleActivity extends BaseActivity<KnowledgePresenter> implements KnowledgeView {
 
-    @BindView(R.id.abc)
+    //@BindView(R.id.abc)
     ActionBarCommon abc;
-    @BindView(R.id.msv)
+    //@BindView(R.id.msv)
     MultiStateView msv;
-    @BindView(R.id.mi)
+    //@BindView(R.id.mi)
     MagicIndicator mi;
-    @BindView(R.id.vp)
+    //@BindView(R.id.vp)
     ViewPager vp;
 
     private long lastClickTime = 0L;
@@ -98,6 +98,16 @@ public class KnowledgeArticleActivity extends BaseActivity<KnowledgePresenter> i
         } catch (Exception e) {
             // ignore
         }
+    }
+
+    @Override
+    public void initRootView() {
+        ActivityKnowledgeArticleBinding binding = ActivityKnowledgeArticleBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        abc = binding.abc;
+        msv = binding.msv;
+        mi = binding.mi;
+        vp = binding.vp;
     }
 
     @Override

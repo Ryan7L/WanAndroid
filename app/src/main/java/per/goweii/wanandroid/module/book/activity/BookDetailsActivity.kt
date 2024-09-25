@@ -5,22 +5,12 @@ import android.content.Intent
 import android.os.Parcelable
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
-import kotlinx.android.synthetic.main.activity_book_details.abc
-import kotlinx.android.synthetic.main.activity_book_details.abl
-import kotlinx.android.synthetic.main.activity_book_details.ctbl
-import kotlinx.android.synthetic.main.activity_book_details.ll_top
-import kotlinx.android.synthetic.main.activity_book_details.msv
-import kotlinx.android.synthetic.main.activity_book_details.riv_book_img
-import kotlinx.android.synthetic.main.activity_book_details.rv
-import kotlinx.android.synthetic.main.activity_book_details.tv_book_author
-import kotlinx.android.synthetic.main.activity_book_details.tv_book_copyright
-import kotlinx.android.synthetic.main.activity_book_details.tv_book_desc
-import kotlinx.android.synthetic.main.activity_book_details.tv_book_name
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import per.goweii.basic.core.base.BaseActivity
 import per.goweii.basic.utils.ResUtils
 import per.goweii.wanandroid.R
+import per.goweii.wanandroid.databinding.ActivityBookDetailsBinding
 import per.goweii.wanandroid.event.ReadRecordAddedEvent
 import per.goweii.wanandroid.event.ReadRecordUpdateEvent
 import per.goweii.wanandroid.module.book.adapter.BookChapterAdapter
@@ -48,6 +38,13 @@ class BookDetailsActivity : BaseActivity<BookDetailsPresenter>(), BookDetailsVie
         }
     }
 
+    private lateinit var binding: ActivityBookDetailsBinding
+    override fun initRootView() {
+        binding = ActivityBookDetailsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+    }
+
     private lateinit var bookBean: BookBean
     private lateinit var adapter: BookChapterAdapter
 
@@ -60,52 +57,52 @@ class BookDetailsActivity : BaseActivity<BookDetailsPresenter>(), BookDetailsVie
     override fun initView() {
         bookBean = intent.getParcelableExtra(PARAM_BOOK)!!
 
-        ImageLoader.userIcon(riv_book_img, bookBean.cover)
-        abc.titleTextView.text = bookBean.name
-        tv_book_name.text = bookBean.name
-        tv_book_author.text = bookBean.author
-        tv_book_desc.text = bookBean.desc
-        tv_book_copyright.text = bookBean.license
-        tv_book_copyright.setOnClickListener {
+        ImageLoader.userIcon(binding.rivBookImg, bookBean.cover)
+        binding.abc.titleTextView.text = bookBean.name
+        binding.tvBookName.text = bookBean.name
+        binding.tvBookAuthor.text = bookBean.author
+        binding.tvBookDesc.text = bookBean.desc
+        binding.tvBookCopyright.text = bookBean.license
+        binding.tvBookCopyright.setOnClickListener {
             UrlOpenUtils.with(bookBean.licenseLink).open(this)
         }
 
-        rv.layoutManager = LinearLayoutManager(context)
+        binding.rv.layoutManager = LinearLayoutManager(context)
         adapter = BookChapterAdapter()
         adapter.setEnableLoadMore(false)
         adapter.setOnLoadMoreListener({
             presenter.getChapters(bookBean.id, currPage)
-        }, rv)
+        }, binding.rv)
         adapter.setOnItemClickListener { _, _, position ->
             val item: BookChapterBean = adapter.getItem(position) ?: return@setOnItemClickListener
             UrlOpenUtils.with(item.articleBean).open(context)
         }
-        rv.adapter = adapter
-        MultiStateUtils.setEmptyAndErrorClick(msv) {
-            MultiStateUtils.toLoading(msv)
+        binding.rv.adapter = adapter
+        MultiStateUtils.setEmptyAndErrorClick(binding.msv) {
+            MultiStateUtils.toLoading(binding.msv)
             presenter.getChapters(bookBean.id, currPage)
         }
-        abl.addOnOffsetChangedListener(OnOffsetChangedListener { abl, offset ->
+        binding.abl.addOnOffsetChangedListener(OnOffsetChangedListener { abl, offset ->
             if (abs(offset) == abl.totalScrollRange) {
-                abc.titleTextView.alpha = 1f
-                val color = ResUtils.getThemeColor(abc, R.attr.colorMainOrSurface)
-                abc.setBackgroundColor(color)
-                ll_top.alpha = 1F
+                binding.abc.titleTextView.alpha = 1f
+                val color = ResUtils.getThemeColor(binding.abc, R.attr.colorMainOrSurface)
+                binding.abc.setBackgroundColor(color)
+                binding.llTop.alpha = 1F
             } else {
-                abc.titleTextView.alpha = 0f
-                val color = ResUtils.getThemeColor(abc, R.attr.colorTransparent)
-                abc.setBackgroundColor(color)
-                ll_top.alpha = 1f - (abs(offset).toFloat() / abl.totalScrollRange.toFloat())
+                binding.abc.titleTextView.alpha = 0f
+                val color = ResUtils.getThemeColor(binding.abc, R.attr.colorTransparent)
+                binding.abc.setBackgroundColor(color)
+                binding.llTop.alpha = 1f - (abs(offset).toFloat() / abl.totalScrollRange.toFloat())
             }
         })
-        ctbl.post {
-            ctbl.minimumHeight = abc.actionBar.height
-            ctbl.scrimVisibleHeightTrigger = abc.actionBar.height
+        binding.ctbl.post {
+            binding.ctbl.minimumHeight = binding.abc.actionBar.height
+            binding.ctbl.scrimVisibleHeightTrigger = binding.abc.actionBar.height
         }
     }
 
     override fun loadData() {
-        MultiStateUtils.toLoading(msv)
+        MultiStateUtils.toLoading(binding.msv)
         presenter.getChapters(bookBean.id, currPage)
     }
 
@@ -149,9 +146,9 @@ class BookDetailsActivity : BaseActivity<BookDetailsPresenter>(), BookDetailsVie
             adapter.setNewData(list)
             adapter.setEnableLoadMore(true)
             if (list.isEmpty()) {
-                toEmpty(msv)
+                toEmpty(binding.msv)
             } else {
-                toContent(msv)
+                toContent(binding.msv)
             }
         } else {
             adapter.addData(list)
@@ -165,7 +162,7 @@ class BookDetailsActivity : BaseActivity<BookDetailsPresenter>(), BookDetailsVie
     override fun getBookChaptersFailed() {
         adapter.loadMoreFail()
         if (currPage == PAGE_START) {
-            toError(msv)
+            toError(binding.msv)
         }
     }
 }

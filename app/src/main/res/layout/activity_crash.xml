@@ -12,9 +12,9 @@
         android:layout_height="wrap_content" />
 
     <LinearLayout
-        android:layout_below="@+id/sbv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/sbv"
         android:orientation="vertical">
 
         <TextView
@@ -32,10 +32,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15sp"
+            android:layout_marginBottom="10dp"
             android:gravity="center"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
-            android:layout_marginBottom="10dp"
             android:text="复制日志"
             android:textColor="?colorTextMain"
             android:textSize="15sp"
@@ -55,8 +55,8 @@
                 android:layout_height="wrap_content"
                 android:textColor="?colorTextSurfaceAlpha"
                 android:textSize="12sp"
-                tools:text="log"
-                android:typeface="monospace" />
+                android:typeface="monospace"
+                tools:text="log" />
 
         </androidx.core.widget.NestedScrollView>
 

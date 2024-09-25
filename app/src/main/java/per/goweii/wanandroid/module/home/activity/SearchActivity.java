@@ -17,13 +17,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import butterknife.BindView;
 import per.goweii.actionbarex.common.ActionIconView;
 import per.goweii.basic.core.base.BaseActivity;
 import per.goweii.basic.core.mvp.MvpPresenter;
 import per.goweii.basic.utils.EditTextUtils;
 import per.goweii.basic.utils.InputMethodUtils;
 import per.goweii.wanandroid.R;
+import per.goweii.wanandroid.databinding.ActivitySearchBinding;
 import per.goweii.wanandroid.module.home.fragment.SearchHistoryFragment;
 import per.goweii.wanandroid.module.home.fragment.SearchResultFragment;
 
@@ -34,26 +34,36 @@ import per.goweii.wanandroid.module.home.fragment.SearchResultFragment;
  */
 public class SearchActivity extends BaseActivity {
 
-    @BindView(R.id.aiv_back)
+    //    @BindView(R.id.aiv_back)
     ActionIconView aiv_back;
-    @BindView(R.id.aiv_clear)
+    //    @BindView(R.id.aiv_clear)
     ActionIconView aiv_clear;
-    @BindView(R.id.aiv_search)
+    //    @BindView(R.id.aiv_search)
     ActionIconView aiv_search;
-    @BindView(R.id.et_search)
+    //    @BindView(R.id.et_search)
     EditText et_search;
-    @BindView(R.id.fl)
+    //    @BindView(R.id.fl)
     FrameLayout fl;
-
+    private ActivitySearchBinding binding;
     private SearchHistoryFragment mSearchHistoryFragment;
     private SearchResultFragment mSearchResultFragment;
     private FragmentManager mFragmentManager;
-
     private boolean mIsResultPage = false;
 
     public static void start(Context context) {
         Intent intent = new Intent(context, SearchActivity.class);
         context.startActivity(intent);
+    }
+
+    @Override
+    public void initRootView() {
+        binding = ActivitySearchBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        aiv_back = binding.ab.findViewById(R.id.aiv_back);
+        aiv_clear = binding.ab.findViewById(R.id.aiv_clear);
+        aiv_search = binding.ab.findViewById(R.id.aiv_search);
+        et_search = binding.ab.findViewById(R.id.et_search);
+        fl = binding.fl;
     }
 
     @Override

@@ -12,8 +12,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 import per.goweii.actionbarex.common.ActionBarCommon;
 import per.goweii.basic.core.base.BaseActivity;
 import per.goweii.basic.ui.toast.ToastMaker;
@@ -23,6 +21,7 @@ import per.goweii.basic.utils.listener.OnClickListener2;
 import per.goweii.basic.utils.listener.SimpleTextWatcher;
 import per.goweii.rxhttp.request.base.BaseBean;
 import per.goweii.wanandroid.R;
+import per.goweii.wanandroid.databinding.ActivityShareArticleBinding;
 import per.goweii.wanandroid.module.main.presenter.ShareArticlePresenter;
 import per.goweii.wanandroid.module.main.view.ShareArticleView;
 import per.goweii.wanandroid.utils.UrlOpenUtils;
@@ -39,18 +38,19 @@ public class ShareArticleActivity extends BaseActivity<ShareArticlePresenter> im
 
     private static final String TAG = ShareArticleActivity.class.getSimpleName();
 
-    @BindView(R.id.abc)
+    //    @BindView(R.id.abc)
     ActionBarCommon abc;
-    @BindView(R.id.wc)
+    //    @BindView(R.id.wc)
     WebContainer wc;
-    @BindView(R.id.et_title)
+    //    @BindView(R.id.et_title)
     EditText et_title;
-    @BindView(R.id.et_link)
+    //    @BindView(R.id.et_link)
     EditText et_link;
-    @BindView(R.id.tv_share)
+    //    @BindView(R.id.tv_share)
     TextView tv_share;
 
     private WebHolder mWebHolder;
+    private ActivityShareArticleBinding binding;
 
     public static void start(Context context) {
         start(context, "");
@@ -68,6 +68,19 @@ public class ShareArticleActivity extends BaseActivity<ShareArticlePresenter> im
         intent.putExtra("title", title);
         intent.putExtra("link", link);
         context.startActivity(intent);
+    }
+
+    @Override
+    public void initRootView() {
+        binding = ActivityShareArticleBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        abc = binding.abc;
+        wc = binding.wc;
+        et_title = binding.etTitle;
+        et_link = binding.etLink;
+        tv_share = binding.tvShare;
+        binding.tvOpen.setOnClickListener(this);
+        binding.tvRefresh.setOnClickListener(this);
     }
 
     @Override
@@ -189,7 +202,7 @@ public class ShareArticleActivity extends BaseActivity<ShareArticlePresenter> im
         et_title.setSelection(title.length());
     }
 
-    @OnClick({R.id.tv_open, R.id.tv_refresh})
+    //    @OnClick({R.id.tv_open, R.id.tv_refresh})
     @Override
     public void onClick(View v) {
         super.onClick(v);

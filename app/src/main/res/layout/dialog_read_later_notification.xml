@@ -17,8 +17,8 @@
         app:hl_layoutBackground="?colorTransparent"
         app:hl_shadowColor="?colorShadow"
         app:hl_shadowLimit="@dimen/margin_small"
-        app:hl_shadowSymmetry="false"
-        app:hl_shadowOffsetY="@dimen/margin_very_thin">
+        app:hl_shadowOffsetY="@dimen/margin_very_thin"
+        app:hl_shadowSymmetry="false">
 
         <LinearLayout
             android:id="@+id/dialog_read_later_notification_ll_content"

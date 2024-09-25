@@ -85,9 +85,9 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/margin_def"
             android:layout_marginBottom="@dimen/margin_middle"
+            android:text="扫码下载安装"
             android:textColor="@color/color_black_a50"
-            android:textSize="@dimen/text_content"
-            android:text="扫码下载安装" />
+            android:textSize="@dimen/text_content" />
 
     </RelativeLayout>
 

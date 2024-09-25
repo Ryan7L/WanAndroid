@@ -1,16 +1,18 @@
 package per.goweii.wanandroid.module.main.fragment
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.scwang.smart.refresh.layout.api.RefreshFooter
 import com.scwang.smart.refresh.layout.constant.RefreshState
-import kotlinx.android.synthetic.main.fragment_bookmark.msv
-import kotlinx.android.synthetic.main.fragment_bookmark.rv
-import kotlinx.android.synthetic.main.fragment_bookmark.srl
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import per.goweii.basic.core.base.BaseFragment
 import per.goweii.basic.core.utils.SmartRefreshUtils
 import per.goweii.wanandroid.R
+import per.goweii.wanandroid.databinding.FragmentBookmarkBinding
 import per.goweii.wanandroid.db.model.ReadLaterModel
 import per.goweii.wanandroid.event.CloseSecondFloorEvent
 import per.goweii.wanandroid.event.ReadLaterEvent
@@ -29,17 +31,28 @@ import per.goweii.wanandroid.widget.refresh.SimpleOnMultiListener
 class BookmarkFragment : BaseFragment<BookmarkPresenter>(), BookmarkView {
 
     private lateinit var mAdapter: BookmarkAdapter
-
+    private lateinit var binding: FragmentBookmarkBinding
     private var offset = 0
     private val perPageCount = 20
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentBookmarkBinding.inflate(inflater, container, false)
+        mRootView = binding.root
+        mViewCreated = true
+
+        return mRootView
+    }
 
     override fun getLayoutRes(): Int = R.layout.fragment_bookmark
 
     override fun initPresenter(): BookmarkPresenter = BookmarkPresenter()
 
     override fun initView() {
-        SmartRefreshUtils.with(srl).pureScrollMode()
-        srl.setOnMultiListener(object : SimpleOnMultiListener() {
+        SmartRefreshUtils.with(binding.srl).pureScrollMode()
+        binding.srl.setOnMultiListener(object : SimpleOnMultiListener() {
             override fun onFooterMoving(
                 footer: RefreshFooter?,
                 isDragging: Boolean,
@@ -56,32 +69,32 @@ class BookmarkFragment : BaseFragment<BookmarkPresenter>(), BookmarkView {
                     footerHeight,
                     maxDragHeight
                 )
-                if (srl.state != RefreshState.PullUpCanceled && isDragging && percent > 1.2F) {
-                    srl.closeHeaderOrFooter()
+                if (binding.srl.state != RefreshState.PullUpCanceled && isDragging && percent > 1.2F) {
+                    binding.srl.closeHeaderOrFooter()
                     CloseSecondFloorEvent().post()
                 }
             }
         })
-        rv.layoutManager = LinearLayoutManager(context)
+        binding.rv.layoutManager = LinearLayoutManager(context)
         mAdapter = BookmarkAdapter()
         RvConfigUtils.init(mAdapter)
         mAdapter.setEnableLoadMore(true)
-        mAdapter.setOnLoadMoreListener({ getPageList() }, rv)
+        mAdapter.setOnLoadMoreListener({ getPageList() }, binding.rv)
         mAdapter.setOnItemClickListener { _, _, position ->
             mAdapter.getItem(position)?.let { item ->
                 UrlOpenUtils.with(item.link).open(context)
             }
         }
-        rv.adapter = mAdapter
-        setEmptyAndErrorClick(msv) {
-            toLoading(msv)
+        binding.rv.adapter = mAdapter
+        setEmptyAndErrorClick(binding.msv) {
+            toLoading(binding.msv)
             offset = 0
             getPageList()
         }
     }
 
     override fun loadData() {
-        toLoading(msv)
+        toLoading(binding.msv)
     }
 
     override fun onVisible(isFirstVisible: Boolean) {
@@ -111,9 +124,9 @@ class BookmarkFragment : BaseFragment<BookmarkPresenter>(), BookmarkView {
         if (offset == 0) {
             mAdapter.setNewData(list)
             if (list.isEmpty()) {
-                toEmpty(msv, true)
+                toEmpty(binding.msv, true)
             } else {
-                toContent(msv)
+                toContent(binding.msv)
             }
         } else {
             mAdapter.addData(list)
@@ -127,7 +140,7 @@ class BookmarkFragment : BaseFragment<BookmarkPresenter>(), BookmarkView {
 
     override fun getBookmarkListFailed() {
         if (offset == 0) {
-            toError(msv)
+            toError(binding.msv)
         } else {
             mAdapter.loadMoreFail()
         }

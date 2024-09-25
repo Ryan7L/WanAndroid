@@ -24,9 +24,13 @@
         app:drag_edge="bottom"
         app:show_mode="pull_out">
 
-        <include layout="@layout/layout_about_me_sponsor" />
+        <include
+            android:id="@+id/sponsor_layout"
+            layout="@layout/layout_about_me_sponsor" />
 
-        <include layout="@layout/layout_about_me_info" />
+        <include
+            android:id="@+id/info_layout"
+            layout="@layout/layout_about_me_info" />
 
     </com.daimajia.swipe.SwipeLayout>
 

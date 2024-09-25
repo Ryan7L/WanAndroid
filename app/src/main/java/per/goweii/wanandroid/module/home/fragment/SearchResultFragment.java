@@ -1,7 +1,11 @@
 package per.goweii.wanandroid.module.home.fragment;
 
+import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,12 +18,12 @@ import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import butterknife.BindView;
 import per.goweii.basic.core.base.BaseFragment;
 import per.goweii.basic.core.utils.SmartRefreshUtils;
 import per.goweii.basic.ui.toast.ToastMaker;
 import per.goweii.basic.utils.listener.SimpleListener;
 import per.goweii.wanandroid.R;
+import per.goweii.wanandroid.databinding.FragmentSearchResultBinding;
 import per.goweii.wanandroid.event.CollectionEvent;
 import per.goweii.wanandroid.module.home.presenter.SearchResultPresenter;
 import per.goweii.wanandroid.module.home.view.SearchResultView;
@@ -39,11 +43,11 @@ public class SearchResultFragment extends BaseFragment<SearchResultPresenter> im
 
     private static final int PAGE_START = 0;
 
-    @BindView(R.id.msv)
+    //@BindView(R.id.msv)
     MultiStateView msv;
-    @BindView(R.id.srl)
+    //@BindView(R.id.srl)
     SmartRefreshLayout srl;
-    @BindView(R.id.rv)
+    //@BindView(R.id.rv)
     RecyclerView rv;
 
     private int currPage = PAGE_START;
@@ -54,6 +58,18 @@ public class SearchResultFragment extends BaseFragment<SearchResultPresenter> im
 
     public static SearchResultFragment create() {
         return new SearchResultFragment();
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        FragmentSearchResultBinding binding = FragmentSearchResultBinding.inflate(inflater, container, false);
+        mRootView = binding.getRoot();
+        mViewCreated = true;
+        msv = binding.msv;
+        srl = binding.srl;
+        rv = binding.rv;
+        return mRootView;
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

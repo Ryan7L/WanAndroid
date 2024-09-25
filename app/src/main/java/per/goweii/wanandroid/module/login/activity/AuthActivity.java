@@ -9,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
 
-import butterknife.BindView;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function0;
 import per.goweii.actionbarex.common.ActionBarCommon;
@@ -21,6 +20,7 @@ import per.goweii.basic.utils.display.DisplayInfoUtils;
 import per.goweii.swipeback.SwipeBackAbility;
 import per.goweii.swipeback.SwipeBackDirection;
 import per.goweii.wanandroid.R;
+import per.goweii.wanandroid.databinding.ActivityAuthBinding;
 import per.goweii.wanandroid.module.login.fragment.LoginFragment;
 import per.goweii.wanandroid.module.login.fragment.RegisterFragment;
 import per.goweii.wanandroid.module.login.model.LoginInfoEntity;
@@ -39,21 +39,19 @@ public class AuthActivity extends BaseActivity<AuthPresenter> implements AuthVie
     private static final int REQ_CODE_OPEN_QUICK_LOGIN = 1;
     private static final int REQ_CODE_USE_QUICK_LOGIN = 2;
 
-    @BindView(R.id.abc)
+    //@BindView(R.id.abc)
     ActionBarCommon abc;
-    @BindView(R.id.rl_input)
+    //@BindView(R.id.rl_input)
     ParallaxStackLayout rl_input;
-    @BindView(R.id.iv_circle_1)
+    //@BindView(R.id.iv_circle_1)
     ImageView iv_circle_1;
-    @BindView(R.id.iv_circle_2)
+    //@BindView(R.id.iv_circle_2)
     ImageView iv_circle_2;
-    @BindView(R.id.vp)
+    //@BindView(R.id.vp)
     ViewPager vp;
-    @BindView(R.id.lav)
+    //@BindView(R.id.lav)
     LogoAnimView lav;
-
     private SoftInputHelper mSoftInputHelper;
-
     private LoginFragment loginFragment = null;
     private RegisterFragment registerFragment = null;
 
@@ -69,6 +67,18 @@ public class AuthActivity extends BaseActivity<AuthPresenter> implements AuthVie
 
     public static void startQuickLogin(Context context) {
         QuickLoginActivity.Companion.startForUse(context, true);
+    }
+
+    @Override
+    public void initRootView() {
+        ActivityAuthBinding binding = ActivityAuthBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        abc = binding.abc;
+        rl_input = binding.rlInput;
+        iv_circle_1 = binding.ivCircle1;
+        iv_circle_2 = binding.ivCircle2;
+        vp = binding.vp;
+        lav = binding.lav;
     }
 
     @NonNull

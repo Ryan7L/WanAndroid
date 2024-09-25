@@ -15,7 +15,6 @@ import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import butterknife.BindView;
 import per.goweii.actionbarex.common.ActionBarCommon;
 import per.goweii.actionbarex.common.OnActionBarChildClickListener;
 import per.goweii.basic.core.base.BaseActivity;
@@ -24,6 +23,7 @@ import per.goweii.basic.ui.toast.ToastMaker;
 import per.goweii.basic.utils.listener.SimpleListener;
 import per.goweii.wanandroid.R;
 import per.goweii.wanandroid.common.Config;
+import per.goweii.wanandroid.databinding.ActivityMineShareBinding;
 import per.goweii.wanandroid.event.ArticleDeleteEvent;
 import per.goweii.wanandroid.event.ArticleShareEvent;
 import per.goweii.wanandroid.event.CollectionEvent;
@@ -47,25 +47,32 @@ public class MineShareActivity extends BaseActivity<MineSharePresenter> implemen
 
     public static final int PAGE_START = 1;
 
-    @BindView(R.id.abc)
+    //@BindView(R.id.abc)
     ActionBarCommon abc;
-    @BindView(R.id.msv)
+    //@BindView(R.id.msv)
     MultiStateView msv;
-    @BindView(R.id.srl)
+    //@BindView(R.id.srl)
     SmartRefreshLayout srl;
-    @BindView(R.id.rv)
+    //@BindView(R.id.rv)
     RecyclerView rv;
-
     private SmartRefreshUtils mSmartRefreshUtils;
     private MineShareArticleAdapter mAdapter;
-
     private int currPage = PAGE_START;
-
     private long lastClickTime = 0L;
 
     public static void start(Context context) {
         Intent intent = new Intent(context, MineShareActivity.class);
         context.startActivity(intent);
+    }
+
+    @Override
+    public void initRootView() {
+        ActivityMineShareBinding binding = ActivityMineShareBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        abc = binding.abc;
+        msv = binding.msv;
+        srl = binding.srl;
+        rv = binding.rv;
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

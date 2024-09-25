@@ -3,12 +3,16 @@ package per.goweii.wanandroid.module.mine.fragment;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.widget.NestedScrollView;
 
@@ -20,12 +24,11 @@ import com.scwang.smart.refresh.layout.simple.SimpleMultiListener;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 import per.goweii.basic.core.base.BaseFragment;
 import per.goweii.basic.core.utils.SmartRefreshUtils;
 import per.goweii.wanandroid.R;
 import per.goweii.wanandroid.common.Config;
+import per.goweii.wanandroid.databinding.FragmentMineBinding;
 import per.goweii.wanandroid.event.LoginEvent;
 import per.goweii.wanandroid.event.MessageCountEvent;
 import per.goweii.wanandroid.event.MessageUpdateEvent;
@@ -53,44 +56,78 @@ import per.goweii.wanandroid.utils.UserUtils;
  * GitHub: https://github.com/goweii
  */
 public class MineFragment extends BaseFragment<MinePresenter> implements MineView {
-
-    @BindView(R.id.aiv_notification)
+    //@BindView(R.id.aiv_notification)
     ImageView aiv_notification;
-    @BindView(R.id.tv_notification)
+    //@BindView(R.id.tv_notification)
     TextView tv_notification;
-    @BindView(R.id.srl)
+    //@BindView(R.id.srl)
     SmartRefreshLayout srl;
-    @BindView(R.id.nsv)
+    //@BindView(R.id.nsv)
     NestedScrollView nsv;
-    @BindView(R.id.iv_blur)
+    //@BindView(R.id.iv_blur)
     ImageView iv_blur;
-    @BindView(R.id.rl_user_info)
+    //@BindView(R.id.rl_user_info)
     RelativeLayout rl_user_info;
-    @BindView(R.id.civ_user_icon)
+    //@BindView(R.id.civ_user_icon)
     ImageView civ_user_icon;
-    @BindView(R.id.tv_user_name)
+    //@BindView(R.id.tv_user_name)
     TextView tv_user_name;
-    @BindView(R.id.ll_user_level_ranking)
+    //@BindView(R.id.ll_user_level_ranking)
     LinearLayout ll_user_level_ranking;
-    @BindView(R.id.ll_read_later)
+    //@BindView(R.id.ll_read_later)
     LinearLayout ll_read_later;
-    @BindView(R.id.ll_read_record)
+    //@BindView(R.id.ll_read_record)
     LinearLayout ll_read_record;
-    @BindView(R.id.ll_open)
+    //@BindView(R.id.ll_open)
     LinearLayout ll_open;
-    @BindView(R.id.ll_about_me)
+    //@BindView(R.id.ll_about_me)
     LinearLayout ll_about_me;
-    @BindView(R.id.tv_user_level)
+    //@BindView(R.id.tv_user_level)
     TextView tv_user_level;
-    @BindView(R.id.tv_user_ranking)
+    //@BindView(R.id.tv_user_ranking)
     TextView tv_user_ranking;
-    @BindView(R.id.tv_coin)
+    //@BindView(R.id.tv_coin)
     TextView tv_coin;
-
     private SmartRefreshUtils mSmartRefreshUtils;
 
     public static MineFragment create() {
         return new MineFragment();
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        FragmentMineBinding binding = FragmentMineBinding.inflate(inflater, container, false);
+        mRootView = binding.getRoot();
+        mViewCreated = true;
+        aiv_notification = binding.ab.findViewById(R.id.aiv_notification);
+        tv_notification = binding.ab.findViewById(R.id.tv_notification);
+        srl = binding.srl;
+        nsv = binding.nsv;
+        iv_blur = binding.ivBlur;
+        rl_user_info = binding.rlUserInfo;
+        civ_user_icon = binding.civUserIcon;
+        tv_user_name = binding.tvUserName;
+        ll_user_level_ranking = binding.llUserLevelRanking;
+        ll_read_later = binding.llReadLater;
+        ll_read_record = binding.llReadRecord;
+        ll_open = binding.llOpen;
+        ll_about_me = binding.llAboutMe;
+        tv_user_level = binding.tvUserLevel;
+        tv_user_ranking = binding.tvUserRanking;
+        tv_coin = binding.tvCoin;
+
+        civ_user_icon.setOnClickListener(this);
+        tv_user_name.setOnClickListener(this);
+        binding.llCollect.setOnClickListener(this);
+        ll_read_later.setOnClickListener(this);
+        ll_read_record.setOnClickListener(this);
+        ll_about_me.setOnClickListener(this);
+        ll_open.setOnClickListener(this);
+        binding.llSetting.setOnClickListener(this);
+        binding.llCoin.setOnClickListener(this);
+        binding.llShare.setOnClickListener(this);
+        return mRootView;
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -138,21 +175,15 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineVie
 
     @Override
     protected void initView() {
-        aiv_notification.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (UserUtils.getInstance().doIfLogin(getContext())) {
-                    MessageActivity.start(requireContext());
-                    loadNotificationCount();
-                }
+        aiv_notification.setOnClickListener(v -> {
+            if (UserUtils.getInstance().doIfLogin(getContext())) {
+                MessageActivity.start(requireContext());
+                loadNotificationCount();
             }
         });
-        nsv.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(NestedScrollView nestedScrollView, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                if (nsv == null || rl_user_info == null) return;
-                setIvBlurHeight(rl_user_info.getMeasuredHeight() - scrollY);
-            }
+        nsv.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (nestedScrollView, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+            if (nsv == null || rl_user_info == null) return;
+            setIvBlurHeight(rl_user_info.getMeasuredHeight() - scrollY);
         });
         srl.setOnMultiListener(new SimpleMultiListener() {
             @Override
@@ -247,11 +278,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineVie
         }
     }
 
-    @OnClick({
-            R.id.civ_user_icon, R.id.tv_user_name,
-            R.id.ll_collect, R.id.ll_read_later, R.id.ll_read_record, R.id.ll_about_me,
-            R.id.ll_open, R.id.ll_setting, R.id.ll_coin, R.id.ll_share
-    })
+
     @Override
     public void onClick(View v) {
         super.onClick(v);

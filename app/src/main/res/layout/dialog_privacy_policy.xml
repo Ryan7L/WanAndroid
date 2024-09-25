@@ -3,19 +3,19 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:gravity="center_horizontal"
     android:layout_margin="@dimen/margin_big"
-    android:padding="@dimen/margin_def"
     android:background="@drawable/bg_solid_round_color_surface_radius_def"
-    android:orientation="vertical">
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="@dimen/margin_def">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:text="隐私政策"
         android:textColor="?colorTextSurface"
-        android:textSize="@dimen/text_title"
-        android:text="隐私政策" />
+        android:textSize="@dimen/text_title" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -30,9 +30,9 @@
             android:id="@+id/dialog_privacy_policy_tv_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@string/privacy_policy_content"
             android:textColor="?colorTextSurface"
-            android:textSize="@dimen/text_content"
-            android:text="@string/privacy_policy_content" />
+            android:textSize="@dimen/text_content" />
 
     </ScrollView>
 
@@ -48,8 +48,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_def"
         android:gravity="center"
-        android:textSize="@dimen/text_content"
+        android:text="退出应用"
         android:textColor="?colorTextThird"
-        android:text="退出应用" />
+        android:textSize="@dimen/text_content" />
 
 </LinearLayout>

@@ -1,9 +1,17 @@
 package per.goweii.basic.core.base;
 
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import org.greenrobot.eventbus.EventBus;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+//import butterknife.ButterKnife;
+//import butterknife.Unbinder;
 import per.goweii.basic.core.mvp.MvpFragment;
 import per.goweii.basic.core.utils.LoadingBarManager;
 import per.goweii.basic.ui.dialog.LoadingDialog;
@@ -16,7 +24,7 @@ import per.goweii.basic.ui.dialog.LoadingDialog;
 public abstract class BaseFragment<P extends BasePresenter> extends MvpFragment<P> {
     private LoadingDialog mLoadingDialog = null;
     private LoadingBarManager mLoadingBarManager = null;
-    private Unbinder mUnbinder = null;
+//    private Unbinder mUnbinder = null;
 
     /**
      * 是否注册事件分发，默认不绑定
@@ -25,11 +33,32 @@ public abstract class BaseFragment<P extends BasePresenter> extends MvpFragment<
         return false;
     }
 
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return setUpView(inflater, container, savedInstanceState);
+    }
+
+    private View setUpView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        if (mRootView == null) {
+            final int layoutId = getLayoutRes();
+            if (layoutId > 0) {
+                mRootView = initRootView(inflater, container, savedInstanceState);
+            }
+        }
+        mViewCreated = true;
+        return mRootView;
+    }
+
+    public View initRootView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(getLayoutRes(), container, false);
+    }
+
     @Override
     protected void initialize() {
-        if (getRootView() != null) {
-            mUnbinder = ButterKnife.bind(this, getRootView());
-        }
+//        if (getRootView() != null) {
+//            mUnbinder = ButterKnife.bind(this, getRootView());
+//        }
         if (isRegisterEventBus()) {
             EventBus.getDefault().register(this);
         }
@@ -43,9 +72,9 @@ public abstract class BaseFragment<P extends BasePresenter> extends MvpFragment<
         if (isRegisterEventBus()) {
             EventBus.getDefault().unregister(this);
         }
-        if (mUnbinder != null) {
-            mUnbinder.unbind();
-        }
+//        if (mUnbinder != null) {
+//            mUnbinder.unbind();
+//        }
     }
 
     @Override

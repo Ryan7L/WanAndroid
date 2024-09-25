@@ -67,9 +67,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_def"
+                android:gravity="end"
                 android:textColor="?colorTextThird"
                 android:textSize="@dimen/text_time"
-                android:gravity="end"
                 tools:text="2022-03-27 14:39" />
 
         </LinearLayout>

@@ -95,8 +95,8 @@
         <TextView
             android:id="@+id/tv_share"
             style="@style/ButtonMain"
-            android:layout_marginTop="@dimen/margin_def"
             android:layout_marginLeft="@dimen/margin_big"
+            android:layout_marginTop="@dimen/margin_def"
             android:layout_marginRight="@dimen/margin_big"
             android:text="分享" />
 

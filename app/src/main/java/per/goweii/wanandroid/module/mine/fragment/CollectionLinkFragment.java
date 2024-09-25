@@ -1,9 +1,13 @@
 package per.goweii.wanandroid.module.mine.fragment;
 
+import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewParent;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,7 +24,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import butterknife.BindView;
 import per.goweii.basic.core.base.BaseFragment;
 import per.goweii.basic.core.utils.SmartRefreshUtils;
 import per.goweii.basic.ui.toast.ToastMaker;
@@ -29,6 +32,7 @@ import per.goweii.basic.utils.IntentUtils;
 import per.goweii.basic.utils.listener.SimpleCallback;
 import per.goweii.basic.utils.listener.SimpleListener;
 import per.goweii.wanandroid.R;
+import per.goweii.wanandroid.databinding.FragmentCollectionLinkBinding;
 import per.goweii.wanandroid.event.CollectionEvent;
 import per.goweii.wanandroid.module.main.model.CollectionLinkBean;
 import per.goweii.wanandroid.module.mine.adapter.CollectionLinkAdapter;
@@ -47,18 +51,29 @@ import per.goweii.wanandroid.utils.UrlOpenUtils;
  */
 public class CollectionLinkFragment extends BaseFragment<CollectionLinkPresenter> implements RvScrollTopUtils.ScrollTop, CollectionLinkView {
 
-    @BindView(R.id.msv)
+    //@BindView(R.id.msv)
     MultiStateView msv;
-    @BindView(R.id.srl)
+    //@BindView(R.id.srl)
     SmartRefreshLayout srl;
-    @BindView(R.id.rv)
+    //@BindView(R.id.rv)
     RecyclerView rv;
-
     private SmartRefreshUtils mSmartRefreshUtils;
     private CollectionLinkAdapter mAdapter;
 
     public static CollectionLinkFragment create() {
         return new CollectionLinkFragment();
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        FragmentCollectionLinkBinding binding = FragmentCollectionLinkBinding.inflate(inflater, container, false);
+        mRootView = binding.getRoot();
+        mViewCreated = true;
+        msv = binding.msv;
+        srl = binding.srl;
+        rv = binding.rv;
+        return mRootView;
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

@@ -1,8 +1,11 @@
 package per.goweii.wanandroid.module.mine.fragment;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,12 +15,12 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
 import per.goweii.basic.core.base.BaseFragment;
 import per.goweii.basic.core.base.BasePresenter;
 import per.goweii.basic.utils.listener.OnClickListener2;
 import per.goweii.basic.utils.listener.SimpleCallback;
 import per.goweii.wanandroid.R;
+import per.goweii.wanandroid.databinding.FragmentHostInterruptBinding;
 import per.goweii.wanandroid.module.mine.adapter.HostInterruptAdapter;
 import per.goweii.wanandroid.module.mine.dialog.AddHostDialog;
 import per.goweii.wanandroid.module.mine.model.HostEntity;
@@ -32,13 +35,23 @@ import per.goweii.wanandroid.utils.SettingUtils;
  */
 public class HostWhiteFragment extends BaseFragment implements RvScrollTopUtils.ScrollTop {
 
-    @BindView(R.id.rv)
+    //@BindView(R.id.rv)
     RecyclerView rv;
 
     private HostInterruptAdapter mAdapter = null;
 
     public static HostWhiteFragment create() {
         return new HostWhiteFragment();
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        FragmentHostInterruptBinding binding = FragmentHostInterruptBinding.inflate(inflater, container, false);
+        mRootView = binding.getRoot();
+        mViewCreated = true;
+        rv = binding.rv;
+        return mRootView;
     }
 
     @Override

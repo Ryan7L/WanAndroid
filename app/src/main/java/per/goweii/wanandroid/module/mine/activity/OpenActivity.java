@@ -17,10 +17,10 @@ import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
 import per.goweii.basic.core.base.BaseActivity;
 import per.goweii.basic.core.mvp.MvpPresenter;
 import per.goweii.wanandroid.R;
+import per.goweii.wanandroid.databinding.ActivityOpenBinding;
 import per.goweii.wanandroid.module.mine.model.OpenEntity;
 import per.goweii.wanandroid.utils.MultiStateUtils;
 import per.goweii.wanandroid.utils.UrlOpenUtils;
@@ -32,18 +32,26 @@ import per.goweii.wanandroid.utils.UrlOpenUtils;
  */
 public class OpenActivity extends BaseActivity {
 
-    @BindView(R.id.msv)
+    //@BindView(R.id.msv)
     MultiStateView msv;
-    @BindView(R.id.srl)
+    //@BindView(R.id.srl)
     SmartRefreshLayout srl;
-    @BindView(R.id.rv)
+    //@BindView(R.id.rv)
     RecyclerView rv;
-
     private BaseQuickAdapter<OpenEntity, BaseViewHolder> mAdapter;
 
     public static void start(Context context) {
         Intent intent = new Intent(context, OpenActivity.class);
         context.startActivity(intent);
+    }
+
+    @Override
+    public void initRootView() {
+        ActivityOpenBinding binding = ActivityOpenBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        msv = binding.msv;
+        srl = binding.srl;
+        rv = binding.rv;
     }
 
     @Override

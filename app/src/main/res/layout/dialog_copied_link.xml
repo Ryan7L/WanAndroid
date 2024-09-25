@@ -46,9 +46,9 @@
             android:layout_below="@+id/dialog_copied_link_tv_open"
             android:layout_alignLeft="@+id/dialog_copied_link_tv_open"
             android:layout_marginBottom="@dimen/margin_def"
+            android:alpha="0.6"
             android:maxWidth="200dp"
             android:textColor="?colorTextOnMain"
-            android:alpha="0.6"
             android:textSize="@dimen/text_notes"
             tools:text="https://www.github.goweii/WanAndroid" />
 

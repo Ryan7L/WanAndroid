@@ -27,6 +27,7 @@ public class InfoEditDialog {
     private String mTitle = null;
     private String mHint = null;
     private String mText = null;
+
     private InfoEditDialog(Context context) {
         mContext = context;
     }

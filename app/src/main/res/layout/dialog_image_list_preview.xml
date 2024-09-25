@@ -21,8 +21,8 @@
     <per.goweii.actionbarex.common.ActionBarCommon
         android:id="@+id/dialog_image_list_preview_abc"
         style="@style/ActionBar.Common"
-        app:abc_leftIconClickToFinish="false"
         android:background="?colorTransparent"
+        app:abc_leftIconClickToFinish="false"
         app:abc_leftIconRes="@drawable/ic_close"
         app:abc_rightText="1/1" />
 

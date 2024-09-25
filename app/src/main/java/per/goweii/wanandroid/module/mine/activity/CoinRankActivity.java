@@ -11,12 +11,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.kennyc.view.MultiStateView;
 
-import butterknife.BindView;
 import per.goweii.actionbarex.common.ActionBarCommon;
 import per.goweii.actionbarex.common.OnActionBarChildClickListener;
 import per.goweii.basic.core.base.BaseActivity;
 import per.goweii.basic.utils.listener.SimpleListener;
 import per.goweii.wanandroid.R;
+import per.goweii.wanandroid.databinding.ActivityCoinRankBinding;
 import per.goweii.wanandroid.module.home.activity.UserPageActivity;
 import per.goweii.wanandroid.module.main.model.CoinInfoBean;
 import per.goweii.wanandroid.module.mine.adapter.CoinRankAdapter;
@@ -35,19 +35,27 @@ public class CoinRankActivity extends BaseActivity<CoinRankPresenter> implements
 
     private static final int PAGE_START = 1;
 
-    @BindView(R.id.abc)
+    //@BindView(R.id.abc)
     ActionBarCommon abc;
-    @BindView(R.id.msv)
+    //@BindView(R.id.msv)
     MultiStateView msv;
-    @BindView(R.id.rv)
+    //@BindView(R.id.rv)
     RecyclerView rv;
-
     private int currPage = PAGE_START;
     private CoinRankAdapter mAdapter = null;
 
     public static void start(Context context) {
         Intent intent = new Intent(context, CoinRankActivity.class);
         context.startActivity(intent);
+    }
+
+    @Override
+    public void initRootView() {
+        ActivityCoinRankBinding binding = ActivityCoinRankBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        abc = binding.abc;
+        msv = binding.msv;
+        rv = binding.rv;
     }
 
     @Override

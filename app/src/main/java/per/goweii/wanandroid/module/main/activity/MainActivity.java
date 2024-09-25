@@ -14,7 +14,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
 
-import butterknife.BindView;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
 import per.goweii.anylayer.Layer;
@@ -30,6 +29,7 @@ import per.goweii.basic.utils.ResUtils;
 import per.goweii.basic.utils.display.DisplayInfoUtils;
 import per.goweii.wanandroid.R;
 import per.goweii.wanandroid.common.WanApp;
+import per.goweii.wanandroid.databinding.ActivityMainBinding;
 import per.goweii.wanandroid.db.model.ReadLaterModel;
 import per.goweii.wanandroid.event.BannerAutoSwitchEnableEvent;
 import per.goweii.wanandroid.event.CloseSecondFloorEvent;
@@ -71,13 +71,13 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
     private static final String sTaskCopiedLink = "CopiedLink";
     private static final String sTaskReadLater = "ReadLater";
     private final PredefinedTaskQueen mPredefinedTaskQueen = new PredefinedTaskQueen();
-    @BindView(R.id.vp)
     ViewPager vp;
     private FixedFragmentPagerAdapter mPagerAdapter;
     private RuntimeRequester mRuntimeRequester;
     private UpdateUtils mUpdateUtils;
     private CopiedLinkDialog mCopiedLinkDialog = null;
     private PasswordDialog mPasswordDialog = null;
+    private ActivityMainBinding binding;
 
     public static void start(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -91,6 +91,14 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
             LogUtils.d("ThemeUtils", "MainActivity onCreate setNotInstall");
             ThemeUtils.setNotInstall();
         }
+
+    }
+
+    @Override
+    public void initRootView() {
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        vp = binding.vp;
     }
 
     @Override
@@ -184,19 +192,18 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
     }
 
     private void showPrivacyPolicyDialog() {
-        mPredefinedTaskQueen.get(sTaskPrivacyPolicy)
-                .runnable(new Function1<PredefinedTaskQueen.Completion, Unit>() {
+        mPredefinedTaskQueen.get(sTaskPrivacyPolicy).runnable(new Function1<PredefinedTaskQueen.Completion, Unit>() {
+            @Override
+            public Unit invoke(PredefinedTaskQueen.Completion completion) {
+                PrivacyPolicyDialog.showIfFirst(getContext(), new PrivacyPolicyDialog.CompleteCallback() {
                     @Override
-                    public Unit invoke(PredefinedTaskQueen.Completion completion) {
-                        PrivacyPolicyDialog.showIfFirst(getContext(), new PrivacyPolicyDialog.CompleteCallback() {
-                            @Override
-                            public void onComplete() {
-                                completion.complete();
-                            }
-                        });
-                        return null;
+                    public void onComplete() {
+                        completion.complete();
                     }
                 });
+                return null;
+            }
+        });
     }
 
     @Override
@@ -347,35 +354,25 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
                 boolean shouldForce = mUpdateUtils.shouldForceUpdate(data);
                 if (shouldForce || mUpdateUtils.shouldUpdate(data)) {
                     mPredefinedTaskQueen.get(sTaskBetaUpdate).complete();
-                    UpdateDialog.with(getContext())
-                            .setUrl(data.getUrl())
-                            .setUrlBackup(data.getUrl_backup())
-                            .setVersionCode(data.getVersion_code())
-                            .setVersionName(data.getVersion_name())
-                            .setForce(shouldForce)
-                            .setDescription(data.getDesc())
-                            .setTime(data.getTime())
-                            .setOnUpdateListener(new UpdateDialog.OnUpdateListener() {
-                                @Override
-                                public void onDownload(String url, String urlBackup, boolean isForce) {
-                                    download(url, urlBackup, isForce);
-                                }
+                    UpdateDialog.with(getContext()).setUrl(data.getUrl()).setUrlBackup(data.getUrl_backup()).setVersionCode(data.getVersion_code()).setVersionName(data.getVersion_name()).setForce(shouldForce).setDescription(data.getDesc()).setTime(data.getTime()).setOnUpdateListener(new UpdateDialog.OnUpdateListener() {
+                        @Override
+                        public void onDownload(String url, String urlBackup, boolean isForce) {
+                            download(url, urlBackup, isForce);
+                        }
 
-                                @Override
-                                public void onIgnore(String versionName, int versionCode) {
-                                    mUpdateUtils.ignore(versionCode);
-                                }
-                            })
-                            .setOnDismissListener(new UpdateDialog.OnDismissListener() {
-                                @Override
-                                public void onDismiss() {
-                                    completion.complete();
-                                    if (!mPredefinedTaskQueen.get(sTaskDownload).isRunnable()) {
-                                        mPredefinedTaskQueen.get(sTaskDownload).complete();
-                                    }
-                                }
-                            })
-                            .show();
+                        @Override
+                        public void onIgnore(String versionName, int versionCode) {
+                            mUpdateUtils.ignore(versionCode);
+                        }
+                    }).setOnDismissListener(new UpdateDialog.OnDismissListener() {
+                        @Override
+                        public void onDismiss() {
+                            completion.complete();
+                            if (!mPredefinedTaskQueen.get(sTaskDownload).isRunnable()) {
+                                mPredefinedTaskQueen.get(sTaskDownload).complete();
+                            }
+                        }
+                    }).show();
                 } else {
                     if (!mUpdateUtils.isNewest(data) && UserUtils.getInstance().isLogin()) {
                         presenter.betaUpdate();
@@ -405,36 +402,25 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
             public Unit invoke(PredefinedTaskQueen.Completion completion) {
                 boolean shouldForce = mUpdateUtils.shouldForceUpdate(data);
                 if (shouldForce || mUpdateUtils.shouldUpdateBeta(data)) {
-                    UpdateDialog.with(getContext())
-                            .setTest(true)
-                            .setUrl(data.getUrl())
-                            .setUrlBackup(data.getUrl_backup())
-                            .setVersionCode(data.getVersion_code())
-                            .setVersionName(data.getVersion_name())
-                            .setForce(shouldForce)
-                            .setDescription(data.getDesc())
-                            .setTime(data.getTime())
-                            .setOnUpdateListener(new UpdateDialog.OnUpdateListener() {
-                                @Override
-                                public void onDownload(String url, String urlBackup, boolean isForce) {
-                                    download(url, urlBackup, isForce);
-                                }
+                    UpdateDialog.with(getContext()).setTest(true).setUrl(data.getUrl()).setUrlBackup(data.getUrl_backup()).setVersionCode(data.getVersion_code()).setVersionName(data.getVersion_name()).setForce(shouldForce).setDescription(data.getDesc()).setTime(data.getTime()).setOnUpdateListener(new UpdateDialog.OnUpdateListener() {
+                        @Override
+                        public void onDownload(String url, String urlBackup, boolean isForce) {
+                            download(url, urlBackup, isForce);
+                        }
 
-                                @Override
-                                public void onIgnore(String versionName, int versionCode) {
-                                    mUpdateUtils.ignoreBeta(versionName, versionCode);
-                                }
-                            })
-                            .setOnDismissListener(new UpdateDialog.OnDismissListener() {
-                                @Override
-                                public void onDismiss() {
-                                    completion.complete();
-                                    if (!mPredefinedTaskQueen.get(sTaskDownload).isRunnable()) {
-                                        mPredefinedTaskQueen.get(sTaskDownload).complete();
-                                    }
-                                }
-                            })
-                            .show();
+                        @Override
+                        public void onIgnore(String versionName, int versionCode) {
+                            mUpdateUtils.ignoreBeta(versionName, versionCode);
+                        }
+                    }).setOnDismissListener(new UpdateDialog.OnDismissListener() {
+                        @Override
+                        public void onDismiss() {
+                            completion.complete();
+                            if (!mPredefinedTaskQueen.get(sTaskDownload).isRunnable()) {
+                                mPredefinedTaskQueen.get(sTaskDownload).complete();
+                            }
+                        }
+                    }).show();
                 } else {
                     completion.complete();
                     mPredefinedTaskQueen.get(sTaskDownload).complete();
@@ -483,13 +469,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
     @Override
     public void getConfigSuccess(ConfigBean configBean) {
         if (configBean.isEnableAtNow()) {
-            new HomeActionBarEvent(
-                    configBean.getHomeTitle(),
-                    configBean.getActionBarBgColor(),
-                    configBean.getActionBarBgImageUrl(),
-                    configBean.getSecondFloorBgImageUrl(),
-                    configBean.getSecondFloorBgImageBlurPercent()
-            ).postSticky();
+            new HomeActionBarEvent(configBean.getHomeTitle(), configBean.getActionBarBgColor(), configBean.getActionBarBgImageUrl(), configBean.getSecondFloorBgImageUrl(), configBean.getSecondFloorBgImageBlurPercent()).postSticky();
         } else {
             new HomeActionBarEvent().postSticky();
         }
@@ -510,27 +490,23 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
             mPredefinedTaskQueen.get(sTaskAdvert).complete();
             return;
         }
-        mPredefinedTaskQueen.get(sTaskAdvert)
-                .runnable(new Function1<PredefinedTaskQueen.Completion, Unit>() {
+        mPredefinedTaskQueen.get(sTaskAdvert).runnable(new Function1<PredefinedTaskQueen.Completion, Unit>() {
+            @Override
+            public Unit invoke(PredefinedTaskQueen.Completion completion) {
+                new AdvertDialog(MainActivity.this).setAdvertBean(advertBean).addOnVisibleChangeListener(new Layer.OnVisibleChangedListener() {
                     @Override
-                    public Unit invoke(PredefinedTaskQueen.Completion completion) {
-                        new AdvertDialog(MainActivity.this)
-                                .setAdvertBean(advertBean)
-                                .addOnVisibleChangeListener(new Layer.OnVisibleChangedListener() {
-                                    @Override
-                                    public void onShow(@NonNull Layer layer) {
-                                        ADUtils.getInstance().setAdShown();
-                                    }
-
-                                    @Override
-                                    public void onDismiss(@NonNull Layer layer) {
-                                        completion.complete();
-                                    }
-                                })
-                                .show();
-                        return null;
+                    public void onShow(@NonNull Layer layer) {
+                        ADUtils.getInstance().setAdShown();
                     }
-                });
+
+                    @Override
+                    public void onDismiss(@NonNull Layer layer) {
+                        completion.complete();
+                    }
+                }).show();
+                return null;
+            }
+        });
     }
 
     @Override
@@ -540,48 +516,41 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
 
     @Override
     public void getReadLaterArticleSuccess(ReadLaterModel readLaterModel) {
-        mPredefinedTaskQueen.get(sTaskReadLater)
-                .runnable(new Function1<PredefinedTaskQueen.Completion, Unit>() {
+        mPredefinedTaskQueen.get(sTaskReadLater).runnable(new Function1<PredefinedTaskQueen.Completion, Unit>() {
+            @Override
+            public Unit invoke(PredefinedTaskQueen.Completion completion) {
+                if (!SettingUtils.getInstance().isShowReadLaterNotification()) {
+                    completion.complete();
+                    return null;
+                }
+                new NotificationLayer(MainActivity.this).setContentView(R.layout.dialog_read_later_notification).addOnBindDataListener(new Layer.OnBindDataListener() {
                     @Override
-                    public Unit invoke(PredefinedTaskQueen.Completion completion) {
-                        if (!SettingUtils.getInstance().isShowReadLaterNotification()) {
-                            completion.complete();
-                            return null;
-                        }
-                        new NotificationLayer(MainActivity.this)
-                                .setContentView(R.layout.dialog_read_later_notification)
-                                .addOnBindDataListener(new Layer.OnBindDataListener() {
-                                    @Override
-                                    public void onBindData(@NonNull Layer layer) {
-                                        View child = layer.requireView(R.id.dialog_read_later_notification);
-                                        child.setPadding(0, DisplayInfoUtils.getInstance().getStatusBarHeight(), 0, 0);
-                                        TextView tv_title = layer.requireView(R.id.dialog_read_later_notification_tv_title);
-                                        TextView tv_desc = layer.requireView(R.id.dialog_read_later_notification_tv_desc);
-                                        tv_title.setText("是否继续阅读？");
-                                        tv_desc.setText(readLaterModel.getTitle());
-                                    }
-                                })
-                                .addOnClickToDismissListener(new Layer.OnClickListener() {
-                                    @Override
-                                    public void onClick(@NonNull Layer layer, @NonNull View view) {
-                                        UrlOpenUtils.Companion
-                                                .with(readLaterModel.getLink())
-                                                .open(getContext());
-                                    }
-                                }, R.id.dialog_read_later_notification_ll_content)
-                                .addOnDismissListener(new Layer.OnDismissListener() {
-                                    @Override
-                                    public void onPreDismiss(@NonNull Layer layer) {
-                                    }
-
-                                    @Override
-                                    public void onPostDismiss(@NonNull Layer layer) {
-                                        completion.complete();
-                                    }
-                                }).show();
-                        return null;
+                    public void onBindData(@NonNull Layer layer) {
+                        View child = layer.requireView(R.id.dialog_read_later_notification);
+                        child.setPadding(0, DisplayInfoUtils.getInstance().getStatusBarHeight(), 0, 0);
+                        TextView tv_title = layer.requireView(R.id.dialog_read_later_notification_tv_title);
+                        TextView tv_desc = layer.requireView(R.id.dialog_read_later_notification_tv_desc);
+                        tv_title.setText("是否继续阅读？");
+                        tv_desc.setText(readLaterModel.getTitle());
                     }
-                });
+                }).addOnClickToDismissListener(new Layer.OnClickListener() {
+                    @Override
+                    public void onClick(@NonNull Layer layer, @NonNull View view) {
+                        UrlOpenUtils.Companion.with(readLaterModel.getLink()).open(getContext());
+                    }
+                }, R.id.dialog_read_later_notification_ll_content).addOnDismissListener(new Layer.OnDismissListener() {
+                    @Override
+                    public void onPreDismiss(@NonNull Layer layer) {
+                    }
+
+                    @Override
+                    public void onPostDismiss(@NonNull Layer layer) {
+                        completion.complete();
+                    }
+                }).show();
+                return null;
+            }
+        });
     }
 
     @Override

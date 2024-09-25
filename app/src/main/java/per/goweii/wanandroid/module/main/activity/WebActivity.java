@@ -18,7 +18,6 @@ import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.List;
 
-import butterknife.BindView;
 import per.goweii.actionbarex.ActionBarEx;
 import per.goweii.anylayer.Layer;
 import per.goweii.basic.core.base.BaseActivity;
@@ -31,6 +30,7 @@ import per.goweii.basic.utils.listener.OnClickListener2;
 import per.goweii.swipeback.SwipeBackAbility;
 import per.goweii.wanandroid.BuildConfig;
 import per.goweii.wanandroid.R;
+import per.goweii.wanandroid.databinding.ActivityWebBinding;
 import per.goweii.wanandroid.db.model.ReadLaterModel;
 import per.goweii.wanandroid.module.main.dialog.ArticleShareDialog;
 import per.goweii.wanandroid.module.main.dialog.WebGuideDialog;
@@ -51,21 +51,13 @@ import per.goweii.wanandroid.widget.CollectView;
  */
 public class WebActivity extends BaseActivity<WebPresenter> implements per.goweii.wanandroid.module.main.view.WebView, SwipeBackAbility.OnlyEdge {
 
-    @BindView(R.id.ab)
     ActionBarEx ab;
-    @BindView(R.id.et_title)
     EditText et_title;
-    @BindView(R.id.cv_collect)
     CollectView cv_collect;
-    @BindView(R.id.iv_into)
     ImageView iv_into;
-    @BindView(R.id.wc)
     WebContainer wc;
-    @BindView(R.id.iv_back)
     ImageView iv_back;
-    @BindView(R.id.iv_forward)
     ImageView iv_forward;
-    @BindView(R.id.iv_menu)
     ImageView iv_menu;
 
     private int mArticleId = -1;
@@ -77,6 +69,7 @@ public class WebActivity extends BaseActivity<WebPresenter> implements per.gowei
     private WebGuideDialog mWebGuideDialog = null;
     private WebHolder mWebHolder;
     private WebQuickDialog mWebQuickDialog;
+    private ActivityWebBinding binding;
 
     public static void start(Context context, String url, String title,
                              int articleId, int collectId, boolean collected) {
@@ -87,6 +80,20 @@ public class WebActivity extends BaseActivity<WebPresenter> implements per.gowei
         intent.putExtra("collectId", collectId);
         intent.putExtra("collected", collected);
         context.startActivity(intent);
+    }
+
+    @Override
+    public void initRootView() {
+        binding = ActivityWebBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        ab = binding.ab;
+        et_title = binding.ab.findViewById(R.id.et_title);
+        cv_collect = binding.ab.findViewById(R.id.cv_collect);
+        iv_into = binding.ab.findViewById(R.id.iv_into);
+        wc = binding.wc;
+        iv_back = binding.ivBack;
+        iv_forward = binding.ivForward;
+        iv_menu = binding.ivMenu;
     }
 
     public void refreshSwipeBackOnlyEdge() {

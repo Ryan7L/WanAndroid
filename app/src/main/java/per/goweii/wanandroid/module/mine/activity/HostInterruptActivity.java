@@ -9,7 +9,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
-import butterknife.BindView;
 import per.goweii.actionbarex.ActionBarEx;
 import per.goweii.basic.core.adapter.FixedFragmentPagerAdapter;
 import per.goweii.basic.core.base.BaseActivity;
@@ -17,6 +16,7 @@ import per.goweii.basic.core.mvp.MvpPresenter;
 import per.goweii.basic.utils.listener.SimpleCallback;
 import per.goweii.wanandroid.R;
 import per.goweii.wanandroid.common.Config;
+import per.goweii.wanandroid.databinding.ActivityHostInterruptBinding;
 import per.goweii.wanandroid.module.mine.fragment.HostBlackFragment;
 import per.goweii.wanandroid.module.mine.fragment.HostWhiteFragment;
 import per.goweii.wanandroid.utils.MagicIndicatorUtils;
@@ -29,11 +29,10 @@ import per.goweii.wanandroid.utils.RvScrollTopUtils;
  */
 public class HostInterruptActivity extends BaseActivity {
 
-    @BindView(R.id.ab)
+    //@BindView(R.id.ab)
     ActionBarEx ab;
-    @BindView(R.id.vp)
+    //@BindView(R.id.vp)
     ViewPager vp;
-
     private FixedFragmentPagerAdapter mAdapter;
     private long lastClickTime = 0L;
     private int lastClickPos = 0;
@@ -41,6 +40,14 @@ public class HostInterruptActivity extends BaseActivity {
     public static void start(Context context) {
         Intent intent = new Intent(context, HostInterruptActivity.class);
         context.startActivity(intent);
+    }
+
+    @Override
+    public void initRootView() {
+        ActivityHostInterruptBinding binding = ActivityHostInterruptBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        ab = binding.ab;
+        vp = binding.vp;
     }
 
     @Override

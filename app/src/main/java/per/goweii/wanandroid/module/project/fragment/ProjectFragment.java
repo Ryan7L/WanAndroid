@@ -1,5 +1,11 @@
 package per.goweii.wanandroid.module.project.fragment;
 
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
 
@@ -7,7 +13,6 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigat
 
 import java.util.List;
 
-import butterknife.BindView;
 import per.goweii.actionbarex.ActionBarEx;
 import per.goweii.basic.core.adapter.MultiFragmentPagerAdapter;
 import per.goweii.basic.core.base.BaseFragment;
@@ -15,6 +20,7 @@ import per.goweii.basic.ui.toast.ToastMaker;
 import per.goweii.basic.utils.listener.SimpleCallback;
 import per.goweii.wanandroid.R;
 import per.goweii.wanandroid.common.Config;
+import per.goweii.wanandroid.databinding.FragmentProjectBinding;
 import per.goweii.wanandroid.event.ScrollTopEvent;
 import per.goweii.wanandroid.module.main.model.ChapterBean;
 import per.goweii.wanandroid.module.project.presenter.ProjectPresenter;
@@ -29,9 +35,9 @@ import per.goweii.wanandroid.utils.RvScrollTopUtils;
  */
 public class ProjectFragment extends BaseFragment<ProjectPresenter> implements RvScrollTopUtils.ScrollTop, ProjectView {
 
-    @BindView(R.id.ab)
+    //@BindView(R.id.ab)
     ActionBarEx ab;
-    @BindView(R.id.vp)
+    //@BindView(R.id.vp)
     ViewPager vp;
 
     private MultiFragmentPagerAdapter<ChapterBean, ProjectArticleFragment> mAdapter;
@@ -41,6 +47,17 @@ public class ProjectFragment extends BaseFragment<ProjectPresenter> implements R
 
     public static ProjectFragment create() {
         return new ProjectFragment();
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        FragmentProjectBinding binding = FragmentProjectBinding.inflate(inflater, container, false);
+        mRootView = binding.getRoot();
+        mViewCreated = true;
+        ab = binding.ab;
+        vp = binding.vp;
+        return mRootView;
     }
 
     @Override

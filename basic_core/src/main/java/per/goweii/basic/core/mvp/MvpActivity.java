@@ -60,14 +60,18 @@ public abstract class MvpActivity<P extends MvpPresenter> extends CacheActivity 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initWindow();
-        if (getLayoutId() > 0) {
-            setContentView(getLayoutId());
-        }
+        initRootView();
         presenter = initPresenter();
         if (presenter != null) {
             presenter.attach(this);
         }
         initialize();
+    }
+
+    public void initRootView() {
+        if (getLayoutId() > 0) {
+            setContentView(getLayoutId());
+        }
     }
 
     protected void initialize() {

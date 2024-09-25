@@ -1,9 +1,10 @@
 package per.goweii.wanandroid.module.question.fragment
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.fragment_question.msv
-import kotlinx.android.synthetic.main.fragment_question.rv
-import kotlinx.android.synthetic.main.fragment_question.srl
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import per.goweii.basic.core.base.BaseFragment
@@ -11,6 +12,7 @@ import per.goweii.basic.core.utils.SmartRefreshUtils
 import per.goweii.basic.ui.toast.ToastMaker
 import per.goweii.basic.utils.listener.SimpleListener
 import per.goweii.wanandroid.R
+import per.goweii.wanandroid.databinding.FragmentQuestionBinding
 import per.goweii.wanandroid.event.CollectionEvent
 import per.goweii.wanandroid.event.LoginEvent
 import per.goweii.wanandroid.event.ScrollTopEvent
@@ -36,6 +38,18 @@ class QuestionFragment : BaseFragment<QuestionPresenter>(), QuestionView, Scroll
         fun create(): QuestionFragment {
             return QuestionFragment()
         }
+    }
+
+    private lateinit var binding: FragmentQuestionBinding
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentQuestionBinding.inflate(inflater, container, false)
+        mRootView = binding.root
+        mViewCreated = true
+        return mRootView
     }
 
     private lateinit var mSmartRefreshUtils: SmartRefreshUtils
@@ -70,7 +84,7 @@ class QuestionFragment : BaseFragment<QuestionPresenter>(), QuestionView, Scroll
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onScrollTopEvent(event: ScrollTopEvent) {
         if (isAdded && !isDetached) {
-            RvScrollTopUtils.smoothScrollTop(rv)
+            RvScrollTopUtils.smoothScrollTop(binding.rv)
         }
     }
 
@@ -81,18 +95,18 @@ class QuestionFragment : BaseFragment<QuestionPresenter>(), QuestionView, Scroll
     override fun initPresenter(): QuestionPresenter = QuestionPresenter()
 
     override fun initView() {
-        mSmartRefreshUtils = SmartRefreshUtils.with(srl)
+        mSmartRefreshUtils = SmartRefreshUtils.with(binding.srl)
         mSmartRefreshUtils.pureScrollMode()
         mSmartRefreshUtils.setRefreshListener {
             currPage = PAGE_START
             presenter.getQuestionList(currPage)
         }
-        rv.layoutManager = LinearLayoutManager(context)
+        binding.rv.layoutManager = LinearLayoutManager(context)
         mAdapter = ArticleAdapter()
         mAdapter.setEnableLoadMore(false)
         mAdapter.setOnLoadMoreListener({
             presenter.getQuestionList(currPage)
-        }, rv)
+        }, binding.rv)
         mAdapter.setOnItemChildViewClickListener { _, v, position ->
             mAdapter.getItem(position)?.let { item ->
                 if (v.isChecked) {
@@ -102,15 +116,15 @@ class QuestionFragment : BaseFragment<QuestionPresenter>(), QuestionView, Scroll
                 }
             }
         }
-        rv.adapter = mAdapter
-        setEmptyAndErrorClick(msv, SimpleListener {
-            MultiStateUtils.toLoading(msv)
+        binding.rv.adapter = mAdapter
+        setEmptyAndErrorClick(binding.msv, SimpleListener {
+            MultiStateUtils.toLoading(binding.msv)
             presenter.getQuestionList(currPage)
         })
     }
 
     override fun loadData() {
-        MultiStateUtils.toLoading(msv)
+        MultiStateUtils.toLoading(binding.msv)
         presenter.getQuestionListCache(PAGE_START)
     }
 
@@ -124,14 +138,14 @@ class QuestionFragment : BaseFragment<QuestionPresenter>(), QuestionView, Scroll
 
     override fun scrollTop() {
         if (isAdded && !isDetached) {
-            RvScrollTopUtils.smoothScrollTop(rv)
+            RvScrollTopUtils.smoothScrollTop(binding.rv)
         }
     }
 
     override fun getQuestionListSuccess(code: Int, data: ArticleListBean) {
         currPage = data.curPage + PAGE_START
         if (data.curPage == PAGE_START) {
-            MultiStateUtils.toContent(msv)
+            MultiStateUtils.toContent(binding.msv)
             mAdapter.setNewData(data.datas)
         } else {
             mAdapter.addData(data.datas)

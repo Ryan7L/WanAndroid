@@ -1,18 +1,23 @@
 package per.goweii.wanandroid.module.main.fragment;
 
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import butterknife.BindView;
 import per.goweii.basic.core.adapter.TabFragmentPagerAdapter;
 import per.goweii.basic.core.base.BaseFragment;
 import per.goweii.basic.core.base.BasePresenter;
 import per.goweii.wanandroid.R;
+import per.goweii.wanandroid.databinding.FragmentMainBinding;
 import per.goweii.wanandroid.event.CloseSecondFloorEvent;
 import per.goweii.wanandroid.event.MessageCountEvent;
 import per.goweii.wanandroid.module.home.fragment.HomeFragment;
@@ -23,15 +28,16 @@ import per.goweii.wanandroid.module.question.fragment.QuestionFragment;
 
 public class MainFragment extends BaseFragment {
 
-    @BindView(R.id.vp_tab)
+    //    @BindView(R.id.vp_tab)
     ViewPager vp_tab;
-    @BindView(R.id.ll_bottom_bar)
+    //    @BindView(R.id.ll_bottom_bar)
     LinearLayout ll_bottom_bar;
     //@BindView(R.id.bvef)
     //BackdropVisualEffectView bvef;
 
     private TabFragmentPagerAdapter.Page<TabEntity> mMinePage;
     private TabFragmentPagerAdapter<TabEntity> mTabFragmentPagerAdapter;
+    private FragmentMainBinding binding;
 
     public static MainFragment create() {
         return new MainFragment();
@@ -42,6 +48,17 @@ public class MainFragment extends BaseFragment {
         if (isDetached()) return;
         mMinePage.getData().setMsgCount(event.getCount());
         mTabFragmentPagerAdapter.notifyPageDataChanged();
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = FragmentMainBinding.inflate(inflater, container, false);
+        mRootView = binding.getRoot();
+        mViewCreated = true;
+        vp_tab = binding.vpTab;
+        ll_bottom_bar = binding.llBottomBar;
+        return mRootView;
     }
 
     @Override

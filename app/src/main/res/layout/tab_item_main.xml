@@ -40,23 +40,23 @@
     <FrameLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
-        android:layout_marginEnd="-5dp"
-        android:layout_marginStart="15dp"
-        android:layout_alignTop="@+id/iv_tab_icon"
         android:layout_alignStart="@+id/iv_tab_icon"
-        android:layout_alignEnd="@+id/iv_tab_icon">
+        android:layout_alignTop="@+id/iv_tab_icon"
+        android:layout_alignEnd="@+id/iv_tab_icon"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="-5dp">
 
         <TextView
             android:id="@+id/tv_tab_msg"
             android:layout_width="wrap_content"
             android:layout_height="15dp"
-            android:gravity="center"
             android:layout_gravity="center"
-            android:paddingStart="3dp"
-            android:minWidth="15dp"
-            android:paddingEnd="3dp"
             android:background="@drawable/bg_solid_round_color_accent_radius_max"
+            android:gravity="center"
+            android:minWidth="15dp"
+            android:paddingStart="3dp"
+            android:paddingEnd="3dp"
             android:textColor="?colorTextOnMain"
             android:textSize="10dp"
             android:visibility="gone"

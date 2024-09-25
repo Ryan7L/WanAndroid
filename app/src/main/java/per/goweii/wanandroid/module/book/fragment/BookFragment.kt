@@ -1,14 +1,16 @@
 package per.goweii.wanandroid.module.book.fragment
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import com.scwang.smart.refresh.layout.api.RefreshFooter
 import com.scwang.smart.refresh.layout.constant.RefreshState
-import kotlinx.android.synthetic.main.fragment_bookmark.msv
-import kotlinx.android.synthetic.main.fragment_bookmark.rv
-import kotlinx.android.synthetic.main.fragment_bookmark.srl
 import per.goweii.basic.core.base.BaseFragment
 import per.goweii.basic.core.utils.SmartRefreshUtils
 import per.goweii.wanandroid.R
+import per.goweii.wanandroid.databinding.FragmentBookBinding
 import per.goweii.wanandroid.event.CloseSecondFloorEvent
 import per.goweii.wanandroid.module.book.activity.BookDetailsActivity
 import per.goweii.wanandroid.module.book.adapter.BookAdapter
@@ -25,10 +27,21 @@ class BookFragment : BaseFragment<BookPresenter>(), BookView {
     override fun getLayoutRes(): Int = R.layout.fragment_book
 
     override fun initPresenter(): BookPresenter = BookPresenter()
+    private lateinit var binding: FragmentBookBinding
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentBookBinding.inflate(inflater, container, false)
+        mRootView = binding.root
+        mViewCreated = true
+        return mRootView
+    }
 
     override fun initView() {
-        SmartRefreshUtils.with(srl).pureScrollMode()
-        srl.setOnMultiListener(object : SimpleOnMultiListener() {
+        SmartRefreshUtils.with(binding.srl).pureScrollMode()
+        binding.srl.setOnMultiListener(object : SimpleOnMultiListener() {
             override fun onFooterMoving(
                 footer: RefreshFooter?,
                 isDragging: Boolean,
@@ -45,13 +58,13 @@ class BookFragment : BaseFragment<BookPresenter>(), BookView {
                     footerHeight,
                     maxDragHeight
                 )
-                if (srl.state != RefreshState.PullUpCanceled && isDragging && percent > 1.2F) {
-                    srl.closeHeaderOrFooter()
+                if (binding.srl.state != RefreshState.PullUpCanceled && isDragging && percent > 1.2F) {
+                    binding.srl.closeHeaderOrFooter()
                     CloseSecondFloorEvent().post()
                 }
             }
         })
-        rv.layoutManager = GridLayoutManager(context, 3)
+        binding.rv.layoutManager = GridLayoutManager(context, 3)
         mAdapter = BookAdapter()
         RvConfigUtils.init(mAdapter)
         mAdapter.setEnableLoadMore(false)
@@ -60,15 +73,15 @@ class BookFragment : BaseFragment<BookPresenter>(), BookView {
                 BookDetailsActivity.start(requireContext(), item)
             }
         }
-        rv.adapter = mAdapter
-        MultiStateUtils.setEmptyAndErrorClick(msv) {
-            MultiStateUtils.toLoading(msv)
+        binding.rv.adapter = mAdapter
+        MultiStateUtils.setEmptyAndErrorClick(binding.msv) {
+            MultiStateUtils.toLoading(binding.msv)
             presenter.getList()
         }
     }
 
     override fun loadData() {
-        MultiStateUtils.toLoading(msv)
+        MultiStateUtils.toLoading(binding.msv)
     }
 
     override fun onVisible(isFirstVisible: Boolean) {
@@ -85,13 +98,13 @@ class BookFragment : BaseFragment<BookPresenter>(), BookView {
     override fun getBookListSuccess(list: List<BookBean>) {
         mAdapter.setNewData(list)
         if (list.isEmpty()) {
-            MultiStateUtils.toEmpty(msv, true)
+            MultiStateUtils.toEmpty(binding.msv, true)
         } else {
-            MultiStateUtils.toContent(msv)
+            MultiStateUtils.toContent(binding.msv)
         }
     }
 
     override fun getBookListFailed() {
-        MultiStateUtils.toError(msv)
+        MultiStateUtils.toError(binding.msv)
     }
 }

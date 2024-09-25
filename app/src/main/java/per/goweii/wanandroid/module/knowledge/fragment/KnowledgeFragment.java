@@ -1,5 +1,11 @@
 package per.goweii.wanandroid.module.knowledge.fragment;
 
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -8,11 +14,11 @@ import com.kennyc.view.MultiStateView;
 
 import java.util.List;
 
-import butterknife.BindView;
 import per.goweii.basic.core.base.BaseFragment;
 import per.goweii.basic.ui.toast.ToastMaker;
 import per.goweii.basic.utils.listener.SimpleListener;
 import per.goweii.wanandroid.R;
+import per.goweii.wanandroid.databinding.FragmentKnowledgeNavigationChildBinding;
 import per.goweii.wanandroid.module.knowledge.activity.KnowledgeArticleActivity;
 import per.goweii.wanandroid.module.knowledge.adapter.KnowledgeAdapter;
 import per.goweii.wanandroid.module.knowledge.presenter.KnowledgePresenter;
@@ -28,15 +34,26 @@ import per.goweii.wanandroid.utils.RvScrollTopUtils;
  */
 public class KnowledgeFragment extends BaseFragment<KnowledgePresenter> implements RvScrollTopUtils.ScrollTop, KnowledgeView {
 
-    @BindView(R.id.msv)
+    //@BindView(R.id.msv)
     MultiStateView msv;
-    @BindView(R.id.rv)
+    //@BindView(R.id.rv)
     RecyclerView rv;
 
     private KnowledgeAdapter mAdapter;
 
     public static KnowledgeFragment create() {
         return new KnowledgeFragment();
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        FragmentKnowledgeNavigationChildBinding binding = FragmentKnowledgeNavigationChildBinding.inflate(inflater, container, false);
+        mRootView = binding.getRoot();
+        mViewCreated = true;
+        msv = binding.msv;
+        rv = binding.rv;
+        return mRootView;
     }
 
     @Override

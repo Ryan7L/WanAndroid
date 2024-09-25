@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.kennyc.view.MultiStateView;
 
-import butterknife.BindView;
 import per.goweii.actionbarex.common.ActionBarSuper;
 import per.goweii.basic.core.base.BaseActivity;
 import per.goweii.basic.ui.toast.ToastMaker;
@@ -20,6 +19,7 @@ import per.goweii.basic.utils.AnimatorUtils;
 import per.goweii.basic.utils.listener.OnClickListener2;
 import per.goweii.basic.utils.listener.SimpleListener;
 import per.goweii.wanandroid.R;
+import per.goweii.wanandroid.databinding.ActivityCoinBinding;
 import per.goweii.wanandroid.module.main.dialog.WebDialog;
 import per.goweii.wanandroid.module.mine.adapter.CoinRecordAdapter;
 import per.goweii.wanandroid.module.mine.model.CoinRecordBean;
@@ -37,21 +37,30 @@ public class CoinActivity extends BaseActivity<CoinPresenter> implements CoinVie
 
     private static final int PAGE_START = 1;
 
-    @BindView(R.id.abc)
+    //@BindView(R.id.abc)
     ActionBarSuper abc;
-    @BindView(R.id.tv_coin)
+    //@BindView(R.id.tv_coin)
     TextView tv_coin;
-    @BindView(R.id.msv)
+    //@BindView(R.id.msv)
     MultiStateView msv;
-    @BindView(R.id.rv)
+    //@BindView(R.id.rv)
     RecyclerView rv;
-
     private int currPage = PAGE_START;
     private CoinRecordAdapter mCoinRecordAdapter = null;
 
     public static void start(Context context) {
         Intent intent = new Intent(context, CoinActivity.class);
         context.startActivity(intent);
+    }
+
+    @Override
+    public void initRootView() {
+        ActivityCoinBinding binding = ActivityCoinBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        abc = binding.abc;
+        tv_coin = binding.tvCoin;
+        msv = binding.msv;
+        rv = binding.rv;
     }
 
     @Override
