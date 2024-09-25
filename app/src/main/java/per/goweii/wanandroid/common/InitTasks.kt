@@ -32,10 +32,6 @@ import per.goweii.wanandroid.utils.web.cache.ReadingModeManager
 import per.goweii.wanandroid.widget.refresh.ShiciRefreshHeader
 import java.util.*
 
-/**
- * @author CuiZhen
- * @date 2020/2/20
- */
 
 class SmartRefreshInitTask : SyncInitTask() {
     override fun init(application: Application) {

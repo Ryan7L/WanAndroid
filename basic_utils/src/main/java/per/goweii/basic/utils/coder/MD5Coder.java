@@ -65,7 +65,7 @@ public class MD5Coder {
     }
 
     @NonNull
-    public static String encode2(String string) {
+    public static String encde2(String string) {
         return encode(string, 2);
     }
 

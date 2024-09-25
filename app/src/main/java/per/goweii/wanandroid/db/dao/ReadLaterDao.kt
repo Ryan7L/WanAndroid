@@ -13,20 +13,20 @@ import per.goweii.wanandroid.db.model.ReadLaterModel
 @Dao
 interface ReadLaterDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(vararg mode: ReadLaterModel)
+     fun insert(vararg mode: ReadLaterModel)
 
     @Query("DELETE FROM ReadLaterModel WHERE link = :link")
-    suspend fun delete(link: String)
+     fun delete(link: String)
 
     @Query("DELETE FROM ReadLaterModel")
-    suspend fun deleteAll()
+     fun deleteAll()
 
     @Query("SELECT * FROM ReadLaterModel ORDER BY time DESC LIMIT (:offset), (:count)")
-    suspend fun findAll(offset: Int, count: Int): List<ReadLaterModel>
+     fun findAll(offset: Int, count: Int): List<ReadLaterModel>
 
     @Query("SELECT * FROM ReadLaterModel ORDER BY time DESC LIMIT 0, (:count)")
-    suspend fun findLately(count: Int): List<ReadLaterModel>
+     fun findLately(count: Int): List<ReadLaterModel>
 
     @Query("SELECT * FROM ReadLaterModel WHERE link = :link")
-    suspend fun findByLink(link: String): List<ReadLaterModel>
+     fun findByLink(link: String): List<ReadLaterModel>
 }

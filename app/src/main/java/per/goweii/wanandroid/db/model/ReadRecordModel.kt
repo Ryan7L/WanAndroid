@@ -2,17 +2,24 @@ package per.goweii.wanandroid.db.model
 
 import androidx.annotation.FloatRange
 import androidx.annotation.IntRange
+import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.PrimaryKey
 
 /**
  * @author CuiZhen
  * @date 2020/3/21
  */
-@Entity(primaryKeys = ["link"])
+@Entity
 data class ReadRecordModel(
+    @PrimaryKey
+    @ColumnInfo(name = "link")
     val link: String,
+    @ColumnInfo(name = "title")
     val title: String,
+    @ColumnInfo(name = "time")
     val time: Long,
+    @ColumnInfo(name = "lastTime")
     val lastTime: Long,
     @IntRange(from = 0, to = 10000) val percent: Int,
 ) {

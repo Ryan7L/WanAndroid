@@ -6,6 +6,6 @@ android {
 
 dependencies {
     //debugImplementation rootProject.ext.dependencies.ponyo
-    api rootProject.ext.dependencies.ponyoLog
-    api rootProject.ext.dependencies.ponyoCrash
+    api "per.goweii.ponyo:ponyo-log:1.0.0"
+    api "per.goweii.ponyo:ponyo-crash:1.0.0"
 }
