@@ -18,6 +18,4 @@ data class BookBean(
     val parentChapterId: Int,
     val userControlSetTop: Boolean,
     val visible: Int,
-) : BaseBean(), Parcelable {
-
-}
+) : BaseBean(), Parcelable
