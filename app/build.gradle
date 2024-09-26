@@ -30,6 +30,7 @@ android {
     viewBinding {
         enable true
     }
+    namespace 'per.goweii.wanandroid'
 }
 
 kapt {

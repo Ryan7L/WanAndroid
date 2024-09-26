@@ -3,6 +3,7 @@ apply from: "${rootDir.path}/basic.gradle"
 
 android {
     resourcePrefix ""
+    namespace 'per.goweii.basic.res'
 }
 
 dependencies {
