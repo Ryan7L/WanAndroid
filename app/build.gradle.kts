@@ -1,4 +1,3 @@
-import com.android.build.api.dsl.ApplicationExtension
 import java.util.Properties
 
 plugins {
@@ -28,8 +27,8 @@ android {
         }
         namespace = "per.goweii.wanandroid"
     }
-    packagingOptions {
-        resources {
+    packaging {
+        resources{
             excludes += "META-INF/gradle/incremental.annotation.processors"
         }
     }
@@ -79,59 +78,59 @@ dependencies {
     implementation("com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava")
 }
 fun task() {
-    var KEYSTORE_FILE = ""
-    var KEYSTORE_FILE_PASSWORD = ""
-    var KEYSTORE_ALIAS = ""
-    var KEYSTORE_ALIAS_PASSWORD = ""
+    val keystoreFile: String
+    val keystoreFilePwd: String
+    val keystoreAlias: String
+    val keystoreAliasPwd: String
 
-    var CDKEY_CLASS = ""
-    var DEVELOPER_ID = ""
+    var cdKeyClass = ""
+    var developerId = ""
 
-    var WANPWD_FORMAT = ""
-    var WANPWD_PATTERN = ""
-    var WANPWD_TYPE_CREATE_CDKEY = ""
-    var WANPWD_TYPE_QQ = ""
-    var WANPWD_TYPE_FESTIVAL = ""
-    var WANPWD_TYPE_USERPAGE = ""
-    var WANPWD_TYPE_CDKEY = ""
-    var WANPWD_TYPE_WEB = ""
-    var WANPWD_TYPE_ABOUTME = ""
+    var wanPwdFormat = ""
+    var wanPwdPatter = ""
+    var wanPwdTypeCreateCdKey = ""
+    var wanPwdTypeQq = ""
+    var wanPwdTypeFestival = ""
+    var wanPwdTypeUserPage = ""
+    var wanPwdTypeCdKey = ""
+    var wanPdTypeWeb = ""
+    var wanPwdTypeAboutMe = ""
     val file = project.rootProject.file("local.properties")
     if (file.exists()) {
         val properties = Properties()
         properties.load(file.inputStream())
-        KEYSTORE_FILE = properties.getProperty("KEYSTORE_FILE") ?: ""
-        KEYSTORE_FILE_PASSWORD = properties.getProperty("KEYSTORE_FILE_PASSWORD") ?: ""
-        KEYSTORE_ALIAS = properties.getProperty("KEYSTORE_ALIAS") ?: ""
-        KEYSTORE_ALIAS_PASSWORD = properties.getProperty("KEYSTORE_ALIAS_PASSWORD") ?: ""
+        keystoreFile = properties.getProperty("KEYSTORE_FILE") ?: ""
+        keystoreFilePwd = properties.getProperty("KEYSTORE_FILE_PASSWORD") ?: ""
+        keystoreAlias = properties.getProperty("KEYSTORE_ALIAS") ?: ""
+        keystoreAliasPwd = properties.getProperty("KEYSTORE_ALIAS_PASSWORD") ?: ""
 
-        CDKEY_CLASS = properties.getProperty("CDKEY_CLASS") ?: ""
-        DEVELOPER_ID = properties.getProperty("DEVELOPER_ID") ?: ""
+        cdKeyClass = properties.getProperty("CDKEY_CLASS") ?: ""
+        developerId = properties.getProperty("DEVELOPER_ID") ?: ""
 
-        WANPWD_FORMAT = properties.getProperty("WANPWD_FORMAT") ?: ""
-        WANPWD_PATTERN = properties.getProperty("WANPWD_PATTERN") ?: ""
-        WANPWD_TYPE_CREATE_CDKEY = properties.getProperty("WANPWD_TYPE_CREATE_CDKEY") ?: ""
-        WANPWD_TYPE_QQ = properties.getProperty("WANPWD_TYPE_QQ") ?: ""
-        WANPWD_TYPE_FESTIVAL = properties.getProperty("WANPWD_TYPE_FESTIVAL") ?: ""
-        WANPWD_TYPE_USERPAGE = properties.getProperty("WANPWD_TYPE_USERPAGE") ?: ""
-        WANPWD_TYPE_CDKEY = properties.getProperty("WANPWD_TYPE_CDKEY") ?: ""
-        WANPWD_TYPE_WEB = properties.getProperty("WANPWD_TYPE_WEB") ?: ""
-        WANPWD_TYPE_ABOUTME = properties.getProperty("WANPWD_TYPE_ABOUTME") ?: ""
+        wanPwdFormat = properties.getProperty("WANPWD_FORMAT") ?: ""
+        wanPwdPatter = properties.getProperty("WANPWD_PATTERN") ?: ""
+        wanPwdTypeCreateCdKey = properties.getProperty("WANPWD_TYPE_CREATE_CDKEY") ?: ""
+        wanPwdTypeQq = properties.getProperty("WANPWD_TYPE_QQ") ?: ""
+        wanPwdTypeFestival = properties.getProperty("WANPWD_TYPE_FESTIVAL") ?: ""
+        wanPwdTypeUserPage = properties.getProperty("WANPWD_TYPE_USERPAGE") ?: ""
+        wanPwdTypeCdKey = properties.getProperty("WANPWD_TYPE_CDKEY") ?: ""
+        wanPdTypeWeb = properties.getProperty("WANPWD_TYPE_WEB") ?: ""
+        wanPwdTypeAboutMe = properties.getProperty("WANPWD_TYPE_ABOUTME") ?: ""
 
     } else {
-        KEYSTORE_FILE = "${rootProject.projectDir}/demo.jks"
-        KEYSTORE_FILE_PASSWORD = "123456"
-        KEYSTORE_ALIAS = "demo"
-        KEYSTORE_ALIAS_PASSWORD = "123456"
+        keystoreFile = "${rootProject.projectDir}/demo.jks"
+        keystoreFilePwd = "123456"
+        keystoreAlias = "demo"
+        keystoreAliasPwd = "123456"
     }
     android {
         signingConfigs {
             create("release") {
-                if (KEYSTORE_FILE.isNotEmpty()) {
-                    storeFile = file(KEYSTORE_FILE)
-                    storePassword = KEYSTORE_FILE_PASSWORD
-                    keyAlias = KEYSTORE_ALIAS
-                    keyPassword = KEYSTORE_ALIAS_PASSWORD
+                if (keystoreFile.isNotEmpty()) {
+                    storeFile = file(keystoreFile)
+                    storePassword = keystoreFilePwd
+                    keyAlias = keystoreAlias
+                    keyPassword = keystoreAliasPwd
                 }
             }
 //            create("debug") {
@@ -167,21 +166,21 @@ fun task() {
         productFlavors.all {
             buildConfigField("String", "APPID_BUGLY", "\"\"")
             buildConfigField("String", "APPKEY_BUGLY", "\"\"")
-            buildConfigField("String", "WANPWD_FORMAT", "\"${WANPWD_FORMAT}\"")
-            buildConfigField("String", "WANPWD_PATTERN", "\"${WANPWD_PATTERN}\"")
-            buildConfigField("String", "WANPWD_TYPE_QQ", "\"${WANPWD_TYPE_QQ}\"")
-            buildConfigField("String", "WANPWD_TYPE_FESTIVAL", "\"${WANPWD_TYPE_FESTIVAL}\"")
-            buildConfigField("String", "WANPWD_TYPE_USERPAGE", "\"${WANPWD_TYPE_USERPAGE}\"")
-            buildConfigField("String", "WANPWD_TYPE_CDKEY", "\"${WANPWD_TYPE_CDKEY}\"")
-            buildConfigField("String", "WANPWD_TYPE_WEB", "\"${WANPWD_TYPE_WEB}\"")
-            buildConfigField("String", "WANPWD_TYPE_ABOUTME", "\"${WANPWD_TYPE_ABOUTME}\"")
+            buildConfigField("String", "WANPWD_FORMAT", "\"${wanPwdFormat}\"")
+            buildConfigField("String", "WANPWD_PATTERN", "\"${wanPwdPatter}\"")
+            buildConfigField("String", "WANPWD_TYPE_QQ", "\"${wanPwdTypeQq}\"")
+            buildConfigField("String", "WANPWD_TYPE_FESTIVAL", "\"${wanPwdTypeFestival}\"")
+            buildConfigField("String", "WANPWD_TYPE_USERPAGE", "\"${wanPwdTypeUserPage}\"")
+            buildConfigField("String", "WANPWD_TYPE_CDKEY", "\"${wanPwdTypeCdKey}\"")
+            buildConfigField("String", "WANPWD_TYPE_WEB", "\"${wanPdTypeWeb}\"")
+            buildConfigField("String", "WANPWD_TYPE_ABOUTME", "\"${wanPwdTypeAboutMe}\"")
             buildConfigField(
                 "String",
                 "WANPWD_TYPE_CREATE_CDKEY",
-                "\"${WANPWD_TYPE_CREATE_CDKEY}\""
+                "\"${wanPwdTypeCreateCdKey}\""
             )
-            buildConfigField("String", "CDKEY_CLASS", "\"${CDKEY_CLASS}\"")
-            buildConfigField("String", "DEVELOPER_ID", "\"${DEVELOPER_ID}\"")
+            buildConfigField("String", "CDKEY_CLASS", "\"${cdKeyClass}\"")
+            buildConfigField("String", "DEVELOPER_ID", "\"${developerId}\"")
         }
     }
 }
