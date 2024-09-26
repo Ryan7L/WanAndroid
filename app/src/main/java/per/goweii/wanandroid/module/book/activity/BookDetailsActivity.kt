@@ -2,6 +2,7 @@ package per.goweii.wanandroid.module.book.activity
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Parcelable
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
@@ -55,8 +56,11 @@ class BookDetailsActivity : BaseActivity<BookDetailsPresenter>(), BookDetailsVie
     override fun initPresenter(): BookDetailsPresenter = BookDetailsPresenter()
 
     override fun initView() {
-        bookBean = intent.getParcelableExtra(PARAM_BOOK)!!
-
+        bookBean =
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.TIRAMISU) intent.getParcelableExtra(
+                PARAM_BOOK,
+                BookBean::class.java
+            )!! else intent.getParcelableExtra(PARAM_BOOK)!!
         ImageLoader.userIcon(binding.rivBookImg, bookBean.cover)
         binding.abc.titleTextView.text = bookBean.name
         binding.tvBookName.text = bookBean.name

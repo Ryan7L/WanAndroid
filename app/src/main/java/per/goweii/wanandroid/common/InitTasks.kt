@@ -1,19 +1,17 @@
 package per.goweii.wanandroid.common
 
+//import com.tencent.bugly.crashreport.CrashReport
+//import com.tencent.bugly.crashreport.CrashReport.CrashHandleCallback
+//import com.tencent.bugly.crashreport.CrashReport.UserStrategy
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
 import com.scwang.smart.refresh.footer.ClassicsFooter
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
-//import com.tencent.bugly.crashreport.CrashReport
-//import com.tencent.bugly.crashreport.CrashReport.CrashHandleCallback
-//import com.tencent.bugly.crashreport.CrashReport.UserStrategy
 import com.tencent.smtt.sdk.QbSdk
 import com.tencent.smtt.sdk.QbSdk.PreInitCallback
-import com.tencent.smtt.sdk.WebView
 import per.goweii.basic.core.CoreInit
 import per.goweii.basic.utils.AsyncInitTask
-import per.goweii.basic.utils.DebugUtils
 import per.goweii.basic.utils.LogUtils
 import per.goweii.basic.utils.SyncInitTask
 import per.goweii.basic.utils.listener.SimpleCallback
@@ -22,7 +20,6 @@ import per.goweii.ponyo.crash.Crash
 import per.goweii.rxhttp.core.RxHttp
 import per.goweii.swipeback.SwipeBack
 import per.goweii.swipeback.SwipeBackDirection
-import per.goweii.wanandroid.BuildConfig
 import per.goweii.wanandroid.db.WanDb
 import per.goweii.wanandroid.http.RxHttpRequestSetting
 import per.goweii.wanandroid.http.WanCache

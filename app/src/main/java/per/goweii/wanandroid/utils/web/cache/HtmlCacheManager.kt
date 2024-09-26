@@ -2,6 +2,7 @@ package per.goweii.wanandroid.utils.web.cache
 
 import com.jakewharton.disklrucache.DiskLruCache
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
@@ -13,6 +14,7 @@ import per.goweii.wanandroid.utils.web.interceptor.WebHttpClient.stringRespBody
 import java.io.File
 import java.io.IOException
 
+@OptIn(DelicateCoroutinesApi::class)
 object HtmlCacheManager : CoroutineScope by GlobalScope {
     private const val diskMaxSize = 10 * 1024 * 1024L
     private var diskLruCache: DiskLruCache? = null

@@ -5,10 +5,7 @@ import android.os.Message
 import android.webkit.JavascriptInterface
 import com.tencent.smtt.sdk.WebView
 
-/**
- * @author CuiZhen
- * @date 2020/3/7
- */
+
 class JsInjector(
     private val webView: WebView
 ) : Handler() {

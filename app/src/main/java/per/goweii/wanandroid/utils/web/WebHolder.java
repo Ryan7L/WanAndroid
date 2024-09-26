@@ -180,10 +180,16 @@ public class WebHolder {
             View v = mWebView.getView();
             if (v instanceof android.webkit.WebView) {
                 android.webkit.WebView wv = (android.webkit.WebView) v;
-                if (isAppDarkMode) {
-                    WebSettingsCompat.setForceDark(wv.getSettings(), WebSettingsCompat.FORCE_DARK_ON);
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+                    // 在 Android 14 以下版本使用 WebSettingsCompat.setForceDark()
+                    if (isAppDarkMode) {
+                        WebSettingsCompat.setForceDark(wv.getSettings(), WebSettingsCompat.FORCE_DARK_ON);
+                    } else {
+                        WebSettingsCompat.setForceDark(wv.getSettings(), WebSettingsCompat.FORCE_DARK_OFF);
+                    }
                 } else {
-                    WebSettingsCompat.setForceDark(wv.getSettings(), WebSettingsCompat.FORCE_DARK_OFF);
+                    // 在 Android 14 及以上版本，系统会自动应用强制暗色模式
+                    // 如果需要自定义暗色模式行为，可以使用 WebViewAssetLoader 或其他方法
                 }
             }
         } else {

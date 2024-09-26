@@ -1,7 +1,10 @@
 package per.goweii.wanandroid.module.book.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import per.goweii.rxhttp.request.base.BaseBean
 
+@Parcelize
 data class BookBean(
     val id: Int,
     val courseId: Int,
@@ -15,6 +18,6 @@ data class BookBean(
     val parentChapterId: Int,
     val userControlSetTop: Boolean,
     val visible: Int,
-) : BaseBean() {
+) : BaseBean(), Parcelable {
 
 }

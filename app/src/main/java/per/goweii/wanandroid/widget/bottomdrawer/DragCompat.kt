@@ -239,7 +239,7 @@ object DragCompat {
 
     fun findFirstClickableView(view: View, x: Float, y: Float): View? {
         if (!contains(view, x, y)) return null
-        var clickableChild: View? = null
+        var clickableChild: View?
         if (view is ViewGroup) {
             for (i in view.childCount - 1 downTo 0) {
                 val child = view.getChildAt(i)

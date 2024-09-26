@@ -1,5 +1,6 @@
 package per.goweii.wanandroid.utils
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ContentValues
 import android.content.Context
@@ -135,6 +136,7 @@ class PictureSelector {
             }
         }
 
+
         @JvmStatic
         fun getUriFromFile(context: Context, imageFile: File): Uri? {
             val filePath = imageFile.absolutePath
@@ -146,6 +148,7 @@ class PictureSelector {
             )
             cursor.use {
                 return if (cursor != null && cursor.moveToFirst()) {
+                    @SuppressLint("Range")
                     val id = cursor.getInt(cursor.getColumnIndex(MediaStore.MediaColumns._ID))
                     val baseUri = Uri.parse("content://media/external/images/media")
                     Uri.withAppendedPath(baseUri, "" + id)

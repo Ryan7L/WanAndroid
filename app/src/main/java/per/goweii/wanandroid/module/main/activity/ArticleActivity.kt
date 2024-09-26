@@ -365,19 +365,46 @@ class ArticleActivity : BaseActivity<ArticlePresenter>(), ArticleView, SwipeBack
                         )
                     )
                     addListener(object : Animator.AnimatorListener {
-                        override fun onAnimationStart(animation: Animator?) {
-                            floatIcon.tip.visible()
+                        /**
+                         *
+                         * Notifies the start of the animation.
+                         *
+                         * @param animation The started animation.
+                         */
+                        override fun onAnimationStart(animation: Animator) {
                         }
 
-                        override fun onAnimationRepeat(animation: Animator?) {
+                        /**
+                         *
+                         * Notifies the end of the animation. This callback is not invoked
+                         * for animations with repeat count set to INFINITE.
+                         *
+                         * @param animation The animation which reached its end.
+                         */
+                        override fun onAnimationEnd(animation: Animator) {
                         }
 
-                        override fun onAnimationEnd(animation: Animator?) {
+                        /**
+                         *
+                         * Notifies the cancellation of the animation. This callback is not invoked
+                         * for animations with repeat count set to INFINITE.
+                         *
+                         * @param animation The animation which was canceled.
+                         */
+                        override fun onAnimationCancel(animation: Animator) {
                         }
 
-                        override fun onAnimationCancel(animation: Animator?) {
+                        /**
+                         *
+                         * Notifies the repetition of the animation.
+                         *
+                         * @param animation The animation which was repeated.
+                         */
+                        override fun onAnimationRepeat(animation: Animator) {
                         }
+
                     })
+
                 }
             } else {
                 floatIcon.tipAnim = AnimatorSet().apply {
@@ -397,22 +424,22 @@ class ArticleActivity : BaseActivity<ArticlePresenter>(), ArticleView, SwipeBack
                     )
                     addListener(object : Animator.AnimatorListener {
                         private var endByCancel = false
-
-                        override fun onAnimationStart(animation: Animator?) {
+                        override fun onAnimationStart(animation: Animator) {
                             floatIcon.tip.visible()
                         }
 
-                        override fun onAnimationRepeat(animation: Animator?) {
+                        override fun onAnimationRepeat(animation: Animator) {
+
                         }
 
-                        override fun onAnimationEnd(animation: Animator?) {
+                        override fun onAnimationEnd(animation: Animator) {
                             if (endByCancel) return
-                            if (floatIcon.tip.translationX != 0F) {
+                            if (floatIcon.tip.translationX != 0f) {
                                 floatIcon.tip.invisible()
                             }
                         }
 
-                        override fun onAnimationCancel(animation: Animator?) {
+                        override fun onAnimationCancel(animation: Animator) {
                             endByCancel = true
                         }
                     })
@@ -465,20 +492,20 @@ class ArticleActivity : BaseActivity<ArticlePresenter>(), ArticleView, SwipeBack
         }
         floatIconsAnim?.apply {
             addListener(object : Animator.AnimatorListener {
-                override fun onAnimationStart(animation: Animator?) {
+                override fun onAnimationStart(animation: Animator) {
                     floatIcons.forEach { it.container.visible() }
                 }
 
-                override fun onAnimationRepeat(animation: Animator?) {
+                override fun onAnimationRepeat(animation: Animator) {
                 }
 
-                override fun onAnimationEnd(animation: Animator?) {
+                override fun onAnimationEnd(animation: Animator) {
                     floatIcons.forEach {
                         if (it.container.translationY == 0F) it.container.invisible()
                     }
                 }
 
-                override fun onAnimationCancel(animation: Animator?) {
+                override fun onAnimationCancel(animation: Animator) {
                 }
             })
         }?.start()

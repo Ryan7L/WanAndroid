@@ -297,7 +297,7 @@ class ScanActivity : BaseActivity<ScanPresenter>(), ScanView, SwipeBackAbility.D
         btnCancel: String? = null,
         onCancel: View.OnClickListener? = null
     ) {
-        binding.llTip ?: return
+        binding.llTip
         binding.tvTipText.text = text
         binding.tvTipBtnSure.text = btnSure
         if (btnCancel.isNullOrEmpty()) {
@@ -313,16 +313,16 @@ class ScanActivity : BaseActivity<ScanPresenter>(), ScanView, SwipeBackAbility.D
             duration = 300
             interpolator = DecelerateInterpolator()
             addListener(object : Animator.AnimatorListener {
-                override fun onAnimationRepeat(animation: Animator?) {
+                override fun onAnimationRepeat(animation: Animator) {
                 }
 
-                override fun onAnimationEnd(animation: Animator?) {
+                override fun onAnimationEnd(animation: Animator) {
                 }
 
-                override fun onAnimationCancel(animation: Animator?) {
+                override fun onAnimationCancel(animation: Animator) {
                 }
 
-                override fun onAnimationStart(animation: Animator?) {
+                override fun onAnimationStart(animation: Animator) {
                     binding.llTip ?: return
                     binding.llTip.visible()
                 }
@@ -347,18 +347,18 @@ class ScanActivity : BaseActivity<ScanPresenter>(), ScanView, SwipeBackAbility.D
             duration = 300
             interpolator = DecelerateInterpolator()
             addListener(object : Animator.AnimatorListener {
-                override fun onAnimationRepeat(animation: Animator?) {
+                override fun onAnimationRepeat(animation: Animator) {
                 }
 
-                override fun onAnimationEnd(animation: Animator?) {
+                override fun onAnimationEnd(animation: Animator) {
                     binding.llTip ?: return
                     binding.llTip.gone()
                 }
 
-                override fun onAnimationCancel(animation: Animator?) {
+                override fun onAnimationCancel(animation: Animator) {
                 }
 
-                override fun onAnimationStart(animation: Animator?) {
+                override fun onAnimationStart(animation: Animator) {
                     binding.llTip ?: return
                     binding.llTip.visible()
                 }

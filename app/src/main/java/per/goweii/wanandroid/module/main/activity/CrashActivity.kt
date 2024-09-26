@@ -60,11 +60,11 @@ class CrashActivity : AppCompatActivity() {
     private fun String.toDBC(): String {
         val c = this.toCharArray()
         for (i in c.indices) {
-            if (c[i].toInt() == 12288) {
+            if (c[i].code == 12288) {
                 c[i] = 32.toChar()
                 continue
             }
-            if (c[i].toInt() in 65281..65374) c[i] = (c[i] - 65248)
+            if (c[i].code in 65281..65374) c[i] = (c[i] - 65248)
         }
         return String(c)
     }
