@@ -1,63 +1,29 @@
-package per.goweii.wanandroid.event;
+package per.goweii.wanandroid.event
 
-/**
- * @author CuiZhen
- * @date 2019/5/17
- * GitHub: https://github.com/goweii
- */
-public class CollectionEvent extends BaseEvent {
+class CollectionEvent private constructor(var isCollect: Boolean,var articleId: Int,var collectId: Int): BaseEvent(){
 
-    private boolean collect;
-    private int articleId;
-    private int collectId;
+    companion object{
+        @JvmStatic
+        fun postCollectWithCollectId(collectId: Int) {
+            CollectionEvent(true, -1, collectId).post()
+        }
+        @JvmStatic
+        fun postCollectWithArticleId(articleId: Int) {
+            CollectionEvent(true, articleId, -1).post()
+        }
+        @JvmStatic
+        fun postUnCollectWithArticleId(articleId: Int) {
+            CollectionEvent(false, articleId, -1).post()
+        }
+        @JvmStatic
+        fun postUncollectWithCollectId(collectId: Int) {
+            CollectionEvent(false, -1, collectId).post()
+        }
+        @JvmStatic
+        fun postUncollect(articleId: Int, collectId: Int) {
+            CollectionEvent(false, articleId, collectId).post()
+        }
 
-    private CollectionEvent(boolean collect, int articleId, int collectId) {
-        this.collect = collect;
-        this.articleId = articleId;
-        this.collectId = collectId;
     }
 
-    public static void postCollectWithCollectId(int collectId) {
-        new CollectionEvent(true, -1, collectId).post();
-    }
-
-    public static void postCollectWithArticleId(int articleId) {
-        new CollectionEvent(true, articleId, -1).post();
-    }
-
-    public static void postUnCollectWithArticleId(int articleId) {
-        new CollectionEvent(false, articleId, -1).post();
-    }
-
-    public static void postUncollectWithCollectId(int collectId) {
-        new CollectionEvent(false, -1, collectId).post();
-    }
-
-    public static void postUncollect(int articleId, int collectId) {
-        new CollectionEvent(false, articleId, collectId).post();
-    }
-
-    public boolean isCollect() {
-        return collect;
-    }
-
-    public void setCollect(boolean collect) {
-        this.collect = collect;
-    }
-
-    public int getArticleId() {
-        return articleId;
-    }
-
-    public void setArticleId(int articleId) {
-        this.articleId = articleId;
-    }
-
-    public int getCollectId() {
-        return collectId;
-    }
-
-    public void setCollectId(int collectId) {
-        this.collectId = collectId;
-    }
 }

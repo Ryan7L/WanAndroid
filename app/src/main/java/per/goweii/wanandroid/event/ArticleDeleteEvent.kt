@@ -1,27 +1,10 @@
-package per.goweii.wanandroid.event;
+package per.goweii.wanandroid.event
 
-/**
- * @author CuiZhen
- * @date 2019/5/17
- * GitHub: https://github.com/goweii
- */
-public class ArticleDeleteEvent extends BaseEvent {
-
-    private int articleId;
-
-    private ArticleDeleteEvent(int articleId) {
-        this.articleId = articleId;
-    }
-
-    public static void postWithArticleId(int articleId) {
-        new ArticleDeleteEvent(articleId).post();
-    }
-
-    public int getArticleId() {
-        return articleId;
-    }
-
-    public void setArticleId(int articleId) {
-        this.articleId = articleId;
+class ArticleDeleteEvent private constructor(var articleId: Int) : BaseEvent() {
+    companion object {
+        @JvmStatic
+        fun postWithArticleId(articleId: Int) {
+            return ArticleDeleteEvent(articleId).post()
+        }
     }
 }
