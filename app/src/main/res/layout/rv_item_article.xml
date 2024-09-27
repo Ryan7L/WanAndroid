@@ -84,7 +84,8 @@
         android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
-        <com.makeramen.roundedimageview.RoundedImageView
+
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/iv_img"
             android:layout_width="120dp"
             android:layout_height="80dp"
@@ -92,10 +93,10 @@
             android:background="?colorBackground"
             android:scaleType="centerCrop"
             android:visibility="gone"
-            app:riv_corner_radius="@dimen/round_radius_small"
-            app:riv_mutate_background="true"
+            app:shapeAppearance="@style/roundedImg3dp"
             tools:src="@drawable/image_holder"
-            tools:visibility="visible" />
+            tools:visibility="visible"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -19,7 +19,7 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <per.goweii.percentimageview.percentimageview.PercentImageView
+        <per.goweii.basic.ui.widget.PercentImageView
             android:id="@+id/piv_zfb_qrcode"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -38,7 +38,7 @@
             android:textColor="?colorOnMainOrSurfaceAlpha"
             android:textSize="@dimen/text_notes" />
 
-        <per.goweii.percentimageview.percentimageview.PercentImageView
+        <per.goweii.basic.ui.widget.PercentImageView
             android:id="@+id/piv_wx_qrcode"
             android:layout_width="0dp"
             android:layout_height="0dp"

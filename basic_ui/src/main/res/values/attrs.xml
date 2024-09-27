@@ -12,4 +12,11 @@
             <enum name="lightIcon" value="2" />
         </attr>
     </declare-styleable>
+    <declare-styleable name="PercentImageView" tools:ignore="ResourceName">
+        <attr name="piv_basics" format="enum">
+            <enum name="width" value="0" />
+            <enum name="height" value="1" />
+        </attr>
+        <attr name="piv_percent" format="float" />
+    </declare-styleable>
 </resources>

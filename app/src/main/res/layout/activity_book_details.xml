@@ -62,16 +62,16 @@
                             android:layout_height="wrap_content"
                             app:layout_scrollFlags="scroll|enterAlways">
 
-                            <com.makeramen.roundedimageview.RoundedImageView
+                            <com.google.android.material.imageview.ShapeableImageView
                                 android:id="@+id/riv_book_img"
                                 android:layout_width="87dp"
                                 android:layout_height="120dp"
                                 android:layout_alignParentStart="true"
                                 android:background="?colorSurfaceMask"
                                 android:scaleType="centerCrop"
-                                app:riv_corner_radius="@dimen/round_radius_small"
-                                app:riv_mutate_background="true"
+                                app:shapeAppearance="@style/roundedImg3dp"
                                 tools:ignore="TooDeepLayout" />
+
 
                             <TextView
                                 android:id="@+id/tv_book_name"

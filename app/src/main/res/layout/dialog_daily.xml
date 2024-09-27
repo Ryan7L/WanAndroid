@@ -16,13 +16,13 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <com.makeramen.roundedimageview.RoundedImageView
+
+        <com.google.android.material.imageview.ShapeableImageView
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:scaleType="centerCrop"
-            app:riv_corner_radius_top_left="@dimen/round_radius"
-            app:riv_corner_radius_top_right="@dimen/round_radius"
-            tools:background="?colorMain" />
+            app:shapeAppearance="@style/topRoundedImg"
+            tools:background="?colorMain"/>
 
         <TextView
             android:layout_width="match_parent"

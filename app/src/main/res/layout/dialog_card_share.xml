@@ -62,7 +62,7 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <per.goweii.percentimageview.percentimageview.PercentImageView
+            <per.goweii.basic.ui.widget.PercentImageView
                 android:id="@+id/dialog_card_share_iv_album"
                 android:layout_width="48dp"
                 android:layout_height="0dp"
@@ -93,7 +93,7 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <per.goweii.percentimageview.percentimageview.PercentImageView
+            <per.goweii.basic.ui.widget.PercentImageView
                 android:id="@+id/dialog_card_share_iv_share"
                 android:layout_width="48dp"
                 android:layout_height="0dp"

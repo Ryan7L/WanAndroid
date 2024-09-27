@@ -12,7 +12,7 @@
         android:clipToPadding="false"
         android:paddingTop="@dimen/action_bar_height">
 
-        <per.goweii.percentimageview.percentimageview.PercentImageView
+        <per.goweii.basic.ui.widget.PercentImageView
             android:id="@+id/iv_circle_1"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -26,7 +26,7 @@
             app:piv_basics="width"
             app:piv_percent="1" />
 
-        <per.goweii.percentimageview.percentimageview.PercentImageView
+        <per.goweii.basic.ui.widget.PercentImageView
             android:id="@+id/iv_circle_2"
             android:layout_width="match_parent"
             android:layout_height="0dp"

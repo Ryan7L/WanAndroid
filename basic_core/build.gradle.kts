@@ -4,7 +4,7 @@ plugins {
 //    alias(libs.plugins.kotlin.android)
 
 }
-apply("${rootDir.path}/basic.gradle")
+apply("${rootDir.path}/gradle/basic.gradle")
 android {
     namespace = "per.goweii.basic.core"
 }

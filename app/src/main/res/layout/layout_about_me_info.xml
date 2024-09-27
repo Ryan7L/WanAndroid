@@ -8,14 +8,23 @@
     android:clipChildren="false"
     tools:background="?colorMain">
 
-    <de.hdodenhof.circleimageview.CircleImageView
+    <!--    <de.hdodenhof.circleimageview.CircleImageView-->
+    <!--        android:id="@+id/civ_icon"-->
+    <!--        android:layout_width="80dp"-->
+    <!--        android:layout_height="80dp"-->
+    <!--        android:layout_centerHorizontal="true"-->
+    <!--        android:layout_marginTop="100dp"-->
+    <!--        android:scaleType="centerCrop"-->
+    <!--        app:civ_circle_background_color="?colorSurfaceMask" />-->
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/civ_icon"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="100dp"
         android:scaleType="centerCrop"
-        app:civ_circle_background_color="?colorSurfaceMask" />
+        android:background="?colorSurfaceMask"
+        app:shapeAppearance="@style/circleImg" />
 
     <TextView
         android:id="@+id/tv_name"

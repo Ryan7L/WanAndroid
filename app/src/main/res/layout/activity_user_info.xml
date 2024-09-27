@@ -20,7 +20,9 @@
         android:background="?colorTransparent"
         app:abc_titleText="个人资料" />
 
-    <com.makeramen.roundedimageview.RoundedImageView
+
+
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/civ_user_icon"
         android:layout_width="80dp"
         android:layout_height="80dp"
@@ -28,8 +30,7 @@
         android:layout_marginTop="110dp"
         android:background="?colorSurfaceMask"
         android:scaleType="centerCrop"
-        app:riv_corner_radius="80dp"
-        app:riv_mutate_background="true" />
+        app:shapeAppearance="@style/circleImg" />
 
     <com.scwang.smart.refresh.layout.SmartRefreshLayout
         android:layout_width="match_parent"

@@ -32,7 +32,7 @@
                 android:orientation="vertical"
                 android:padding="10dp">
 
-                <per.goweii.percentimageview.percentimageview.PercentImageView
+                <per.goweii.basic.ui.widget.PercentImageView
                     android:id="@+id/dialog_web_share_iv_capture"
                     android:layout_width="48dp"
                     android:layout_height="0dp"
@@ -61,7 +61,7 @@
                 android:orientation="vertical"
                 android:padding="10dp">
 
-                <per.goweii.percentimageview.percentimageview.PercentImageView
+                <per.goweii.basic.ui.widget.PercentImageView
                     android:id="@+id/dialog_web_share_iv_qrcode"
                     android:layout_width="48dp"
                     android:layout_height="0dp"

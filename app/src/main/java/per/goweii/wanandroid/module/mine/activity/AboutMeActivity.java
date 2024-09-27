@@ -36,7 +36,7 @@ import per.goweii.basic.utils.CopyUtils;
 import per.goweii.basic.utils.LogUtils;
 import per.goweii.basic.utils.RandomUtils;
 import per.goweii.basic.utils.listener.SimpleCallback;
-import per.goweii.percentimageview.percentimageview.PercentImageView;
+import per.goweii.basic.ui.widget.PercentImageView;
 import per.goweii.wanandroid.BuildConfig;
 import per.goweii.wanandroid.R;
 import per.goweii.wanandroid.databinding.ActivityAboutMeBinding;

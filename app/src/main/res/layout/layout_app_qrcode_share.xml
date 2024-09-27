@@ -24,15 +24,16 @@
             android:layout_marginTop="@dimen/margin_middle"
             android:layout_marginEnd="@dimen/margin_middle">
 
-            <com.makeramen.roundedimageview.RoundedImageView
+
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/dialog_qrcode_share_riv_logo"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:background="@color/color_blue"
-                android:padding="10dp"
-                android:src="@drawable/logo"
-                app:riv_corner_radius="16dp"
-                app:riv_mutate_background="true" />
+                android:scaleType="centerInside"
+                app:contentPadding="10dp"
+                app:shapeAppearance="@style/roundedImg16dp"
+                app:srcCompat="@drawable/logo" />
 
             <TextView
                 android:id="@+id/layout_app_qrcode_share_tv_name"
@@ -63,7 +64,7 @@
 
         </RelativeLayout>
 
-        <per.goweii.percentimageview.percentimageview.PercentImageView
+        <per.goweii.basic.ui.widget.PercentImageView
             android:id="@+id/layout_app_qrcode_share_iv_qrcode"
             android:layout_width="match_parent"
             android:layout_height="0dp"

@@ -13,7 +13,7 @@
     app:cardCornerRadius="@dimen/round_radius_small"
     app:cardElevation="0dp">
 
-    <per.goweii.percentimageview.percentimageview.PercentImageView
+    <per.goweii.basic.ui.widget.PercentImageView
         android:id="@+id/piv_img"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

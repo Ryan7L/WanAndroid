@@ -5,7 +5,7 @@ plugins {
     kotlin("kapt")
     id("kotlin-parcelize")
 }
-apply("${rootDir.path}/basic.gradle")
+apply("${rootDir.path}/gradle/basic.gradle")
 flavortask()
 android {
 

@@ -8,7 +8,7 @@
     tools:background="?colorForeground"
     tools:layout_width="100dp">
 
-    <per.goweii.percentimageview.percentimageview.PercentImageView
+    <per.goweii.basic.ui.widget.PercentImageView
         android:id="@+id/dialog_web_menu_iv_icon"
         android:layout_width="48dp"
         android:layout_height="0dp"

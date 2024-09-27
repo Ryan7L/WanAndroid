@@ -3,7 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
 
 }
-apply("${rootDir.path}/basic.gradle")
+apply("${rootDir.path}/gradle/basic.gradle")
 android {
     namespace = "per.goweii.basic.ui"
 }
@@ -19,9 +19,6 @@ dependencies {
     api (libs.recyclerview)
     api (libs.anylayer)
     api (libs.action.bar.ex)
-    api (libs.percentimg)
-    api (libs.roundimg)
-    api (libs.circleimg)
     api (libs.magicindicator)
     api (libs.progressbar.library)
     api (libs.shadowlayout)

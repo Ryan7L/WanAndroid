@@ -11,7 +11,7 @@
     android:paddingBottom="3dp"
     tools:layout_height="@dimen/bottom_bar_height">
 
-    <per.goweii.percentimageview.percentimageview.PercentImageView
+    <per.goweii.basic.ui.widget.PercentImageView
         android:id="@+id/iv_tab_icon"
         android:layout_width="0dp"
         android:layout_height="0dp"

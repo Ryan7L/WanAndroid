@@ -59,7 +59,7 @@
                 android:textSize="@dimen/text_auxiliary"
                 tools:text="文章标题文章标题文标题文章标题文章标题文章标题文章标题文章标题文章标题文标题文章标题文章标题文章标题文章标题" />
 
-            <per.goweii.percentimageview.percentimageview.PercentImageView
+            <per.goweii.basic.ui.widget.PercentImageView
                 android:id="@+id/dialog_qrcode_share_piv_qrcode"
                 android:layout_width="56dp"
                 android:layout_height="0dp"
@@ -88,16 +88,17 @@
             android:paddingRight="@dimen/margin_def"
             android:paddingBottom="@dimen/margin_thin">
 
-            <com.makeramen.roundedimageview.RoundedImageView
+
+            <com.google.android.material.imageview.ShapeableImageView
+
                 android:id="@+id/dialog_qrcode_share_iv_app"
                 android:layout_width="14dp"
                 android:layout_height="14dp"
                 android:layout_centerVertical="true"
                 android:background="@color/color_blue"
-                android:padding="2dp"
                 android:src="@drawable/logo"
-                app:riv_corner_radius="3dp"
-                app:riv_mutate_background="true" />
+                app:contentPadding="2dp"
+                app:shapeAppearance="@style/roundedImg3dp" />
 
             <TextView
                 android:id="@+id/dialog_qrcode_share_tv_app"

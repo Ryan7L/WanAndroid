@@ -33,7 +33,7 @@
             android:padding="10dp"
             tools:layout_width="100dp">
 
-            <per.goweii.percentimageview.percentimageview.PercentImageView
+            <per.goweii.basic.ui.widget.PercentImageView
                 android:id="@+id/dialog_web_menu_iv_home"
                 android:layout_width="48dp"
                 android:layout_height="0dp"
@@ -64,7 +64,7 @@
             android:padding="10dp"
             tools:layout_width="100dp">
 
-            <per.goweii.percentimageview.percentimageview.PercentImageView
+            <per.goweii.basic.ui.widget.PercentImageView
                 android:id="@+id/dialog_web_menu_iv_share_article"
                 android:layout_width="48dp"
                 android:layout_height="0dp"
@@ -95,7 +95,7 @@
             android:padding="10dp"
             tools:layout_width="100dp">
 
-            <per.goweii.percentimageview.percentimageview.PercentImageView
+            <per.goweii.basic.ui.widget.PercentImageView
                 android:id="@+id/dialog_web_menu_iv_collect"
                 android:layout_width="48dp"
                 android:layout_height="0dp"
@@ -127,7 +127,7 @@
             android:padding="10dp"
             tools:layout_width="100dp">
 
-            <per.goweii.percentimageview.percentimageview.PercentImageView
+            <per.goweii.basic.ui.widget.PercentImageView
                 android:id="@+id/dialog_web_menu_iv_read_later"
                 android:layout_width="48dp"
                 android:layout_height="0dp"
@@ -164,7 +164,7 @@
             android:padding="10dp"
             tools:layout_width="100dp">
 
-            <per.goweii.percentimageview.percentimageview.PercentImageView
+            <per.goweii.basic.ui.widget.PercentImageView
                 android:id="@+id/dialog_web_menu_iv_refresh"
                 android:layout_width="48dp"
                 android:layout_height="0dp"
@@ -195,7 +195,7 @@
             android:padding="10dp"
             tools:layout_width="100dp">
 
-            <per.goweii.percentimageview.percentimageview.PercentImageView
+            <per.goweii.basic.ui.widget.PercentImageView
                 android:id="@+id/dialog_web_menu_iv_go_top"
                 android:layout_width="48dp"
                 android:layout_height="0dp"
@@ -227,7 +227,7 @@
             android:padding="10dp"
             tools:layout_width="100dp">
 
-            <per.goweii.percentimageview.percentimageview.PercentImageView
+            <per.goweii.basic.ui.widget.PercentImageView
                 android:id="@+id/dialog_web_menu_iv_interrupt"
                 android:layout_width="48dp"
                 android:layout_height="0dp"
@@ -259,7 +259,7 @@
             android:padding="10dp"
             tools:layout_width="100dp">
 
-            <per.goweii.percentimageview.percentimageview.PercentImageView
+            <per.goweii.basic.ui.widget.PercentImageView
                 android:id="@+id/dialog_web_menu_iv_close_activity"
                 android:layout_width="48dp"
                 android:layout_height="0dp"
