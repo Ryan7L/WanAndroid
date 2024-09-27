@@ -3,7 +3,7 @@ package per.goweii.wanandroid.module.main.activity;
 import androidx.annotation.Nullable;
 
 import per.goweii.basic.core.base.BaseActivity;
-import per.goweii.basic.core.mvp.MvpPresenter;
+import per.goweii.basic.core.mvp.IPresenter;
 import per.goweii.wanandroid.R;
 
 /**
@@ -21,18 +21,18 @@ public class SplashActivity extends BaseActivity {
 
     @Nullable
     @Override
-    protected MvpPresenter initPresenter() {
+    protected IPresenter initPresenter() {
         return null;
     }
 
     @Override
-    protected void initView() {
+    protected void initViews() {
         MainActivity.start(getContext());
         finish();
         overridePendingTransition(R.anim.zoom_small_in, R.anim.zoom_small_out);
     }
 
     @Override
-    protected void loadData() {
+    protected void bindData() {
     }
 }

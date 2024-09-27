@@ -83,7 +83,7 @@ public class WebActivity extends BaseActivity<WebPresenter> implements per.gowei
     }
 
     @Override
-    public void initRootView() {
+    public void initBinding() {
         binding = ActivityWebBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         ab = binding.ab;
@@ -116,7 +116,7 @@ public class WebActivity extends BaseActivity<WebPresenter> implements per.gowei
     }
 
     @Override
-    protected void initView() {
+    protected void initViews() {
         Uri uri = Router.getUriFrom(getIntent());
         if (uri != null) {
             mUrl = uri.toString();
@@ -226,7 +226,7 @@ public class WebActivity extends BaseActivity<WebPresenter> implements per.gowei
     }
 
     @Override
-    protected void loadData() {
+    protected void bindData() {
         mWebHolder = WebHolder.with(this, wc)
                 .setOnPageTitleCallback(new WebHolder.OnPageTitleCallback() {
                     @Override

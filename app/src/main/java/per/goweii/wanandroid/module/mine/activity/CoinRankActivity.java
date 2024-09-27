@@ -50,7 +50,7 @@ public class CoinRankActivity extends BaseActivity<CoinRankPresenter> implements
     }
 
     @Override
-    public void initRootView() {
+    public void initBinding() {
         ActivityCoinRankBinding binding = ActivityCoinRankBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         abc = binding.abc;
@@ -70,7 +70,7 @@ public class CoinRankActivity extends BaseActivity<CoinRankPresenter> implements
     }
 
     @Override
-    protected void initView() {
+    protected void initViews() {
         abc.setOnRightIconClickListener(new OnActionBarChildClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,7 +108,7 @@ public class CoinRankActivity extends BaseActivity<CoinRankPresenter> implements
     }
 
     @Override
-    protected void loadData() {
+    protected void bindData() {
         MultiStateUtils.toLoading(msv);
         currPage = PAGE_START;
         presenter.getCoinRankList(currPage);

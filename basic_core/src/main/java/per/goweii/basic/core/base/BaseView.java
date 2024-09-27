@@ -1,6 +1,6 @@
 package per.goweii.basic.core.base;
 
-import per.goweii.basic.core.mvp.MvpView;
+import per.goweii.basic.core.mvp.IView;
 
 /**
  * 描述：
@@ -8,5 +8,5 @@ import per.goweii.basic.core.mvp.MvpView;
  * @author Cuizhen
  * @date 2019/3/29
  */
-public interface BaseView extends MvpView {
+public interface BaseView extends IView {
 }

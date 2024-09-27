@@ -90,7 +90,7 @@ public class SettingActivity extends BaseActivity<SettingPresenter> implements S
     }
 
     @Override
-    public void initRootView() {
+    public void initBinding() {
         ActivitySettingBinding binding = ActivitySettingBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         sc_system_theme = binding.scSystemTheme;
@@ -127,7 +127,7 @@ public class SettingActivity extends BaseActivity<SettingPresenter> implements S
     }
 
     @Override
-    protected void initView() {
+    protected void initViews() {
         tv_has_update.setText("");
         tv_curr_version.setText("当前版本" + AppInfoUtils.getVersionName());
         mSystemTheme = SettingUtils.getInstance().isSystemTheme();
@@ -196,7 +196,7 @@ public class SettingActivity extends BaseActivity<SettingPresenter> implements S
     }
 
     @Override
-    protected void loadData() {
+    protected void bindData() {
         presenter.update(false);
         presenter.getCacheSize();
     }
@@ -254,7 +254,7 @@ public class SettingActivity extends BaseActivity<SettingPresenter> implements S
     }
 
     @Override
-    protected void onClick2(View v) {
+    protected void onClickSpace(View v) {
         switch (v.getId()) {
             default:
                 break;

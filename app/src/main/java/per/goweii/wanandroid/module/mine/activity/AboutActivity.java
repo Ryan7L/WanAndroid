@@ -54,7 +54,7 @@ public class AboutActivity extends BaseActivity<AboutPresenter> implements About
     }
 
     @Override
-    public void initRootView() {
+    public void initBinding() {
         ActivityAboutBinding binding = ActivityAboutBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         abc = binding.abc;
@@ -81,7 +81,7 @@ public class AboutActivity extends BaseActivity<AboutPresenter> implements About
     }
 
     @Override
-    protected void initView() {
+    protected void initViews() {
         abc.setOnRightIconClickListener(new OnActionBarChildClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,7 +91,7 @@ public class AboutActivity extends BaseActivity<AboutPresenter> implements About
     }
 
     @Override
-    protected void loadData() {
+    protected void bindData() {
         tv_version_name.setText(String.format("%s(%d)",
                 AppInfoUtils.getVersionName(), AppInfoUtils.getVersionCode()));
     }
@@ -108,7 +108,7 @@ public class AboutActivity extends BaseActivity<AboutPresenter> implements About
     }
 
     @Override
-    protected void onClick2(View v) {
+    protected void onClickSpace(View v) {
         switch (v.getId()) {
             default:
                 break;

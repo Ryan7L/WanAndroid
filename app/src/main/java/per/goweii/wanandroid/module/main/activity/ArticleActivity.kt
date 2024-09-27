@@ -48,7 +48,7 @@ import per.goweii.wanandroid.utils.web.interceptor.WebResUrlInterceptor
  */
 class ArticleActivity : BaseActivity<ArticlePresenter>(), ArticleView, SwipeBackAbility.OnlyEdge {
     private lateinit var binding: ActivityArticleBinding
-    override fun initRootView() {
+    override fun initBinding() {
         binding = ActivityArticleBinding.inflate(layoutInflater)
         setContentView(binding.root)
     }
@@ -126,7 +126,7 @@ class ArticleActivity : BaseActivity<ArticlePresenter>(), ArticleView, SwipeBack
 
     override fun initPresenter(): ArticlePresenter = ArticlePresenter()
 
-    override fun initView() {
+    override fun initViews() {
         StatusBarCompat.setIconMode(this, !DarkModeUtils.isDarkMode(this))
         intent?.let {
             presenter.articleUrl = it.getStringExtra("url") ?: ""
@@ -310,7 +310,7 @@ class ArticleActivity : BaseActivity<ArticlePresenter>(), ArticleView, SwipeBack
         }
     }
 
-    override fun loadData() {
+    override fun bindData() {
         lastUrlLoadTime = System.currentTimeMillis()
         mWebHolder.loadUrl(presenter.articleUrl)
         presenter.isReadLater { switchReadLaterIcon() }

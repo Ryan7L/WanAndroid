@@ -19,7 +19,7 @@ import per.goweii.lazyfragment.LazyFragment;
  * @version v1.0.0
  * @date 2018/3/10-下午12:38
  */
-public abstract class MvpFragment<T extends MvpPresenter> extends LazyFragment implements MvpView, View.OnClickListener {
+public abstract class MvpFragment<T extends IPresenter> extends LazyFragment implements IView, View.OnClickListener {
     protected T presenter;
 
     /**

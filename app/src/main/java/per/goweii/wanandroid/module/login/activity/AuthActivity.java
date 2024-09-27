@@ -70,7 +70,7 @@ public class AuthActivity extends BaseActivity<AuthPresenter> implements AuthVie
     }
 
     @Override
-    public void initRootView() {
+    public void initBinding() {
         ActivityAuthBinding binding = ActivityAuthBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         abc = binding.abc;
@@ -99,7 +99,7 @@ public class AuthActivity extends BaseActivity<AuthPresenter> implements AuthVie
     }
 
     @Override
-    protected void initView() {
+    protected void initViews() {
         int pt = DisplayInfoUtils.getInstance().getStatusBarHeight() + getResources().getDimensionPixelSize(R.dimen.action_bar_height);
         rl_input.setPadding(0, pt, 0, 0);
         mSoftInputHelper = SoftInputHelper.attach(this).moveBy(rl_input).moveWithScroll();
@@ -111,7 +111,7 @@ public class AuthActivity extends BaseActivity<AuthPresenter> implements AuthVie
     }
 
     @Override
-    protected void loadData() {
+    protected void bindData() {
         //tryUseLoginByBiometric();
     }
 

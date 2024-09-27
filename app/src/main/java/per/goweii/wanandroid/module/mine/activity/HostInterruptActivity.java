@@ -12,7 +12,7 @@ import androidx.viewpager.widget.ViewPager;
 import per.goweii.actionbarex.ActionBarEx;
 import per.goweii.basic.core.adapter.FixedFragmentPagerAdapter;
 import per.goweii.basic.core.base.BaseActivity;
-import per.goweii.basic.core.mvp.MvpPresenter;
+import per.goweii.basic.core.mvp.IPresenter;
 import per.goweii.basic.utils.listener.SimpleCallback;
 import per.goweii.wanandroid.R;
 import per.goweii.wanandroid.common.Config;
@@ -43,7 +43,7 @@ public class HostInterruptActivity extends BaseActivity {
     }
 
     @Override
-    public void initRootView() {
+    public void initBinding() {
         ActivityHostInterruptBinding binding = ActivityHostInterruptBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         ab = binding.ab;
@@ -57,12 +57,12 @@ public class HostInterruptActivity extends BaseActivity {
 
     @Nullable
     @Override
-    protected MvpPresenter initPresenter() {
+    protected IPresenter initPresenter() {
         return null;
     }
 
     @Override
-    protected void initView() {
+    protected void initViews() {
         ImageView ivBack = ab.getView(R.id.action_bar_fixed_magic_indicator_iv_back);
         ivBack.setVisibility(View.VISIBLE);
         ivBack.setOnClickListener(new View.OnClickListener() {
@@ -87,7 +87,7 @@ public class HostInterruptActivity extends BaseActivity {
     }
 
     @Override
-    protected void loadData() {
+    protected void bindData() {
     }
 
     private void notifyScrollTop(int pos) {

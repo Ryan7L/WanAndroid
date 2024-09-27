@@ -7,7 +7,7 @@ import android.content.Context;
  * @version v1.0.0
  * @date 2018/4/4-下午1:23
  */
-public abstract class MvpPresenter<V extends MvpView> {
+public abstract class IPresenter<V extends IView> {
     protected Context context;
     private V baseView;
 

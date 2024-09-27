@@ -101,7 +101,7 @@ public class KnowledgeArticleActivity extends BaseActivity<KnowledgePresenter> i
     }
 
     @Override
-    public void initRootView() {
+    public void initBinding() {
         ActivityKnowledgeArticleBinding binding = ActivityKnowledgeArticleBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         abc = binding.abc;
@@ -122,7 +122,7 @@ public class KnowledgeArticleActivity extends BaseActivity<KnowledgePresenter> i
     }
 
     @Override
-    protected void initView() {
+    protected void initViews() {
         abc.getTitleTextView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -158,7 +158,7 @@ public class KnowledgeArticleActivity extends BaseActivity<KnowledgePresenter> i
     }
 
     @Override
-    protected void loadData() {
+    protected void bindData() {
         ChapterBean bean = (ChapterBean) getIntent().getSerializableExtra("chapterBean");
         int currPos = getIntent().getIntExtra("currPos", 0);
         if (bean != null) {

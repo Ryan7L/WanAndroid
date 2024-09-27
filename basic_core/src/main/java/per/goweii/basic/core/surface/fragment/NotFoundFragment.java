@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import per.goweii.basic.core.R;
 import per.goweii.basic.core.base.BaseFragment;
-import per.goweii.basic.core.mvp.MvpPresenter;
+import per.goweii.basic.core.mvp.IPresenter;
 
 /**
  * 描述：
@@ -30,7 +30,7 @@ public class NotFoundFragment extends BaseFragment {
     }
 
     @Override
-    protected MvpPresenter initPresenter() {
+    protected IPresenter initPresenter() {
         return null;
     }
 

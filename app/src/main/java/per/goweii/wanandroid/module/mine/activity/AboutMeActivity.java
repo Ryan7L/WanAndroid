@@ -100,7 +100,7 @@ public class AboutMeActivity extends BaseActivity<AboutMePresenter> implements A
     }
 
     @Override
-    public void initRootView() {
+    public void initBinding() {
         ActivityAboutMeBinding binding = ActivityAboutMeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         abc = binding.abc;
@@ -143,7 +143,7 @@ public class AboutMeActivity extends BaseActivity<AboutMePresenter> implements A
     }
 
     @Override
-    protected void initView() {
+    protected void initViews() {
         abc.setOnRightTextClickListener(new OnActionBarChildClickListener() {
             @Override
             public void onClick(View v) {
@@ -161,7 +161,7 @@ public class AboutMeActivity extends BaseActivity<AboutMePresenter> implements A
     }
 
     @Override
-    protected void loadData() {
+    protected void bindData() {
         presenter.getAboutMe();
 
         Uri uri = Router.getUriFrom(getIntent());
@@ -185,7 +185,7 @@ public class AboutMeActivity extends BaseActivity<AboutMePresenter> implements A
     }
 
     @Override
-    protected void onClick2(View v) {
+    protected void onClickSpace(View v) {
         switch (v.getId()) {
             default:
                 break;

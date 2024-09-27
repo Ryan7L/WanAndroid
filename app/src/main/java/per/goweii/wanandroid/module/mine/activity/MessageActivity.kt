@@ -34,7 +34,7 @@ class MessageActivity : BaseActivity<BasePresenter<BaseView>>() {
     }
 
     private lateinit var binding: ActivityMessageBinding
-    override fun initRootView() {
+    override fun initBinding() {
         binding = ActivityMessageBinding.inflate(layoutInflater)
         ab = binding.ab
     }
@@ -43,7 +43,7 @@ class MessageActivity : BaseActivity<BasePresenter<BaseView>>() {
 
     override fun initPresenter(): BasePresenter<BaseView>? = null
 
-    override fun initView() {
+    override fun initViews() {
         ab.getView<ActionIconView>(R.id.action_bar_fixed_magic_indicator_iv_back).apply {
             visibility = View.VISIBLE
             setOnClickListener {
@@ -60,5 +60,5 @@ class MessageActivity : BaseActivity<BasePresenter<BaseView>>() {
         MagicIndicatorUtils.commonNavigator(ab.getView(R.id.mi), binding.vp, adapter, null)
     }
 
-    override fun loadData() {}
+    override fun bindData() {}
 }

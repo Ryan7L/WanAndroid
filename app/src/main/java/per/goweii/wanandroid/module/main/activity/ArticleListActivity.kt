@@ -23,9 +23,9 @@ class ArticleListActivity : BaseActivity<BasePresenter<BaseView>>() {
 
     override fun initPresenter(): BasePresenter<BaseView>? = null
 
-    override fun initView() {
+    override fun initViews() {
     }
 
-    override fun loadData() {
+    override fun bindData() {
     }
 }

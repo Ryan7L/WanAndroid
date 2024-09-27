@@ -108,7 +108,7 @@ public class UserPageActivity extends BaseActivity<UserPagePresenter> implements
     }
 
     @Override
-    public void initRootView() {
+    public void initBinding() {
         ActivityUserPageBinding binding = ActivityUserPageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         msv = binding.msv;
@@ -164,7 +164,7 @@ public class UserPageActivity extends BaseActivity<UserPagePresenter> implements
     }
 
     @Override
-    protected void initView() {
+    protected void initViews() {
         mUserId = getUserIdFromIntent(getIntent());
         abc.setOnRightTextClickListener(new OnActionBarChildClickListener() {
             @Override
@@ -321,7 +321,7 @@ public class UserPageActivity extends BaseActivity<UserPagePresenter> implements
     }
 
     @Override
-    protected void loadData() {
+    protected void bindData() {
         MultiStateUtils.toLoading(msv);
         msv_list.setVisibility(View.GONE);
         currPage = PAGE_START;
@@ -333,7 +333,7 @@ public class UserPageActivity extends BaseActivity<UserPagePresenter> implements
         super.onNewIntent(intent);
         int newUserId = getUserIdFromIntent(intent);
         if (mUserId != newUserId) {
-            loadData();
+            bindData();
         }
     }
 

@@ -78,7 +78,7 @@ class ScanActivity : BaseActivity<ScanPresenter>(), ScanView, SwipeBackAbility.D
         }
     }
 
-    override fun initRootView() {
+    override fun initBinding() {
         binding = ActivityScanBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -97,7 +97,7 @@ class ScanActivity : BaseActivity<ScanPresenter>(), ScanView, SwipeBackAbility.D
 
     override fun initPresenter(): ScanPresenter = ScanPresenter()
 
-    override fun initView() {
+    override fun initViews() {
         binding.ivClose.setOnClickListener {
             finish()
         }
@@ -133,7 +133,7 @@ class ScanActivity : BaseActivity<ScanPresenter>(), ScanView, SwipeBackAbility.D
         startScan()
     }
 
-    override fun loadData() {
+    override fun bindData() {
     }
 
     override fun onDestroy() {

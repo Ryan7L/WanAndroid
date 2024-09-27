@@ -15,14 +15,18 @@ import per.goweii.basic.utils.ClickHelper;
  * @version v1.0.0
  * @date 2018/4/4-下午1:23
  */
-public abstract class MvpActivity<P extends MvpPresenter> extends CacheActivity implements MvpView, View.OnClickListener {
+public abstract class MvpActivity<P extends IPresenter> extends CacheActivity implements IView, View.OnClickListener {
 
     public P presenter;
 
     /**
      * 获取布局资源文件
      */
-    protected abstract int getLayoutId();
+//    protected int getLayoutId() {
+//        return 0;
+//    }
+    protected abstract void initContentView();
+
 
     /**
      * 初始化presenter
@@ -33,34 +37,35 @@ public abstract class MvpActivity<P extends MvpPresenter> extends CacheActivity 
     /**
      * 初始化控件
      */
-    protected abstract void initView();
+    protected abstract void initViews();
 
     /**
      * 绑定数据
      */
-    protected abstract void loadData();
+    protected abstract void bindData();
 
     /**
      * 点击事件，可连续点击
      */
-    protected boolean onClick1(final View v) {
+    protected boolean onClickContinuously(final View v) {
         return false;
     }
 
     /**
      * 点击事件，500毫秒第一次
      */
-    protected void onClick2(final View v) {
+    protected void onClickSpace(final View v) {
     }
 
-    protected void initWindow() {
+    protected void initWindowConfig() {
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initWindow();
-        initRootView();
+        initWindowConfig();
+//        initBinding();
+        initContentView();
         presenter = initPresenter();
         if (presenter != null) {
             presenter.attach(this);
@@ -68,15 +73,15 @@ public abstract class MvpActivity<P extends MvpPresenter> extends CacheActivity 
         initialize();
     }
 
-    public void initRootView() {
-        if (getLayoutId() > 0) {
-            setContentView(getLayoutId());
-        }
-    }
+//    public void initBinding() {
+//        if (getLayoutId() > 0) {
+//            setContentView(getLayoutId());
+//        }
+//    }
 
     protected void initialize() {
-        initView();
-        loadData();
+        initViews();
+        bindData();
     }
 
     @Override
@@ -101,11 +106,11 @@ public abstract class MvpActivity<P extends MvpPresenter> extends CacheActivity 
      */
     @Override
     public void onClick(final View v) {
-        if (!onClick1(v)) {
+        if (!onClickContinuously(v)) {
             ClickHelper.onlyFirstSameView(v, new ClickHelper.Callback() {
                 @Override
                 public void onClick(View view) {
-                    onClick2(view);
+                    onClickSpace(view);
                 }
             });
         }

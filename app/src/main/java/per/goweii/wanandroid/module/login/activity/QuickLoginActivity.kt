@@ -78,14 +78,14 @@ class QuickLoginActivity : BaseActivity<QuickLoginPresenter>(), QuickLoginView,
         return QuickLoginPresenter()
     }
 
-    override fun initView() {
+    override fun initViews() {
         openOrUse = intent.getBooleanExtra(PARAMS_OPEN_OR_USE, openOrUse)
         startPasswordLoginOnFail =
             intent.getBooleanExtra(PARAMS_START_PASSWORD_LOGIN_ON_FAIL, startPasswordLoginOnFail)
         biometricHelper = BiometricHelper(this)
     }
 
-    override fun loadData() {
+    override fun bindData() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             finishWithFailed()
             return

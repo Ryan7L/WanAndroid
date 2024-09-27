@@ -6,7 +6,7 @@ import android.content.Intent;
 import androidx.annotation.Nullable;
 
 import per.goweii.basic.core.base.BaseActivity;
-import per.goweii.basic.core.mvp.MvpPresenter;
+import per.goweii.basic.core.mvp.IPresenter;
 
 public class BringToFrontActivity extends BaseActivity {
     public static void start(Context context) {
@@ -21,16 +21,16 @@ public class BringToFrontActivity extends BaseActivity {
 
     @Nullable
     @Override
-    protected MvpPresenter initPresenter() {
+    protected IPresenter initPresenter() {
         return null;
     }
 
     @Override
-    protected void initView() {
+    protected void initViews() {
         finish();
     }
 
     @Override
-    protected void loadData() {
+    protected void bindData() {
     }
 }

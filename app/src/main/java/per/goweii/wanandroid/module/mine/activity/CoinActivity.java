@@ -54,7 +54,7 @@ public class CoinActivity extends BaseActivity<CoinPresenter> implements CoinVie
     }
 
     @Override
-    public void initRootView() {
+    public void initBinding() {
         ActivityCoinBinding binding = ActivityCoinBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         abc = binding.abc;
@@ -75,7 +75,7 @@ public class CoinActivity extends BaseActivity<CoinPresenter> implements CoinVie
     }
 
     @Override
-    protected void initView() {
+    protected void initViews() {
         abc.getRightActionView(0).setOnClickListener(new OnClickListener2() {
             @Override
             public void onClick2(View v) {
@@ -111,7 +111,7 @@ public class CoinActivity extends BaseActivity<CoinPresenter> implements CoinVie
     }
 
     @Override
-    protected void loadData() {
+    protected void bindData() {
         presenter.getCoin();
         MultiStateUtils.toLoading(msv);
         currPage = PAGE_START;

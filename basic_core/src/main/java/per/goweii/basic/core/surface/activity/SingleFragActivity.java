@@ -9,7 +9,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import per.goweii.basic.core.R;
 import per.goweii.basic.core.base.BaseActivity;
-import per.goweii.basic.core.mvp.MvpPresenter;
+import per.goweii.basic.core.mvp.IPresenter;
 import per.goweii.basic.core.surface.fragment.NotFoundFragment;
 
 /**
@@ -34,12 +34,12 @@ public class SingleFragActivity extends BaseActivity {
     }
 
     @Override
-    protected MvpPresenter initPresenter() {
+    protected IPresenter initPresenter() {
         return null;
     }
 
     @Override
-    protected void initView() {
+    protected void initViews() {
         String fragmentClassName = getIntent().getStringExtra("fragmentClassName");
         try {
             Class<Fragment> clazz = (Class<Fragment>) Class.forName(fragmentClassName);
@@ -56,6 +56,6 @@ public class SingleFragActivity extends BaseActivity {
     }
 
     @Override
-    protected void loadData() {
+    protected void bindData() {
     }
 }

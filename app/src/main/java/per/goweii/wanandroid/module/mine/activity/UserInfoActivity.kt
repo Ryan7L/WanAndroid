@@ -26,7 +26,7 @@ class UserInfoActivity : BaseActivity<UserInfoPresenter>(), UserInfoView {
     }
 
     private lateinit var binding: ActivityUserInfoBinding
-    override fun initRootView() {
+    override fun initBinding() {
         binding = ActivityUserInfoBinding.inflate(layoutInflater)
         setContentView(binding.root)
     }
@@ -35,10 +35,10 @@ class UserInfoActivity : BaseActivity<UserInfoPresenter>(), UserInfoView {
 
     override fun initPresenter(): UserInfoPresenter = UserInfoPresenter()
 
-    override fun initView() {
+    override fun initViews() {
     }
 
-    override fun loadData() {
+    override fun bindData() {
         presenter.mineInfo()
     }
 

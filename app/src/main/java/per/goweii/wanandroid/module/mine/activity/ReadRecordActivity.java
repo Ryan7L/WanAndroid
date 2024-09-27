@@ -66,7 +66,7 @@ public class ReadRecordActivity extends BaseActivity<ReadRecordPresenter> implem
     }
 
     @Override
-    public void initRootView() {
+    public void initBinding() {
         ActivityReadRecordBinding binding = ActivityReadRecordBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         abc = binding.abc;
@@ -104,7 +104,7 @@ public class ReadRecordActivity extends BaseActivity<ReadRecordPresenter> implem
     }
 
     @Override
-    protected void initView() {
+    protected void initViews() {
         abc.setOnRightTextClickListener(new OnActionBarChildClickListener() {
             @Override
             public void onClick(View v) {
@@ -189,7 +189,7 @@ public class ReadRecordActivity extends BaseActivity<ReadRecordPresenter> implem
     }
 
     @Override
-    protected void loadData() {
+    protected void bindData() {
         MultiStateUtils.toLoading(msv);
         offset = 0;
         getPageList();

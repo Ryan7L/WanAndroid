@@ -40,7 +40,7 @@ class BookDetailsActivity : BaseActivity<BookDetailsPresenter>(), BookDetailsVie
     }
 
     private lateinit var binding: ActivityBookDetailsBinding
-    override fun initRootView() {
+    override fun initBinding() {
         binding = ActivityBookDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -55,7 +55,7 @@ class BookDetailsActivity : BaseActivity<BookDetailsPresenter>(), BookDetailsVie
 
     override fun initPresenter(): BookDetailsPresenter = BookDetailsPresenter()
 
-    override fun initView() {
+    override fun initViews() {
         bookBean =
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.TIRAMISU) intent.getParcelableExtra(
                 PARAM_BOOK,
@@ -105,7 +105,7 @@ class BookDetailsActivity : BaseActivity<BookDetailsPresenter>(), BookDetailsVie
         }
     }
 
-    override fun loadData() {
+    override fun bindData() {
         MultiStateUtils.toLoading(binding.msv)
         presenter.getChapters(bookBean.id, currPage)
     }

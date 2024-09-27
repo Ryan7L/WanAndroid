@@ -66,7 +66,7 @@ public class MineShareActivity extends BaseActivity<MineSharePresenter> implemen
     }
 
     @Override
-    public void initRootView() {
+    public void initBinding() {
         ActivityMineShareBinding binding = ActivityMineShareBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         abc = binding.abc;
@@ -125,7 +125,7 @@ public class MineShareActivity extends BaseActivity<MineSharePresenter> implemen
     }
 
     @Override
-    protected void initView() {
+    protected void initViews() {
         abc.setOnRightIconClickListener(new OnActionBarChildClickListener() {
             @Override
             public void onClick(View v) {
@@ -200,7 +200,7 @@ public class MineShareActivity extends BaseActivity<MineSharePresenter> implemen
     }
 
     @Override
-    protected void loadData() {
+    protected void bindData() {
         MultiStateUtils.toLoading(msv);
         currPage = PAGE_START;
         presenter.getMineShareArticleList(currPage, false);

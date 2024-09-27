@@ -11,7 +11,7 @@ import java.io.File;
 import per.goweii.anypermission.AnyPermission;
 import per.goweii.anypermission.RequestListener;
 import per.goweii.basic.core.base.BaseActivity;
-import per.goweii.basic.core.mvp.MvpPresenter;
+import per.goweii.basic.core.mvp.IPresenter;
 import per.goweii.basic.utils.LogUtils;
 import per.goweii.wanandroid.common.WanApp;
 import per.goweii.wanandroid.utils.ThemeUtils;
@@ -33,12 +33,12 @@ public class InstallApkActivity extends BaseActivity {
 
     @Nullable
     @Override
-    protected MvpPresenter initPresenter() {
+    protected IPresenter initPresenter() {
         return null;
     }
 
     @Override
-    protected void initView() {
+    protected void initViews() {
         String apkPath = getIntent().getStringExtra(APK_PATH);
         if (TextUtils.isEmpty(apkPath)) {
             finish();
@@ -51,7 +51,7 @@ public class InstallApkActivity extends BaseActivity {
     }
 
     @Override
-    protected void loadData() {
+    protected void bindData() {
     }
 
     @Override

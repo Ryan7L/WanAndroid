@@ -67,7 +67,7 @@ public class ReadLaterActivity extends BaseActivity<ReadLaterPresenter> implemen
     }
 
     @Override
-    public void initRootView() {
+    public void initBinding() {
         ActivityReadLaterBinding binding = ActivityReadLaterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         abc = binding.abc;
@@ -102,7 +102,7 @@ public class ReadLaterActivity extends BaseActivity<ReadLaterPresenter> implemen
     }
 
     @Override
-    protected void initView() {
+    protected void initViews() {
         abc.setOnRightTextClickListener(new OnActionBarChildClickListener() {
             @Override
             public void onClick(View v) {
@@ -187,7 +187,7 @@ public class ReadLaterActivity extends BaseActivity<ReadLaterPresenter> implemen
     }
 
     @Override
-    protected void loadData() {
+    protected void bindData() {
         MultiStateUtils.toLoading(msv);
         offset = 0;
         getPageList();

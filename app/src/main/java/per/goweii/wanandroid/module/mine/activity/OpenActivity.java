@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import per.goweii.basic.core.base.BaseActivity;
-import per.goweii.basic.core.mvp.MvpPresenter;
+import per.goweii.basic.core.mvp.IPresenter;
 import per.goweii.wanandroid.R;
 import per.goweii.wanandroid.databinding.ActivityOpenBinding;
 import per.goweii.wanandroid.module.mine.model.OpenEntity;
@@ -46,7 +46,7 @@ public class OpenActivity extends BaseActivity {
     }
 
     @Override
-    public void initRootView() {
+    public void initBinding() {
         ActivityOpenBinding binding = ActivityOpenBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         msv = binding.msv;
@@ -61,12 +61,12 @@ public class OpenActivity extends BaseActivity {
 
     @Nullable
     @Override
-    protected MvpPresenter initPresenter() {
+    protected IPresenter initPresenter() {
         return null;
     }
 
     @Override
-    protected void initView() {
+    protected void initViews() {
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new BaseQuickAdapter<OpenEntity, BaseViewHolder>(R.layout.rv_item_open) {
             @Override
@@ -96,7 +96,7 @@ public class OpenActivity extends BaseActivity {
     }
 
     @Override
-    protected void loadData() {
+    protected void bindData() {
         MultiStateUtils.toLoading(msv);
         List<OpenEntity> list = new ArrayList<>();
         list.add(new OpenEntity("goweii/RxHttp", "对RxJava2+Retrofit2+OkHttp3的封装", "https://github.com/goweii/RxHttp"));

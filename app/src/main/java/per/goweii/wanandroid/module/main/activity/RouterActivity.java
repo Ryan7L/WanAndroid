@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import per.goweii.basic.core.base.BaseActivity;
-import per.goweii.basic.core.mvp.MvpPresenter;
+import per.goweii.basic.core.mvp.IPresenter;
 import per.goweii.basic.utils.LogUtils;
 import per.goweii.swipeback.SwipeBackAbility;
 import per.goweii.swipeback.SwipeBackDirection;
@@ -41,17 +41,17 @@ public class RouterActivity extends BaseActivity implements SwipeBackAbility.Dir
 
     @Nullable
     @Override
-    protected MvpPresenter initPresenter() {
+    protected IPresenter initPresenter() {
         return null;
     }
 
     @Override
-    protected void initView() {
+    protected void initViews() {
 
     }
 
     @Override
-    protected void loadData() {
+    protected void bindData() {
     }
 
     @Override

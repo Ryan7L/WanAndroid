@@ -7,6 +7,9 @@ plugins {
 apply("${rootDir.path}/gradle/basic.gradle")
 android {
     namespace = "per.goweii.basic.core"
+    viewBinding{
+        enable = true
+    }
 }
 
 dependencies {

@@ -71,7 +71,7 @@ public class ShareArticleActivity extends BaseActivity<ShareArticlePresenter> im
     }
 
     @Override
-    public void initRootView() {
+    public void initBinding() {
         binding = ActivityShareArticleBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         abc = binding.abc;
@@ -95,7 +95,7 @@ public class ShareArticleActivity extends BaseActivity<ShareArticlePresenter> im
     }
 
     @Override
-    protected void initView() {
+    protected void initViews() {
         tv_share.setOnClickListener(new OnClickListener2() {
             @Override
             public void onClick2(View v) {
@@ -132,7 +132,7 @@ public class ShareArticleActivity extends BaseActivity<ShareArticlePresenter> im
     }
 
     @Override
-    protected void loadData() {
+    protected void bindData() {
     }
 
     @Override
@@ -209,7 +209,7 @@ public class ShareArticleActivity extends BaseActivity<ShareArticlePresenter> im
     }
 
     @Override
-    protected void onClick2(View v) {
+    protected void onClickSpace(View v) {
         switch (v.getId()) {
             default:
                 break;

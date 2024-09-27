@@ -95,15 +95,15 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
     }
 
     @Override
-    public void initRootView() {
+    public void initBinding() {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         vp = binding.vp;
     }
 
     @Override
-    protected void initWindow() {
-        super.initWindow();
+    protected void initWindowConfig() {
+        super.initWindowConfig();
         getWindow().setBackgroundDrawable(new ColorDrawable(ResUtils.getThemeColor(this, R.attr.colorBackground)));
     }
 
@@ -119,7 +119,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
     }
 
     @Override
-    protected void initView() {
+    protected void initViews() {
         vp.setOffscreenPageLimit(1);
         mPagerAdapter = new FixedFragmentPagerAdapter(getSupportFragmentManager());
         vp.setAdapter(mPagerAdapter);
@@ -192,22 +192,14 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
     }
 
     private void showPrivacyPolicyDialog() {
-        mPredefinedTaskQueen.get(sTaskPrivacyPolicy).runnable(new Function1<PredefinedTaskQueen.Completion, Unit>() {
-            @Override
-            public Unit invoke(PredefinedTaskQueen.Completion completion) {
-                PrivacyPolicyDialog.showIfFirst(getContext(), new PrivacyPolicyDialog.CompleteCallback() {
-                    @Override
-                    public void onComplete() {
-                        completion.complete();
-                    }
-                });
-                return null;
-            }
+        mPredefinedTaskQueen.get(sTaskPrivacyPolicy).runnable(completion -> {
+            PrivacyPolicyDialog.showIfFirst(getContext(), completion::complete);
+            return null;
         });
     }
 
     @Override
-    protected void loadData() {
+    protected void bindData() {
         mUpdateUtils = UpdateUtils.newInstance();
         presenter.getConfig();
         presenter.getAdvert();
@@ -261,22 +253,19 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
             // 当前任务是否完成？
             if (!task.isCompleted()) {
                 // 当前任务没有完成，更新任务
-                task.runnable(new Function1<PredefinedTaskQueen.Completion, Unit>() {
-                    @Override
-                    public Unit invoke(PredefinedTaskQueen.Completion completion) {
-                        mCopiedLinkDialog.addOnDismissListener(new Layer.OnDismissListener() {
-                            @Override
-                            public void onPreDismiss(@NonNull Layer layer) {
-                            }
+                task.runnable(completion -> {
+                    mCopiedLinkDialog.addOnDismissListener(new Layer.OnDismissListener() {
+                        @Override
+                        public void onPreDismiss(@NonNull Layer layer) {
+                        }
 
-                            @Override
-                            public void onPostDismiss(@NonNull Layer layer) {
-                                completion.complete();
-                            }
-                        });
-                        mCopiedLinkDialog.show();
-                        return null;
-                    }
+                        @Override
+                        public void onPostDismiss(@NonNull Layer layer) {
+                            completion.complete();
+                        }
+                    });
+                    mCopiedLinkDialog.show();
+                    return null;
                 });
                 return;
             }
@@ -303,23 +292,20 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
             // 当前任务是否完成？
             if (!task.isCompleted()) {
                 // 当前任务没有完成，更新任务
-                task.runnable(new Function1<PredefinedTaskQueen.Completion, Unit>() {
-                    @Override
-                    public Unit invoke(PredefinedTaskQueen.Completion completion) {
-                        mPasswordDialog.addOnDismissListener(new Layer.OnDismissListener() {
-                            @Override
-                            public void onPreDismiss(@NonNull Layer layer) {
-                            }
+                task.runnable(completion -> {
+                    mPasswordDialog.addOnDismissListener(new Layer.OnDismissListener() {
+                        @Override
+                        public void onPreDismiss(@NonNull Layer layer) {
+                        }
 
-                            @Override
-                            public void onPostDismiss(@NonNull Layer layer) {
-                                mPasswordDialog = null;
-                                completion.complete();
-                            }
-                        });
-                        mPasswordDialog.show();
-                        return null;
-                    }
+                        @Override
+                        public void onPostDismiss(@NonNull Layer layer) {
+                            mPasswordDialog = null;
+                            completion.complete();
+                        }
+                    });
+                    mPasswordDialog.show();
+                    return null;
                 });
                 return;
             }
@@ -348,42 +334,36 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
     @Override
     public void updateSuccess(int code, UpdateBean data) {
         PredefinedTaskQueen.Task task = mPredefinedTaskQueen.get(sTaskUpdate);
-        task.runnable(new Function1<PredefinedTaskQueen.Completion, Unit>() {
-            @Override
-            public Unit invoke(PredefinedTaskQueen.Completion completion) {
-                boolean shouldForce = mUpdateUtils.shouldForceUpdate(data);
-                if (shouldForce || mUpdateUtils.shouldUpdate(data)) {
-                    mPredefinedTaskQueen.get(sTaskBetaUpdate).complete();
-                    UpdateDialog.with(getContext()).setUrl(data.getUrl()).setUrlBackup(data.getUrl_backup()).setVersionCode(data.getVersion_code()).setVersionName(data.getVersion_name()).setForce(shouldForce).setDescription(data.getDesc()).setTime(data.getTime()).setOnUpdateListener(new UpdateDialog.OnUpdateListener() {
-                        @Override
-                        public void onDownload(String url, String urlBackup, boolean isForce) {
-                            download(url, urlBackup, isForce);
-                        }
+        task.runnable(completion -> {
+            boolean shouldForce = mUpdateUtils.shouldForceUpdate(data);
+            if (shouldForce || mUpdateUtils.shouldUpdate(data)) {
+                mPredefinedTaskQueen.get(sTaskBetaUpdate).complete();
+                UpdateDialog.with(getContext()).setUrl(data.getUrl()).setUrlBackup(data.getUrl_backup()).setVersionCode(data.getVersion_code()).setVersionName(data.getVersion_name()).setForce(shouldForce).setDescription(data.getDesc()).setTime(data.getTime()).setOnUpdateListener(new UpdateDialog.OnUpdateListener() {
+                    @Override
+                    public void onDownload(String url, String urlBackup, boolean isForce) {
+                        download(url, urlBackup, isForce);
+                    }
 
-                        @Override
-                        public void onIgnore(String versionName, int versionCode) {
-                            mUpdateUtils.ignore(versionCode);
-                        }
-                    }).setOnDismissListener(new UpdateDialog.OnDismissListener() {
-                        @Override
-                        public void onDismiss() {
-                            completion.complete();
-                            if (!mPredefinedTaskQueen.get(sTaskDownload).isRunnable()) {
-                                mPredefinedTaskQueen.get(sTaskDownload).complete();
-                            }
-                        }
-                    }).show();
-                } else {
-                    if (!mUpdateUtils.isNewest(data) && UserUtils.getInstance().isLogin()) {
-                        presenter.betaUpdate();
-                    } else {
-                        mPredefinedTaskQueen.get(sTaskBetaUpdate).complete();
+                    @Override
+                    public void onIgnore(String versionName, int versionCode) {
+                        mUpdateUtils.ignore(versionCode);
+                    }
+                }).setOnDismissListener(() -> {
+                    completion.complete();
+                    if (!mPredefinedTaskQueen.get(sTaskDownload).isRunnable()) {
                         mPredefinedTaskQueen.get(sTaskDownload).complete();
                     }
-                    completion.complete();
+                }).show();
+            } else {
+                if (!mUpdateUtils.isNewest(data) && UserUtils.getInstance().isLogin()) {
+                    presenter.betaUpdate();
+                } else {
+                    mPredefinedTaskQueen.get(sTaskBetaUpdate).complete();
+                    mPredefinedTaskQueen.get(sTaskDownload).complete();
                 }
-                return null;
+                completion.complete();
             }
+            return null;
         });
     }
 
