@@ -16,8 +16,7 @@
         android:background="?colorSurfaceTop"
         android:scaleType="centerCrop"
         app:shapeAppearance="@style/roundedImg12dp"
-        tools:src="@tools:sample/backgrounds/scenic"
-        />
+        tools:src="@tools:sample/backgrounds/scenic" />
 
     <ImageView
         android:id="@+id/iv_none"

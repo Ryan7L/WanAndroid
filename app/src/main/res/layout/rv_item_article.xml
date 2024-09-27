@@ -95,8 +95,7 @@
             android:visibility="gone"
             app:shapeAppearance="@style/roundedImg3dp"
             tools:src="@drawable/image_holder"
-            tools:visibility="visible"
-            />
+            tools:visibility="visible" />
 
         <LinearLayout
             android:layout_width="match_parent"

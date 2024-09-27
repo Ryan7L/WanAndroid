@@ -36,9 +36,9 @@ android {
     buildFeatures {
         buildConfig = true
     }
-    configurations{
-        implementation{
-            exclude("com.intellij","annotations")
+    configurations {
+        implementation {
+            exclude("com.intellij", "annotations")
         }
     }
 }

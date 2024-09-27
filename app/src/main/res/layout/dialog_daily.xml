@@ -22,7 +22,7 @@
             android:layout_height="200dp"
             android:scaleType="centerCrop"
             app:shapeAppearance="@style/topRoundedImg"
-            tools:background="?colorMain"/>
+            tools:background="?colorMain" />
 
         <TextView
             android:layout_width="match_parent"

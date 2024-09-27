@@ -21,7 +21,6 @@
         app:abc_titleText="个人资料" />
 
 
-
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/civ_user_icon"
         android:layout_width="80dp"

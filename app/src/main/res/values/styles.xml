@@ -73,24 +73,27 @@
         <item name="cornerSize">16dp</item>
         <item name="cornerFamily">rounded</item>
     </style>
+
     <style name="roundedImg3dp">
         <item name="cornerSize">3dp</item>
         <item name="cornerFamily">rounded</item>
     </style>
+
     <style name="roundedImg12dp">
         <item name="cornerSize">12dp</item>
         <item name="cornerFamily">rounded</item>
     </style>
+
     <style name="circleImg">
         <item name="cornerSize">50%</item>
         <item name="cornerFamily">rounded</item>
     </style>
+
     <style name="topRoundedImg">
         <item name="cornerFamily">rounded</item>
         <item name="cornerFamilyTopLeft">@dimen/round_radius</item>
         <item name="cornerFamilyTopRight">@dimen/round_radius</item>
     </style>
-
 
 
 </resources>

@@ -22,8 +22,8 @@
         android:layout_height="80dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="100dp"
-        android:scaleType="centerCrop"
         android:background="?colorSurfaceMask"
+        android:scaleType="centerCrop"
         app:shapeAppearance="@style/circleImg" />
 
     <TextView

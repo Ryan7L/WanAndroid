@@ -124,10 +124,9 @@
                                 android:layout_height="14dp"
                                 android:layout_centerVertical="true"
                                 android:background="@color/color_blue"
-                                app:contentPadding="2dp"
                                 android:src="@drawable/logo"
-                                app:shapeAppearance="@style/roundedImg3dp"
-                                />
+                                app:contentPadding="2dp"
+                                app:shapeAppearance="@style/roundedImg3dp" />
 
                             <TextView
                                 android:id="@+id/dialog_article_share_tv_app"
