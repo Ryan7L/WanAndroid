@@ -85,10 +85,10 @@ public enum RouterMap {
     void navigation(String url) {
         if (clazz == null) return;
         try {
-            Intent intent = new Intent(Utils.getAppContext(), clazz);
+            Intent intent = new Intent(Utils.getContext(), clazz);
             intent.putExtra(Router.PARAM_URL, url);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            Utils.getAppContext().startActivity(intent);
+            Utils.getContext().startActivity(intent);
         } catch (Exception ignore) {
         }
     }

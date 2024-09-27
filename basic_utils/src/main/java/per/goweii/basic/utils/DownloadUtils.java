@@ -48,7 +48,7 @@ public class DownloadUtils {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            Uri apkUri = FileProvider.getUriForFile(context, Utils.getAppContext().getPackageName() + ".fileprovider", file);
+            Uri apkUri = FileProvider.getUriForFile(context, Utils.getContext().getPackageName() + ".fileprovider", file);
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             intent.setDataAndType(apkUri, "application/vnd.android.package-archive");
         } else {
@@ -84,7 +84,7 @@ public class DownloadUtils {
             try {
                 URL url = new URL(params[0]);
                 try {
-                    final String fileName = Utils.getAppContext().getPackageName() + ".apk";
+                    final String fileName = Utils.getContext().getPackageName() + ".apk";
                     String parentPath;
                     if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
                         parentPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();

@@ -35,7 +35,7 @@ public final class DisplayInfoUtils {
     }
 
     private DisplayInfoUtils() {
-        mContext = Utils.getAppContext();
+        mContext = Utils.getContext();
         mDisplayMetrics = mContext.getResources().getDisplayMetrics();
     }
 

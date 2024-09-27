@@ -25,8 +25,8 @@ public class QQWanPwd implements IWanPwd {
         return new Runnable() {
             @Override
             public void run() {
-                if (AppInfoUtils.isAppInstalled(Utils.getAppContext(), AppInfoUtils.PackageName.QQ)) {
-                    AppOpenUtils.openQQChat(Utils.getAppContext(), getQQ());
+                if (AppInfoUtils.isAppInstalled(Utils.getContext(), AppInfoUtils.PackageName.QQ)) {
+                    AppOpenUtils.openQQChat(Utils.getContext(), getQQ());
                 }
             }
         };

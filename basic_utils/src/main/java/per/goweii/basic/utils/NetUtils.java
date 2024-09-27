@@ -24,8 +24,8 @@ public class NetUtils {
      */
     @RequiresPermission(value = "android.permission.ACCESS_NETWORK_STATE")
     public static boolean isConnected() {
-        if (Utils.getAppContext() != null) {
-            ConnectivityManager connectivityManager = (ConnectivityManager) Utils.getAppContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (Utils.getContext() != null) {
+            ConnectivityManager connectivityManager = (ConnectivityManager) Utils.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
             if (connectivityManager != null) {
                 NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
                 if (networkInfo != null) {
@@ -44,8 +44,8 @@ public class NetUtils {
      * @permission android.permission.ACCESS_NETWORK_STATE
      */
     public static final int getNetWorkStates() {
-        if (Utils.getAppContext() != null) {
-            ConnectivityManager connectivityManager = (ConnectivityManager) Utils.getAppContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (Utils.getContext() != null) {
+            ConnectivityManager connectivityManager = (ConnectivityManager) Utils.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
             if (activeNetworkInfo == null || !activeNetworkInfo.isConnected()) {
                 return TYPE_NONE;//没网

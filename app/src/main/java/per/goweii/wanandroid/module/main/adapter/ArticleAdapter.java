@@ -11,11 +11,11 @@ import androidx.annotation.Nullable;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.crayon.ryan.utils.StringUtilsKt;
 
 import java.util.Collection;
 import java.util.List;
 
-import per.goweii.basic.utils.StringUtils;
 import per.goweii.basic.utils.listener.OnClickListener2;
 import per.goweii.wanandroid.R;
 import per.goweii.wanandroid.event.CollectionEvent;
@@ -94,7 +94,7 @@ public class ArticleAdapter extends BaseQuickAdapter<ArticleBean, BaseViewHolder
             tv_desc.setVisibility(View.VISIBLE);
             tv_title.setSingleLine(true);
             String desc = Html.fromHtml(item.getDesc()).toString();
-            desc = StringUtils.removeAllBank(desc, 2);
+            desc = StringUtilsKt.removeBlank(desc, 2);
             tv_desc.setText(desc);
         }
         tv_chapter_name.setText(Html.fromHtml(formatChapterName(item.getSuperChapterName(), item.getChapterName())));

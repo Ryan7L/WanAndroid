@@ -15,7 +15,7 @@ import androidx.annotation.NonNull;
 public class CopyUtils {
 
     public static void copyText(@NonNull String text) {
-        ClipboardManager clipboardManager = (ClipboardManager) Utils.getAppContext().getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipboardManager clipboardManager = (ClipboardManager) Utils.getContext().getSystemService(Context.CLIPBOARD_SERVICE);
         clipboardManager.setText(text);
     }
 

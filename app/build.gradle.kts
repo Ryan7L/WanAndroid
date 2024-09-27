@@ -29,8 +29,16 @@ android {
         namespace = "per.goweii.wanandroid"
     }
     packaging {
-        resources{
+        resources {
             excludes += "META-INF/gradle/incremental.annotation.processors"
+        }
+    }
+    buildFeatures {
+        buildConfig = true
+    }
+    configurations{
+        implementation{
+            exclude("com.intellij","annotations")
         }
     }
 }
@@ -78,6 +86,7 @@ dependencies {
 
     //该依赖用于解决一个报错问题：https://stackoverflow.com/questions/56639529/duplicate-class-com-google-common-util-concurrent-listenablefuture-found-in-modu
     implementation(libs.guavanolistenablefuture)
+
 }
 
 fun flavortask() {

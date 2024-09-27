@@ -28,7 +28,7 @@ object ImageCacheManager {
         val ext = lastPathSegment.substring(lastIndexOf + 1)
         if (ext.isBlank()) return null
         supportExts.find { it.equals(ext, true) } ?: return null
-        return Glide.with(Utils.getAppContext()).asFile()
+        return Glide.with(Utils.context).asFile()
             .apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.DATA))
             .load(uri.toString()).submit().get()
             .inputStream()

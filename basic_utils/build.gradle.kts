@@ -5,6 +5,9 @@ plugins {
 apply("${rootDir.path}/basic.gradle")
 android {
     namespace = "per.goweii.basic.utils"
+    buildFeatures {
+        buildConfig = true
+    }
 
 }
 

@@ -27,7 +27,7 @@ public class CopiedTextProcessor {
     private String mCurrProcessText = null;
 
     private CopiedTextProcessor() {
-        mClipboardManager = (ClipboardManager) Utils.getAppContext().getSystemService(Context.CLIPBOARD_SERVICE);
+        mClipboardManager = (ClipboardManager) Utils.getContext().getSystemService(Context.CLIPBOARD_SERVICE);
     }
 
     public static CopiedTextProcessor getInstance() {

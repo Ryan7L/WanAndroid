@@ -26,7 +26,7 @@ public class DeviceIdUtils {
     @NonNull
     public static String getId() {
         synchronized (DeviceIdUtils.class) {
-            SharedPreferences sp = Utils.getAppContext().getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
+            SharedPreferences sp = Utils.getContext().getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
             String deviceId = sp.getString(KEY_ID, null);
             if (!TextUtils.isEmpty(deviceId)) {
                 return deviceId;

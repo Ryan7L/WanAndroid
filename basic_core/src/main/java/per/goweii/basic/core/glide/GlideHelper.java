@@ -416,7 +416,7 @@ public class GlideHelper {
         if (context != null) {
             return context;
         }
-        return Utils.getAppContext();
+        return Utils.getContext();
     }
 
     private RequestBuilder<Bitmap> getBmpBuilder() {

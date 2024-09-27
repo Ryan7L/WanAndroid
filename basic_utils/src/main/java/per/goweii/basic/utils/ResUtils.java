@@ -32,11 +32,11 @@ import java.io.InputStreamReader;
 public class ResUtils {
 
     public static Resources getResources() {
-        return Utils.getAppContext().getResources();
+        return Utils.getContext().getResources();
     }
 
     public static Drawable getDrawable(@DrawableRes int id) {
-        return ContextCompat.getDrawable(Utils.getAppContext(), id);
+        return ContextCompat.getDrawable(Utils.getContext(), id);
     }
 
     public static String getString(@StringRes int id) {
@@ -45,7 +45,7 @@ public class ResUtils {
 
     @Deprecated
     public static int getColor(@ColorRes int id) {
-        return ContextCompat.getColor(Utils.getAppContext(), id);
+        return ContextCompat.getColor(Utils.getContext(), id);
     }
 
     public static int getColor(@NonNull Context context, @ColorRes int id) {
@@ -86,7 +86,7 @@ public class ResUtils {
     public static String getAssets(String fileName) {
         StringBuilder stringBuilder = new StringBuilder();
         try {
-            AssetManager assetManager = Utils.getAppContext().getAssets();
+            AssetManager assetManager = Utils.getContext().getAssets();
             BufferedReader bf = new BufferedReader(new InputStreamReader(assetManager.open(fileName)));
             String line;
             while ((line = bf.readLine()) != null) {

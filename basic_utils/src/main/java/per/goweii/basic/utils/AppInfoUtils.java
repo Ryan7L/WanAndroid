@@ -15,8 +15,8 @@ public class AppInfoUtils {
     public static String getAppName() {
         String appName = "";
         try {
-            PackageInfo packageInfo = Utils.getAppContext().getApplicationContext().getPackageManager().getPackageInfo(Utils.getAppContext().getPackageName(), 0);
-            appName = Utils.getAppContext().getString(packageInfo.applicationInfo.labelRes);
+            PackageInfo packageInfo = Utils.getContext().getApplicationContext().getPackageManager().getPackageInfo(Utils.getContext().getPackageName(), 0);
+            appName = Utils.getContext().getString(packageInfo.applicationInfo.labelRes);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
@@ -29,7 +29,7 @@ public class AppInfoUtils {
     public static int getVersionCode() {
         int localVersion = 0;
         try {
-            PackageInfo packageInfo = Utils.getAppContext().getPackageManager().getPackageInfo(Utils.getAppContext().getPackageName(), 0);
+            PackageInfo packageInfo = Utils.getContext().getPackageManager().getPackageInfo(Utils.getContext().getPackageName(), 0);
             localVersion = packageInfo.versionCode;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
@@ -43,7 +43,7 @@ public class AppInfoUtils {
     public static String getVersionName() {
         String versionName = "";
         try {
-            PackageInfo packageInfo = Utils.getAppContext().getApplicationContext().getPackageManager().getPackageInfo(Utils.getAppContext().getPackageName(), 0);
+            PackageInfo packageInfo = Utils.getContext().getApplicationContext().getPackageManager().getPackageInfo(Utils.getContext().getPackageName(), 0);
             versionName = packageInfo.versionName;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();

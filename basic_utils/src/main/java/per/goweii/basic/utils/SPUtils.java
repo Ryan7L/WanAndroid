@@ -14,7 +14,7 @@ public class SPUtils {
     private final SharedPreferences sp;
 
     private static class SPHolder {
-        private static final SharedPreferences INSTANCE = PreferenceManager.getDefaultSharedPreferences(Utils.getAppContext());
+        private static final SharedPreferences INSTANCE = PreferenceManager.getDefaultSharedPreferences(Utils.getContext());
     }
 
     private SPUtils(@NonNull String name) {
@@ -34,7 +34,7 @@ public class SPUtils {
     }
 
     private static SharedPreferences getSharedPreferences(@NonNull String name) {
-        return Utils.getAppContext().getSharedPreferences(name, Context.MODE_PRIVATE);
+        return Utils.getContext().getSharedPreferences(name, Context.MODE_PRIVATE);
     }
 
     private static SharedPreferences getDefaultSharedPreferences() {

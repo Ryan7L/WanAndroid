@@ -29,7 +29,7 @@ public class LoginReceiver extends BroadcastReceiver {
     private SimpleCallback<Integer> mCallback;
 
     public static void send(int type) {
-        LocalBroadcastManager manager = LocalBroadcastManager.getInstance(Utils.getAppContext());
+        LocalBroadcastManager manager = LocalBroadcastManager.getInstance(Utils.getContext());
         Intent intent = new Intent();
         intent.setAction(ACTION);
         intent.putExtra(TYPE, NOT_LOGIN);

@@ -19,16 +19,16 @@ public class CacheUtils {
     public static String getCacheDir() {
         File cacheFile = null;
         if (FileUtils.isSDCardAlive()) {
-            cacheFile = Utils.getAppContext().getExternalCacheDir();
+            cacheFile = Utils.getContext().getExternalCacheDir();
         }
         if (cacheFile == null) {
-            cacheFile = Utils.getAppContext().getCacheDir();
+            cacheFile = Utils.getContext().getCacheDir();
         }
         return cacheFile.getAbsolutePath();
     }
 
     public static String getFilesDir() {
-        File cacheFile = Utils.getAppContext().getFilesDir();
+        File cacheFile = Utils.getContext().getFilesDir();
         return cacheFile.getAbsolutePath();
     }
 
@@ -36,9 +36,9 @@ public class CacheUtils {
      * 获取系统默认缓存文件夹内的缓存大小
      */
     public static String getTotalCacheSize() {
-        long cacheSize = FileUtils.getSize(Utils.getAppContext().getCacheDir());
+        long cacheSize = FileUtils.getSize(Utils.getContext().getCacheDir());
         if (FileUtils.isSDCardAlive()) {
-            cacheSize += FileUtils.getSize(Utils.getAppContext().getExternalCacheDir());
+            cacheSize += FileUtils.getSize(Utils.getContext().getExternalCacheDir());
         }
         return FileUtils.formatSize(cacheSize);
     }
@@ -47,9 +47,9 @@ public class CacheUtils {
      * 清除系统默认缓存文件夹内的缓存
      */
     public static void clearAllCache() {
-        FileUtils.delete(Utils.getAppContext().getCacheDir());
+        FileUtils.delete(Utils.getContext().getCacheDir());
         if (FileUtils.isSDCardAlive()) {
-            FileUtils.delete(Utils.getAppContext().getExternalCacheDir());
+            FileUtils.delete(Utils.getContext().getExternalCacheDir());
         }
     }
 

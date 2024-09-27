@@ -157,6 +157,7 @@ class ArticleShareDialog(
 
     private fun shareBitmap(bitmap: Bitmap) {
         ShareUtils.shareBitmap(activity, bitmap)
+
     }
 
     private fun saveBitmap(bitmap: Bitmap) {

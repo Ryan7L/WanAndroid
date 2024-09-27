@@ -21,7 +21,7 @@ abstract class BaseJsInterface(val jsName: String) {
             return@lazy null
         }
         try {
-            Utils.getAppContext().resources.assets.open(assetsName).use {
+            Utils.context.resources.assets.open(assetsName).use {
                 try {
                     val buffer = ByteArray(it.available())
                     it.read(buffer)

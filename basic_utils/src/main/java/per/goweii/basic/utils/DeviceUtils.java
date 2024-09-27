@@ -13,7 +13,7 @@ public class DeviceUtils {
 
     @SuppressLint("HardwareIds")
     public static String getAndroidId() {
-        return Settings.Secure.getString(Utils.getAppContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+        return Settings.Secure.getString(Utils.getContext().getContentResolver(), Settings.Secure.ANDROID_ID);
     }
 
     public static String getSerial() {

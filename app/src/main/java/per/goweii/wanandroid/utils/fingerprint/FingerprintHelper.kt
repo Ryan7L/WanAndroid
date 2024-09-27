@@ -63,15 +63,15 @@ class FingerprintHelper(
             0, // 可选 flag，建议为 0
             cancellationSignal, // CancellationSignal 对象，用于取消指纹认证，可空，但不建议为 null
             object : FingerprintManagerCompat.AuthenticationCallback() {
-                override fun onAuthenticationError(errMsgId: Int, errString: CharSequence?) {
+                override fun onAuthenticationError(errMsgId: Int, errString: CharSequence) {
                     super.onAuthenticationError(errMsgId, errString)
                 }
 
-                override fun onAuthenticationHelp(helpMsgId: Int, helpString: CharSequence?) {
+                override fun onAuthenticationHelp(helpMsgId: Int, helpString: CharSequence) {
                     super.onAuthenticationHelp(helpMsgId, helpString)
                 }
 
-                override fun onAuthenticationSucceeded(result: FingerprintManagerCompat.AuthenticationResult?) {
+                override fun onAuthenticationSucceeded(result: FingerprintManagerCompat.AuthenticationResult) {
                     super.onAuthenticationSucceeded(result)
                 }
 

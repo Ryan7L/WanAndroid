@@ -33,7 +33,7 @@ public abstract class BaseApp extends App {
     @Override
     public void onCreate() {
         super.onCreate();
-        Utils.init(this);
+        Utils.setUp(this);
         RxJavaPlugins.setErrorHandler(new Consumer<Throwable>() {
             @Override
             public void accept(Throwable throwable) throws Exception {

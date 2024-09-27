@@ -4,7 +4,7 @@ import android.text.Html
 import android.text.TextUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
-import per.goweii.basic.utils.StringUtils
+import com.crayon.ryan.utils.removeBlank
 import per.goweii.wanandroid.R
 import per.goweii.wanandroid.module.mine.model.MessageBean
 
@@ -25,7 +25,7 @@ class MessageUnreadAdapter :
         helper.setText(R.id.tv_data, item.niceDate)
         helper.setText(R.id.tv_detail, item.title)
         var content: String = Html.fromHtml(item.message).toString()
-        content = StringUtils.removeAllBank(content, 2)
+        content = content.removeBlank(2)
         helper.setGone(R.id.tv_content, content.isNotEmpty())
         helper.setText(R.id.tv_content, content)
     }

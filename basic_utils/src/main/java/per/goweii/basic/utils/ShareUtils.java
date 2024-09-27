@@ -25,7 +25,7 @@ public class ShareUtils {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_SEND);
         intent.setType("image/*");
-        intent.putExtra(Intent.EXTRA_STREAM, UriUtils.getFileUri(file));
+        intent.putExtra(Intent.EXTRA_STREAM, UriUtilsKt.getUri(file));
         intent = Intent.createChooser(intent, "分享到");
         try {
             context.startActivity(intent);

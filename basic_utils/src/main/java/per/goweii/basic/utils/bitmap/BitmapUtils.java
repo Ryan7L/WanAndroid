@@ -22,7 +22,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import per.goweii.basic.utils.UriUtils;
+import per.goweii.basic.utils.UriUtilsKt;
 import per.goweii.basic.utils.Utils;
 import per.goweii.basic.utils.file.CacheUtils;
 
@@ -46,9 +46,9 @@ public class BitmapUtils {
             outStream = new FileOutputStream(file.getPath());
             bmp.compress(Bitmap.CompressFormat.JPEG, 100, outStream);
             Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-            Uri uri = UriUtils.getFileUri(file);
+            Uri uri = UriUtilsKt.getUri(file);
             intent.setData(uri);
-            Utils.getAppContext().sendBroadcast(intent);
+            Utils.getContext().sendBroadcast(intent);
             return file;
         } catch (Exception e) {
             e.getStackTrace();
@@ -79,7 +79,7 @@ public class BitmapUtils {
             File file = new File(dir, picName);
             contentValues.put(MediaStore.MediaColumns.DATA, file.getPath());
         }
-        Uri insertUri = Utils.getAppContext()
+        Uri insertUri = Utils.getContext()
                 .getContentResolver()
                 .insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
         if (insertUri == null) {
@@ -87,7 +87,7 @@ public class BitmapUtils {
         }
         OutputStream outputStream = null;
         try {
-            outputStream = Utils.getAppContext()
+            outputStream = Utils.getContext()
                     .getContentResolver()
                     .openOutputStream(insertUri);
             bmp.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
