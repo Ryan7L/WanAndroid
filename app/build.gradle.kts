@@ -6,8 +6,9 @@ plugins {
     id("kotlin-parcelize")
 }
 apply("${rootDir.path}/basic.gradle")
-task()
+flavortask()
 android {
+
     defaultConfig {
         javaCompileOptions {
             annotationProcessorOptions {
@@ -38,46 +39,48 @@ kapt {
 }
 dependencies {
 
-    implementation("androidx.startup:startup-runtime:1.0.0")
-    implementation("androidx.cardview:cardview:1.0.0")
-    implementation("com.google.android:flexbox:1.0.0")
-    implementation("com.github.mmin18:realtimeblurview:1.1.2")
-    implementation("com.youth.banner:banner:1.4.10")
-    implementation("com.github.franmontiel:PersistentCookieJar:v1.0.1")
-    implementation("com.github.goweii:RevealLayout:1.3.4")
-    implementation("com.github.goweii:KeyboardCompat:1.0.0")
+    implementation(libs.startup)
+    implementation(libs.cardview)
+    implementation(libs.flexbox)
+    implementation(libs.realtimeblurview)
+    implementation(libs.banner)
+    implementation(libs.cookiejar)
+    implementation(libs.reveallayout)
+    implementation(libs.keyboardcompat)
     implementation("com.daimajia.swipelayout:library:1.2.0@aar")
-    implementation("com.jakewharton:disklrucache:2.0.2")
-    implementation("com.github.Kennyc1012:MultiStateView:1.3.2")
-    implementation("com.github.goweii:HeartView:1.0.0")
-    implementation("com.tencent.tbs:tbssdk:44286")
-    implementation("androidx.webkit:webkit:1.2.0")
-    implementation("com.github.chrisbanes:PhotoView:2.1.3")
-    implementation("androidx.room:room-runtime:2.2.5")
-    implementation("androidx.room:room-ktx:2.2.5")
-    implementation("org.jsoup:jsoup:1.13.1")
-    implementation("per.goweii.codex:core:1.0.0")
-    implementation("per.goweii.codex:decorator-gesture:1.0.0")
-    implementation("per.goweii.codex:decorator-beep:1.0.0")
-    implementation("per.goweii.codex:decorator-finder-wechat:1.0.0")
-    implementation("per.goweii.codex:decorator-frozen:1.0.0")
-    implementation("per.goweii.codex:decorator-vibrate:1.0.0")
-    implementation("per.goweii.codex:processor-zxing:1.0.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.2.0")
-    implementation("androidx.palette:palette:1.0.0")
-    implementation("com.github.goweii:CropImageView:1.2.1")
-    implementation("androidx.biometric:biometric:1.2.0-alpha01")
-    implementation("com.github.donkingliang:ConsecutiveScroller:4.6.4")
-    implementation("androidx.room:room-rxjava2:2.2.5")
+    implementation(libs.disklrucache)
+    implementation(libs.multistateview)
+    implementation(libs.heartview)
+    implementation(libs.x5web)
+    implementation(libs.webkit)
+    implementation(libs.photoview)
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    implementation(libs.jsoup)
+    implementation(libs.codex.core)
+    implementation(libs.codex.decorator.gesture)
+    implementation(libs.codex.decorator.beep)
+    implementation(libs.codex.decorator.finder)
+    implementation(libs.codex.decorator.frozen)
+    implementation(libs.codex.decorator.vibrate)
+    implementation(libs.codex.processor.zxing)
+    implementation(libs.lifecycle.runtime.ktx)
+    implementation(libs.palette)
+    implementation(libs.cropimgview)
+    implementation(libs.biometric)
+    implementation(libs.consecutivescroller)
+    implementation(libs.room.rxjava2)
     implementation(project(":basic_core"))
     kapt {
-        api("androidx.room:room-compiler:2.2.5")
-        api("androidx.lifecycle:lifecycle-compiler:2.2.0")
+        api(libs.room.compiler)
+        api(libs.lifecycle.compiler)
     }
+
     //该依赖用于解决一个报错问题：https://stackoverflow.com/questions/56639529/duplicate-class-com-google-common-util-concurrent-listenablefuture-found-in-modu
-    implementation("com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava")
+    implementation(libs.guavanolistenablefuture)
 }
-fun task() {
+
+fun flavortask() {
     val keystoreFile: String
     val keystoreFilePwd: String
     val keystoreAlias: String

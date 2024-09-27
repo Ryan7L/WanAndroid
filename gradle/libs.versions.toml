@@ -1,10 +1,135 @@
 [versions]
 agp = "8.4.2"
 kotlin = "1.9.0"
+ponyo = "1.0.0"
+material = "1.0.0"
+smart_refresh = "2.0.3"
+brvah = "2.9.50"
+recyclerview = "1.1.0"
+anylayer = "5.0.0-alpha02"
+actionbarex = "3.3.0"
+percentimg = "1.0.2"
+roundimg = "2.3.0"
+circleimg = "2.2.0"
+magicindicator = "1.6.0"
+progressbar-library = "1.4.2"
+shadowlayout = "3.1.6"
+blurred = "1.3.0"
+visualeffect = "1.0.0"
+bouncescrollview = "1.5-androidx"
+appcompat = "1.2.0"
+localbroadcastmanager = "1.0.0"
+lazyfragment = "1.1.2"
+swipeback = "2.0.5"
+anypermission = "1.1.2"
+rxhttp = "2.2.12"
+glide = "4.11.0"
+gson = "2.8.5"
+eventbus = "3.1.1"
+multidex = "2.0.1"
+androidx = "1.2.0"
+kotlin-reflect = "2.0.0"
+coroutines = "1.8.1"
+startup = "1.0.0"
+cardview = "1.0.0"
+flexbox = "1.0.0"
+realttimeblurview = "1.1.2"
+banner = "1.4.10"
+cookiejar = "v1.0.1"
+reveallayout = "1.3.4"
+keyboardCompat = "1.0.0"
+swiplayout = "1.2.0@aar"
+disklrucache = "2.0.2"
+multistateview = "1.3.2"
+heartview = "1.0.0"
+x5web = "44286"
+webkit = "1.2.0"
+photoview = "2.1.3"
+room = "2.2.5"
+jsoup = "1.13.1"
+codex = "1.0.0"
+lifecycle = "2.2.0"
+palette = "1.0.0"
+cropimgview = "1.2.1"
+biometric = "1.2.0-alpha01"
+consecutivescroller = "4.6.4"
+guavanolistenablefuture = "9999.0-empty-to-avoid-conflict-with-guava"
 [libraries]
-
+ponyo-log = { group = "per.goweii.ponyo", name = "ponyo-log", version.ref = "ponyo" }
+ponyo-crash = { group = "per.goweii.ponyo", name = "ponyo-crash", version.ref = "ponyo" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+smart-refresh-kernel = { module = "com.scwang.smart:refresh-layout-kernel", version.ref = "smart_refresh" }
+smart-refresh-header-classics = { module = "com.scwang.smart:refresh-header-classics", version.ref = "smart_refresh" }
+smart-refresh-header-two-level = { module = "com.scwang.smart:refresh-header-two-level", version.ref = "smart_refresh" }
+smart-refresh-footer-classics = { module = "com.scwang.smart:refresh-footer-classics", version.ref = "smart_refresh" }
+brvah = { module = "com.github.CymChad:BaseRecyclerViewAdapterHelper", version.ref = "brvah" }
+recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
+anylayer = { module = "com.github.goweii:AnyLayer", version.ref = "anylayer" }
+action-bar-ex = { module = "com.github.goweii:ActionBarEx", version.ref = "actionbarex" }
+percentimg = { module = "com.github.goweii:PercentImageView", version.ref = "percentimg" }
+roundimg = { module = "com.makeramen:roundedimageview", version.ref = "roundimg" }
+circleimg = { module = "de.hdodenhof:circleimageview", version.ref = "circleimg" }
+magicindicator = { module = "com.github.hackware1993:MagicIndicator", version.ref = "magicindicator" }
+progressbar-library = { group = "me.zhanghai.android.materialprogressbar", name = "library", version.ref = "progressbar-library" }
+shadowlayout = { module = "com.github.lihangleo2:ShadowLayout", version.ref = "shadowlayout" }
+blurred = { module = "com.github.goweii:blurred", version.ref = "blurred" }
+visualeffect-core = { group = "per.goweii.visualeffect", name = "visualeffect-core", version.ref = "visualeffect" }
+visualeffect-view = { group = "per.goweii.visualeffect", name = "visualeffect-view", version.ref = "visualeffect" }
+visualeffect-blur = { group = "per.goweii.visualeffect", name = "visualeffect-blur", version.ref = "visualeffect" }
+bouncescrollview = { module = "com.github.woxingxiao:BounceScrollView", version.ref = "bouncescrollview" }
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+multidex = { module = "androidx.multidex:multidex", version.ref = "multidex" }
+localbroadcastmanager = { module = "androidx.localbroadcastmanager:localbroadcastmanager", version.ref = "localbroadcastmanager" }
+exentbus = { module = "org.greenrobot:eventbus", version.ref = "eventbus" }
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
+glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
+glide-compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glide" }
+glide-okhttp3 = { module = "com.github.bumptech.glide:okhttp3-integration", version.ref = "glide" }
+rx-http = { module = "com.github.goweii:RxHttp", version.ref = "rxhttp" }
+anypermission = { module = "com.github.goweii:AnyPermission", version.ref = "anypermission" }
+swipeback = { module = "com.github.goweii:SwipeBack", version.ref = "swipeback" }
+lazyfragment = { module = "com.github.goweii.LazyFragment:lazyfragment", version.ref = "lazyfragment" }
+androidx-core = { group = "androidx.core", name = "core", version.ref = "androidx" }
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidx" }
+kotlin-reflect = { group = "org.jetbrains.kotlin", name = "kotlin-reflect", version.ref = "kotlin-reflect" }
+coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
+startup = { group = "androidx.startup", name = "startup-runtime", version.ref = "startup" }
+cardview = { module = "androidx.cardview:cardview", version.ref = "cardview" }
+flexbox = { module = "com.google.android:flexbox", version.ref = "flexbox" }
+realtimeblurview = { module = "com.github.mmin18:realtimeblurview", version.ref = "realttimeblurview" }
+banner = { module = "com.youth.banner:banner", version.ref = "banner" }
+reveallayout = { module = "com.github.goweii:RevealLayout", version.ref = "reveallayout" }
+keyboardcompat = { module = "com.github.goweii:KeyboardCompat", version.ref = "keyboardCompat" }
+swipelayout = { module = "com.daimajia.swipelayout:library", version.ref = "swiplayout" }
+disklrucache = { module = "com.jakewharton:disklrucache", version.ref = "disklrucache" }
+multistateview = { module = "com.github.Kennyc1012:MultiStateView", version.ref = "multistateview" }
+heartview = { module = "com.github.goweii:HeartView", version.ref = "heartview" }
+x5web = { module = "com.tencent.tbs:tbssdk", version.ref = "x5web" }
+webkit = { module = "androidx.webkit:webkit", version.ref = "webkit" }
+photoview = { module = "com.github.chrisbanes:PhotoView", version.ref = "photoview" }
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
+jsoup = { module = "org.jsoup:jsoup", version.ref = "jsoup" }
+codex-core = { module = "per.goweii.codex:core", version.ref = "codex" }
+codex-decorator-gesture = { module = "per.goweii.codex:decorator-gesture", version.ref = "codex" }
+codex-decorator-beep = { module = "per.goweii.codex:decorator-beep", version.ref = "codex" }
+codex-decorator-finder = { module = "per.goweii.codex:decorator-finder-wechat", version.ref = "codex" }
+codex-decorator-frozen = { module = "per.goweii.codex:decorator-frozen", version.ref = "codex" }
+codex-decorator-vibrate = { module = "per.goweii.codex:decorator-vibrate", version.ref = "codex" }
+codex-processor-zxing = { module = "per.goweii.codex:processor-zxing", version.ref = "codex" }
+lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle" }
+palette = { module = "androidx.palette:palette", version.ref = "palette" }
+cropimgview = { module = "com.github.goweii:CropImageView", version.ref = "cropimgview" }
+biometric = { module = "androidx.biometric:biometric", version.ref = "biometric" }
+consecutivescroller = { module = "com.github.donkingliang:ConsecutiveScroller", version.ref = "consecutivescroller" }
+room-rxjava2 = { module = "androidx.room:room-rxjava2", version.ref = "room" }
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+lifecycle-compiler = { module = "androidx.lifecycle:lifecycle-compiler", version.ref = "lifecycle" }
+guavanolistenablefuture = { module = "com.google.guava:listenablefuture", version.ref = "guavanolistenablefuture" }
+cookiejar = {module = "com.github.franmontiel:PersistentCookieJar",version.ref = "cookiejar"}
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 android-library = { id = "com.android.library", version.ref = "agp" }
-kapt-kotlin = {id = "org.jetbrains.kotlin.kapt",version.ref = "kotlin"}
+kapt-kotlin = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }

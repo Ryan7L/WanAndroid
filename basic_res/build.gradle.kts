@@ -1,5 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+
 }
 apply("${rootDir.path}/basic.gradle")
 android {
@@ -8,5 +10,6 @@ android {
 }
 
 dependencies {
-    api ("androidx.appcompat:appcompat:1.2.0")
+    api (libs.appcompat)
+
 }
