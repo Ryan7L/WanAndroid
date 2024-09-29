@@ -40,7 +40,7 @@ class BookDetailsActivity : BaseActivity<BookDetailsPresenter,BookDetailsView>()
     }
 
     private lateinit var binding: ActivityBookDetailsBinding
-    override fun initBinding() {
+    override fun initContentView() {
         binding = ActivityBookDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -51,9 +51,11 @@ class BookDetailsActivity : BaseActivity<BookDetailsPresenter,BookDetailsView>()
 
     private var currPage = PAGE_START
 
-    override fun getLayoutId(): Int = R.layout.activity_book_details
 
-    override fun initPresenter(): BookDetailsPresenter = BookDetailsPresenter()
+
+    override fun setUpPresenter() {
+        presenter = BookDetailsPresenter()
+    }
 
     override fun initViews() {
         bookBean =
@@ -71,7 +73,7 @@ class BookDetailsActivity : BaseActivity<BookDetailsPresenter,BookDetailsView>()
             UrlOpenUtils.with(bookBean.licenseLink).open(this)
         }
 
-        binding.rv.layoutManager = LinearLayoutManager(context)
+        binding.rv.layoutManager = LinearLayoutManager(viewContext)
         adapter = BookChapterAdapter()
         adapter.setEnableLoadMore(false)
         adapter.setOnLoadMoreListener({
@@ -79,7 +81,7 @@ class BookDetailsActivity : BaseActivity<BookDetailsPresenter,BookDetailsView>()
         }, binding.rv)
         adapter.setOnItemClickListener { _, _, position ->
             val item: BookChapterBean = adapter.getItem(position) ?: return@setOnItemClickListener
-            UrlOpenUtils.with(item.articleBean).open(context)
+            UrlOpenUtils.with(item.articleBean).open(viewContext)
         }
         binding.rv.adapter = adapter
         MultiStateUtils.setEmptyAndErrorClick(binding.msv) {

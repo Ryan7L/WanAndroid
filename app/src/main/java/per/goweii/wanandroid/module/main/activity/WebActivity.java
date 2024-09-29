@@ -9,14 +9,12 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.net.URLEncoder;
 import java.util.Arrays;
-import java.util.List;
 
 import per.goweii.actionbarex.ActionBarEx;
 import per.goweii.anylayer.Layer;
@@ -84,7 +82,7 @@ public class WebActivity extends BaseActivity<WebPresenter, WebView> implements 
     }
 
     @Override
-    public void initBinding() {
+    public void initContentView() {
         binding = ActivityWebBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         ab = binding.ab;
@@ -106,14 +104,8 @@ public class WebActivity extends BaseActivity<WebPresenter, WebView> implements 
     }
 
     @Override
-    protected int getLayoutId() {
-        return R.layout.activity_web;
-    }
-
-    @Nullable
-    @Override
-    protected WebPresenter initPresenter() {
-        return new WebPresenter();
+    protected void setUpPresenter() {
+        presenter =  new WebPresenter();
     }
 
     @Override
@@ -266,7 +258,7 @@ public class WebActivity extends BaseActivity<WebPresenter, WebView> implements 
         if (mWebGuideDialog != null) {
             return;
         }
-        mWebGuideDialog = new WebGuideDialog(getContext());
+        mWebGuideDialog = new WebGuideDialog(getViewContext());
         mWebGuideDialog.addOnVisibleChangeListener(new Layer.OnVisibleChangedListener() {
             @Override
             public void onShow(@NonNull Layer layer) {
@@ -292,7 +284,7 @@ public class WebActivity extends BaseActivity<WebPresenter, WebView> implements 
 
                 @Override
                 public void onBrowser() {
-                    IntentUtils.openBrowser(getContext(), mUrl);
+                    IntentUtils.openBrowser(getViewContext(), mUrl);
                 }
 
                 @Override
@@ -328,12 +320,12 @@ public class WebActivity extends BaseActivity<WebPresenter, WebView> implements 
     }
 
     private void showMenuDialog() {
-        WebMenuDialog.show(getContext(), mWebHolder.getUrl(),
+        WebMenuDialog.show(getViewContext(), mWebHolder.getUrl(),
                 isCollect(), isReadLater(),
                 new WebMenuDialog.OnMenuClickListener() {
                     @Override
                     public void onShareArticle() {
-                        ShareArticleActivity.start(getContext(), mWebHolder.getTitle(), mWebHolder.getUrl());
+                        ShareArticleActivity.start(getViewContext(), mWebHolder.getTitle(), mWebHolder.getUrl());
                     }
 
                     @Override
@@ -374,7 +366,7 @@ public class WebActivity extends BaseActivity<WebPresenter, WebView> implements 
 
                     @Override
                     public void onShare() {
-                        mWebHolder.getShareInfo((url, covers, title, desc) -> new ArticleShareDialog(getContext(), covers, title, desc, url).show());
+                        mWebHolder.getShareInfo((url, covers, title, desc) -> new ArticleShareDialog(getViewContext(), covers, title, desc, url).show());
                     }
                 });
     }

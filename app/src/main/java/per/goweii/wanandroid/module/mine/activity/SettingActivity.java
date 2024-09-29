@@ -77,7 +77,7 @@ public class SettingActivity extends BaseActivity<SettingPresenter,SettingView> 
     }
 
     @Override
-    public void initBinding() {
+    public void initContentView() {
         ActivitySettingBinding binding = ActivitySettingBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         sc_system_theme = binding.scSystemTheme;
@@ -109,8 +109,8 @@ public class SettingActivity extends BaseActivity<SettingPresenter,SettingView> 
 
     @Nullable
     @Override
-    protected SettingPresenter initPresenter() {
-        return new SettingPresenter();
+    protected void setUpPresenter() {
+        presenter =  new SettingPresenter();
     }
 
     @Override
@@ -228,7 +228,7 @@ public class SettingActivity extends BaseActivity<SettingPresenter,SettingView> 
             default:
                 break;
             case R.id.rl_intercept_host:
-                HostInterruptActivity.start(getContext());
+                HostInterruptActivity.start(getViewContext());
                 break;
         }
         return true;
@@ -246,7 +246,7 @@ public class SettingActivity extends BaseActivity<SettingPresenter,SettingView> 
             default:
                 break;
             case R.id.rl_intercept_host:
-                ListDialog.with(getContext())
+                ListDialog.with(getViewContext())
                         .cancelable(true)
 //                        .title("网页拦截")
                         .datas(HostInterceptUtils.getName(HostInterceptUtils.TYPE_NOTHING),
@@ -266,7 +266,7 @@ public class SettingActivity extends BaseActivity<SettingPresenter,SettingView> 
                 presenter.update(true);
                 break;
             case R.id.ll_cache:
-                TipDialog.with(getContext())
+                TipDialog.with(getViewContext())
                         .message("确定要清除缓存吗？")
                         .onYes(new SimpleCallback<Void>() {
                             @Override
@@ -277,15 +277,15 @@ public class SettingActivity extends BaseActivity<SettingPresenter,SettingView> 
                         .show();
                 break;
             case R.id.ll_about:
-                AboutActivity.start(getContext());
+                AboutActivity.start(getViewContext());
                 break;
             case R.id.ll_privacy_policy:
                 UrlOpenUtils.Companion
                         .with(Constant.PRIVACY_POLICY_URL)
-                        .open(getContext());
+                        .open(getViewContext());
                 break;
             case R.id.ll_logout:
-                TipDialog.with(getContext())
+                TipDialog.with(getViewContext())
                         .message("确定要退出登录吗？")
                         .onYes(new SimpleCallback<Void>() {
                             @Override
@@ -304,10 +304,10 @@ public class SettingActivity extends BaseActivity<SettingPresenter,SettingView> 
             mUpdateUtils = UpdateUtils.newInstance();
         }
         if (mUpdateUtils.isNewest(data)) {
-            tv_has_update.setTextColor(ResUtils.getThemeColor(getContext(), R.attr.colorTextMain));
+            tv_has_update.setTextColor(ResUtils.getThemeColor(getViewContext(), R.attr.colorTextMain));
             tv_has_update.setText("发现新版本");
             if (click) {
-                UpdateDialog.with(getContext())
+                UpdateDialog.with(getViewContext())
                         .setUrl(data.getUrl())
                         .setUrlBackup(data.getUrl_backup())
                         .setVersionCode(data.getVersion_code())
@@ -335,17 +335,17 @@ public class SettingActivity extends BaseActivity<SettingPresenter,SettingView> 
 
     @Override
     public void updateFailed(int code, String msg, boolean click) {
-        tv_has_update.setTextColor(ResUtils.getThemeColor(getContext(), R.attr.colorTextThird));
+        tv_has_update.setTextColor(ResUtils.getThemeColor(getViewContext(), R.attr.colorTextThird));
         tv_has_update.setText("已是最新版");
     }
 
     @Override
     public void betaUpdateSuccess(int code, UpdateBean data, boolean click) {
         if (mUpdateUtils.isNewest(data)) {
-            tv_has_update.setTextColor(ResUtils.getThemeColor(getContext(), R.attr.colorTextAccent));
+            tv_has_update.setTextColor(ResUtils.getThemeColor(getViewContext(), R.attr.colorTextAccent));
             tv_has_update.setText("发现内测版本");
             if (click) {
-                UpdateDialog.with(getContext())
+                UpdateDialog.with(getViewContext())
                         .setTest(true)
                         .setUrl(data.getUrl())
                         .setUrlBackup(data.getUrl_backup())
@@ -368,7 +368,7 @@ public class SettingActivity extends BaseActivity<SettingPresenter,SettingView> 
                         .show();
             }
         } else {
-            tv_has_update.setTextColor(ResUtils.getThemeColor(getContext(), R.attr.colorTextThird));
+            tv_has_update.setTextColor(ResUtils.getThemeColor(getViewContext(), R.attr.colorTextThird));
             tv_has_update.setText("已是最新版");
             if (click) {
                 ToastMaker.showShort("已是最新版");
@@ -378,7 +378,7 @@ public class SettingActivity extends BaseActivity<SettingPresenter,SettingView> 
 
     @Override
     public void betaUpdateFailed(int code, String msg, boolean click) {
-        tv_has_update.setTextColor(ResUtils.getThemeColor(getContext(), R.attr.colorTextThird));
+        tv_has_update.setTextColor(ResUtils.getThemeColor(getViewContext(), R.attr.colorTextThird));
         tv_has_update.setText("已是最新版");
         if (click) {
             ToastMaker.showShort("已是最新版");
@@ -420,6 +420,6 @@ public class SettingActivity extends BaseActivity<SettingPresenter,SettingView> 
             @Override
             public void onFailed() {
             }
-        }, getContext(), REQ_CODE_PERMISSION, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE);
+        }, getViewContext(), REQ_CODE_PERMISSION, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE);
     }
 }

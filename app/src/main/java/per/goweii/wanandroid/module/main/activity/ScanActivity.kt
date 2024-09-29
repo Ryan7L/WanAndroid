@@ -78,7 +78,7 @@ class ScanActivity : BaseActivity<ScanPresenter,ScanView>(), ScanView, SwipeBack
         }
     }
 
-    override fun initBinding() {
+    override fun initContentView() {
         binding = ActivityScanBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -93,9 +93,11 @@ class ScanActivity : BaseActivity<ScanPresenter,ScanView>(), ScanView, SwipeBack
 
     override fun swipeBackTransformer(): SwipeBackTransformer? = null
 
-    override fun getLayoutId(): Int = R.layout.activity_scan
 
-    override fun initPresenter(): ScanPresenter = ScanPresenter()
+
+    override fun setUpPresenter() {
+        presenter= ScanPresenter()
+    }
 
     override fun initViews() {
         binding.ivClose.setOnClickListener {
@@ -150,7 +152,7 @@ class ScanActivity : BaseActivity<ScanPresenter,ScanView>(), ScanView, SwipeBack
     }
 
     private fun startScan() {
-        mRuntimeRequester = AnyPermission.with(context!!)
+        mRuntimeRequester = AnyPermission.with(viewContext!!)
             .runtime(REQ_CODE_PERMISSION_CAMERA)
             .permissions(Manifest.permission.CAMERA)
             .onBeforeRequest { _, executor ->
@@ -196,7 +198,7 @@ class ScanActivity : BaseActivity<ScanPresenter,ScanView>(), ScanView, SwipeBack
 
     private fun startAlbum() {
         stopScan()
-        mRuntimeRequester = AnyPermission.with(context!!)
+        mRuntimeRequester = AnyPermission.with(viewContext!!)
             .runtime(REQ_CODE_PERMISSION_ALBUM)
             .permissions(Manifest.permission.WRITE_EXTERNAL_STORAGE)
             .onBeforeRequest { _, executor ->
@@ -250,7 +252,7 @@ class ScanActivity : BaseActivity<ScanPresenter,ScanView>(), ScanView, SwipeBack
 
             REQ_CODE_SELECT_PIC -> {
                 PictureSelector.result(resultCode, data)?.let {
-                    BitmapUtils.getBitmapFromUri(context, it)?.let { bitmap ->
+                    BitmapUtils.getBitmapFromUri(viewContext, it)?.let { bitmap ->
                         val decoder = CodeDecoder(ZXingMultiDecodeQRCodeProcessor())
                         decoder.decode(bitmap, onSuccess = { results ->
                             onAlbumQRCodeSuccess(results.first().text)
@@ -272,7 +274,7 @@ class ScanActivity : BaseActivity<ScanPresenter,ScanView>(), ScanView, SwipeBack
     private fun onScanQRCodeSuccess(result: String) {
         LogUtils.d("ScanActivity", "result=$result")
         window.decorView.postDelayed({
-            UrlOpenUtils.with(result).open(context)
+            UrlOpenUtils.with(result).open(viewContext)
             finish()
         }, 300L)
     }
@@ -280,7 +282,7 @@ class ScanActivity : BaseActivity<ScanPresenter,ScanView>(), ScanView, SwipeBack
     private fun onAlbumQRCodeSuccess(result: String) {
         LogUtils.d("ScanActivity", "result=$result")
         window.decorView.postDelayed({
-            UrlOpenUtils.with(result).open(context)
+            UrlOpenUtils.with(result).open(viewContext)
             finish()
         }, 300L)
     }

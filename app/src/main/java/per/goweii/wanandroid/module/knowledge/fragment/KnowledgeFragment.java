@@ -69,13 +69,13 @@ public class KnowledgeFragment extends BaseFragment<KnowledgePresenter,Knowledge
 
     @Override
     protected void initView() {
-        rv.setLayoutManager(new LinearLayoutManager(getContext()));
+        rv.setLayoutManager(new LinearLayoutManager(getViewContext()));
         mAdapter = new KnowledgeAdapter();
         mAdapter.setEnableLoadMore(false);
         mAdapter.setOnItemClickListener(new KnowledgeAdapter.OnItemClickListener() {
             @Override
             public void onClick(ChapterBean bean, int pos) {
-                KnowledgeArticleActivity.start(getContext(), bean, pos);
+                KnowledgeArticleActivity.start(getViewContext(), bean, pos);
             }
         });
         rv.setAdapter(mAdapter);

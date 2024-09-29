@@ -33,14 +33,11 @@ class MessageActivity : BaseActivity<BasePresenter<BaseView>,BaseView>() {
     }
 
     private lateinit var binding: ActivityMessageBinding
-    override fun initBinding() {
+    override fun initContentView() {
         binding = ActivityMessageBinding.inflate(layoutInflater)
         ab = binding.ab
     }
 
-    override fun getLayoutId() = R.layout.activity_message
-
-    override fun initPresenter(): BasePresenter<BaseView>? = null
 
     override fun initViews() {
         ab.getView<ActionIconView>(R.id.action_bar_fixed_magic_indicator_iv_back).apply {

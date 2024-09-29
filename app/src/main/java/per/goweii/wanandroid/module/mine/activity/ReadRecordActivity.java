@@ -3,13 +3,11 @@ package per.goweii.wanandroid.module.mine.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
-import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.kennyc.view.MultiStateView;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 
@@ -19,7 +17,6 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.List;
 
 import per.goweii.actionbarex.common.ActionBarCommon;
-import per.goweii.actionbarex.common.OnActionBarChildClickListener;
 import per.goweii.basic.core.base.BaseActivity;
 import per.goweii.basic.core.utils.SmartRefreshUtils;
 import per.goweii.basic.ui.dialog.TipDialog;
@@ -27,7 +24,6 @@ import per.goweii.basic.ui.toast.ToastMaker;
 import per.goweii.basic.utils.CopyUtils;
 import per.goweii.basic.utils.IntentUtils;
 import per.goweii.basic.utils.listener.SimpleCallback;
-import per.goweii.basic.utils.listener.SimpleListener;
 import per.goweii.wanandroid.R;
 import per.goweii.wanandroid.databinding.ActivityReadRecordBinding;
 import per.goweii.wanandroid.db.model.ReadRecordModel;
@@ -62,7 +58,7 @@ public class ReadRecordActivity extends BaseActivity<ReadRecordPresenter,ReadRec
     }
 
     @Override
-    public void initBinding() {
+    public void initContentView() {
         ActivityReadRecordBinding binding = ActivityReadRecordBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         abc = binding.abc;
@@ -88,20 +84,17 @@ public class ReadRecordActivity extends BaseActivity<ReadRecordPresenter,ReadRec
         return true;
     }
 
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_read_record;
-    }
+
 
     @Nullable
     @Override
-    protected ReadRecordPresenter initPresenter() {
-        return new ReadRecordPresenter();
+    protected void setUpPresenter() {
+        presenter =  new ReadRecordPresenter();
     }
 
     @Override
     protected void initViews() {
-        abc.setOnRightTextClickListener(v -> TipDialog.with(getContext())
+        abc.setOnRightTextClickListener(v -> TipDialog.with(getViewContext())
                 .message("确定要全部删除吗？")
                 .onYes(new SimpleCallback<Void>() {
                     @Override
@@ -116,7 +109,7 @@ public class ReadRecordActivity extends BaseActivity<ReadRecordPresenter,ReadRec
             offset = 0;
             getPageList();
         });
-        rv.setLayoutManager(new LinearLayoutManager(getContext()));
+        rv.setLayoutManager(new LinearLayoutManager(getViewContext()));
         mAdapter = new ReadRecordAdapter();
         RvConfigUtils.init(mAdapter);
         mAdapter.setEnableLoadMore(false);
@@ -134,7 +127,7 @@ public class ReadRecordActivity extends BaseActivity<ReadRecordPresenter,ReadRec
                     UrlOpenUtils.Companion
                             .with(item.getLink())
                             .title(item.getTitle())
-                            .open(getContext());
+                            .open(getViewContext());
                     break;
                 case R.id.tv_copy:
                     CopyUtils.copyText(item.getLink());
@@ -145,8 +138,8 @@ public class ReadRecordActivity extends BaseActivity<ReadRecordPresenter,ReadRec
                         ToastMaker.showShort("链接为空");
                         break;
                     }
-                    if (getContext() != null) {
-                        IntentUtils.openBrowser(getContext(), item.getLink());
+                    if (getViewContext() != null) {
+                        IntentUtils.openBrowser(getViewContext(), item.getLink());
                     }
                     break;
                 case R.id.tv_delete:

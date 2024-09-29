@@ -7,7 +7,6 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.text.TextUtils;
 import android.view.View;
@@ -25,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import per.goweii.actionbarex.common.ActionBarCommon;
-import per.goweii.actionbarex.common.OnActionBarChildClickListener;
 import per.goweii.anypermission.RequestListener;
 import per.goweii.anypermission.RuntimeRequester;
 import per.goweii.basic.core.base.BaseActivity;
@@ -36,7 +34,6 @@ import per.goweii.basic.ui.widget.PercentImageView;
 import per.goweii.basic.utils.CopyUtils;
 import per.goweii.basic.utils.LogUtils;
 import per.goweii.basic.utils.RandomUtils;
-import per.goweii.basic.utils.listener.SimpleCallback;
 import per.goweii.wanandroid.BuildConfig;
 import per.goweii.wanandroid.R;
 import per.goweii.wanandroid.databinding.ActivityAboutMeBinding;
@@ -82,7 +79,7 @@ public class AboutMeActivity extends BaseActivity<AboutMePresenter,AboutMeView> 
     }
 
     @Override
-    public void initBinding() {
+    public void initContentView() {
         ActivityAboutMeBinding binding = ActivityAboutMeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         abc = binding.abc;
@@ -113,15 +110,10 @@ public class AboutMeActivity extends BaseActivity<AboutMePresenter,AboutMeView> 
 
     }
 
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_about_me;
-    }
 
-    @Nullable
     @Override
-    protected AboutMePresenter initPresenter() {
-        return new AboutMePresenter();
+    protected void setUpPresenter() {
+        presenter =  new AboutMePresenter();
     }
 
     @Override
@@ -172,13 +164,13 @@ public class AboutMeActivity extends BaseActivity<AboutMePresenter,AboutMeView> 
                 UrlOpenUtils.Companion
                         .with(tv_github.getText().toString())
                         .title(tv_name.getText().toString())
-                        .open(getContext());
+                        .open(getViewContext());
                 break;
             case R.id.ll_jianshu:
                 UrlOpenUtils.Companion
                         .with(tv_jianshu.getText().toString())
                         .title(tv_name.getText().toString())
-                        .open(getContext());
+                        .open(getViewContext());
                 break;
             case R.id.ll_qq:
                 presenter.openQQChat();
@@ -196,7 +188,7 @@ public class AboutMeActivity extends BaseActivity<AboutMePresenter,AboutMeView> 
                     @Override
                     public void onFailed() {
                     }
-                }, getContext(), REQUEST_CODE_PERMISSION, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE);
+                }, getViewContext(), REQUEST_CODE_PERMISSION, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE);
                 break;
             case R.id.piv_wx_qrcode:
                 mRuntimeRequester = PermissionUtils.request(new RequestListener() {
@@ -208,7 +200,7 @@ public class AboutMeActivity extends BaseActivity<AboutMePresenter,AboutMeView> 
                     @Override
                     public void onFailed() {
                     }
-                }, getContext(), REQUEST_CODE_PERMISSION, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE);
+                }, getViewContext(), REQUEST_CODE_PERMISSION, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE);
                 break;
         }
     }
@@ -288,7 +280,7 @@ public class AboutMeActivity extends BaseActivity<AboutMePresenter,AboutMeView> 
     public void getAboutMeSuccess(int code, AboutMeBean data) {
         ImageLoader.image(piv_zfb_qrcode, data.getZfb_qrcode());
         ImageLoader.image(piv_wx_qrcode, data.getWx_qrcode());
-        GlideHelper.with(getContext())
+        GlideHelper.with(getViewContext())
                 .asBitmap()
                 .load(data.getIcon())
                 .getBitmap(bitmap -> {

@@ -9,7 +9,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 import per.goweii.basic.core.R;
 import per.goweii.basic.core.base.BaseActivity;
-import per.goweii.basic.core.mvp.IPresenter;
 import per.goweii.basic.core.surface.fragment.NotFoundFragment;
 
 /**
@@ -34,8 +33,8 @@ public class SingleFragActivity extends BaseActivity {
     }
 
     @Override
-    protected IPresenter initPresenter() {
-        return null;
+    protected void setUpPresenter() {
+
     }
 
     @Override

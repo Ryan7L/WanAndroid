@@ -81,7 +81,7 @@ class MessageUnreadFragment : BaseFragment<MessageUnreadPresenter,MessageUnreadV
             currPage = PAGE_START
             presenter.getMessageUnreadList(currPage)
         }
-        binding.rv.layoutManager = LinearLayoutManager(context)
+        binding.rv.layoutManager = LinearLayoutManager(viewContext)
         mAdapter = MessageUnreadAdapter()
         mAdapter.setEnableLoadMore(false)
         mAdapter.setOnLoadMoreListener({
@@ -89,7 +89,7 @@ class MessageUnreadFragment : BaseFragment<MessageUnreadPresenter,MessageUnreadV
         }, binding.rv)
         mAdapter.onItemClickListener = BaseQuickAdapter.OnItemClickListener { _, _, position ->
             mAdapter.getItem(position)?.let {
-                UrlOpenUtils.with(it.realLink).open(context)
+                UrlOpenUtils.with(it.realLink).open(viewContext)
             }
         }
         binding.rv.adapter = mAdapter

@@ -9,8 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
 
-import kotlin.Unit;
-import kotlin.jvm.functions.Function0;
 import per.goweii.actionbarex.common.ActionBarCommon;
 import per.goweii.basic.core.adapter.FixedFragmentPagerAdapter;
 import per.goweii.basic.core.base.BaseActivity;
@@ -64,7 +62,7 @@ public class AuthActivity extends BaseActivity<AuthPresenter,AuthView> implement
     }
 
     @Override
-    public void initBinding() {
+    public void initContentView() {
         ActivityAuthBinding binding = ActivityAuthBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         abc = binding.abc;
@@ -81,15 +79,11 @@ public class AuthActivity extends BaseActivity<AuthPresenter,AuthView> implement
         return SwipeBackDirection.BOTTOM;
     }
 
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_auth;
-    }
 
-    @Nullable
+
     @Override
-    protected AuthPresenter initPresenter() {
-        return new AuthPresenter();
+    protected void setUpPresenter() {
+        presenter =  new AuthPresenter();
     }
 
     @Override

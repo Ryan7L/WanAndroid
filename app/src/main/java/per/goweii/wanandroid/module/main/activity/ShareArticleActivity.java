@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import per.goweii.actionbarex.common.ActionBarCommon;
@@ -66,7 +65,7 @@ public class ShareArticleActivity extends BaseActivity<ShareArticlePresenter,Sha
     }
 
     @Override
-    public void initBinding() {
+    public void initContentView() {
         binding = ActivityShareArticleBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         abc = binding.abc;
@@ -79,14 +78,8 @@ public class ShareArticleActivity extends BaseActivity<ShareArticlePresenter,Sha
     }
 
     @Override
-    protected int getLayoutId() {
-        return R.layout.activity_share_article;
-    }
-
-    @Nullable
-    @Override
-    protected ShareArticlePresenter initPresenter() {
-        return new ShareArticlePresenter();
+    protected void setUpPresenter() {
+        presenter =  new ShareArticlePresenter();
     }
 
     @Override
@@ -209,7 +202,7 @@ public class ShareArticleActivity extends BaseActivity<ShareArticlePresenter,Sha
                 UrlOpenUtils.Companion
                         .with(et_link.getText().toString())
                         .title(et_title.getText().toString())
-                        .open(getContext());
+                        .open(getViewContext());
                 break;
         }
     }

@@ -269,7 +269,7 @@ public class WebDialog extends DialogLayer implements WebDialogView {
     }
 
     @Override
-    public Context getContext() {
+    public Context getViewContext() {
         return getActivity();
     }
 

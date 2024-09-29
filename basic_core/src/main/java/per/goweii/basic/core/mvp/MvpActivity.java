@@ -5,8 +5,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.annotation.Nullable;
-
 import per.goweii.basic.utils.ClickHelper;
 
 
@@ -15,24 +13,16 @@ import per.goweii.basic.utils.ClickHelper;
  * @version v1.0.0
  * @date 2018/4/4-下午1:23
  */
-public abstract class MvpActivity<P extends IPresenter<V>,V extends IView> extends CacheActivity implements IView, View.OnClickListener {
+public abstract class MvpActivity<P extends IPresenter<V>, V extends IView> extends CacheActivity implements IView, View.OnClickListener {
 
     public P presenter;
 
     /**
-     * 获取布局资源文件
-     */
-    protected int getLayoutId() {
-        return 0;
-    }
-//    protected abstract void initContentView();
-
-
-    /**
      * 初始化presenter
      */
-    @Nullable
-    protected abstract P initPresenter();
+    protected void setUpPresenter() {
+
+    }
 
     /**
      * 初始化控件
@@ -64,19 +54,16 @@ public abstract class MvpActivity<P extends IPresenter<V>,V extends IView> exten
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initWindowConfig();
-        initBinding();
-//        initContentView();
-        presenter = initPresenter();
+        initContentView();
+        setUpPresenter();
         if (presenter != null) {
             presenter.attach((V) this);
         }
         initialize();
     }
 
-    public void initBinding() {
-        if (getLayoutId() > 0) {
-            setContentView(getLayoutId());
-        }
+    public void initContentView() {
+
     }
 
     protected void initialize() {
@@ -93,7 +80,7 @@ public abstract class MvpActivity<P extends IPresenter<V>,V extends IView> exten
     }
 
     @Override
-    public Context getContext() {
+    public Context getViewContext() {
         return getActivity();
     }
 

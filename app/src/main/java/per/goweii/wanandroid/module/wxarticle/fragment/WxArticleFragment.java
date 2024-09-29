@@ -149,7 +149,7 @@ public class WxArticleFragment extends BaseFragment<WxArticlePresenter,WxArticle
                 getWxArticleList(true);
             }
         });
-        rv.setLayoutManager(new LinearLayoutManager(getContext()));
+        rv.setLayoutManager(new LinearLayoutManager(getViewContext()));
         mAdapter = new ArticleAdapter();
         mAdapter.setEnableLoadMore(false);
         mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {

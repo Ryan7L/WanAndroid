@@ -2,19 +2,15 @@ package per.goweii.wanandroid.module.mine.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.kennyc.view.MultiStateView;
 
 import per.goweii.actionbarex.common.ActionBarCommon;
-import per.goweii.actionbarex.common.OnActionBarChildClickListener;
 import per.goweii.basic.core.base.BaseActivity;
-import per.goweii.basic.utils.listener.SimpleListener;
 import per.goweii.wanandroid.R;
 import per.goweii.wanandroid.databinding.ActivityCoinRankBinding;
 import per.goweii.wanandroid.module.home.activity.UserPageActivity;
@@ -47,7 +43,7 @@ public class CoinRankActivity extends BaseActivity<CoinRankPresenter,CoinRankVie
     }
 
     @Override
-    public void initBinding() {
+    public void initContentView() {
         ActivityCoinRankBinding binding = ActivityCoinRankBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         abc = binding.abc;
@@ -55,15 +51,12 @@ public class CoinRankActivity extends BaseActivity<CoinRankPresenter,CoinRankVie
         rv = binding.rv;
     }
 
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_coin_rank;
-    }
+
 
     @Nullable
     @Override
-    protected CoinRankPresenter initPresenter() {
-        return new CoinRankPresenter();
+    protected void setUpPresenter() {
+        presenter =  new CoinRankPresenter();
     }
 
     @Override
@@ -71,7 +64,7 @@ public class CoinRankActivity extends BaseActivity<CoinRankPresenter,CoinRankVie
         abc.setOnRightIconClickListener(v -> {
 
         });
-        rv.setLayoutManager(new LinearLayoutManager(getContext()));
+        rv.setLayoutManager(new LinearLayoutManager(getViewContext()));
         mAdapter = new CoinRankAdapter();
         RvConfigUtils.init(mAdapter);
         mAdapter.setEnableLoadMore(false);
@@ -79,7 +72,7 @@ public class CoinRankActivity extends BaseActivity<CoinRankPresenter,CoinRankVie
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             CoinInfoBean item = mAdapter.getItem(position);
             if (item != null) {
-                UserPageActivity.start(getContext(), item.getUserId());
+                UserPageActivity.start(getViewContext(), item.getUserId());
             }
         });
         rv.setAdapter(mAdapter);

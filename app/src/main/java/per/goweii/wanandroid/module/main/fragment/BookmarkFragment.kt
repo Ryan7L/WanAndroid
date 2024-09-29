@@ -75,14 +75,14 @@ class BookmarkFragment : BaseFragment<BookmarkPresenter,BookmarkView>(), Bookmar
                 }
             }
         })
-        binding.rv.layoutManager = LinearLayoutManager(context)
+        binding.rv.layoutManager = LinearLayoutManager(viewContext)
         mAdapter = BookmarkAdapter()
         RvConfigUtils.init(mAdapter)
         mAdapter.setEnableLoadMore(true)
         mAdapter.setOnLoadMoreListener({ getPageList() }, binding.rv)
         mAdapter.setOnItemClickListener { _, _, position ->
             mAdapter.getItem(position)?.let { item ->
-                UrlOpenUtils.with(item.link).open(context)
+                UrlOpenUtils.with(item.link).open(viewContext)
             }
         }
         binding.rv.adapter = mAdapter

@@ -138,7 +138,7 @@ public class UserArticleFragment extends BaseFragment<UserArticlePresenter,UserA
         abc.setOnRightIconClickListener(new OnActionBarChildClickListener() {
             @Override
             public void onClick(View v) {
-                ShareArticleActivity.start(getContext());
+                ShareArticleActivity.start(getViewContext());
             }
         });
         mSmartRefreshUtils = SmartRefreshUtils.with(srl);
@@ -150,7 +150,7 @@ public class UserArticleFragment extends BaseFragment<UserArticlePresenter,UserA
                 getProjectArticleList(true);
             }
         });
-        rv.setLayoutManager(new LinearLayoutManager(getContext()));
+        rv.setLayoutManager(new LinearLayoutManager(getViewContext()));
         mAdapter = new ArticleAdapter();
         mAdapter.setEnableLoadMore(false);
         mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
@@ -164,7 +164,7 @@ public class UserArticleFragment extends BaseFragment<UserArticlePresenter,UserA
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 ArticleBean item = mAdapter.getItem(position);
                 if (item != null) {
-                    UrlOpenUtils.Companion.with(item).open(getContext());
+                    UrlOpenUtils.Companion.with(item).open(getViewContext());
                 }
             }
         });

@@ -95,7 +95,7 @@ public class MainActivity extends BaseActivity<MainPresenter,MainView> implement
     }
 
     @Override
-    public void initBinding() {
+    public void initContentView() {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         vp = binding.vp;
@@ -107,15 +107,12 @@ public class MainActivity extends BaseActivity<MainPresenter,MainView> implement
         getWindow().setBackgroundDrawable(new ColorDrawable(ResUtils.getThemeColor(this, R.attr.colorBackground)));
     }
 
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_main;
-    }
+
 
     @Nullable
     @Override
-    protected MainPresenter initPresenter() {
-        return new MainPresenter();
+    protected void setUpPresenter() {
+        presenter =  new MainPresenter();
     }
 
     @Override
@@ -193,7 +190,7 @@ public class MainActivity extends BaseActivity<MainPresenter,MainView> implement
 
     private void showPrivacyPolicyDialog() {
         mPredefinedTaskQueen.get(sTaskPrivacyPolicy).runnable(completion -> {
-            PrivacyPolicyDialog.showIfFirst(getContext(), completion::complete);
+            PrivacyPolicyDialog.showIfFirst(getViewContext(), completion::complete);
             return null;
         });
     }
@@ -284,7 +281,7 @@ public class MainActivity extends BaseActivity<MainPresenter,MainView> implement
         }
         // 没有复用的就重新创建
         if (mPasswordDialog == null) {
-            mPasswordDialog = new PasswordDialog(getContext(), parser);
+            mPasswordDialog = new PasswordDialog(getViewContext(), parser);
         }
         // 预定义任务是否完成？
         if (!mPredefinedTaskQueen.isCompleted()) {
@@ -338,7 +335,7 @@ public class MainActivity extends BaseActivity<MainPresenter,MainView> implement
             boolean shouldForce = mUpdateUtils.shouldForceUpdate(data);
             if (shouldForce || mUpdateUtils.shouldUpdate(data)) {
                 mPredefinedTaskQueen.get(sTaskBetaUpdate).complete();
-                UpdateDialog.with(getContext()).setUrl(data.getUrl()).setUrlBackup(data.getUrl_backup()).setVersionCode(data.getVersion_code()).setVersionName(data.getVersion_name()).setForce(shouldForce).setDescription(data.getDesc()).setTime(data.getTime()).setOnUpdateListener(new UpdateDialog.OnUpdateListener() {
+                UpdateDialog.with(getViewContext()).setUrl(data.getUrl()).setUrlBackup(data.getUrl_backup()).setVersionCode(data.getVersion_code()).setVersionName(data.getVersion_name()).setForce(shouldForce).setDescription(data.getDesc()).setTime(data.getTime()).setOnUpdateListener(new UpdateDialog.OnUpdateListener() {
                     @Override
                     public void onDownload(String url, String urlBackup, boolean isForce) {
                         download(url, urlBackup, isForce);
@@ -382,7 +379,7 @@ public class MainActivity extends BaseActivity<MainPresenter,MainView> implement
             public Unit invoke(PredefinedTaskQueen.Completion completion) {
                 boolean shouldForce = mUpdateUtils.shouldForceUpdate(data);
                 if (shouldForce || mUpdateUtils.shouldUpdateBeta(data)) {
-                    UpdateDialog.with(getContext()).setTest(true).setUrl(data.getUrl()).setUrlBackup(data.getUrl_backup()).setVersionCode(data.getVersion_code()).setVersionName(data.getVersion_name()).setForce(shouldForce).setDescription(data.getDesc()).setTime(data.getTime()).setOnUpdateListener(new UpdateDialog.OnUpdateListener() {
+                    UpdateDialog.with(getViewContext()).setTest(true).setUrl(data.getUrl()).setUrlBackup(data.getUrl_backup()).setVersionCode(data.getVersion_code()).setVersionName(data.getVersion_name()).setForce(shouldForce).setDescription(data.getDesc()).setTime(data.getTime()).setOnUpdateListener(new UpdateDialog.OnUpdateListener() {
                         @Override
                         public void onDownload(String url, String urlBackup, boolean isForce) {
                             download(url, urlBackup, isForce);
@@ -440,7 +437,7 @@ public class MainActivity extends BaseActivity<MainPresenter,MainView> implement
                             completion.complete();
                         }
                     }
-                }, getContext(), REQ_CODE_PERMISSION, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE);
+                }, getViewContext(), REQ_CODE_PERMISSION, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE);
                 return null;
             }
         });
@@ -516,7 +513,7 @@ public class MainActivity extends BaseActivity<MainPresenter,MainView> implement
                 }).addOnClickToDismissListener(new Layer.OnClickListener() {
                     @Override
                     public void onClick(@NonNull Layer layer, @NonNull View view) {
-                        UrlOpenUtils.Companion.with(readLaterModel.getLink()).open(getContext());
+                        UrlOpenUtils.Companion.with(readLaterModel.getLink()).open(getViewContext());
                     }
                 }, R.id.dialog_read_later_notification_ll_content).addOnDismissListener(new Layer.OnDismissListener() {
                     @Override

@@ -19,7 +19,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 import per.goweii.actionbarex.common.ActionIconView;
 import per.goweii.basic.core.base.BaseActivity;
-import per.goweii.basic.core.mvp.IPresenter;
 import per.goweii.basic.utils.EditTextUtils;
 import per.goweii.basic.utils.InputMethodUtils;
 import per.goweii.wanandroid.R;
@@ -51,7 +50,7 @@ public class SearchActivity extends BaseActivity {
     }
 
     @Override
-    public void initBinding() {
+    public void initContentView() {
         binding = ActivitySearchBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         aiv_back = binding.ab.findViewById(R.id.aiv_back);
@@ -61,16 +60,6 @@ public class SearchActivity extends BaseActivity {
         fl = binding.fl;
     }
 
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_search;
-    }
-
-    @Nullable
-    @Override
-    protected IPresenter initPresenter() {
-        return null;
-    }
 
     @Override
     protected void initViews() {

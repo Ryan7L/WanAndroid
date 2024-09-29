@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.kennyc.view.MultiStateView;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 
@@ -29,8 +28,6 @@ import per.goweii.basic.core.utils.SmartRefreshUtils;
 import per.goweii.basic.ui.toast.ToastMaker;
 import per.goweii.basic.utils.CopyUtils;
 import per.goweii.basic.utils.IntentUtils;
-import per.goweii.basic.utils.listener.SimpleCallback;
-import per.goweii.basic.utils.listener.SimpleListener;
 import per.goweii.wanandroid.R;
 import per.goweii.wanandroid.databinding.FragmentCollectionLinkBinding;
 import per.goweii.wanandroid.event.CollectionEvent;
@@ -116,7 +113,7 @@ public class CollectionLinkFragment extends BaseFragment<CollectionLinkPresenter
         mSmartRefreshUtils = SmartRefreshUtils.with(srl);
         mSmartRefreshUtils.pureScrollMode();
         mSmartRefreshUtils.setRefreshListener(() -> presenter.getCollectLinkList(true));
-        rv.setLayoutManager(new LinearLayoutManager(getContext()));
+        rv.setLayoutManager(new LinearLayoutManager(getViewContext()));
         mAdapter = new CollectionLinkAdapter();
         RvConfigUtils.init(mAdapter);
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
@@ -134,7 +131,7 @@ public class CollectionLinkFragment extends BaseFragment<CollectionLinkPresenter
                             .collectId(item.getId())
                             .title(item.getName())
                             .collected(true)
-                            .open(getContext());
+                            .open(getViewContext());
                     break;
                 case R.id.tv_copy:
                     CopyUtils.copyText(item.getLink());
@@ -145,12 +142,12 @@ public class CollectionLinkFragment extends BaseFragment<CollectionLinkPresenter
                         ToastMaker.showShort("链接为空");
                         break;
                     }
-                    if (getContext() != null) {
-                        IntentUtils.openBrowser(getContext(), item.getLink());
+                    if (getViewContext() != null) {
+                        IntentUtils.openBrowser(getViewContext(), item.getLink());
                     }
                     break;
                 case R.id.tv_edit:
-                    EditCollectLinkDialog.show(getContext(), item, data -> presenter.updateCollectLink(data));
+                    EditCollectLinkDialog.show(getViewContext(), item, data -> presenter.updateCollectLink(data));
                     break;
                 case R.id.tv_delete:
                     presenter.uncollectLink(item);

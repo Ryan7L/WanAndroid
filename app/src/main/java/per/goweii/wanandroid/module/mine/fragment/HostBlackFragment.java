@@ -10,15 +10,12 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import per.goweii.basic.core.base.BaseFragment;
 import per.goweii.basic.core.base.BasePresenter;
 import per.goweii.basic.utils.listener.OnClickListener2;
-import per.goweii.basic.utils.listener.SimpleCallback;
 import per.goweii.wanandroid.R;
 import per.goweii.wanandroid.databinding.FragmentHostInterruptBinding;
 import per.goweii.wanandroid.module.mine.adapter.HostInterruptAdapter;
@@ -65,7 +62,7 @@ public class HostBlackFragment extends BaseFragment implements RvScrollTopUtils.
 
     @Override
     protected void initView() {
-        rv.setLayoutManager(new LinearLayoutManager(getContext()));
+        rv.setLayoutManager(new LinearLayoutManager(getViewContext()));
         mAdapter = new HostInterruptAdapter();
         RvConfigUtils.init(mAdapter);
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> mAdapter.remove(position));
@@ -74,11 +71,11 @@ public class HostBlackFragment extends BaseFragment implements RvScrollTopUtils.
             mAdapter.notifyItemChanged(position);
         });
         mAdapter.setOnCheckedChangeListener((position, isChecked) -> mAdapter.getData().get(position).setEnable(isChecked));
-        View footer = LayoutInflater.from(getContext()).inflate(R.layout.rv_item_host_interrupt_footer, null);
+        View footer = LayoutInflater.from(getViewContext()).inflate(R.layout.rv_item_host_interrupt_footer, null);
         footer.setOnClickListener(new OnClickListener2() {
             @Override
             public void onClick2(View v) {
-                AddHostDialog.show(getContext(), data -> mAdapter.addData(new HostEntity(data, true)));
+                AddHostDialog.show(getViewContext(), data -> mAdapter.addData(new HostEntity(data, true)));
             }
         });
         mAdapter.addFooterView(footer);

@@ -26,14 +26,15 @@ class UserInfoActivity : BaseActivity<UserInfoPresenter,UserInfoView>(), UserInf
     }
 
     private lateinit var binding: ActivityUserInfoBinding
-    override fun initBinding() {
+    override fun initContentView() {
         binding = ActivityUserInfoBinding.inflate(layoutInflater)
         setContentView(binding.root)
     }
 
-    override fun getLayoutId(): Int = R.layout.activity_user_info
 
-    override fun initPresenter(): UserInfoPresenter = UserInfoPresenter()
+    override fun setUpPresenter() {
+        presenter = UserInfoPresenter()
+    }
 
     override fun initViews() {
     }
@@ -43,7 +44,7 @@ class UserInfoActivity : BaseActivity<UserInfoPresenter,UserInfoView>(), UserInf
     }
 
     override fun gotoLogin() {
-        AuthActivity.startQuickLogin(context)
+        AuthActivity.startQuickLogin(viewContext)
         finish()
     }
 

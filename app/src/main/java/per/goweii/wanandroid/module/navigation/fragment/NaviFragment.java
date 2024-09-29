@@ -16,10 +16,8 @@ import java.util.List;
 
 import per.goweii.basic.core.base.BaseFragment;
 import per.goweii.basic.ui.toast.ToastMaker;
-import per.goweii.basic.utils.listener.SimpleListener;
 import per.goweii.wanandroid.R;
 import per.goweii.wanandroid.databinding.FragmentKnowledgeNavigationChildBinding;
-import per.goweii.wanandroid.module.main.model.ArticleBean;
 import per.goweii.wanandroid.module.navigation.adapter.NaviAdapter;
 import per.goweii.wanandroid.module.navigation.model.NaviBean;
 import per.goweii.wanandroid.module.navigation.presenter.NaviPresenter;
@@ -68,10 +66,10 @@ public class NaviFragment extends BaseFragment<NaviPresenter,NaviView> implement
 
     @Override
     protected void initView() {
-        rv.setLayoutManager(new LinearLayoutManager(getContext()));
+        rv.setLayoutManager(new LinearLayoutManager(getViewContext()));
         mAdapter = new NaviAdapter();
         mAdapter.setEnableLoadMore(false);
-        mAdapter.setOnItemClickListener((bean, pos) -> UrlOpenUtils.Companion.with(bean).open(getContext()));
+        mAdapter.setOnItemClickListener((bean, pos) -> UrlOpenUtils.Companion.with(bean).open(getViewContext()));
         rv.setAdapter(mAdapter);
         MultiStateUtils.setEmptyAndErrorClick(msv, () -> {
             MultiStateUtils.toLoading(msv);

@@ -8,7 +8,7 @@ abstract class IPresenter<V : IView> {
 
     open fun attach(baseView: V) {
         this._baseView = baseView
-        context = baseView.context
+        context = baseView.viewContext
     }
 
     open fun detach() {

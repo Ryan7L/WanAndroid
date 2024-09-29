@@ -19,9 +19,10 @@ class ArticleListActivity : BaseActivity<BasePresenter<BaseView>,BaseView>() {
         }
     }
 
-    override fun getLayoutId(): Int = R.layout.activity_article_list
+    override fun initContentView() {
+        setContentView(R.layout.activity_article_list)
+    }
 
-    override fun initPresenter(): BasePresenter<BaseView>? = null
 
     override fun initViews() {
     }

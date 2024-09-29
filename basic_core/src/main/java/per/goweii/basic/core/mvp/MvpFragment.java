@@ -114,7 +114,7 @@ public abstract class MvpFragment<T extends IPresenter<V>,V extends IView> exten
     }
 
     @Override
-    public Context getContext() {
+    public Context getViewContext() {
         return getActivity();
     }
 

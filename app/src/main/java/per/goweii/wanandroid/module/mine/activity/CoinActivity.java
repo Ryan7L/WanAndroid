@@ -9,7 +9,6 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.kennyc.view.MultiStateView;
 
 import per.goweii.actionbarex.common.ActionBarSuper;
@@ -17,7 +16,6 @@ import per.goweii.basic.core.base.BaseActivity;
 import per.goweii.basic.ui.toast.ToastMaker;
 import per.goweii.basic.utils.AnimatorUtils;
 import per.goweii.basic.utils.listener.OnClickListener2;
-import per.goweii.basic.utils.listener.SimpleListener;
 import per.goweii.wanandroid.R;
 import per.goweii.wanandroid.databinding.ActivityCoinBinding;
 import per.goweii.wanandroid.module.main.dialog.WebDialog;
@@ -50,7 +48,7 @@ public class CoinActivity extends BaseActivity<CoinPresenter,CoinView> implement
     }
 
     @Override
-    public void initBinding() {
+    public void initContentView() {
         ActivityCoinBinding binding = ActivityCoinBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         abc = binding.abc;
@@ -59,15 +57,10 @@ public class CoinActivity extends BaseActivity<CoinPresenter,CoinView> implement
         rv = binding.rv;
     }
 
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_coin;
-    }
 
-    @Nullable
     @Override
-    protected CoinPresenter initPresenter() {
-        return new CoinPresenter();
+    protected void setUpPresenter() {
+        presenter =  new CoinPresenter();
     }
 
     @Override
@@ -75,17 +68,17 @@ public class CoinActivity extends BaseActivity<CoinPresenter,CoinView> implement
         abc.getRightActionView(0).setOnClickListener(new OnClickListener2() {
             @Override
             public void onClick2(View v) {
-                WebDialog.create(getContext(), "https://www.wanandroid.com/blog/show/2653").show();
+                WebDialog.create(getViewContext(), "https://www.wanandroid.com/blog/show/2653").show();
             }
         });
         abc.getRightActionView(1).setOnClickListener(new OnClickListener2() {
             @Override
             public void onClick2(View v) {
-                CoinRankActivity.start(getContext());
+                CoinRankActivity.start(getViewContext());
             }
         });
         tv_coin.setText("0");
-        rv.setLayoutManager(new LinearLayoutManager(getContext()));
+        rv.setLayoutManager(new LinearLayoutManager(getViewContext()));
         mCoinRecordAdapter = new CoinRecordAdapter();
         RvConfigUtils.init(mCoinRecordAdapter);
         mCoinRecordAdapter.setEnableLoadMore(false);

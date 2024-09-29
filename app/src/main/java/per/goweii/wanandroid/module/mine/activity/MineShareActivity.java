@@ -2,13 +2,11 @@ package per.goweii.wanandroid.module.mine.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.kennyc.view.MultiStateView;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 
@@ -16,11 +14,9 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import per.goweii.actionbarex.common.ActionBarCommon;
-import per.goweii.actionbarex.common.OnActionBarChildClickListener;
 import per.goweii.basic.core.base.BaseActivity;
 import per.goweii.basic.core.utils.SmartRefreshUtils;
 import per.goweii.basic.ui.toast.ToastMaker;
-import per.goweii.basic.utils.listener.SimpleListener;
 import per.goweii.wanandroid.R;
 import per.goweii.wanandroid.common.Config;
 import per.goweii.wanandroid.databinding.ActivityMineShareBinding;
@@ -62,7 +58,7 @@ public class MineShareActivity extends BaseActivity<MineSharePresenter,MineShare
     }
 
     @Override
-    public void initBinding() {
+    public void initContentView() {
         ActivityMineShareBinding binding = ActivityMineShareBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         abc = binding.abc;
@@ -107,19 +103,13 @@ public class MineShareActivity extends BaseActivity<MineSharePresenter,MineShare
     }
 
     @Override
-    protected int getLayoutId() {
-        return R.layout.activity_mine_share;
-    }
-
-    @Nullable
-    @Override
-    protected MineSharePresenter initPresenter() {
-        return new MineSharePresenter();
+    protected void setUpPresenter() {
+        presenter =  new MineSharePresenter();
     }
 
     @Override
     protected void initViews() {
-        abc.setOnRightIconClickListener(v -> ShareArticleActivity.start(getContext()));
+        abc.setOnRightIconClickListener(v -> ShareArticleActivity.start(getViewContext()));
         abc.getTitleTextView().setOnClickListener(v -> {
             long currClickTime = System.currentTimeMillis();
             if (currClickTime - lastClickTime <= Config.SCROLL_TOP_DOUBLE_CLICK_DELAY) {
@@ -133,7 +123,7 @@ public class MineShareActivity extends BaseActivity<MineSharePresenter,MineShare
             currPage = PAGE_START;
             presenter.getMineShareArticleList(currPage, true);
         });
-        rv.setLayoutManager(new LinearLayoutManager(getContext()));
+        rv.setLayoutManager(new LinearLayoutManager(getViewContext()));
         mAdapter = new MineShareArticleAdapter();
         mAdapter.setEnableLoadMore(false);
         mAdapter.setOnLoadMoreListener(() -> presenter.getMineShareArticleList(currPage, true), rv);

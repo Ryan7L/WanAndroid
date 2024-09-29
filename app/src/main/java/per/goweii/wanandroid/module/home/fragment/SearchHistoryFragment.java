@@ -89,7 +89,7 @@ public class SearchHistoryFragment extends BaseFragment<SearchHistoryPresenter,S
     protected void initView() {
         rv_hot.setNestedScrollingEnabled(false);
         rv_hot.setHasFixedSize(true);
-        rv_hot.setLayoutManager(new FlexboxLayoutManager(getContext()));
+        rv_hot.setLayoutManager(new FlexboxLayoutManager(getViewContext()));
         mHotAdapter = new BaseQuickAdapter<HotKeyBean, BaseViewHolder>(R.layout.rv_item_search_hot) {
             @Override
             protected void convert(BaseViewHolder helper, HotKeyBean item) {
@@ -106,7 +106,7 @@ public class SearchHistoryFragment extends BaseFragment<SearchHistoryPresenter,S
             }
         });
         rv_hot.setAdapter(mHotAdapter);
-        rv_history.setLayoutManager(new FlexboxLayoutManager(getContext()));
+        rv_history.setLayoutManager(new FlexboxLayoutManager(getViewContext()));
         mHistoryAdapter = new BaseQuickAdapter<String, BaseViewHolder>(R.layout.rv_item_search_history) {
             @Override
             protected void convert(BaseViewHolder helper, String item) {
@@ -246,7 +246,7 @@ public class SearchHistoryFragment extends BaseFragment<SearchHistoryPresenter,S
             default:
                 break;
             case R.id.tv_clean:
-                TipDialog.with(getContext())
+                TipDialog.with(getViewContext())
                         .message("确定要清除搜索历史？")
                         .onYes(new SimpleCallback<Void>() {
                             @Override

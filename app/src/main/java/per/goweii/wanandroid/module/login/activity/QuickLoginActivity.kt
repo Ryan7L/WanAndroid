@@ -69,13 +69,14 @@ class QuickLoginActivity : BaseActivity<QuickLoginPresenter,QuickLoginView>(), Q
     private var startPasswordLoginOnFail = false
     private lateinit var biometricHelper: BiometricHelper
 
-    override fun getLayoutId(): Int {
+
+
+    override fun initContentView() {
         setContentView(View(this))
-        return 0
     }
 
-    override fun initPresenter(): QuickLoginPresenter {
-        return QuickLoginPresenter()
+    override fun setUpPresenter() {
+        presenter =  QuickLoginPresenter()
     }
 
     override fun initViews() {

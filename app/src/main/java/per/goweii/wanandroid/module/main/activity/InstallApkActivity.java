@@ -11,7 +11,6 @@ import java.io.File;
 import per.goweii.anypermission.AnyPermission;
 import per.goweii.anypermission.RequestListener;
 import per.goweii.basic.core.base.BaseActivity;
-import per.goweii.basic.core.mvp.IPresenter;
 import per.goweii.basic.utils.LogUtils;
 import per.goweii.wanandroid.common.WanApp;
 import per.goweii.wanandroid.utils.ThemeUtils;
@@ -26,16 +25,7 @@ public class InstallApkActivity extends BaseActivity {
         context.startActivity(intent);
     }
 
-    @Override
-    protected int getLayoutId() {
-        return 0;
-    }
 
-    @Nullable
-    @Override
-    protected IPresenter initPresenter() {
-        return null;
-    }
 
     @Override
     protected void initViews() {

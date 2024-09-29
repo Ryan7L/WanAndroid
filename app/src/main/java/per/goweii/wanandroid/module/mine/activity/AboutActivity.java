@@ -3,7 +3,6 @@ package per.goweii.wanandroid.module.mine.activity;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,7 +12,6 @@ import androidx.annotation.Nullable;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
 import per.goweii.actionbarex.common.ActionBarCommon;
-import per.goweii.actionbarex.common.OnActionBarChildClickListener;
 import per.goweii.basic.core.base.BaseActivity;
 import per.goweii.basic.ui.dialog.TipDialog;
 import per.goweii.basic.utils.AppInfoUtils;
@@ -48,7 +46,7 @@ public class AboutActivity extends BaseActivity<AboutPresenter,AboutView> implem
     }
 
     @Override
-    public void initBinding() {
+    public void initContentView() {
         ActivityAboutBinding binding = ActivityAboutBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         abc = binding.abc;
@@ -63,15 +61,10 @@ public class AboutActivity extends BaseActivity<AboutPresenter,AboutView> implem
         binding.llBeta.setOnClickListener(this);
     }
 
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_about;
-    }
 
-    @Nullable
     @Override
-    protected AboutPresenter initPresenter() {
-        return new AboutPresenter();
+    protected void setUpPresenter() {
+        presenter =  new AboutPresenter();
     }
 
     @Override
@@ -105,19 +98,19 @@ public class AboutActivity extends BaseActivity<AboutPresenter,AboutView> implem
                 UrlOpenUtils.Companion
                         .with("https://www.wanandroid.com")
                         .title(tv_web.getText().toString())
-                        .open(getContext());
+                        .open(getViewContext());
                 break;
             case R.id.ll_about:
                 UrlOpenUtils.Companion
                         .with("https://www.wanandroid.com/about")
                         .title(tv_about.getText().toString())
-                        .open(getContext());
+                        .open(getViewContext());
                 break;
             case R.id.ll_github:
                 UrlOpenUtils.Companion
                         .with("https://github.com/goweii/WanAndroid")
                         .title(tv_github.getText().toString())
-                        .open(getContext());
+                        .open(getViewContext());
                 break;
             case R.id.ll_beta:
                 String msg = new StringBuilder()

@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import per.goweii.basic.core.base.BaseActivity;
-import per.goweii.basic.core.mvp.IPresenter;
 import per.goweii.basic.utils.LogUtils;
 import per.goweii.swipeback.SwipeBackAbility;
 import per.goweii.swipeback.SwipeBackDirection;
@@ -34,16 +33,7 @@ public class RouterActivity extends BaseActivity implements SwipeBackAbility.Dir
         return SwipeBackDirection.NONE;
     }
 
-    @Override
-    protected int getLayoutId() {
-        return 0;
-    }
 
-    @Nullable
-    @Override
-    protected IPresenter initPresenter() {
-        return null;
-    }
 
     @Override
     protected void initViews() {
@@ -61,7 +51,7 @@ public class RouterActivity extends BaseActivity implements SwipeBackAbility.Dir
         LogUtils.i(TAG, "findActivity=" + ma);
         if (ma == null) {
             LogUtils.i(TAG, "start MainActivity");
-            MainActivity.start(getContext());
+            MainActivity.start(getViewContext());
             afterMainActivityStarted();
         } else {
             parseIntent(getIntent());
@@ -123,7 +113,7 @@ public class RouterActivity extends BaseActivity implements SwipeBackAbility.Dir
         }
         UrlOpenUtils.Companion
                 .with(data.toString())
-                .open(getContext());
+                .open(getViewContext());
     }
 
     private void handleShareText(String sharedText) {
@@ -154,7 +144,7 @@ public class RouterActivity extends BaseActivity implements SwipeBackAbility.Dir
             }
             String url = urlBuilder.toString();
             LogUtils.d(TAG, "sharedUrl=" + url);
-            ShareArticleActivity.start(getContext(), msg, url);
+            ShareArticleActivity.start(getViewContext(), msg, url);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -64,7 +64,7 @@ class BookFragment : BaseFragment<BookPresenter, BookView>(), BookView {
                 }
             }
         })
-        binding.rv.layoutManager = GridLayoutManager(context, 3)
+        binding.rv.layoutManager = GridLayoutManager(viewContext, 3)
         mAdapter = BookAdapter()
         RvConfigUtils.init(mAdapter)
         mAdapter.setEnableLoadMore(false)

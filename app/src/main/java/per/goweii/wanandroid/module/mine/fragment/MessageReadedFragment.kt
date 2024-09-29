@@ -82,7 +82,7 @@ class MessageReadedFragment : BaseFragment<MessageReadedPresenter,MessageReadedV
             currPage = PAGE_START
             presenter.getMessageReadList(currPage)
         }
-        binding.rv.layoutManager = LinearLayoutManager(context)
+        binding.rv.layoutManager = LinearLayoutManager(viewContext)
         mAdapter = MessageReadedAdapter()
         mAdapter.setEnableLoadMore(false)
         mAdapter.setOnLoadMoreListener({
@@ -94,7 +94,7 @@ class MessageReadedFragment : BaseFragment<MessageReadedPresenter,MessageReadedV
                 val item = mAdapter.getItem(position) ?: return@OnItemChildClickListener
                 when (view.id) {
                     R.id.rl_message -> {
-                        UrlOpenUtils.with(item.realLink).open(context)
+                        UrlOpenUtils.with(item.realLink).open(viewContext)
                     }
 
                     R.id.tv_delete -> {

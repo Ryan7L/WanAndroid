@@ -12,8 +12,6 @@ import androidx.viewpager.widget.ViewPager;
 import per.goweii.actionbarex.ActionBarEx;
 import per.goweii.basic.core.adapter.FixedFragmentPagerAdapter;
 import per.goweii.basic.core.base.BaseActivity;
-import per.goweii.basic.core.mvp.IPresenter;
-import per.goweii.basic.utils.listener.SimpleCallback;
 import per.goweii.wanandroid.R;
 import per.goweii.wanandroid.common.Config;
 import per.goweii.wanandroid.databinding.ActivityCollectionBinding;
@@ -41,23 +39,14 @@ public class CollectionActivity extends BaseActivity {
     }
 
     @Override
-    public void initBinding() {
+    public void initContentView() {
         ActivityCollectionBinding binding = ActivityCollectionBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         ab = binding.ab;
         vp = binding.vp;
     }
 
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_collection;
-    }
 
-    @Nullable
-    @Override
-    protected IPresenter initPresenter() {
-        return null;
-    }
 
     @Override
     protected void initViews() {

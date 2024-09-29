@@ -73,7 +73,7 @@ public abstract class BaseFragment<P extends BasePresenter<V>,V extends BaseView
     @Override
     public void showLoadingDialog() {
         if (mLoadingDialog == null) {
-            mLoadingDialog = LoadingDialog.with(getContext());
+            mLoadingDialog = LoadingDialog.with(getViewContext());
         }
         mLoadingDialog.show();
     }

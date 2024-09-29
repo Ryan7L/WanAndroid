@@ -3,7 +3,7 @@ package per.goweii.basic.core.mvp
 import android.content.Context
 
 interface IView {
-    val context: Context?
+    val viewContext: Context?
 
     fun showLoadingDialog()
 

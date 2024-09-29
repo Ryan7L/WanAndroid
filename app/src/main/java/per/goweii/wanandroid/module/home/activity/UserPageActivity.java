@@ -15,8 +15,6 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.kennyc.view.MultiStateView;
@@ -33,7 +31,6 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.Random;
 
 import per.goweii.actionbarex.common.ActionBarCommon;
-import per.goweii.actionbarex.common.OnActionBarChildClickListener;
 import per.goweii.basic.core.base.BaseActivity;
 import per.goweii.basic.core.utils.SmartRefreshUtils;
 import per.goweii.basic.ui.toast.ToastMaker;
@@ -41,7 +38,6 @@ import per.goweii.basic.utils.CopyUtils;
 import per.goweii.basic.utils.LogUtils;
 import per.goweii.basic.utils.RandomUtils;
 import per.goweii.basic.utils.ResUtils;
-import per.goweii.basic.utils.listener.SimpleListener;
 import per.goweii.wanandroid.BuildConfig;
 import per.goweii.wanandroid.R;
 import per.goweii.wanandroid.databinding.ActivityUserPageBinding;
@@ -56,7 +52,6 @@ import per.goweii.wanandroid.utils.ImageLoader;
 import per.goweii.wanandroid.utils.MultiStateUtils;
 import per.goweii.wanandroid.utils.UrlOpenUtils;
 import per.goweii.wanandroid.utils.router.Router;
-import per.goweii.wanandroid.widget.CollectView;
 
 /**
  * @author CuiZhen
@@ -93,7 +88,7 @@ public class UserPageActivity extends BaseActivity<UserPagePresenter,UserPageVie
     }
 
     @Override
-    public void initBinding() {
+    public void initContentView() {
         ActivityUserPageBinding binding = ActivityUserPageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         msv = binding.msv;
@@ -137,15 +132,10 @@ public class UserPageActivity extends BaseActivity<UserPagePresenter,UserPageVie
         return true;
     }
 
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_user_page;
-    }
 
-    @Nullable
     @Override
-    protected UserPagePresenter initPresenter() {
-        return new UserPagePresenter();
+    protected void setUpPresenter() {
+        presenter =  new UserPagePresenter();
     }
 
     @Override
@@ -180,14 +170,14 @@ public class UserPageActivity extends BaseActivity<UserPagePresenter,UserPageVie
             currPage = PAGE_START;
             getUserPage(true);
         });
-        rv.setLayoutManager(new LinearLayoutManager(getContext()));
+        rv.setLayoutManager(new LinearLayoutManager(getViewContext()));
         mAdapter = new ArticleAdapter();
         mAdapter.setEnableLoadMore(false);
         mAdapter.setOnLoadMoreListener(() -> getUserPage(true), rv);
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             ArticleBean item = mAdapter.getItem(position);
             if (item != null) {
-                UrlOpenUtils.Companion.with(item).open(getContext());
+                UrlOpenUtils.Companion.with(item).open(getViewContext());
             }
         });
         mAdapter.setOnItemChildViewClickListener((helper, v, position) -> {

@@ -269,7 +269,7 @@ public class HomeFragment extends BaseFragment<HomePresenter,HomeView> implement
         abc.setOnRightIconClickListener(new OnActionBarChildClickListener() {
             @Override
             public void onClick(View v) {
-                SearchActivity.start(getContext());
+                SearchActivity.start(getViewContext());
             }
         });
         abc.setOnLeftIconClickListener(new OnActionBarChildClickListener() {
@@ -296,7 +296,7 @@ public class HomeFragment extends BaseFragment<HomePresenter,HomeView> implement
             }
         });
         initSecondFloor();
-        rv.setLayoutManager(new LinearLayoutManager(getContext()));
+        rv.setLayoutManager(new LinearLayoutManager(getViewContext()));
         mAdapter = new ArticleAdapter();
         mAdapter.setEnableLoadMore(false);
         mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
@@ -537,7 +537,7 @@ public class HomeFragment extends BaseFragment<HomePresenter,HomeView> implement
     }
 
     private void showWebDialog(int position) {
-        mWebDialog = WebDialog.create(getContext(), null, mAdapter.getData(), position);
+        mWebDialog = WebDialog.create(getViewContext(), null, mAdapter.getData(), position);
         mWebDialog.setOnPageChangedListener(new WebDialog.OnPageChangedListener() {
             @Override
             public void onPageChanged(int pos, ArticleBean data) {
@@ -635,8 +635,8 @@ public class HomeFragment extends BaseFragment<HomePresenter,HomeView> implement
     }
 
     private void createHeaderBanner() {
-        if (mBanner == null && getContext() != null) {
-            mBanner = new Banner(getContext());
+        if (mBanner == null && getViewContext() != null) {
+            mBanner = new Banner(getViewContext());
             int screenWidth = DisplayInfoUtils.getInstance().getWidthPixels();
             int screenHeight = DisplayInfoUtils.getInstance().getHeightPixels();
             int height = (int) (Math.min(screenWidth, screenHeight) * (9F / 16F));
@@ -675,7 +675,7 @@ public class HomeFragment extends BaseFragment<HomePresenter,HomeView> implement
                         UrlOpenUtils.Companion
                                 .with(bean.getUrl())
                                 .title(bean.getTitle())
-                                .open(getContext());
+                                .open(getViewContext());
                     } else if (obj instanceof RecommendBean.BannerBean) {
                         RecommendBean.BannerBean bean = (RecommendBean.BannerBean) obj;
                         Router.routeTo(bean.getRoute());
@@ -858,7 +858,7 @@ public class HomeFragment extends BaseFragment<HomePresenter,HomeView> implement
             clearActionBarIconMode();
             changeActionBarBgColor(event.getActionBarBgColor());
             if (!TextUtils.isEmpty(event.getActionBarBgImageUrl())) {
-                GlideHelper.with(getContext())
+                GlideHelper.with(getViewContext())
                         .asBitmap()
                         .load(event.getActionBarBgImageUrl())
                         .getBitmap(new SimpleCallback<Bitmap>() {
@@ -873,7 +873,7 @@ public class HomeFragment extends BaseFragment<HomePresenter,HomeView> implement
         }
         if (iv_second_floor_background != null) {
             if (!TextUtils.isEmpty(event.getSecondFloorBgImageUrl())) {
-                GlideHelper.with(getContext())
+                GlideHelper.with(getViewContext())
                         .asBitmap()
                         .load(event.getSecondFloorBgImageUrl())
                         .transformation(new BlurTransformation(event.getSecondFloorBgImageBlurPercent()))
@@ -907,7 +907,7 @@ public class HomeFragment extends BaseFragment<HomePresenter,HomeView> implement
 
     private boolean isColorLight(int color) {
         double lumi = LuminanceUtils.calcLuminance(color);
-        Context context = getContext();
+        Context context = getViewContext();
         if (context != null) {
             if (DarkModeUtils.isDarkMode(context)) {
                 return lumi > 0.1F;

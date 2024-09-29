@@ -12,8 +12,6 @@ import androidx.viewpager.widget.ViewPager;
 import per.goweii.actionbarex.ActionBarEx;
 import per.goweii.basic.core.adapter.FixedFragmentPagerAdapter;
 import per.goweii.basic.core.base.BaseActivity;
-import per.goweii.basic.core.mvp.IPresenter;
-import per.goweii.basic.utils.listener.SimpleCallback;
 import per.goweii.wanandroid.R;
 import per.goweii.wanandroid.common.Config;
 import per.goweii.wanandroid.databinding.ActivityHostInterruptBinding;
@@ -41,23 +39,14 @@ public class HostInterruptActivity extends BaseActivity {
     }
 
     @Override
-    public void initBinding() {
+    public void initContentView() {
         ActivityHostInterruptBinding binding = ActivityHostInterruptBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         ab = binding.ab;
         vp = binding.vp;
     }
 
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_host_interrupt;
-    }
 
-    @Nullable
-    @Override
-    protected IPresenter initPresenter() {
-        return null;
-    }
 
     @Override
     protected void initViews() {

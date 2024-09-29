@@ -10,8 +10,6 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
 import com.kennyc.view.MultiStateView;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 
@@ -21,7 +19,6 @@ import org.greenrobot.eventbus.ThreadMode;
 import per.goweii.basic.core.base.BaseFragment;
 import per.goweii.basic.core.utils.SmartRefreshUtils;
 import per.goweii.basic.ui.toast.ToastMaker;
-import per.goweii.basic.utils.listener.SimpleListener;
 import per.goweii.wanandroid.R;
 import per.goweii.wanandroid.databinding.FragmentCollectionArticleBinding;
 import per.goweii.wanandroid.event.CollectionEvent;
@@ -33,7 +30,6 @@ import per.goweii.wanandroid.module.mine.view.CollectionArticleView;
 import per.goweii.wanandroid.utils.MultiStateUtils;
 import per.goweii.wanandroid.utils.RvScrollTopUtils;
 import per.goweii.wanandroid.utils.UrlOpenUtils;
-import per.goweii.wanandroid.widget.CollectView;
 
 /**
  * @author CuiZhen
@@ -120,14 +116,14 @@ public class CollectionArticleFragment extends BaseFragment<CollectionArticlePre
             currPage = PAGE_START;
             presenter.getCollectArticleList(currPage, true);
         });
-        rv.setLayoutManager(new LinearLayoutManager(getContext()));
+        rv.setLayoutManager(new LinearLayoutManager(getViewContext()));
         mAdapter = new ArticleAdapter();
         mAdapter.setEnableLoadMore(false);
         mAdapter.setOnLoadMoreListener(() -> presenter.getCollectArticleList(currPage, true), rv);
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             ArticleBean item = mAdapter.getItem(position);
             if (item != null) {
-                UrlOpenUtils.Companion.with(item).open(getContext());
+                UrlOpenUtils.Companion.with(item).open(getViewContext());
             }
         });
         mAdapter.setOnItemChildViewClickListener((helper, v, position) -> {

@@ -23,7 +23,6 @@ import per.goweii.basic.utils.listener.SimpleCallback;
 public abstract class BaseActivity<P extends BasePresenter<V>,V extends BaseView> extends MvpActivity<P,V> {
     private LoadingDialog mLoadingDialog = null;
     private LoadingBarManager mLoadingBarManager = null;
-//    private Unbinder mUnbinder = null;
     private LoginReceiver mLoginReceiver;
 
     /**
@@ -40,7 +39,6 @@ public abstract class BaseActivity<P extends BasePresenter<V>,V extends BaseView
 
     @Override
     protected void initialize() {
-//        mUnbinder = ButterKnife.bind(this);
         if (isRegisterEventBus()) {
             EventBus.getDefault().register(this);
         }
@@ -79,15 +77,12 @@ public abstract class BaseActivity<P extends BasePresenter<V>,V extends BaseView
         if (isRegisterEventBus()) {
             EventBus.getDefault().unregister(this);
         }
-//        if (mUnbinder != null) {
-//            mUnbinder.unbind();
-//        }
     }
 
     @Override
     public void showLoadingDialog() {
         if (mLoadingDialog == null) {
-            mLoadingDialog = LoadingDialog.with(getContext());
+            mLoadingDialog = LoadingDialog.with(getViewContext());
         }
         mLoadingDialog.show();
     }

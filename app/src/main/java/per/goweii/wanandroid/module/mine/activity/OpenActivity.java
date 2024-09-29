@@ -3,7 +3,6 @@ package per.goweii.wanandroid.module.mine.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
-import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import per.goweii.basic.core.base.BaseActivity;
-import per.goweii.basic.core.mvp.IPresenter;
 import per.goweii.wanandroid.R;
 import per.goweii.wanandroid.databinding.ActivityOpenBinding;
 import per.goweii.wanandroid.module.mine.model.OpenEntity;
@@ -43,7 +41,7 @@ public class OpenActivity extends BaseActivity {
     }
 
     @Override
-    public void initBinding() {
+    public void initContentView() {
         ActivityOpenBinding binding = ActivityOpenBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         msv = binding.msv;
@@ -51,20 +49,11 @@ public class OpenActivity extends BaseActivity {
         rv = binding.rv;
     }
 
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_open;
-    }
 
-    @Nullable
-    @Override
-    protected IPresenter initPresenter() {
-        return null;
-    }
 
     @Override
     protected void initViews() {
-        rv.setLayoutManager(new LinearLayoutManager(getContext()));
+        rv.setLayoutManager(new LinearLayoutManager(getViewContext()));
         mAdapter = new BaseQuickAdapter<>(R.layout.rv_item_open) {
             @Override
             protected void convert(BaseViewHolder helper, OpenEntity item) {
@@ -83,7 +72,7 @@ public class OpenActivity extends BaseActivity {
                 UrlOpenUtils.Companion
                         .with(item.getLink())
                         .title(item.getProject())
-                        .open(getContext());
+                        .open(getViewContext());
             }
         });
         rv.setAdapter(mAdapter);

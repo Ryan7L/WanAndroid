@@ -101,7 +101,7 @@ class QuestionFragment : BaseFragment<QuestionPresenter,QuestionView>(), Questio
             currPage = PAGE_START
             presenter.getQuestionList(currPage)
         }
-        binding.rv.layoutManager = LinearLayoutManager(context)
+        binding.rv.layoutManager = LinearLayoutManager(viewContext)
         mAdapter = ArticleAdapter()
         mAdapter.setEnableLoadMore(false)
         mAdapter.setOnLoadMoreListener({

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.text.TextUtils;
-import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
@@ -19,7 +18,6 @@ import java.util.List;
 import per.goweii.actionbarex.common.ActionBarCommon;
 import per.goweii.basic.core.adapter.MultiFragmentPagerAdapter;
 import per.goweii.basic.core.base.BaseActivity;
-import per.goweii.basic.utils.listener.SimpleCallback;
 import per.goweii.wanandroid.R;
 import per.goweii.wanandroid.common.Config;
 import per.goweii.wanandroid.databinding.ActivityKnowledgeArticleBinding;
@@ -97,7 +95,7 @@ public class KnowledgeArticleActivity extends BaseActivity<KnowledgePresenter,Kn
     }
 
     @Override
-    public void initBinding() {
+    public void initContentView() {
         ActivityKnowledgeArticleBinding binding = ActivityKnowledgeArticleBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         abc = binding.abc;
@@ -106,15 +104,10 @@ public class KnowledgeArticleActivity extends BaseActivity<KnowledgePresenter,Kn
         vp = binding.vp;
     }
 
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_knowledge_article;
-    }
 
-    @Nullable
     @Override
-    protected KnowledgePresenter initPresenter() {
-        return new KnowledgePresenter();
+    protected void setUpPresenter() {
+        presenter =  new KnowledgePresenter();
     }
 
     @Override

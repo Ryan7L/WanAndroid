@@ -48,7 +48,7 @@ import per.goweii.wanandroid.utils.web.interceptor.WebResUrlInterceptor
  */
 class ArticleActivity : BaseActivity<ArticlePresenter,ArticleView>(), ArticleView, SwipeBackAbility.OnlyEdge {
     private lateinit var binding: ActivityArticleBinding
-    override fun initBinding() {
+    override fun initContentView() {
         binding = ActivityArticleBinding.inflate(layoutInflater)
         setContentView(binding.root)
     }
@@ -122,9 +122,11 @@ class ArticleActivity : BaseActivity<ArticlePresenter,ArticleView>(), ArticleVie
         }
     }
 
-    override fun getLayoutId(): Int = R.layout.activity_article
 
-    override fun initPresenter(): ArticlePresenter = ArticlePresenter()
+
+    override fun setUpPresenter() {
+        presenter = ArticlePresenter()
+    }
 
     override fun initViews() {
         StatusBarCompat.setIconMode(this, !DarkModeUtils.isDarkMode(this))
@@ -186,7 +188,7 @@ class ArticleActivity : BaseActivity<ArticlePresenter,ArticleView>(), ArticleVie
                 .author(presenter.userName)
                 .userId(presenter.userId)
                 .forceWeb()
-                .open(context)
+                .open(viewContext)
             if (floatIconsVisible) toggleFloatIcons()
         }
         binding.includeLayout.cvCollect.setOnClickListener {
@@ -211,7 +213,7 @@ class ArticleActivity : BaseActivity<ArticlePresenter,ArticleView>(), ArticleVie
                 if (!userTouched) return@setOverrideUrlInterceptor false
                 val currUrlLoadTime = System.currentTimeMillis()
                 val intercept = if (currUrlLoadTime - lastUrlLoadTime > 1000L) {
-                    UrlOpenUtils.with(it).open(context)
+                    UrlOpenUtils.with(it).open(viewContext)
                     true
                 } else {
                     false

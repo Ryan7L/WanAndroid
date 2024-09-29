@@ -160,7 +160,7 @@ public class MineFragment extends BaseFragment<MinePresenter,MineView> implement
     @Override
     protected void initView() {
         aiv_notification.setOnClickListener(v -> {
-            if (UserUtils.getInstance().doIfLogin(getContext())) {
+            if (UserUtils.getInstance().doIfLogin(getViewContext())) {
                 MessageActivity.start(requireContext());
                 loadNotificationCount();
             }
@@ -292,19 +292,19 @@ public class MineFragment extends BaseFragment<MinePresenter,MineView> implement
                 }
                 break;
             case R.id.ll_read_later:
-                ReadLaterActivity.start(getContext());
+                ReadLaterActivity.start(getViewContext());
                 break;
             case R.id.ll_read_record:
-                ReadRecordActivity.start(getContext());
+                ReadRecordActivity.start(getViewContext());
                 break;
             case R.id.ll_about_me:
-                AboutMeActivity.start(getContext());
+                AboutMeActivity.start(getViewContext());
                 break;
             case R.id.ll_open:
-                OpenActivity.start(getContext());
+                OpenActivity.start(getViewContext());
                 break;
             case R.id.ll_setting:
-                SettingActivity.start(getContext());
+                SettingActivity.start(getViewContext());
                 break;
         }
     }
