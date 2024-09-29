@@ -33,7 +33,7 @@ import per.goweii.wanandroid.utils.RvScrollTopUtils;
  * @date 2019/5/12
  * GitHub: https://github.com/goweii
  */
-public class ProjectFragment extends BaseFragment<ProjectPresenter> implements RvScrollTopUtils.ScrollTop, ProjectView {
+public class ProjectFragment extends BaseFragment<ProjectPresenter,ProjectView> implements RvScrollTopUtils.ScrollTop, ProjectView {
 
     //@BindView(R.id.ab)
     ActionBarEx ab;

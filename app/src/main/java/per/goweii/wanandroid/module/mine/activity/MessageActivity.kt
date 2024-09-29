@@ -20,9 +20,8 @@ import per.goweii.wanandroid.utils.MagicIndicatorUtils
  * @date 2019/5/17
  * GitHub: https://github.com/goweii
  */
-class MessageActivity : BaseActivity<BasePresenter<BaseView>>() {
+class MessageActivity : BaseActivity<BasePresenter<BaseView>,BaseView>() {
 
-    //    @BindView(R.id.ab)
     lateinit var ab: ActionBarEx
 
     companion object {

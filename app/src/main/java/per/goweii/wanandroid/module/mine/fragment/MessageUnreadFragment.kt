@@ -27,7 +27,7 @@ import per.goweii.wanandroid.utils.UrlOpenUtils
  * @author CuiZhen
  * @date 2020/5/16
  */
-class MessageUnreadFragment : BaseFragment<MessageUnreadPresenter>(), MessageUnreadView {
+class MessageUnreadFragment : BaseFragment<MessageUnreadPresenter,MessageUnreadView>(), MessageUnreadView {
 
     companion object {
         const val PAGE_START = 1

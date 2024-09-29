@@ -34,15 +34,10 @@ import per.goweii.wanandroid.module.home.fragment.SearchResultFragment;
  */
 public class SearchActivity extends BaseActivity {
 
-    //    @BindView(R.id.aiv_back)
     ActionIconView aiv_back;
-    //    @BindView(R.id.aiv_clear)
     ActionIconView aiv_clear;
-    //    @BindView(R.id.aiv_search)
     ActionIconView aiv_search;
-    //    @BindView(R.id.et_search)
     EditText et_search;
-    //    @BindView(R.id.fl)
     FrameLayout fl;
     private ActivitySearchBinding binding;
     private SearchHistoryFragment mSearchHistoryFragment;

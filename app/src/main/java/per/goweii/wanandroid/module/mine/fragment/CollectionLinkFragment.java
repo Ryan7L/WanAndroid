@@ -49,13 +49,10 @@ import per.goweii.wanandroid.utils.UrlOpenUtils;
  * @date 2019/5/17
  * GitHub: https://github.com/goweii
  */
-public class CollectionLinkFragment extends BaseFragment<CollectionLinkPresenter> implements RvScrollTopUtils.ScrollTop, CollectionLinkView {
+public class CollectionLinkFragment extends BaseFragment<CollectionLinkPresenter,CollectionLinkView> implements RvScrollTopUtils.ScrollTop, CollectionLinkView {
 
-    //@BindView(R.id.msv)
     MultiStateView msv;
-    //@BindView(R.id.srl)
     SmartRefreshLayout srl;
-    //@BindView(R.id.rv)
     RecyclerView rv;
     private SmartRefreshUtils mSmartRefreshUtils;
     private CollectionLinkAdapter mAdapter;
@@ -118,68 +115,52 @@ public class CollectionLinkFragment extends BaseFragment<CollectionLinkPresenter
     protected void initView() {
         mSmartRefreshUtils = SmartRefreshUtils.with(srl);
         mSmartRefreshUtils.pureScrollMode();
-        mSmartRefreshUtils.setRefreshListener(new SmartRefreshUtils.RefreshListener() {
-            @Override
-            public void onRefresh() {
-                presenter.getCollectLinkList(true);
-            }
-        });
+        mSmartRefreshUtils.setRefreshListener(() -> presenter.getCollectLinkList(true));
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new CollectionLinkAdapter();
         RvConfigUtils.init(mAdapter);
-        mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                mAdapter.closeAll(null);
-                CollectionLinkBean item = mAdapter.getItem(position);
-                if (item == null) {
-                    return;
-                }
-                switch (view.getId()) {
-                    default:
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            mAdapter.closeAll(null);
+            CollectionLinkBean item = mAdapter.getItem(position);
+            if (item == null) {
+                return;
+            }
+            switch (view.getId()) {
+                default:
+                    break;
+                case R.id.rl_top:
+                    UrlOpenUtils.Companion
+                            .with(item.getLink())
+                            .collectId(item.getId())
+                            .title(item.getName())
+                            .collected(true)
+                            .open(getContext());
+                    break;
+                case R.id.tv_copy:
+                    CopyUtils.copyText(item.getLink());
+                    ToastMaker.showShort("复制成功");
+                    break;
+                case R.id.tv_open:
+                    if (TextUtils.isEmpty(item.getLink())) {
+                        ToastMaker.showShort("链接为空");
                         break;
-                    case R.id.rl_top:
-                        UrlOpenUtils.Companion
-                                .with(item.getLink())
-                                .collectId(item.getId())
-                                .title(item.getName())
-                                .collected(true)
-                                .open(getContext());
-                        break;
-                    case R.id.tv_copy:
-                        CopyUtils.copyText(item.getLink());
-                        ToastMaker.showShort("复制成功");
-                        break;
-                    case R.id.tv_open:
-                        if (TextUtils.isEmpty(item.getLink())) {
-                            ToastMaker.showShort("链接为空");
-                            break;
-                        }
-                        if (getContext() != null) {
-                            IntentUtils.openBrowser(getContext(), item.getLink());
-                        }
-                        break;
-                    case R.id.tv_edit:
-                        EditCollectLinkDialog.show(getContext(), item, new SimpleCallback<CollectionLinkBean>() {
-                            @Override
-                            public void onResult(CollectionLinkBean data) {
-                                presenter.updateCollectLink(data);
-                            }
-                        });
-                        break;
-                    case R.id.tv_delete:
-                        presenter.uncollectLink(item);
-                        break;
-                }
+                    }
+                    if (getContext() != null) {
+                        IntentUtils.openBrowser(getContext(), item.getLink());
+                    }
+                    break;
+                case R.id.tv_edit:
+                    EditCollectLinkDialog.show(getContext(), item, data -> presenter.updateCollectLink(data));
+                    break;
+                case R.id.tv_delete:
+                    presenter.uncollectLink(item);
+                    break;
             }
         });
         rv.setAdapter(mAdapter);
-        MultiStateUtils.setEmptyAndErrorClick(msv, new SimpleListener() {
-            @Override
-            public void onResult() {
-                MultiStateUtils.toLoading(msv);
-                presenter.getCollectLinkList(true);
-            }
+        MultiStateUtils.setEmptyAndErrorClick(msv, () -> {
+            MultiStateUtils.toLoading(msv);
+            presenter.getCollectLinkList(true);
         });
         if (getRootView() != null) {
             ViewParent parent = getRootView().getParent();

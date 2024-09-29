@@ -43,17 +43,13 @@ import per.goweii.wanandroid.widget.CollectView;
  * @date 2019/5/17
  * GitHub: https://github.com/goweii
  */
-public class MineShareActivity extends BaseActivity<MineSharePresenter> implements MineShareView {
+public class MineShareActivity extends BaseActivity<MineSharePresenter,MineShareView> implements MineShareView {
 
     public static final int PAGE_START = 1;
 
-    //@BindView(R.id.abc)
     ActionBarCommon abc;
-    //@BindView(R.id.msv)
     MultiStateView msv;
-    //@BindView(R.id.srl)
     SmartRefreshLayout srl;
-    //@BindView(R.id.rv)
     RecyclerView rv;
     private SmartRefreshUtils mSmartRefreshUtils;
     private MineShareArticleAdapter mAdapter;
@@ -95,15 +91,12 @@ public class MineShareActivity extends BaseActivity<MineSharePresenter> implemen
             currPage = PAGE_START;
             presenter.getMineShareArticleList(currPage, true);
         } else {
-            mAdapter.forEach(new ArticleAdapter.ArticleForEach() {
-                @Override
-                public boolean forEach(int dataPos, int adapterPos, ArticleBean bean) {
-                    if (event.getArticleId() == bean.getId()) {
-                        mAdapter.remove(adapterPos);
-                        return true;
-                    }
-                    return false;
+            mAdapter.forEach((dataPos, adapterPos, bean) -> {
+                if (event.getArticleId() == bean.getId()) {
+                    mAdapter.remove(adapterPos);
+                    return true;
                 }
+                return false;
             });
         }
     }
@@ -126,40 +119,24 @@ public class MineShareActivity extends BaseActivity<MineSharePresenter> implemen
 
     @Override
     protected void initViews() {
-        abc.setOnRightIconClickListener(new OnActionBarChildClickListener() {
-            @Override
-            public void onClick(View v) {
-                ShareArticleActivity.start(getContext());
+        abc.setOnRightIconClickListener(v -> ShareArticleActivity.start(getContext()));
+        abc.getTitleTextView().setOnClickListener(v -> {
+            long currClickTime = System.currentTimeMillis();
+            if (currClickTime - lastClickTime <= Config.SCROLL_TOP_DOUBLE_CLICK_DELAY) {
+                RvScrollTopUtils.smoothScrollTop(rv);
             }
-        });
-        abc.getTitleTextView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                long currClickTime = System.currentTimeMillis();
-                if (currClickTime - lastClickTime <= Config.SCROLL_TOP_DOUBLE_CLICK_DELAY) {
-                    RvScrollTopUtils.smoothScrollTop(rv);
-                }
-                lastClickTime = currClickTime;
-            }
+            lastClickTime = currClickTime;
         });
         mSmartRefreshUtils = SmartRefreshUtils.with(srl);
         mSmartRefreshUtils.pureScrollMode();
-        mSmartRefreshUtils.setRefreshListener(new SmartRefreshUtils.RefreshListener() {
-            @Override
-            public void onRefresh() {
-                currPage = PAGE_START;
-                presenter.getMineShareArticleList(currPage, true);
-            }
+        mSmartRefreshUtils.setRefreshListener(() -> {
+            currPage = PAGE_START;
+            presenter.getMineShareArticleList(currPage, true);
         });
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new MineShareArticleAdapter();
         mAdapter.setEnableLoadMore(false);
-        mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
-            @Override
-            public void onLoadMoreRequested() {
-                presenter.getMineShareArticleList(currPage, true);
-            }
-        }, rv);
+        mAdapter.setOnLoadMoreListener(() -> presenter.getMineShareArticleList(currPage, true), rv);
         mAdapter.setOnCollectListener(new ArticleAdapter.OnCollectListener() {
             @Override
             public void collect(ArticleBean item, CollectView v) {
@@ -171,31 +148,25 @@ public class MineShareActivity extends BaseActivity<MineSharePresenter> implemen
                 presenter.uncollect(item, v);
             }
         });
-        mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                mAdapter.closeAll(null);
-                ArticleBean item = mAdapter.getItem(position);
-                if (item == null) {
-                    return;
-                }
-                switch (view.getId()) {
-                    default:
-                        break;
-                    case R.id.tv_delete:
-                        presenter.deleteMineShareArticle(item);
-                        break;
-                }
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            mAdapter.closeAll(null);
+            ArticleBean item = mAdapter.getItem(position);
+            if (item == null) {
+                return;
+            }
+            switch (view.getId()) {
+                default:
+                    break;
+                case R.id.tv_delete:
+                    presenter.deleteMineShareArticle(item);
+                    break;
             }
         });
         rv.setAdapter(mAdapter);
-        MultiStateUtils.setEmptyAndErrorClick(msv, new SimpleListener() {
-            @Override
-            public void onResult() {
-                MultiStateUtils.toLoading(msv);
-                currPage = PAGE_START;
-                presenter.getMineShareArticleList(currPage, true);
-            }
+        MultiStateUtils.setEmptyAndErrorClick(msv, () -> {
+            MultiStateUtils.toLoading(msv);
+            currPage = PAGE_START;
+            presenter.getMineShareArticleList(currPage, true);
         });
     }
 

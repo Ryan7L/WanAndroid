@@ -48,7 +48,7 @@ import per.goweii.wanandroid.utils.UrlOpenUtils
  * @author CuiZhen
  * @date 2020/2/26
  */
-class ScanActivity : BaseActivity<ScanPresenter>(), ScanView, SwipeBackAbility.Direction,
+class ScanActivity : BaseActivity<ScanPresenter,ScanView>(), ScanView, SwipeBackAbility.Direction,
     SwipeBackAbility.Transformer {
     private lateinit var binding: ActivityScanBinding
 

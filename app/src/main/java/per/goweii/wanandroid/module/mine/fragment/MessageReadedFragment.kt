@@ -28,7 +28,7 @@ import per.goweii.wanandroid.utils.UrlOpenUtils
  * @author CuiZhen
  * @date 2020/5/16
  */
-class MessageReadedFragment : BaseFragment<MessageReadedPresenter>(), MessageReadedView {
+class MessageReadedFragment : BaseFragment<MessageReadedPresenter,MessageReadedView>(), MessageReadedView {
 
     companion object {
         const val PAGE_START = 1

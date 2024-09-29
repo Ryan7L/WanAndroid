@@ -29,7 +29,7 @@ import per.goweii.wanandroid.widget.SubmitView;
  * @date 2019/5/16
  * GitHub: https://github.com/goweii
  */
-public class LoginFragment extends BaseFragment<LoginPresenter> implements LoginView {
+public class LoginFragment extends BaseFragment<LoginPresenter,LoginView> implements LoginView {
 
     //@BindView(R.id.ll_go_register)
     LinearLayout ll_go_register;

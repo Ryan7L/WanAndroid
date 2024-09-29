@@ -55,38 +55,22 @@ import per.goweii.wanandroid.utils.UserUtils;
  * @date 2019/5/12
  * GitHub: https://github.com/goweii
  */
-public class MineFragment extends BaseFragment<MinePresenter> implements MineView {
-    //@BindView(R.id.aiv_notification)
+public class MineFragment extends BaseFragment<MinePresenter,MineView> implements MineView {
     ImageView aiv_notification;
-    //@BindView(R.id.tv_notification)
     TextView tv_notification;
-    //@BindView(R.id.srl)
     SmartRefreshLayout srl;
-    //@BindView(R.id.nsv)
     NestedScrollView nsv;
-    //@BindView(R.id.iv_blur)
     ImageView iv_blur;
-    //@BindView(R.id.rl_user_info)
     RelativeLayout rl_user_info;
-    //@BindView(R.id.civ_user_icon)
     ImageView civ_user_icon;
-    //@BindView(R.id.tv_user_name)
     TextView tv_user_name;
-    //@BindView(R.id.ll_user_level_ranking)
     LinearLayout ll_user_level_ranking;
-    //@BindView(R.id.ll_read_later)
     LinearLayout ll_read_later;
-    //@BindView(R.id.ll_read_record)
     LinearLayout ll_read_record;
-    //@BindView(R.id.ll_open)
     LinearLayout ll_open;
-    //@BindView(R.id.ll_about_me)
     LinearLayout ll_about_me;
-    //@BindView(R.id.tv_user_level)
     TextView tv_user_level;
-    //@BindView(R.id.tv_user_ranking)
     TextView tv_user_ranking;
-    //@BindView(R.id.tv_coin)
     TextView tv_coin;
     private SmartRefreshUtils mSmartRefreshUtils;
 
@@ -214,12 +198,9 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineVie
 
     private void setRefresh() {
         if (UserUtils.getInstance().isLogin()) {
-            mSmartRefreshUtils.setRefreshListener(new SmartRefreshUtils.RefreshListener() {
-                @Override
-                public void onRefresh() {
-                    loadUserInfo();
-                    loadNotificationCount();
-                }
+            mSmartRefreshUtils.setRefreshListener(() -> {
+                loadUserInfo();
+                loadNotificationCount();
             });
         } else {
             mSmartRefreshUtils.setRefreshListener(null);

@@ -10,7 +10,7 @@ import per.goweii.wanandroid.module.main.model.ChapterBean
  * @author CuiZhen
  * @date 2020/3/22
  */
-class ArticleListActivity : BaseActivity<BasePresenter<BaseView>>() {
+class ArticleListActivity : BaseActivity<BasePresenter<BaseView>,BaseView>() {
 
     companion object {
         @JvmStatic

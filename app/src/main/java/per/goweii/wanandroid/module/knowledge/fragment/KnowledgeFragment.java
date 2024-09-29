@@ -32,7 +32,7 @@ import per.goweii.wanandroid.utils.RvScrollTopUtils;
  * @date 2019/5/12
  * GitHub: https://github.com/goweii
  */
-public class KnowledgeFragment extends BaseFragment<KnowledgePresenter> implements RvScrollTopUtils.ScrollTop, KnowledgeView {
+public class KnowledgeFragment extends BaseFragment<KnowledgePresenter,KnowledgeView> implements RvScrollTopUtils.ScrollTop, KnowledgeView {
 
     //@BindView(R.id.msv)
     MultiStateView msv;

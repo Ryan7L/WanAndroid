@@ -63,38 +63,23 @@ import per.goweii.wanandroid.widget.CollectView;
  * @date 2019/5/18
  * GitHub: https://github.com/goweii
  */
-public class UserPageActivity extends BaseActivity<UserPagePresenter> implements UserPageView {
+public class UserPageActivity extends BaseActivity<UserPagePresenter,UserPageView> implements UserPageView {
 
     private static final int PAGE_START = 1;
-    //@BindView(R.id.msv)
     MultiStateView msv;
-    //@BindView(R.id.msv_list)
     MultiStateView msv_list;
-    //@BindView(R.id.cl)
     CoordinatorLayout cl;
-    //@BindView(R.id.ctbl)
     CollapsingToolbarLayout ctbl;
-    //@BindView(R.id.abl)
     AppBarLayout abl;
-    //@BindView(R.id.abc)
     ActionBarCommon abc;
-    //@BindView(R.id.srl)
     SmartRefreshLayout srl;
-    //@BindView(R.id.iv_blur)
     ImageView iv_blur;
-    //@BindView(R.id.rl_user_info)
     RelativeLayout rl_user_info;
-    //@BindView(R.id.rv)
     RecyclerView rv;
-    //@BindView(R.id.civ_user_icon)
     ImageView civ_user_icon;
-    //@BindView(R.id.tv_user_name)
     TextView tv_user_name;
-    //@BindView(R.id.tv_user_id)
     TextView tv_user_id;
-    //@BindView(R.id.tv_user_coin)
     TextView tv_user_coin;
-    //@BindView(R.id.tv_user_ranking)
     TextView tv_user_ranking;
     private SmartRefreshUtils mSmartRefreshUtils;
     private ArticleAdapter mAdapter;
@@ -166,80 +151,60 @@ public class UserPageActivity extends BaseActivity<UserPagePresenter> implements
     @Override
     protected void initViews() {
         mUserId = getUserIdFromIntent(getIntent());
-        abc.setOnRightTextClickListener(new OnActionBarChildClickListener() {
-            @Override
-            public void onClick(View v) {
-                String userId = String.valueOf(mUserId);
-                String salt = RandomUtils.randomLetter(10 - userId.length());
-                StringBuilder id = new StringBuilder();
-                Random random = new Random();
-                for (int i = 0; i < userId.length(); i++) {
-                    int l = userId.length() - i;
-                    int maxi = salt.length() - l - 1;
-                    maxi = maxi < 2 ? 2 : maxi;
-                    int ii = random.nextInt(maxi);
-                    id.append(salt.substring(0, ii));
-                    id.append(userId.charAt(i));
-                    salt = salt.substring(ii);
-                }
-                id.append(salt);
-                StringBuilder s = new StringBuilder();
-                s.append("【玩口令】你的好友给你分享了一个神秘用户，户制泽条消息");
-                s.append(String.format(BuildConfig.WANPWD_FORMAT, BuildConfig.WANPWD_TYPE_USERPAGE, id.toString()));
-                s.append("打開最美玩安卓客户端揭开他/她的神秘面纱");
-                LogUtils.d("UserPageActivity", s);
-                CopyUtils.copyText(s.toString());
-                ToastMaker.showShort("口令已复制");
+        abc.setOnRightTextClickListener(v -> {
+            String userId = String.valueOf(mUserId);
+            String salt = RandomUtils.randomLetter(10 - userId.length());
+            StringBuilder id = new StringBuilder();
+            Random random = new Random();
+            for (int i = 0; i < userId.length(); i++) {
+                int l = userId.length() - i;
+                int maxi = salt.length() - l - 1;
+                maxi = maxi < 2 ? 2 : maxi;
+                int ii = random.nextInt(maxi);
+                id.append(salt.substring(0, ii));
+                id.append(userId.charAt(i));
+                salt = salt.substring(ii);
             }
+            id.append(salt);
+            StringBuilder s = new StringBuilder();
+            s.append("【玩口令】你的好友给你分享了一个神秘用户，户制泽条消息");
+            s.append(String.format(BuildConfig.WANPWD_FORMAT, BuildConfig.WANPWD_TYPE_USERPAGE, id.toString()));
+            s.append("打開最美玩安卓客户端揭开他/她的神秘面纱");
+            LogUtils.d("UserPageActivity", s);
+            CopyUtils.copyText(s.toString());
+            ToastMaker.showShort("口令已复制");
         });
         mSmartRefreshUtils = SmartRefreshUtils.with(srl);
         mSmartRefreshUtils.pureScrollMode();
-        mSmartRefreshUtils.setRefreshListener(new SmartRefreshUtils.RefreshListener() {
-            @Override
-            public void onRefresh() {
-                currPage = PAGE_START;
-                getUserPage(true);
-            }
+        mSmartRefreshUtils.setRefreshListener(() -> {
+            currPage = PAGE_START;
+            getUserPage(true);
         });
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new ArticleAdapter();
         mAdapter.setEnableLoadMore(false);
-        mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
-            @Override
-            public void onLoadMoreRequested() {
-                getUserPage(true);
-            }
-        }, rv);
-        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                ArticleBean item = mAdapter.getItem(position);
-                if (item != null) {
-                    UrlOpenUtils.Companion.with(item).open(getContext());
-                }
+        mAdapter.setOnLoadMoreListener(() -> getUserPage(true), rv);
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            ArticleBean item = mAdapter.getItem(position);
+            if (item != null) {
+                UrlOpenUtils.Companion.with(item).open(getContext());
             }
         });
-        mAdapter.setOnItemChildViewClickListener(new ArticleAdapter.OnItemChildViewClickListener() {
-            @Override
-            public void onCollectClick(BaseViewHolder helper, CollectView v, int position) {
-                ArticleBean item = mAdapter.getItem(position);
-                if (item != null) {
-                    if (v.isChecked()) {
-                        presenter.collect(item, v);
-                    } else {
-                        presenter.uncollect(item, v);
-                    }
+        mAdapter.setOnItemChildViewClickListener((helper, v, position) -> {
+            ArticleBean item = mAdapter.getItem(position);
+            if (item != null) {
+                if (v.isChecked()) {
+                    presenter.collect(item, v);
+                } else {
+                    presenter.uncollect(item, v);
                 }
             }
         });
         rv.setAdapter(mAdapter);
-        MultiStateUtils.setEmptyAndErrorClick(msv, new SimpleListener() {
-            @Override
-            public void onResult() {
-                MultiStateUtils.toLoading(msv);
-                currPage = PAGE_START;
-                getUserPage(true);
-            }
+        MultiStateUtils.setEmptyAndErrorClick(msv, () -> {
+            MultiStateUtils.toLoading(msv);
+            currPage = PAGE_START;
+            getUserPage(true);
         });
         srl.setOnMultiListener(new OnMultiListener() {
             @Override
@@ -295,20 +260,17 @@ public class UserPageActivity extends BaseActivity<UserPagePresenter> implements
             public void onStateChanged(@NonNull RefreshLayout refreshLayout, @NonNull RefreshState oldState, @NonNull RefreshState newState) {
             }
         });
-        abl.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            @Override
-            public void onOffsetChanged(AppBarLayout abl, int offset) {
-                if (Math.abs(offset) == abl.getTotalScrollRange()) {
-                    abc.getTitleTextView().setAlpha(1F);
-                    int color = ResUtils.getThemeColor(abc, R.attr.colorMainOrSurface);
-                    abc.setBackgroundColor(color);
-                    rl_user_info.setAlpha(1f);
-                } else {
-                    abc.getTitleTextView().setAlpha(0F);
-                    int color = ResUtils.getThemeColor(abc, R.attr.colorTransparent);
-                    abc.setBackgroundColor(color);
-                    rl_user_info.setAlpha(1f - ((float) Math.abs(offset) / (float) abl.getTotalScrollRange()));
-                }
+        abl.addOnOffsetChangedListener((abl, offset) -> {
+            if (Math.abs(offset) == abl.getTotalScrollRange()) {
+                abc.getTitleTextView().setAlpha(1F);
+                int color = ResUtils.getThemeColor(abc, R.attr.colorMainOrSurface);
+                abc.setBackgroundColor(color);
+                rl_user_info.setAlpha(1f);
+            } else {
+                abc.getTitleTextView().setAlpha(0F);
+                int color = ResUtils.getThemeColor(abc, R.attr.colorTransparent);
+                abc.setBackgroundColor(color);
+                rl_user_info.setAlpha(1f - ((float) Math.abs(offset) / (float) abl.getTotalScrollRange()));
             }
         });
         ctbl.post(new Runnable() {

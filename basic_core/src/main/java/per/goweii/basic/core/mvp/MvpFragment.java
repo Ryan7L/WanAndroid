@@ -19,7 +19,7 @@ import per.goweii.lazyfragment.LazyFragment;
  * @version v1.0.0
  * @date 2018/3/10-下午12:38
  */
-public abstract class MvpFragment<T extends IPresenter> extends LazyFragment implements IView, View.OnClickListener {
+public abstract class MvpFragment<T extends IPresenter<V>,V extends IView> extends LazyFragment implements IView, View.OnClickListener {
     protected T presenter;
 
     /**
@@ -91,7 +91,7 @@ public abstract class MvpFragment<T extends IPresenter> extends LazyFragment imp
             presenter = initPresenter();
         }
         if (presenter != null) {
-            presenter.attach(this);
+            presenter.attach((V)this);
         }
     }
 
@@ -128,12 +128,7 @@ public abstract class MvpFragment<T extends IPresenter> extends LazyFragment imp
     @Override
     public void onClick(final View v) {
         if (!onClick1(v)) {
-            ClickHelper.onlyFirstSameView(v, new ClickHelper.Callback() {
-                @Override
-                public void onClick(View view) {
-                    onClick2(view);
-                }
-            });
+            ClickHelper.onlyFirstSameView(v, this::onClick2);
         }
     }
 }

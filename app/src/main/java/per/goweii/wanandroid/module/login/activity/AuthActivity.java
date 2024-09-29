@@ -34,22 +34,16 @@ import per.goweii.wanandroid.widget.ParallaxStackLayout;
  * @date 2019/5/15
  * GitHub: https://github.com/goweii
  */
-public class AuthActivity extends BaseActivity<AuthPresenter> implements AuthView, SwipeBackAbility.Direction {
+public class AuthActivity extends BaseActivity<AuthPresenter,AuthView> implements AuthView, SwipeBackAbility.Direction {
 
     private static final int REQ_CODE_OPEN_QUICK_LOGIN = 1;
     private static final int REQ_CODE_USE_QUICK_LOGIN = 2;
 
-    //@BindView(R.id.abc)
     ActionBarCommon abc;
-    //@BindView(R.id.rl_input)
     ParallaxStackLayout rl_input;
-    //@BindView(R.id.iv_circle_1)
     ImageView iv_circle_1;
-    //@BindView(R.id.iv_circle_2)
     ImageView iv_circle_2;
-    //@BindView(R.id.vp)
     ViewPager vp;
-    //@BindView(R.id.lav)
     LogoAnimView lav;
     private SoftInputHelper mSoftInputHelper;
     private LoginFragment loginFragment = null;
@@ -198,14 +192,11 @@ public class AuthActivity extends BaseActivity<AuthPresenter> implements AuthVie
         if (close) {
             lav.close(null);
         } else {
-            lav.open(new Function0<Unit>() {
-                @Override
-                public Unit invoke() {
-                    if (lav != null) {
-                        lav.randomBlink();
-                    }
-                    return null;
+            lav.open(() -> {
+                if (lav != null) {
+                    lav.randomBlink();
                 }
+                return null;
             });
         }
     }

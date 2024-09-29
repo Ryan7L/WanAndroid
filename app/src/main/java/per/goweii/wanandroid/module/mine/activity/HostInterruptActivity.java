@@ -29,9 +29,7 @@ import per.goweii.wanandroid.utils.RvScrollTopUtils;
  */
 public class HostInterruptActivity extends BaseActivity {
 
-    //@BindView(R.id.ab)
     ActionBarEx ab;
-    //@BindView(R.id.vp)
     ViewPager vp;
     private FixedFragmentPagerAdapter mAdapter;
     private long lastClickTime = 0L;
@@ -65,12 +63,7 @@ public class HostInterruptActivity extends BaseActivity {
     protected void initViews() {
         ImageView ivBack = ab.getView(R.id.action_bar_fixed_magic_indicator_iv_back);
         ivBack.setVisibility(View.VISIBLE);
-        ivBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        ivBack.setOnClickListener(v -> finish());
         mAdapter = new FixedFragmentPagerAdapter(getSupportFragmentManager());
         mAdapter.setTitles("白名单", "黑名单");
         mAdapter.setFragmentList(
@@ -78,12 +71,7 @@ public class HostInterruptActivity extends BaseActivity {
                 HostBlackFragment.create()
         );
         vp.setAdapter(mAdapter);
-        MagicIndicatorUtils.commonNavigator(ab.getView(R.id.mi), vp, mAdapter, new SimpleCallback<Integer>() {
-            @Override
-            public void onResult(Integer data) {
-                notifyScrollTop(data);
-            }
-        });
+        MagicIndicatorUtils.commonNavigator(ab.getView(R.id.mi), vp, mAdapter, this::notifyScrollTop);
     }
 
     @Override

@@ -34,19 +34,14 @@ import per.goweii.wanandroid.utils.web.view.WebContainer;
  * @date 2019/5/17
  * GitHub: https://github.com/goweii
  */
-public class ShareArticleActivity extends BaseActivity<ShareArticlePresenter> implements ShareArticleView {
+public class ShareArticleActivity extends BaseActivity<ShareArticlePresenter,ShareArticleView> implements ShareArticleView {
 
     private static final String TAG = ShareArticleActivity.class.getSimpleName();
 
-    //    @BindView(R.id.abc)
     ActionBarCommon abc;
-    //    @BindView(R.id.wc)
     WebContainer wc;
-    //    @BindView(R.id.et_title)
     EditText et_title;
-    //    @BindView(R.id.et_link)
     EditText et_link;
-    //    @BindView(R.id.tv_share)
     TextView tv_share;
 
     private WebHolder mWebHolder;
@@ -179,12 +174,7 @@ public class ShareArticleActivity extends BaseActivity<ShareArticlePresenter> im
         }
         if (mWebHolder == null) {
             mWebHolder = WebHolder.with(this, wc)
-                    .setOnPageTitleCallback(new WebHolder.OnPageTitleCallback() {
-                        @Override
-                        public void onReceivedTitle(@NonNull String title) {
-                            resetTitle(title);
-                        }
-                    })
+                    .setOnPageTitleCallback(title -> resetTitle(title))
                     .loadUrl(url);
         } else {
             mWebHolder.loadUrl(url);
@@ -202,7 +192,6 @@ public class ShareArticleActivity extends BaseActivity<ShareArticlePresenter> im
         et_title.setSelection(title.length());
     }
 
-    //    @OnClick({R.id.tv_open, R.id.tv_refresh})
     @Override
     public void onClick(View v) {
         super.onClick(v);

@@ -43,7 +43,7 @@ import per.goweii.wanandroid.widget.CollectView;
  * @date 2019/5/12
  * GitHub: https://github.com/goweii
  */
-public class KnowledgeArticleFragment extends BaseFragment<KnowledgeArticlePresenter> implements KnowledgeArticleView {
+public class KnowledgeArticleFragment extends BaseFragment<KnowledgeArticlePresenter,KnowledgeArticleView> implements KnowledgeArticleView {
 
     private static final int PAGE_START = 0;
 

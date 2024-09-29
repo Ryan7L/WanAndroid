@@ -21,10 +21,9 @@ import per.goweii.basic.ui.dialog.LoadingDialog;
  * @version v1.0.0
  * @date 2018/3/10-下午12:38
  */
-public abstract class BaseFragment<P extends BasePresenter> extends MvpFragment<P> {
+public abstract class BaseFragment<P extends BasePresenter<V>,V extends BaseView> extends MvpFragment<P,V> {
     private LoadingDialog mLoadingDialog = null;
     private LoadingBarManager mLoadingBarManager = null;
-//    private Unbinder mUnbinder = null;
 
     /**
      * 是否注册事件分发，默认不绑定
@@ -56,9 +55,6 @@ public abstract class BaseFragment<P extends BasePresenter> extends MvpFragment<
 
     @Override
     protected void initialize() {
-//        if (getRootView() != null) {
-//            mUnbinder = ButterKnife.bind(this, getRootView());
-//        }
         if (isRegisterEventBus()) {
             EventBus.getDefault().register(this);
         }
@@ -72,9 +68,6 @@ public abstract class BaseFragment<P extends BasePresenter> extends MvpFragment<
         if (isRegisterEventBus()) {
             EventBus.getDefault().unregister(this);
         }
-//        if (mUnbinder != null) {
-//            mUnbinder.unbind();
-//        }
     }
 
     @Override

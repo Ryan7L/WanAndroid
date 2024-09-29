@@ -33,11 +33,9 @@ import per.goweii.wanandroid.utils.UrlOpenUtils;
  * @date 2019/5/12
  * GitHub: https://github.com/goweii
  */
-public class NaviFragment extends BaseFragment<NaviPresenter> implements RvScrollTopUtils.ScrollTop, NaviView {
+public class NaviFragment extends BaseFragment<NaviPresenter,NaviView> implements RvScrollTopUtils.ScrollTop, NaviView {
 
-    //@BindView(R.id.msv)
     MultiStateView msv;
-    //@BindView(R.id.rv)
     RecyclerView rv;
 
     private NaviAdapter mAdapter;
@@ -73,19 +71,11 @@ public class NaviFragment extends BaseFragment<NaviPresenter> implements RvScrol
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new NaviAdapter();
         mAdapter.setEnableLoadMore(false);
-        mAdapter.setOnItemClickListener(new NaviAdapter.OnItemClickListener() {
-            @Override
-            public void onClick(ArticleBean bean, int pos) {
-                UrlOpenUtils.Companion.with(bean).open(getContext());
-            }
-        });
+        mAdapter.setOnItemClickListener((bean, pos) -> UrlOpenUtils.Companion.with(bean).open(getContext()));
         rv.setAdapter(mAdapter);
-        MultiStateUtils.setEmptyAndErrorClick(msv, new SimpleListener() {
-            @Override
-            public void onResult() {
-                MultiStateUtils.toLoading(msv);
-                presenter.getKnowledgeList();
-            }
+        MultiStateUtils.setEmptyAndErrorClick(msv, () -> {
+            MultiStateUtils.toLoading(msv);
+            presenter.getKnowledgeList();
         });
     }
 

@@ -38,6 +38,7 @@ import per.goweii.wanandroid.module.main.dialog.WebMenuDialog;
 import per.goweii.wanandroid.module.main.dialog.WebQuickDialog;
 import per.goweii.wanandroid.module.main.model.CollectArticleEntity;
 import per.goweii.wanandroid.module.main.presenter.WebPresenter;
+import per.goweii.wanandroid.module.main.view.WebView;
 import per.goweii.wanandroid.utils.GuideSPUtils;
 import per.goweii.wanandroid.utils.router.Router;
 import per.goweii.wanandroid.utils.web.WebHolder;
@@ -49,7 +50,7 @@ import per.goweii.wanandroid.widget.CollectView;
  * @date 2019/5/15
  * GitHub: https://github.com/goweii
  */
-public class WebActivity extends BaseActivity<WebPresenter> implements per.goweii.wanandroid.module.main.view.WebView, SwipeBackAbility.OnlyEdge {
+public class WebActivity extends BaseActivity<WebPresenter, WebView> implements per.goweii.wanandroid.module.main.view.WebView, SwipeBackAbility.OnlyEdge {
 
     ActionBarEx ab;
     EditText et_title;
@@ -165,62 +166,40 @@ public class WebActivity extends BaseActivity<WebPresenter> implements per.gowei
                 }
             }
         });
-        wc.setOnTouchDownListener(new WebContainer.OnTouchDownListener() {
-            @Override
-            public void onTouchDown() {
-                et_title.clearFocus();
+        wc.setOnTouchDownListener(() -> et_title.clearFocus());
+        wc.setOnDoubleClickListener((x, y) -> collect());
+        iv_into.setOnClickListener(v -> {
+            String url = et_title.getText().toString();
+            if (!TextUtils.isEmpty(url)) {
+                Uri uri1 = Uri.parse(url);
+                if (TextUtils.equals(uri1.getScheme(), "http") || TextUtils.equals(uri1.getScheme(), "https")) {
+                    mWebHolder.loadUrl(url);
+                }
+            }
+            et_title.clearFocus();
+        });
+        et_title.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_GO) {
+                iv_into.performClick();
+                return true;
+            }
+            return false;
+        });
+        et_title.setOnFocusChangeListener((v, hasFocus) -> {
+            updateTitle();
+            if (hasFocus) {
+                InputMethodUtils.show(et_title);
+                showQuickDialog();
+            } else {
+                InputMethodUtils.hide(et_title);
+                dismissQuickDialog();
             }
         });
-        wc.setOnDoubleClickListener(new WebContainer.OnDoubleClickListener() {
-            @Override
-            public void onDoubleClick(float x, float y) {
+        cv_collect.setOnClickListener((CollectView.OnClickListener) v -> {
+            if (v.isChecked()) {
                 collect();
-            }
-        });
-        iv_into.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String url = et_title.getText().toString();
-                if (!TextUtils.isEmpty(url)) {
-                    Uri uri = Uri.parse(url);
-                    if (TextUtils.equals(uri.getScheme(), "http") || TextUtils.equals(uri.getScheme(), "https")) {
-                        mWebHolder.loadUrl(url);
-                    }
-                }
-                et_title.clearFocus();
-            }
-        });
-        et_title.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_GO) {
-                    iv_into.performClick();
-                    return true;
-                }
-                return false;
-            }
-        });
-        et_title.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                updateTitle();
-                if (hasFocus) {
-                    InputMethodUtils.show(et_title);
-                    showQuickDialog();
-                } else {
-                    InputMethodUtils.hide(et_title);
-                    dismissQuickDialog();
-                }
-            }
-        });
-        cv_collect.setOnClickListener(new CollectView.OnClickListener() {
-            @Override
-            public void onClick(CollectView v) {
-                if (v.isChecked()) {
-                    collect();
-                } else {
-                    uncollect();
-                }
+            } else {
+                uncollect();
             }
         });
     }
@@ -228,12 +207,9 @@ public class WebActivity extends BaseActivity<WebPresenter> implements per.gowei
     @Override
     protected void bindData() {
         mWebHolder = WebHolder.with(this, wc)
-                .setOnPageTitleCallback(new WebHolder.OnPageTitleCallback() {
-                    @Override
-                    public void onReceivedTitle(@NonNull String title) {
-                        updateTitle();
-                        presenter.addReadRecord(mWebHolder.getUrl(), mWebHolder.getTitle(), mWebHolder.getPercent());
-                    }
+                .setOnPageTitleCallback(title -> {
+                    updateTitle();
+                    presenter.addReadRecord(mWebHolder.getUrl(), mWebHolder.getTitle(), mWebHolder.getPercent());
                 })
                 .setOnPageLoadCallback(new WebHolder.OnPageLoadCallback() {
                     @Override
@@ -251,17 +227,14 @@ public class WebActivity extends BaseActivity<WebPresenter> implements per.gowei
                         }
                     }
                 })
-                .setOnHistoryUpdateCallback(new WebHolder.OnHistoryUpdateCallback() {
-                    @Override
-                    public void onHistoryUpdate(boolean isReload) {
-                        resetCollect();
-                        if (mWebHolder.canGoBack()) {
-                            iv_back.setImageResource(R.drawable.ic_back);
-                        } else {
-                            iv_back.setImageResource(R.drawable.ic_close);
-                        }
-                        switchIconEnable(iv_forward, mWebHolder.canGoForward());
+                .setOnHistoryUpdateCallback(isReload -> {
+                    resetCollect();
+                    if (mWebHolder.canGoBack()) {
+                        iv_back.setImageResource(R.drawable.ic_back);
+                    } else {
+                        iv_back.setImageResource(R.drawable.ic_close);
                     }
+                    switchIconEnable(iv_forward, mWebHolder.canGoForward());
                 })
                 .setOnPageProgressCallback(new WebHolder.OnPageProgressCallback() {
                     @Override
@@ -278,20 +251,12 @@ public class WebActivity extends BaseActivity<WebPresenter> implements per.gowei
                     }
                 });
         mWebHolder.loadUrl(mUrl);
-        mWebHolder.setOnPageScrollEndListener(new WebHolder.OnPageScrollEndListener() {
-            @Override
-            public void onPageScrollEnd() {
-                if (isReadLater()) {
-                    presenter.deleteReadLater(mWebHolder.getUrl());
-                }
+        mWebHolder.setOnPageScrollEndListener(() -> {
+            if (isReadLater()) {
+                presenter.deleteReadLater(mWebHolder.getUrl());
             }
         });
-        mWebHolder.setOnPageScrollChangeListener(new WebHolder.OnPageScrollChangeListener() {
-            @Override
-            public void onPageScrolled(float percent) {
-                presenter.updateReadRecordPercent(mWebHolder.getUrl(), percent);
-            }
-        });
+        mWebHolder.setOnPageScrollChangeListener(percent -> presenter.updateReadRecordPercent(mWebHolder.getUrl(), percent));
     }
 
     private void showWebGuideDialogIfNeeded() {
@@ -409,15 +374,7 @@ public class WebActivity extends BaseActivity<WebPresenter> implements per.gowei
 
                     @Override
                     public void onShare() {
-                        mWebHolder.getShareInfo(new WebHolder.OnShareInfoCallback() {
-                            @Override
-                            public void onShareInfo(@NonNull String url,
-                                                    @NonNull List<String> covers,
-                                                    @NonNull String title,
-                                                    @NonNull String desc) {
-                                new ArticleShareDialog(getContext(), covers, title, desc, url).show();
-                            }
-                        });
+                        mWebHolder.getShareInfo((url, covers, title, desc) -> new ArticleShareDialog(getContext(), covers, title, desc, url).show());
                     }
                 });
     }

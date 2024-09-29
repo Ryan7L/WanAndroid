@@ -29,7 +29,7 @@ import per.goweii.wanandroid.utils.RvScrollTopUtils.ScrollTop
  * @author CuiZhen
  * @date 2020/3/25
  */
-class QuestionFragment : BaseFragment<QuestionPresenter>(), QuestionView, ScrollTop {
+class QuestionFragment : BaseFragment<QuestionPresenter,QuestionView>(), QuestionView, ScrollTop {
 
     companion object {
         private const val PAGE_START = 1

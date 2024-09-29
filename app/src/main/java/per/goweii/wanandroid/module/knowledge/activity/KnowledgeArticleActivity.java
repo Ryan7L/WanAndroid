@@ -38,15 +38,11 @@ import per.goweii.wanandroid.utils.router.Router;
  * @date 2019/5/12
  * GitHub: https://github.com/goweii
  */
-public class KnowledgeArticleActivity extends BaseActivity<KnowledgePresenter> implements KnowledgeView {
+public class KnowledgeArticleActivity extends BaseActivity<KnowledgePresenter,KnowledgeView> implements KnowledgeView {
 
-    //@BindView(R.id.abc)
     ActionBarCommon abc;
-    //@BindView(R.id.msv)
     MultiStateView msv;
-    //@BindView(R.id.mi)
     MagicIndicator mi;
-    //@BindView(R.id.vp)
     ViewPager vp;
 
     private long lastClickTime = 0L;
@@ -123,15 +119,10 @@ public class KnowledgeArticleActivity extends BaseActivity<KnowledgePresenter> i
 
     @Override
     protected void initViews() {
-        abc.getTitleTextView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                notifyScrollTop(vp.getCurrentItem());
-            }
-        });
+        abc.getTitleTextView().setOnClickListener(v -> notifyScrollTop(vp.getCurrentItem()));
         mAdapter = new MultiFragmentPagerAdapter<>(
                 getSupportFragmentManager(),
-                new MultiFragmentPagerAdapter.FragmentCreator<ChapterBean, KnowledgeArticleFragment>() {
+                new MultiFragmentPagerAdapter.FragmentCreator<>() {
                     @Override
                     public KnowledgeArticleFragment create(ChapterBean data, int pos) {
                         return KnowledgeArticleFragment.create(data, pos);
@@ -143,12 +134,7 @@ public class KnowledgeArticleActivity extends BaseActivity<KnowledgePresenter> i
                     }
                 });
         vp.setAdapter(mAdapter);
-        mCommonNavigator = MagicIndicatorUtils.commonNavigator(mi, vp, mAdapter, new SimpleCallback<Integer>() {
-            @Override
-            public void onResult(Integer data) {
-                notifyScrollTop(data);
-            }
-        });
+        mCommonNavigator = MagicIndicatorUtils.commonNavigator(mi, vp, mAdapter, this::notifyScrollTop);
     }
 
     @Override

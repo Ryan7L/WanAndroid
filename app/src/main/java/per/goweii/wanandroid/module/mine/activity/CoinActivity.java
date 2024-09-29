@@ -33,17 +33,13 @@ import per.goweii.wanandroid.utils.RvConfigUtils;
  * @date 2019/8/31
  * GitHub: https://github.com/goweii
  */
-public class CoinActivity extends BaseActivity<CoinPresenter> implements CoinView {
+public class CoinActivity extends BaseActivity<CoinPresenter,CoinView> implements CoinView {
 
     private static final int PAGE_START = 1;
 
-    //@BindView(R.id.abc)
     ActionBarSuper abc;
-    //@BindView(R.id.tv_coin)
     TextView tv_coin;
-    //@BindView(R.id.msv)
     MultiStateView msv;
-    //@BindView(R.id.rv)
     RecyclerView rv;
     private int currPage = PAGE_START;
     private CoinRecordAdapter mCoinRecordAdapter = null;
@@ -93,20 +89,12 @@ public class CoinActivity extends BaseActivity<CoinPresenter> implements CoinVie
         mCoinRecordAdapter = new CoinRecordAdapter();
         RvConfigUtils.init(mCoinRecordAdapter);
         mCoinRecordAdapter.setEnableLoadMore(false);
-        mCoinRecordAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
-            @Override
-            public void onLoadMoreRequested() {
-                presenter.getCoinRecordList(currPage);
-            }
-        }, rv);
+        mCoinRecordAdapter.setOnLoadMoreListener(() -> presenter.getCoinRecordList(currPage), rv);
         rv.setAdapter(mCoinRecordAdapter);
-        MultiStateUtils.setEmptyAndErrorClick(msv, new SimpleListener() {
-            @Override
-            public void onResult() {
-                MultiStateUtils.toLoading(msv);
-                currPage = PAGE_START;
-                presenter.getCoinRecordList(currPage);
-            }
+        MultiStateUtils.setEmptyAndErrorClick(msv, () -> {
+            MultiStateUtils.toLoading(msv);
+            currPage = PAGE_START;
+            presenter.getCoinRecordList(currPage);
         });
     }
 

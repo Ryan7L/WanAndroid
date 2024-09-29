@@ -43,15 +43,12 @@ import per.goweii.wanandroid.widget.CollectView;
  * @date 2019/5/12
  * GitHub: https://github.com/goweii
  */
-public class ProjectArticleFragment extends BaseFragment<ProjectArticlePresenter> implements ProjectArticleView {
+public class ProjectArticleFragment extends BaseFragment<ProjectArticlePresenter,ProjectArticleView> implements ProjectArticleView {
 
     private static final int PAGE_START = 1;
 
-    //@BindView(R.id.msv)
     MultiStateView msv;
-    //@BindView(R.id.srl)
     SmartRefreshLayout srl;
-    //@BindView(R.id.rv)
     RecyclerView rv;
     private SmartRefreshUtils mSmartRefreshUtils;
     private ArticleAdapter mAdapter;

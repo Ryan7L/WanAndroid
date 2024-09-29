@@ -42,7 +42,7 @@ import per.goweii.wanandroid.widget.CollectView;
  * @date 2019/5/12
  * GitHub: https://github.com/goweii
  */
-public class WxArticleFragment extends BaseFragment<WxArticlePresenter> implements WxArticleView {
+public class WxArticleFragment extends BaseFragment<WxArticlePresenter,WxArticleView> implements WxArticleView {
 
     private static final int PAGE_START = 1;
 

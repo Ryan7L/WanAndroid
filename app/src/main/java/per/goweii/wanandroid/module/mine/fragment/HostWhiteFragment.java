@@ -35,7 +35,6 @@ import per.goweii.wanandroid.utils.SettingUtils;
  */
 public class HostWhiteFragment extends BaseFragment implements RvScrollTopUtils.ScrollTop {
 
-    //@BindView(R.id.rv)
     RecyclerView rv;
 
     private HostInterruptAdapter mAdapter = null;
@@ -70,35 +69,17 @@ public class HostWhiteFragment extends BaseFragment implements RvScrollTopUtils.
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new HostInterruptAdapter();
         RvConfigUtils.init(mAdapter);
-        mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                mAdapter.remove(position);
-            }
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> mAdapter.remove(position));
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            mAdapter.getData().get(position).setEnable(!mAdapter.getData().get(position).isEnable());
+            mAdapter.notifyItemChanged(position);
         });
-        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                mAdapter.getData().get(position).setEnable(!mAdapter.getData().get(position).isEnable());
-                mAdapter.notifyItemChanged(position);
-            }
-        });
-        mAdapter.setOnCheckedChangeListener(new HostInterruptAdapter.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(int position, boolean isChecked) {
-                mAdapter.getData().get(position).setEnable(isChecked);
-            }
-        });
+        mAdapter.setOnCheckedChangeListener((position, isChecked) -> mAdapter.getData().get(position).setEnable(isChecked));
         View footer = LayoutInflater.from(getContext()).inflate(R.layout.rv_item_host_interrupt_footer, null);
         footer.setOnClickListener(new OnClickListener2() {
             @Override
             public void onClick2(View v) {
-                AddHostDialog.show(getContext(), new SimpleCallback<String>() {
-                    @Override
-                    public void onResult(String data) {
-                        mAdapter.addData(new HostEntity(data, true));
-                    }
-                });
+                AddHostDialog.show(getContext(), data -> mAdapter.addData(new HostEntity(data, true)));
             }
         });
         mAdapter.addFooterView(footer);

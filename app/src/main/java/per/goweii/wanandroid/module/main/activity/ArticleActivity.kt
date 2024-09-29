@@ -46,7 +46,7 @@ import per.goweii.wanandroid.utils.web.interceptor.WebResUrlInterceptor
  * @author CuiZhen
  * @date 2020/2/20
  */
-class ArticleActivity : BaseActivity<ArticlePresenter>(), ArticleView, SwipeBackAbility.OnlyEdge {
+class ArticleActivity : BaseActivity<ArticlePresenter,ArticleView>(), ArticleView, SwipeBackAbility.OnlyEdge {
     private lateinit var binding: ActivityArticleBinding
     override fun initBinding() {
         binding = ActivityArticleBinding.inflate(layoutInflater)

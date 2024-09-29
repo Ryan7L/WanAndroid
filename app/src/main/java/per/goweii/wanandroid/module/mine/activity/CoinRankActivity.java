@@ -31,15 +31,12 @@ import per.goweii.wanandroid.utils.RvConfigUtils;
  * @date 2019/8/31
  * GitHub: https://github.com/goweii
  */
-public class CoinRankActivity extends BaseActivity<CoinRankPresenter> implements CoinRankView {
+public class CoinRankActivity extends BaseActivity<CoinRankPresenter,CoinRankView> implements CoinRankView {
 
     private static final int PAGE_START = 1;
 
-    //@BindView(R.id.abc)
     ActionBarCommon abc;
-    //@BindView(R.id.msv)
     MultiStateView msv;
-    //@BindView(R.id.rv)
     RecyclerView rv;
     private int currPage = PAGE_START;
     private CoinRankAdapter mAdapter = null;
@@ -71,39 +68,25 @@ public class CoinRankActivity extends BaseActivity<CoinRankPresenter> implements
 
     @Override
     protected void initViews() {
-        abc.setOnRightIconClickListener(new OnActionBarChildClickListener() {
-            @Override
-            public void onClick(View v) {
+        abc.setOnRightIconClickListener(v -> {
 
-            }
         });
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new CoinRankAdapter();
         RvConfigUtils.init(mAdapter);
         mAdapter.setEnableLoadMore(false);
-        mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
-            @Override
-            public void onLoadMoreRequested() {
-                presenter.getCoinRankList(currPage);
-            }
-        }, rv);
-        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                CoinInfoBean item = mAdapter.getItem(position);
-                if (item != null) {
-                    UserPageActivity.start(getContext(), item.getUserId());
-                }
+        mAdapter.setOnLoadMoreListener(() -> presenter.getCoinRankList(currPage), rv);
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            CoinInfoBean item = mAdapter.getItem(position);
+            if (item != null) {
+                UserPageActivity.start(getContext(), item.getUserId());
             }
         });
         rv.setAdapter(mAdapter);
-        MultiStateUtils.setEmptyAndErrorClick(msv, new SimpleListener() {
-            @Override
-            public void onResult() {
-                MultiStateUtils.toLoading(msv);
-                currPage = PAGE_START;
-                presenter.getCoinRankList(currPage);
-            }
+        MultiStateUtils.setEmptyAndErrorClick(msv, () -> {
+            MultiStateUtils.toLoading(msv);
+            currPage = PAGE_START;
+            presenter.getCoinRankList(currPage);
         });
     }
 

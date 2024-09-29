@@ -21,7 +21,7 @@ import per.goweii.wanandroid.utils.MultiStateUtils
 import per.goweii.wanandroid.utils.RvConfigUtils
 import per.goweii.wanandroid.widget.refresh.SimpleOnMultiListener
 
-class BookFragment : BaseFragment<BookPresenter>(), BookView {
+class BookFragment : BaseFragment<BookPresenter, BookView>(), BookView {
     private lateinit var mAdapter: BookAdapter
 
     override fun getLayoutRes(): Int = R.layout.fragment_book

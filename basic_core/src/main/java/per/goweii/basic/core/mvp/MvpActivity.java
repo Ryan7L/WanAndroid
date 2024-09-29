@@ -15,7 +15,7 @@ import per.goweii.basic.utils.ClickHelper;
  * @version v1.0.0
  * @date 2018/4/4-下午1:23
  */
-public abstract class MvpActivity<P extends IPresenter> extends CacheActivity implements IView, View.OnClickListener {
+public abstract class MvpActivity<P extends IPresenter<V>,V extends IView> extends CacheActivity implements IView, View.OnClickListener {
 
     public P presenter;
 
@@ -68,7 +68,7 @@ public abstract class MvpActivity<P extends IPresenter> extends CacheActivity im
 //        initContentView();
         presenter = initPresenter();
         if (presenter != null) {
-            presenter.attach(this);
+            presenter.attach((V) this);
         }
         initialize();
     }

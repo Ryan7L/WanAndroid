@@ -16,7 +16,7 @@ import per.goweii.wanandroid.utils.ImageLoader
  * @author CuiZhen
  * @date 2020/5/27
  */
-class UserInfoActivity : BaseActivity<UserInfoPresenter>(), UserInfoView {
+class UserInfoActivity : BaseActivity<UserInfoPresenter,UserInfoView>(), UserInfoView {
 
     companion object {
         @JvmStatic

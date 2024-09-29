@@ -52,45 +52,27 @@ import per.goweii.wanandroid.utils.router.Router;
  * @date 2019/5/17
  * GitHub: https://github.com/goweii
  */
-public class AboutMeActivity extends BaseActivity<AboutMePresenter> implements AboutMeView {
+public class AboutMeActivity extends BaseActivity<AboutMePresenter,AboutMeView> implements AboutMeView {
 
     private static final int REQUEST_CODE_PERMISSION = 1;
 
-    //@BindView(R.id.abc)
     ActionBarCommon abc;
-    //@BindView(R.id.sl)
     SwipeLayout sl;
-    //@BindView(R.id.iv_blur)
     ImageView iv_blur;
-    //@BindView(R.id.civ_icon)
     ImageView civ_icon;
-    //@BindView(R.id.tv_name)
     TextView tv_name;
-    //@BindView(R.id.tv_sign)
     TextView tv_sign;
-    //@BindView(R.id.ll_github)
     LinearLayout ll_github;
-    //@BindView(R.id.ll_jianshu)
     LinearLayout ll_jianshu;
-    //@BindView(R.id.ll_qq)
     LinearLayout ll_qq;
-    //@BindView(R.id.ll_qq_group)
     LinearLayout ll_qq_group;
-    //@BindView(R.id.tv_github)
     TextView tv_github;
-    //@BindView(R.id.tv_jianshu)
     TextView tv_jianshu;
-    //@BindView(R.id.tv_qq)
     TextView tv_qq;
-    //@BindView(R.id.tv_qq_group)
     TextView tv_qq_group;
-    //@BindView(R.id.rl_info)
     RelativeLayout rl_info;
-    //@BindView(R.id.rl_reward)
     RelativeLayout rl_reward;
-    //@BindView(R.id.piv_zfb_qrcode)
     PercentImageView piv_zfb_qrcode;
-    //@BindView(R.id.piv_wx_qrcode)
     PercentImageView piv_wx_qrcode;
     private RuntimeRequester mRuntimeRequester;
 
@@ -144,17 +126,14 @@ public class AboutMeActivity extends BaseActivity<AboutMePresenter> implements A
 
     @Override
     protected void initViews() {
-        abc.setOnRightTextClickListener(new OnActionBarChildClickListener() {
-            @Override
-            public void onClick(View v) {
-                StringBuilder s = new StringBuilder();
-                s.append("【玩口令】你的好友给你订了一份双人咖啡，户制泽条消息");
-                s.append(String.format(BuildConfig.WANPWD_FORMAT, BuildConfig.WANPWD_TYPE_ABOUTME, RandomUtils.randomLetter(10)));
-                s.append("打開最美玩安卓客户端即可领取品尝");
-                LogUtils.d("UserPageActivity", s);
-                CopyUtils.copyText(s.toString());
-                ToastMaker.showShort("口令已复制");
-            }
+        abc.setOnRightTextClickListener(v -> {
+            StringBuilder s = new StringBuilder();
+            s.append("【玩口令】你的好友给你订了一份双人咖啡，户制泽条消息");
+            s.append(String.format(BuildConfig.WANPWD_FORMAT, BuildConfig.WANPWD_TYPE_ABOUTME, RandomUtils.randomLetter(10)));
+            s.append("打開最美玩安卓客户端即可领取品尝");
+            LogUtils.d("UserPageActivity", s);
+            CopyUtils.copyText(s.toString());
+            ToastMaker.showShort("口令已复制");
         });
         changeVisible(View.INVISIBLE, civ_icon, tv_name, tv_sign);
         changeVisible(View.GONE, ll_github, ll_jianshu, ll_qq, ll_qq_group);
@@ -252,17 +231,14 @@ public class AboutMeActivity extends BaseActivity<AboutMePresenter> implements A
         final ValueAnimator animator = ValueAnimator.ofFloat(from, to);
         animator.setDuration(dur);
         animator.setInterpolator(new DecelerateInterpolator());
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animator) {
-                if (target == null) {
-                    animator.cancel();
-                    return;
-                }
-                float f = (float) animator.getAnimatedValue();
-                target.setScaleX(f);
-                target.setScaleY(f);
+        animator.addUpdateListener(animator1 -> {
+            if (target == null) {
+                animator1.cancel();
+                return;
             }
+            float f = (float) animator1.getAnimatedValue();
+            target.setScaleX(f);
+            target.setScaleY(f);
         });
         animator.start();
     }
@@ -315,20 +291,17 @@ public class AboutMeActivity extends BaseActivity<AboutMePresenter> implements A
         GlideHelper.with(getContext())
                 .asBitmap()
                 .load(data.getIcon())
-                .getBitmap(new SimpleCallback<Bitmap>() {
-                    @Override
-                    public void onResult(Bitmap bitmap) {
-                        ImageLoader.userIcon(civ_icon, data.getIcon());
-                        ImageLoader.userBlur(iv_blur, data.getIcon());
-                        iv_blur.setAlpha(0F);
-                        iv_blur.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                changeViewAlpha(iv_blur, 0, 1, 600);
-                                changeViewSize(iv_blur, 2, 1, 1000);
-                            }
-                        });
-                    }
+                .getBitmap(bitmap -> {
+                    ImageLoader.userIcon(civ_icon, data.getIcon());
+                    ImageLoader.userBlur(iv_blur, data.getIcon());
+                    iv_blur.setAlpha(0F);
+                    iv_blur.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            changeViewAlpha(iv_blur, 0, 1, 600);
+                            changeViewSize(iv_blur, 2, 1, 1000);
+                        }
+                    });
                 });
 
         List<View> targets = new ArrayList<>();
@@ -357,12 +330,9 @@ public class AboutMeActivity extends BaseActivity<AboutMePresenter> implements A
             tv_qq_group.setText(data.getQq_group());
             targets.add(ll_qq_group);
         }
-        civ_icon.post(new Runnable() {
-            @Override
-            public void run() {
-                changeViewSize(civ_icon, 0, 1, 300);
-                doDelayShowAnim(800, 60, targets.toArray(new View[0]));
-            }
+        civ_icon.post(() -> {
+            changeViewSize(civ_icon, 0, 1, 300);
+            doDelayShowAnim(800, 60, targets.toArray(new View[0]));
         });
     }
 

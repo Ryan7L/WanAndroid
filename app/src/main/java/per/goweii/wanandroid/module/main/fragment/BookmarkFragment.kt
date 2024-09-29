@@ -28,7 +28,7 @@ import per.goweii.wanandroid.utils.RvConfigUtils
 import per.goweii.wanandroid.utils.UrlOpenUtils
 import per.goweii.wanandroid.widget.refresh.SimpleOnMultiListener
 
-class BookmarkFragment : BaseFragment<BookmarkPresenter>(), BookmarkView {
+class BookmarkFragment : BaseFragment<BookmarkPresenter,BookmarkView>(), BookmarkView {
 
     private lateinit var mAdapter: BookmarkAdapter
     private lateinit var binding: FragmentBookmarkBinding

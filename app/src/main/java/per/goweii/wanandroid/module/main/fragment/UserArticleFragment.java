@@ -46,7 +46,7 @@ import per.goweii.wanandroid.widget.CollectView;
  * @date 2019/5/18
  * GitHub: https://github.com/goweii
  */
-public class UserArticleFragment extends BaseFragment<UserArticlePresenter> implements UserArticleView {
+public class UserArticleFragment extends BaseFragment<UserArticlePresenter,UserArticleView> implements UserArticleView {
 
     private static final int PAGE_START = 0;
 

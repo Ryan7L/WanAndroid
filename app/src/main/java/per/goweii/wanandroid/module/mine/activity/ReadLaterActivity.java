@@ -44,15 +44,11 @@ import per.goweii.wanandroid.utils.UrlOpenUtils;
  * @date 2019/5/17
  * GitHub: https://github.com/goweii
  */
-public class ReadLaterActivity extends BaseActivity<ReadLaterPresenter> implements ReadLaterView {
+public class ReadLaterActivity extends BaseActivity<ReadLaterPresenter,ReadLaterView> implements ReadLaterView {
 
-    //@BindView(R.id.abc)
     ActionBarCommon abc;
-    //@BindView(R.id.msv)
     MultiStateView msv;
-    //@BindView(R.id.srl)
     SmartRefreshLayout srl;
-    //@BindView(R.id.rv)
     RecyclerView rv;
 
     private SmartRefreshUtils mSmartRefreshUtils;
@@ -103,86 +99,67 @@ public class ReadLaterActivity extends BaseActivity<ReadLaterPresenter> implemen
 
     @Override
     protected void initViews() {
-        abc.setOnRightTextClickListener(new OnActionBarChildClickListener() {
-            @Override
-            public void onClick(View v) {
-                TipDialog.with(getContext())
-                        .message("确定要全部删除吗？")
-                        .onYes(new SimpleCallback<Void>() {
-                            @Override
-                            public void onResult(Void data) {
-                                presenter.removeAll();
-                            }
-                        })
-                        .show();
-            }
-        });
+        abc.setOnRightTextClickListener(v -> TipDialog.with(getContext())
+                .message("确定要全部删除吗？")
+                .onYes(new SimpleCallback<Void>() {
+                    @Override
+                    public void onResult(Void data) {
+                        presenter.removeAll();
+                    }
+                })
+                .show());
         mSmartRefreshUtils = SmartRefreshUtils.with(srl);
         mSmartRefreshUtils.pureScrollMode();
-        mSmartRefreshUtils.setRefreshListener(new SmartRefreshUtils.RefreshListener() {
-            @Override
-            public void onRefresh() {
-                offset = 0;
-                getPageList();
-            }
+        mSmartRefreshUtils.setRefreshListener(() -> {
+            offset = 0;
+            getPageList();
         });
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new ReadLaterAdapter();
         RvConfigUtils.init(mAdapter);
         mAdapter.setEnableLoadMore(false);
-        mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
-            @Override
-            public void onLoadMoreRequested() {
-                getPageList();
+        mAdapter.setOnLoadMoreListener(() -> getPageList(), rv);
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            mAdapter.closeAll(null);
+            ReadLaterModel item = mAdapter.getItem(position);
+            if (item == null) {
+                return;
             }
-        }, rv);
-        mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                mAdapter.closeAll(null);
-                ReadLaterModel item = mAdapter.getItem(position);
-                if (item == null) {
-                    return;
-                }
-                switch (view.getId()) {
-                    default:
+            switch (view.getId()) {
+                default:
+                    break;
+                case R.id.rl_top:
+                    UrlOpenUtils.Companion
+                            .with(item.getLink())
+                            .title(item.getTitle())
+                            .open(getContext());
+                    break;
+                case R.id.tv_copy:
+                    CopyUtils.copyText(item.getLink());
+                    ToastMaker.showShort("复制成功");
+                    break;
+                case R.id.tv_open:
+                    if (TextUtils.isEmpty(item.getLink())) {
+                        ToastMaker.showShort("链接为空");
                         break;
-                    case R.id.rl_top:
-                        UrlOpenUtils.Companion
-                                .with(item.getLink())
-                                .title(item.getTitle())
-                                .open(getContext());
-                        break;
-                    case R.id.tv_copy:
-                        CopyUtils.copyText(item.getLink());
-                        ToastMaker.showShort("复制成功");
-                        break;
-                    case R.id.tv_open:
-                        if (TextUtils.isEmpty(item.getLink())) {
-                            ToastMaker.showShort("链接为空");
-                            break;
-                        }
-                        if (getContext() != null) {
-                            IntentUtils.openBrowser(getContext(), item.getLink());
-                        }
-                        break;
-                    case R.id.tv_delete:
-                        ReadLaterModel model = mAdapter.getItem(position);
-                        if (model != null) {
-                            presenter.remove(model.getLink());
-                        }
-                        break;
-                }
+                    }
+                    if (getContext() != null) {
+                        IntentUtils.openBrowser(getContext(), item.getLink());
+                    }
+                    break;
+                case R.id.tv_delete:
+                    ReadLaterModel model = mAdapter.getItem(position);
+                    if (model != null) {
+                        presenter.remove(model.getLink());
+                    }
+                    break;
             }
         });
         rv.setAdapter(mAdapter);
-        MultiStateUtils.setEmptyAndErrorClick(msv, new SimpleListener() {
-            @Override
-            public void onResult() {
-                MultiStateUtils.toLoading(msv);
-                offset = 0;
-                getPageList();
-            }
+        MultiStateUtils.setEmptyAndErrorClick(msv, () -> {
+            MultiStateUtils.toLoading(msv);
+            offset = 0;
+            getPageList();
         });
     }
 

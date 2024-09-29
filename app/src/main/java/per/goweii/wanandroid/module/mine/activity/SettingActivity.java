@@ -45,35 +45,22 @@ import per.goweii.wanandroid.utils.web.HostInterceptUtils;
  * @date 2019/5/17
  * GitHub: https://github.com/goweii
  */
-public class SettingActivity extends BaseActivity<SettingPresenter> implements SettingView {
+public class SettingActivity extends BaseActivity<SettingPresenter,SettingView> implements SettingView {
 
     private static final int REQ_CODE_PERMISSION = 1;
 
-    //@BindView(R.id.sc_system_theme)
     SwitchCompat sc_system_theme;
-    //@BindView(R.id.tv_dark_theme_title)
     TextView tv_dark_theme_title;
-    //@BindView(R.id.tv_show_read_later_notification_title)
     TextView tv_show_read_later_notification_title;
-    //@BindView(R.id.tv_show_read_later_notification_desc)
     TextView tv_show_read_later_notification_desc;
-    //@BindView(R.id.sc_dark_theme)
     SwitchCompat sc_dark_theme;
-    //@BindView(R.id.sc_show_read_later_notification)
     SwitchCompat sc_show_read_later_notification;
-    //@BindView(R.id.sc_show_top)
     SwitchCompat sc_show_top;
-    //@BindView(R.id.sc_show_banner)
     SwitchCompat sc_show_banner;
-    //@BindView(R.id.tv_intercept_host)
     TextView tv_intercept_host;
-    //@BindView(R.id.tv_cache)
     TextView tv_cache;
-    //@BindView(R.id.tv_has_update)
     TextView tv_has_update;
-    //@BindView(R.id.tv_curr_version)
     TextView tv_curr_version;
-    //@BindView(R.id.ll_logout)
     LinearLayout ll_logout;
     private RuntimeRequester mRuntimeRequester;
     private UpdateUtils mUpdateUtils;

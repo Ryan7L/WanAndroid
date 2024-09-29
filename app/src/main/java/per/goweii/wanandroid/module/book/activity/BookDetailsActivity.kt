@@ -27,7 +27,7 @@ import per.goweii.wanandroid.utils.MultiStateUtils.Companion.toError
 import per.goweii.wanandroid.utils.UrlOpenUtils
 import kotlin.math.abs
 
-class BookDetailsActivity : BaseActivity<BookDetailsPresenter>(), BookDetailsView {
+class BookDetailsActivity : BaseActivity<BookDetailsPresenter,BookDetailsView>(), BookDetailsView {
     companion object {
         private const val PAGE_START = 0
         private const val PARAM_BOOK = "book"

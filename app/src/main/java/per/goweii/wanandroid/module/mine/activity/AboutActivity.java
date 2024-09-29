@@ -33,19 +33,13 @@ import per.goweii.wanandroid.widget.LogoAnimView;
  * @date 2019/5/17
  * GitHub: https://github.com/goweii
  */
-public class AboutActivity extends BaseActivity<AboutPresenter> implements AboutView {
+public class AboutActivity extends BaseActivity<AboutPresenter,AboutView> implements AboutView {
 
-    //@BindView(R.id.abc)
     ActionBarCommon abc;
-    //@BindView(R.id.tv_version_name)
     TextView tv_version_name;
-    //@BindView(R.id.tv_web)
     TextView tv_web;
-    //@BindView(R.id.tv_about)
     TextView tv_about;
-    //@BindView(R.id.tv_github)
     TextView tv_github;
-    //@BindView(R.id.lav)
     LogoAnimView lav;
 
     public static void start(Context context) {
@@ -82,12 +76,7 @@ public class AboutActivity extends BaseActivity<AboutPresenter> implements About
 
     @Override
     protected void initViews() {
-        abc.setOnRightIconClickListener(new OnActionBarChildClickListener() {
-            @Override
-            public void onClick(View v) {
-                presenter.getAppDownloadUrl();
-            }
-        });
+        abc.setOnRightIconClickListener(v -> presenter.getAppDownloadUrl());
     }
 
     @Override
@@ -161,18 +150,10 @@ public class AboutActivity extends BaseActivity<AboutPresenter> implements About
                 tv_name.setText(AppInfoUtils.getAppName());
                 tv_version.setText(String.format("%s(%d)", data.getVersion_name(), data.getVersion_code()));
                 new CodeEncoder(new ZXingEncodeQRCodeProcessor())
-                        .encode(data.getUrl(), new Function1<Bitmap, Unit>() {
-                            @Override
-                            public Unit invoke(Bitmap bitmap) {
-                                iv_qrcode.setImageBitmap(bitmap);
-                                return null;
-                            }
-                        }, new Function1<Exception, Unit>() {
-                            @Override
-                            public Unit invoke(Exception e) {
-                                return null;
-                            }
-                        });
+                        .encode(data.getUrl(), bitmap -> {
+                            iv_qrcode.setImageBitmap(bitmap);
+                            return null;
+                        }, e -> null);
                 return null;
             }
         }).show();

@@ -24,6 +24,7 @@ import per.goweii.wanandroid.databinding.FragmentWxBinding;
 import per.goweii.wanandroid.event.ScrollTopEvent;
 import per.goweii.wanandroid.module.main.model.ChapterBean;
 import per.goweii.wanandroid.module.wxarticle.presenter.WxPresenter;
+import per.goweii.wanandroid.module.wxarticle.view.WxArticleView;
 import per.goweii.wanandroid.module.wxarticle.view.WxView;
 import per.goweii.wanandroid.utils.MagicIndicatorUtils;
 import per.goweii.wanandroid.utils.RvScrollTopUtils;
@@ -33,7 +34,7 @@ import per.goweii.wanandroid.utils.RvScrollTopUtils;
  * @date 2019/5/12
  * GitHub: https://github.com/goweii
  */
-public class WxFragment extends BaseFragment<WxPresenter> implements RvScrollTopUtils.ScrollTop, WxView {
+public class WxFragment extends BaseFragment<WxPresenter, WxView> implements RvScrollTopUtils.ScrollTop, WxView {
 
     //@BindView(R.id.ab)
     ActionBarEx ab;

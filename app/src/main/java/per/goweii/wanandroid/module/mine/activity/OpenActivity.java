@@ -32,11 +32,8 @@ import per.goweii.wanandroid.utils.UrlOpenUtils;
  */
 public class OpenActivity extends BaseActivity {
 
-    //@BindView(R.id.msv)
     MultiStateView msv;
-    //@BindView(R.id.srl)
     SmartRefreshLayout srl;
-    //@BindView(R.id.rv)
     RecyclerView rv;
     private BaseQuickAdapter<OpenEntity, BaseViewHolder> mAdapter;
 
@@ -68,7 +65,7 @@ public class OpenActivity extends BaseActivity {
     @Override
     protected void initViews() {
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
-        mAdapter = new BaseQuickAdapter<OpenEntity, BaseViewHolder>(R.layout.rv_item_open) {
+        mAdapter = new BaseQuickAdapter<>(R.layout.rv_item_open) {
             @Override
             protected void convert(BaseViewHolder helper, OpenEntity item) {
                 helper.setText(R.id.tv_project, item.getProject());
@@ -80,16 +77,13 @@ public class OpenActivity extends BaseActivity {
                 }
             }
         };
-        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                OpenEntity item = mAdapter.getItem(position);
-                if (item != null) {
-                    UrlOpenUtils.Companion
-                            .with(item.getLink())
-                            .title(item.getProject())
-                            .open(getContext());
-                }
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            OpenEntity item = mAdapter.getItem(position);
+            if (item != null) {
+                UrlOpenUtils.Companion
+                        .with(item.getLink())
+                        .title(item.getProject())
+                        .open(getContext());
             }
         });
         rv.setAdapter(mAdapter);

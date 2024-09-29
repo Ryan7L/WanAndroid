@@ -37,7 +37,7 @@ import per.goweii.wanandroid.utils.SettingUtils;
  * @date 2019/5/11
  * GitHub: https://github.com/goweii
  */
-public class SearchHistoryFragment extends BaseFragment<SearchHistoryPresenter> implements SearchHistoryView {
+public class SearchHistoryFragment extends BaseFragment<SearchHistoryPresenter,SearchHistoryView> implements SearchHistoryView {
 
     //@BindView(R.id.rv_hot)
     RecyclerView rv_hot;

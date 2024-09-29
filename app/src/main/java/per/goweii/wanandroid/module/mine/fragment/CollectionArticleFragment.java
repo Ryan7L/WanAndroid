@@ -40,15 +40,12 @@ import per.goweii.wanandroid.widget.CollectView;
  * @date 2019/5/17
  * GitHub: https://github.com/goweii
  */
-public class CollectionArticleFragment extends BaseFragment<CollectionArticlePresenter> implements RvScrollTopUtils.ScrollTop, CollectionArticleView {
+public class CollectionArticleFragment extends BaseFragment<CollectionArticlePresenter,CollectionArticleView> implements RvScrollTopUtils.ScrollTop, CollectionArticleView {
 
     public static final int PAGE_START = 0;
 
-    //@BindView(R.id.msv)
     MultiStateView msv;
-    //@BindView(R.id.srl)
     SmartRefreshLayout srl;
-    //@BindView(R.id.rv)
     RecyclerView rv;
     private SmartRefreshUtils mSmartRefreshUtils;
     private ArticleAdapter mAdapter;
@@ -81,22 +78,19 @@ public class CollectionArticleFragment extends BaseFragment<CollectionArticlePre
         } else {
             presenter.updateCollectArticleList(PAGE_START);
             if (event.getArticleId() != -1 || event.getCollectId() != -1) {
-                mAdapter.forEach(new ArticleAdapter.ArticleForEach() {
-                    @Override
-                    public boolean forEach(int dataPos, int adapterPos, ArticleBean bean) {
-                        if (event.getArticleId() != -1) {
-                            if (bean.getOriginId() == event.getArticleId()) {
-                                mAdapter.remove(adapterPos);
-                                return true;
-                            }
-                        } else if (event.getCollectId() != -1) {
-                            if (bean.getId() == event.getCollectId()) {
-                                mAdapter.remove(adapterPos);
-                                return true;
-                            }
+                mAdapter.forEach((dataPos, adapterPos, bean) -> {
+                    if (event.getArticleId() != -1) {
+                        if (bean.getOriginId() == event.getArticleId()) {
+                            mAdapter.remove(adapterPos);
+                            return true;
                         }
-                        return false;
+                    } else if (event.getCollectId() != -1) {
+                        if (bean.getId() == event.getCollectId()) {
+                            mAdapter.remove(adapterPos);
+                            return true;
+                        }
                     }
+                    return false;
                 });
             }
         }
@@ -122,48 +116,31 @@ public class CollectionArticleFragment extends BaseFragment<CollectionArticlePre
     protected void initView() {
         mSmartRefreshUtils = SmartRefreshUtils.with(srl);
         mSmartRefreshUtils.pureScrollMode();
-        mSmartRefreshUtils.setRefreshListener(new SmartRefreshUtils.RefreshListener() {
-            @Override
-            public void onRefresh() {
-                currPage = PAGE_START;
-                presenter.getCollectArticleList(currPage, true);
-            }
+        mSmartRefreshUtils.setRefreshListener(() -> {
+            currPage = PAGE_START;
+            presenter.getCollectArticleList(currPage, true);
         });
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new ArticleAdapter();
         mAdapter.setEnableLoadMore(false);
-        mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
-            @Override
-            public void onLoadMoreRequested() {
-                presenter.getCollectArticleList(currPage, true);
-            }
-        }, rv);
-        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                ArticleBean item = mAdapter.getItem(position);
-                if (item != null) {
-                    UrlOpenUtils.Companion.with(item).open(getContext());
-                }
+        mAdapter.setOnLoadMoreListener(() -> presenter.getCollectArticleList(currPage, true), rv);
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            ArticleBean item = mAdapter.getItem(position);
+            if (item != null) {
+                UrlOpenUtils.Companion.with(item).open(getContext());
             }
         });
-        mAdapter.setOnItemChildViewClickListener(new ArticleAdapter.OnItemChildViewClickListener() {
-            @Override
-            public void onCollectClick(BaseViewHolder helper, CollectView v, int position) {
-                ArticleBean item = mAdapter.getItem(position);
-                if (item != null) {
-                    presenter.uncollectArticle(item, v);
-                }
+        mAdapter.setOnItemChildViewClickListener((helper, v, position) -> {
+            ArticleBean item = mAdapter.getItem(position);
+            if (item != null) {
+                presenter.uncollectArticle(item, v);
             }
         });
         rv.setAdapter(mAdapter);
-        MultiStateUtils.setEmptyAndErrorClick(msv, new SimpleListener() {
-            @Override
-            public void onResult() {
-                MultiStateUtils.toLoading(msv);
-                currPage = PAGE_START;
-                presenter.getCollectArticleList(currPage, true);
-            }
+        MultiStateUtils.setEmptyAndErrorClick(msv, () -> {
+            MultiStateUtils.toLoading(msv);
+            currPage = PAGE_START;
+            presenter.getCollectArticleList(currPage, true);
         });
     }
 

@@ -39,7 +39,7 @@ import per.goweii.wanandroid.widget.CollectView;
  * @date 2019/5/11
  * GitHub: https://github.com/goweii
  */
-public class SearchResultFragment extends BaseFragment<SearchResultPresenter> implements SearchResultView {
+public class SearchResultFragment extends BaseFragment<SearchResultPresenter,SearchResultView> implements SearchResultView {
 
     private static final int PAGE_START = 0;
 
