@@ -1,22 +1,17 @@
-package per.goweii.basic.core.mvp;
+package per.goweii.basic.core.mvp
 
-import android.content.Context;
+import android.content.Context
 
-/**
- * @author Cuizhen
- * @version v1.0.0
- * @date 2018/4/4-下午1:23
- */
-public interface IView {
-    Context getContext();
+interface IView {
+    val context: Context?
 
-    void showLoadingDialog();
+    fun showLoadingDialog()
 
-    void dismissLoadingDialog();
+    fun dismissLoadingDialog()
 
-    void showLoadingBar();
+    fun showLoadingBar()
 
-    void dismissLoadingBar();
+    fun dismissLoadingBar()
 
-    void clearLoading();
+    fun clearLoading()
 }

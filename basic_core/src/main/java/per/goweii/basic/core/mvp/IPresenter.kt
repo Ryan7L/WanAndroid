@@ -1,59 +1,38 @@
-package per.goweii.basic.core.mvp;
+package per.goweii.basic.core.mvp
 
-import android.content.Context;
+import android.content.Context
 
-/**
- * @author Cuizhen
- * @version v1.0.0
- * @date 2018/4/4-下午1:23
- */
-public abstract class IPresenter<V extends IView> {
-    protected Context context;
-    private V baseView;
+abstract class IPresenter<V : IView> {
+    protected var context: Context? = null
+    private var _baseView: V? = null
 
-    public void attach(V baseView) {
-        this.baseView = baseView;
-        context = baseView.getContext();
+    open fun attach(baseView: V) {
+        this._baseView = baseView
+        context = baseView.context
     }
 
-    public void detach() {
-        baseView = null;
-        context = null;
+    open fun detach() {
+        _baseView = null
+        context = null
     }
 
-    public V getBaseView() {
-        return baseView;
+    val baseView: V
+        get() = _baseView ?: throw NullPointerException("baseView is null")
+    val isAttach: Boolean
+        get() = _baseView != null
+    fun showLoadingDialog() {
+        _baseView?.showLoadingDialog()
     }
 
-    public boolean isAttach() {
-        return baseView != null;
+    fun dismissLoadingDialog() {
+        _baseView?.dismissLoadingDialog()
     }
 
-    public Context getContext() {
-        return context;
+    fun showLoadingBar() {
+        _baseView?.showLoadingBar()
     }
 
-    public void showLoadingDialog() {
-        if (baseView != null) {
-            baseView.showLoadingDialog();
-        }
-    }
-
-    public void dismissLoadingDialog() {
-        if (baseView != null) {
-            baseView.dismissLoadingDialog();
-        }
-    }
-
-    public void showLoadingBar() {
-        if (baseView != null) {
-            baseView.showLoadingBar();
-        }
-    }
-
-    public void dismissLoadingBar() {
-        if (baseView != null) {
-            baseView.dismissLoadingBar();
-        }
+    fun dismissLoadingBar() {
+        _baseView?.dismissLoadingBar()
     }
 }

@@ -18,7 +18,7 @@ class ScanPresenter : BasePresenter<ScanView>() {
     fun getBitmapFromPath(path: String): Bitmap? {
         val uri = BitmapUtils.getImageContentUri(context, path)
         uri ?: return null
-        val bm = getBitmapFromUri(context, uri)
+        val bm = getBitmapFromUri(context!!, uri)
         bm ?: return null
         return bm
     }

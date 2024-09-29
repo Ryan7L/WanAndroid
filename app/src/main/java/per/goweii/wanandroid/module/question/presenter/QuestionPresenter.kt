@@ -34,7 +34,7 @@ class QuestionPresenter : BasePresenter<QuestionView>() {
     }
 
     fun getQuestionList(page: Int) {
-        QuestionRequest.getQuestionList(rxLife, page, object : RequestListener<ArticleListBean> {
+        QuestionRequest.getQuestionList(getRxLife()!!, page, object : RequestListener<ArticleListBean> {
             override fun onStart() {}
             override fun onSuccess(code: Int, data: ArticleListBean) {
                 if (isAttach) {

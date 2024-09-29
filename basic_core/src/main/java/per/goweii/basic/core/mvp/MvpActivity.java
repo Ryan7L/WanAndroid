@@ -22,10 +22,10 @@ public abstract class MvpActivity<P extends IPresenter> extends CacheActivity im
     /**
      * 获取布局资源文件
      */
-//    protected int getLayoutId() {
-//        return 0;
-//    }
-    protected abstract void initContentView();
+    protected int getLayoutId() {
+        return 0;
+    }
+//    protected abstract void initContentView();
 
 
     /**
@@ -64,8 +64,8 @@ public abstract class MvpActivity<P extends IPresenter> extends CacheActivity im
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initWindowConfig();
-//        initBinding();
-        initContentView();
+        initBinding();
+//        initContentView();
         presenter = initPresenter();
         if (presenter != null) {
             presenter.attach(this);
@@ -73,11 +73,11 @@ public abstract class MvpActivity<P extends IPresenter> extends CacheActivity im
         initialize();
     }
 
-//    public void initBinding() {
-//        if (getLayoutId() > 0) {
-//            setContentView(getLayoutId());
-//        }
-//    }
+    public void initBinding() {
+        if (getLayoutId() > 0) {
+            setContentView(getLayoutId());
+        }
+    }
 
     protected void initialize() {
         initViews();
@@ -107,12 +107,7 @@ public abstract class MvpActivity<P extends IPresenter> extends CacheActivity im
     @Override
     public void onClick(final View v) {
         if (!onClickContinuously(v)) {
-            ClickHelper.onlyFirstSameView(v, new ClickHelper.Callback() {
-                @Override
-                public void onClick(View view) {
-                    onClickSpace(view);
-                }
-            });
+            ClickHelper.onlyFirstSameView(v, this::onClickSpace);
         }
     }
 }

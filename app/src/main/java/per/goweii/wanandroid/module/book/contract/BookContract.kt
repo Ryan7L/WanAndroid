@@ -14,7 +14,7 @@ interface BookView : BaseView {
 
 class BookPresenter : BasePresenter<BookView>() {
     fun getList() {
-        BookRequest.getBookList(rxLife, object : RequestListener<List<BookBean>> {
+        BookRequest.getBookList(getRxLife(), object : RequestListener<List<BookBean>> {
             override fun onStart() {
             }
 

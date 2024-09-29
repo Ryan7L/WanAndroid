@@ -150,7 +150,7 @@ class ScanActivity : BaseActivity<ScanPresenter>(), ScanView, SwipeBackAbility.D
     }
 
     private fun startScan() {
-        mRuntimeRequester = AnyPermission.with(context)
+        mRuntimeRequester = AnyPermission.with(context!!)
             .runtime(REQ_CODE_PERMISSION_CAMERA)
             .permissions(Manifest.permission.CAMERA)
             .onBeforeRequest { _, executor ->
@@ -196,7 +196,7 @@ class ScanActivity : BaseActivity<ScanPresenter>(), ScanView, SwipeBackAbility.D
 
     private fun startAlbum() {
         stopScan()
-        mRuntimeRequester = AnyPermission.with(context)
+        mRuntimeRequester = AnyPermission.with(context!!)
             .runtime(REQ_CODE_PERMISSION_ALBUM)
             .permissions(Manifest.permission.WRITE_EXTERNAL_STORAGE)
             .onBeforeRequest { _, executor ->

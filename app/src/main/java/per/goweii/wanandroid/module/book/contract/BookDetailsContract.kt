@@ -40,7 +40,7 @@ class BookDetailsPresenter : BasePresenter<BookDetailsView>() {
     }
 
     fun getChapters(id: Int, page: Int) {
-        BookRequest.getBookChapterList(rxLife, id, page, object : RequestListener<ArticleListBean> {
+        BookRequest.getBookChapterList(getRxLife(), id, page, object : RequestListener<ArticleListBean> {
             override fun onStart() {
             }
 
