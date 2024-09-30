@@ -77,7 +77,7 @@ class BookDetailsActivity : BaseActivity<BookDetailsPresenter,BookDetailsView>()
         adapter = BookChapterAdapter()
         adapter.setEnableLoadMore(false)
         adapter.setOnLoadMoreListener({
-            presenter.getChapters(bookBean.id, currPage)
+            presenter!!.getChapters(bookBean.id, currPage)
         }, binding.rv)
         adapter.setOnItemClickListener { _, _, position ->
             val item: BookChapterBean = adapter.getItem(position) ?: return@setOnItemClickListener
@@ -86,7 +86,7 @@ class BookDetailsActivity : BaseActivity<BookDetailsPresenter,BookDetailsView>()
         binding.rv.adapter = adapter
         MultiStateUtils.setEmptyAndErrorClick(binding.msv) {
             MultiStateUtils.toLoading(binding.msv)
-            presenter.getChapters(bookBean.id, currPage)
+            presenter!!.getChapters(bookBean.id, currPage)
         }
         binding.abl.addOnOffsetChangedListener(OnOffsetChangedListener { abl, offset ->
             if (abs(offset) == abl.totalScrollRange) {
@@ -109,10 +109,11 @@ class BookDetailsActivity : BaseActivity<BookDetailsPresenter,BookDetailsView>()
 
     override fun bindData() {
         MultiStateUtils.toLoading(binding.msv)
-        presenter.getChapters(bookBean.id, currPage)
+        presenter!!.getChapters(bookBean.id, currPage)
     }
 
-    override fun isRegisterEventBus(): Boolean = true
+    override val isRegisterEventBus: Boolean
+        get() = true
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onReadRecordAddedEvent(event: ReadRecordAddedEvent) {

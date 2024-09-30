@@ -63,14 +63,11 @@ public class SearchActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
-        aiv_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mIsResultPage) {
-                    showHistoryFragment();
-                } else {
-                    finish();
-                }
+        aiv_back.setOnClickListener(v -> {
+            if (mIsResultPage) {
+                showHistoryFragment();
+            } else {
+                finish();
             }
         });
         aiv_search.setOnClickListener(new View.OnClickListener() {

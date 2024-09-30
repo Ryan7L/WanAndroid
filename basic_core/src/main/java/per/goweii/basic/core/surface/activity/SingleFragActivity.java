@@ -28,15 +28,9 @@ public class SingleFragActivity extends BaseActivity {
     }
 
     @Override
-    protected int getLayoutId() {
-        return R.layout.basic_core_activity_single_frag;
+    protected void initContentView() {
+        setContentView(R.layout.basic_core_activity_single_frag);
     }
-
-    @Override
-    protected void setUpPresenter() {
-
-    }
-
     @Override
     protected void initViews() {
         String fragmentClassName = getIntent().getStringExtra("fragmentClassName");

@@ -40,7 +40,7 @@ class UserInfoActivity : BaseActivity<UserInfoPresenter,UserInfoView>(), UserInf
     }
 
     override fun bindData() {
-        presenter.mineInfo()
+        presenter!!.mineInfo()
     }
 
     override fun gotoLogin() {

@@ -131,12 +131,12 @@ class ArticleActivity : BaseActivity<ArticlePresenter,ArticleView>(), ArticleVie
     override fun initViews() {
         StatusBarCompat.setIconMode(this, !DarkModeUtils.isDarkMode(this))
         intent?.let {
-            presenter.articleUrl = it.getStringExtra("url") ?: ""
-            presenter.articleTitle = it.getStringExtra("title") ?: ""
-            presenter.articleId = it.getIntExtra("articleId", 0)
-            presenter.collected = it.getBooleanExtra("collected", false)
-            presenter.userName = it.getStringExtra("user_name") ?: ""
-            presenter.userId = it.getIntExtra("user_id", 0)
+            presenter!!.articleUrl = it.getStringExtra("url") ?: ""
+            presenter!!.articleTitle = it.getStringExtra("title") ?: ""
+            presenter!!.articleId = it.getIntExtra("articleId", 0)
+            presenter!!.collected = it.getBooleanExtra("collected", false)
+            presenter!!.userName = it.getStringExtra("user_name") ?: ""
+            presenter!!.userId = it.getIntExtra("user_id", 0)
         }
         switchCollectView(false)
         val icons = mutableListOf<FloatIconTouchListener.Icon>()
@@ -171,31 +171,31 @@ class ArticleActivity : BaseActivity<ArticlePresenter,ArticleView>(), ArticleVie
             if (floatIconsVisible) toggleFloatIcons()
         }
         binding.includeLayout.aivReadLater.setOnClickListener {
-            presenter.isReadLater { isReadLater ->
+            presenter!!.isReadLater { isReadLater ->
                 if (isReadLater) {
-                    presenter.removeReadLater()
+                    presenter!!.removeReadLater()
                 } else {
-                    presenter.addReadLater()
+                    presenter!!.addReadLater()
                 }
             }
             if (floatIconsVisible) toggleFloatIcons()
         }
         binding.includeLayout.aivOpen.setOnClickListener {
-            UrlOpenUtils.with(presenter.articleUrl)
-                .title(presenter.articleTitle)
-                .articleId(presenter.articleId)
-                .collected(presenter.collected)
-                .author(presenter.userName)
-                .userId(presenter.userId)
+            UrlOpenUtils.with(presenter!!.articleUrl)
+                .title(presenter!!.articleTitle)
+                .articleId(presenter!!.articleId)
+                .collected(presenter!!.collected)
+                .author(presenter!!.userName)
+                .userId(presenter!!.userId)
                 .forceWeb()
                 .open(viewContext)
             if (floatIconsVisible) toggleFloatIcons()
         }
         binding.includeLayout.cvCollect.setOnClickListener {
             if (binding.includeLayout.cvCollect.isChecked) {
-                presenter.collect()
+                presenter!!.collect()
             } else {
-                presenter.uncollect()
+                presenter!!.uncollect()
             }
             if (floatIconsVisible) toggleFloatIcons()
         }
@@ -238,7 +238,7 @@ class ArticleActivity : BaseActivity<ArticlePresenter,ArticleView>(), ArticleVie
                 }
             })
             .setInterceptUrlInterceptor { uri, reqHeaders, reqMethod ->
-                val pageUri = Uri.parse(presenter.articleUrl)
+                val pageUri = Uri.parse(presenter!!.articleUrl)
                 ReadingModeManager.getUrlRegexBeanForHost(pageUri.host)
                     ?: return@setInterceptUrlInterceptor null
                 WebReadingModeInterceptor.intercept(
@@ -262,24 +262,24 @@ class ArticleActivity : BaseActivity<ArticlePresenter,ArticleView>(), ArticleVie
                 return@setInterceptUrlInterceptor null
             }
             .setOnPageTitleCallback {
-                presenter.addReadRecord(mWebHolder.url, mWebHolder.title, mWebHolder.percent)
+                presenter!!.addReadRecord(mWebHolder.url, mWebHolder.title, mWebHolder.percent)
             }
             .setOnPageScrollEndListener {
-                presenter.isReadLater { isReadLater ->
+                presenter!!.isReadLater { isReadLater ->
                     if (isReadLater) {
-                        presenter.removeReadLater()
+                        presenter!!.removeReadLater()
                     }
                 }
             }
             .setOnPageScrollChangeListener {
-                presenter.updateReadRecordPercent(mWebHolder.url, it)
+                presenter!!.updateReadRecordPercent(mWebHolder.url, it)
             }
         binding.wc.setOnDoubleClickListener { _, _ ->
             changeRevealLayoutCenterXY(
                 binding.includeLayout.rl.width * 0.5F,
                 binding.includeLayout.rl.height * 0.5F
             )
-            presenter.collect()
+            presenter!!.collect()
         }
 
         window.decorView.doOnLayout {
@@ -314,8 +314,8 @@ class ArticleActivity : BaseActivity<ArticlePresenter,ArticleView>(), ArticleVie
 
     override fun bindData() {
         lastUrlLoadTime = System.currentTimeMillis()
-        mWebHolder.loadUrl(presenter.articleUrl)
-        presenter.isReadLater { switchReadLaterIcon() }
+        mWebHolder.loadUrl(presenter!!.articleUrl)
+        presenter!!.isReadLater { switchReadLaterIcon() }
     }
 
     override fun onPause() {
@@ -528,8 +528,8 @@ class ArticleActivity : BaseActivity<ArticlePresenter,ArticleView>(), ArticleVie
     }
 
     private fun switchCollectView(anim: Boolean = true) {
-        binding.includeLayout.rl.setChecked(presenter.collected, anim)
-        binding.includeLayout.cvCollect.setChecked(presenter.collected, anim)
+        binding.includeLayout.rl.setChecked(presenter!!.collected, anim)
+        binding.includeLayout.cvCollect.setChecked(presenter!!.collected, anim)
     }
 
     override fun collectSuccess() {
@@ -571,7 +571,7 @@ class ArticleActivity : BaseActivity<ArticlePresenter,ArticleView>(), ArticleVie
     }
 
     private fun switchReadLaterIcon() {
-        if (presenter.readLater) {
+        if (presenter!!.readLater) {
             binding.includeLayout.aivReadLater.setImageResource(R.drawable.ic_read_later_added)
             binding.includeLayout.aivReadLater.setColorFilter(
                 ResUtils.getThemeColor(

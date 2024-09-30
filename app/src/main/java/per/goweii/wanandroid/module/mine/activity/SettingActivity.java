@@ -102,10 +102,6 @@ public class SettingActivity extends BaseActivity<SettingPresenter,SettingView> 
         binding.rlInterceptHost.setOnLongClickListener(this::onLongClick);
     }
 
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_setting;
-    }
 
     @Nullable
     @Override

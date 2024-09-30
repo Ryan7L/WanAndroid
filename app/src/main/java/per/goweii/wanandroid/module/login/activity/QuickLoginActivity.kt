@@ -107,7 +107,7 @@ class QuickLoginActivity : BaseActivity<QuickLoginPresenter,QuickLoginView>(), Q
     @RequiresApi(Build.VERSION_CODES.M)
     private fun tryOpenLoginByBiometric(loginInfoEntity: LoginInfoEntity?) {
         biometricHelper.onAuthSuccess = { cipher ->
-            if (presenter.encodeAndSaveLoginInfo(cipher, loginInfoEntity)) {
+            if (presenter!!.encodeAndSaveLoginInfo(cipher, loginInfoEntity)) {
                 finishWithSuccess()
             } else {
                 finishWithFailed()
@@ -122,14 +122,14 @@ class QuickLoginActivity : BaseActivity<QuickLoginPresenter,QuickLoginView>(), Q
 
     @RequiresApi(Build.VERSION_CODES.M)
     private fun tryLoginByBiometric() {
-        val loginInfoStr: String = presenter.loginInfo
-        val ivStr: String = presenter.cipherIV
+        val loginInfoStr: String = presenter!!.loginInfo
+        val ivStr: String = presenter!!.cipherIV
         if (TextUtils.isEmpty(loginInfoStr) || TextUtils.isEmpty(ivStr)) {
             finishWithFailed()
             return
         }
         biometricHelper.onAuthSuccess = { cipher ->
-            val loginInfoEntity = presenter.decodeLoginInfo(cipher, loginInfoStr)
+            val loginInfoEntity = presenter!!.decodeLoginInfo(cipher, loginInfoStr)
             if (loginInfoEntity == null || loginInfoEntity.isEmpty) {
                 finishWithFailed()
             } else {
