@@ -16,7 +16,7 @@ import com.crayon.ryan.utils.StringUtilsKt;
 import java.util.Collection;
 import java.util.List;
 
-import per.goweii.basic.utils.listener.OnClickListener2;
+import per.goweii.basic.utils.listener.OnCustomClickListener;
 import per.goweii.wanandroid.R;
 import per.goweii.wanandroid.event.CollectionEvent;
 import per.goweii.wanandroid.module.home.activity.UserPageActivity;
@@ -70,9 +70,9 @@ public class ArticleAdapter extends BaseQuickAdapter<ArticleBean, BaseViewHolder
         if (item.getTags() != null && item.getTags().size() > 0) {
             tv_tag.setText(item.getTags().get(0).getName());
             tv_tag.setVisibility(View.VISIBLE);
-            tv_tag.setOnClickListener(new OnClickListener2() {
+            tv_tag.setOnClickListener(new OnCustomClickListener() {
                 @Override
-                public void onClick2(View v) {
+                public void onCustomClick(View v) {
                     KnowledgeArticleActivity.start(v.getContext(), item.getTags().get(0));
                 }
             });
@@ -103,17 +103,17 @@ public class ArticleAdapter extends BaseQuickAdapter<ArticleBean, BaseViewHolder
         } else {
             cv_collect.setChecked(false, false);
         }
-        tv_chapter_name.setOnClickListener(new OnClickListener2() {
+        tv_chapter_name.setOnClickListener(new OnCustomClickListener() {
             @Override
-            public void onClick2(View v) {
+            public void onCustomClick(View v) {
                 KnowledgeArticleActivity.start(v.getContext(),
                         item.getSuperChapterId(), item.getSuperChapterName(),
                         item.getChapterId());
             }
         });
-        tv_author.setOnClickListener(new OnClickListener2() {
+        tv_author.setOnClickListener(new OnCustomClickListener() {
             @Override
-            public void onClick2(View v) {
+            public void onCustomClick(View v) {
                 UserPageActivity.start(v.getContext(), item.getUserId());
             }
         });
@@ -131,9 +131,9 @@ public class ArticleAdapter extends BaseQuickAdapter<ArticleBean, BaseViewHolder
                 }
             }
         });
-        view.setOnClickListener(new OnClickListener2() {
+        view.setOnClickListener(new OnCustomClickListener() {
             @Override
-            public void onClick2(View v) {
+            public void onCustomClick(View v) {
                 UrlOpenUtils.Companion.with(item).open(v.getContext());
             }
         });

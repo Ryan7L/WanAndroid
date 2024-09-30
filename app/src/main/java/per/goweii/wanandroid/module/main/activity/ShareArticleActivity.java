@@ -14,7 +14,7 @@ import per.goweii.basic.core.base.BaseActivity;
 import per.goweii.basic.ui.toast.ToastMaker;
 import per.goweii.basic.utils.InputMethodUtils;
 import per.goweii.basic.utils.LogUtils;
-import per.goweii.basic.utils.listener.OnClickListener2;
+import per.goweii.basic.utils.listener.OnCustomClickListener;
 import per.goweii.basic.utils.listener.SimpleTextWatcher;
 import per.goweii.rxhttp.request.base.BaseBean;
 import per.goweii.wanandroid.R;
@@ -82,9 +82,9 @@ public class ShareArticleActivity extends BaseActivity<ShareArticlePresenter, Sh
 
     @Override
     protected void initViews() {
-        tv_share.setOnClickListener(new OnClickListener2() {
+        tv_share.setOnClickListener(new OnCustomClickListener() {
             @Override
-            public void onClick2(View v) {
+            public void onCustomClick(View v) {
                 String title = et_title.getText().toString();
                 if (TextUtils.isEmpty(title)) {
                     et_title.requestFocus();

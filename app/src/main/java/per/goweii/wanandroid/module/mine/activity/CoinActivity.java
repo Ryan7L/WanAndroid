@@ -14,7 +14,7 @@ import per.goweii.actionbarex.common.ActionBarSuper;
 import per.goweii.basic.core.base.BaseActivity;
 import per.goweii.basic.ui.toast.ToastMaker;
 import per.goweii.basic.utils.AnimatorUtils;
-import per.goweii.basic.utils.listener.OnClickListener2;
+import per.goweii.basic.utils.listener.OnCustomClickListener;
 import per.goweii.wanandroid.databinding.ActivityCoinBinding;
 import per.goweii.wanandroid.module.main.dialog.WebDialog;
 import per.goweii.wanandroid.module.mine.adapter.CoinRecordAdapter;
@@ -63,15 +63,15 @@ public class CoinActivity extends BaseActivity<CoinPresenter, CoinView> implemen
 
     @Override
     protected void initViews() {
-        abc.getRightActionView(0).setOnClickListener(new OnClickListener2() {
+        abc.getRightActionView(0).setOnClickListener(new OnCustomClickListener() {
             @Override
-            public void onClick2(View v) {
+            public void onCustomClick(View v) {
                 WebDialog.create(getViewContext(), "https://www.wanandroid.com/blog/show/2653").show();
             }
         });
-        abc.getRightActionView(1).setOnClickListener(new OnClickListener2() {
+        abc.getRightActionView(1).setOnClickListener(new OnCustomClickListener() {
             @Override
-            public void onClick2(View v) {
+            public void onCustomClick(View v) {
                 CoinRankActivity.start(getViewContext());
             }
         });

@@ -8,7 +8,7 @@ import android.widget.TextView
 import com.kennyc.view.MultiStateView
 import per.goweii.basic.utils.ext.gone
 import per.goweii.basic.utils.ext.visible
-import per.goweii.basic.utils.listener.OnClickListener2
+import per.goweii.basic.utils.listener.OnCustomClickListener
 import per.goweii.basic.utils.listener.SimpleListener
 import per.goweii.wanandroid.R
 
@@ -106,8 +106,8 @@ class MultiStateUtils {
         @JvmStatic
         fun setEmptyClick(view: MultiStateView, listener: SimpleListener) {
             val empty = view.getView(MultiStateView.VIEW_STATE_EMPTY)
-            empty?.setOnClickListener(object : OnClickListener2() {
-                override fun onClick2(v: View) {
+            empty?.setOnClickListener(object : OnCustomClickListener() {
+                override fun onCustomClick(v: View) {
                     listener.onResult()
                 }
             })
@@ -116,8 +116,8 @@ class MultiStateUtils {
         @JvmStatic
         fun setErrorClick(view: MultiStateView, listener: SimpleListener) {
             val error = view.getView(MultiStateView.VIEW_STATE_ERROR)
-            error?.setOnClickListener(object : OnClickListener2() {
-                override fun onClick2(v: View) {
+            error?.setOnClickListener(object : OnCustomClickListener() {
+                override fun onCustomClick(v: View) {
                     listener.onResult()
                 }
             })

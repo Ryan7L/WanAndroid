@@ -19,7 +19,7 @@ import per.goweii.anylayer.dialog.DialogLayer;
 import per.goweii.anylayer.utils.AnimatorHelper;
 import per.goweii.basic.utils.ResUtils;
 import per.goweii.basic.utils.display.DisplayInfoUtils;
-import per.goweii.basic.utils.listener.OnClickListener2;
+import per.goweii.basic.utils.listener.OnCustomClickListener;
 import per.goweii.basic.utils.listener.SimpleCallback;
 import per.goweii.wanandroid.R;
 import per.goweii.wanandroid.module.home.presenter.WebDialogPresenter;
@@ -149,9 +149,9 @@ public class WebDialog extends DialogLayer implements WebDialogView {
         } else {
             iv_read_later.setVisibility(View.VISIBLE);
             cv_collect.setVisibility(View.VISIBLE);
-            iv_read_later.setOnClickListener(new OnClickListener2() {
+            iv_read_later.setOnClickListener(new OnCustomClickListener() {
                 @Override
-                public void onClick2(View v) {
+                public void onCustomClick(View v) {
                     if (mAdapter != null) {
                         ArticleBean data = mAdapter.getArticleBean(vp.getCurrentItem());
                         if (data != null) {

@@ -58,7 +58,7 @@ import per.goweii.basic.ui.toast.ToastMaker;
 import per.goweii.basic.utils.ColorUtils;
 import per.goweii.basic.utils.ResUtils;
 import per.goweii.basic.utils.display.DisplayInfoUtils;
-import per.goweii.basic.utils.listener.OnClickListener2;
+import per.goweii.basic.utils.listener.OnCustomClickListener;
 import per.goweii.basic.utils.listener.SimpleCallback;
 import per.goweii.basic.utils.listener.SimpleListener;
 import per.goweii.cropimageview.CropImageView;
@@ -357,9 +357,9 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
         iv_second_floor_background.setSmoothMoveAnimDuration(0);
         iv_second_floor_background.setCropScale(1.3F);
         iv_second_floor_background.setCropType(CropImageView.CropType.CENTER);
-        v_dl_content_mask.setOnClickListener(new OnClickListener2() {
+        v_dl_content_mask.setOnClickListener(new OnCustomClickListener() {
             @Override
-            public void onClick2(View v) {
+            public void onCustomClick(View v) {
                 dl.open(300);
             }
         });

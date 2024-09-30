@@ -23,7 +23,7 @@ import per.goweii.basic.utils.CopyUtils;
 import per.goweii.basic.utils.InputMethodUtils;
 import per.goweii.basic.utils.IntentUtils;
 import per.goweii.basic.utils.LogUtils;
-import per.goweii.basic.utils.listener.OnClickListener2;
+import per.goweii.basic.utils.listener.OnCustomClickListener;
 import per.goweii.swipeback.SwipeBackAbility;
 import per.goweii.wanandroid.BuildConfig;
 import per.goweii.wanandroid.R;
@@ -133,15 +133,15 @@ public class WebActivity extends BaseActivity<WebPresenter, WebView> implements 
             entity.setCollect(true);
             presenter.addCollected(entity);
         }
-        iv_menu.setOnClickListener(new OnClickListener2() {
+        iv_menu.setOnClickListener(new OnCustomClickListener() {
             @Override
-            public void onClick2(View v) {
+            public void onCustomClick(View v) {
                 showMenuDialog();
             }
         });
-        iv_back.setOnClickListener(new OnClickListener2() {
+        iv_back.setOnClickListener(new OnCustomClickListener() {
             @Override
-            public void onClick2(View v) {
+            public void onCustomClick(View v) {
                 if (mWebHolder.canGoBack()) {
                     mWebHolder.goBack();
                 } else {
@@ -149,9 +149,9 @@ public class WebActivity extends BaseActivity<WebPresenter, WebView> implements 
                 }
             }
         });
-        iv_forward.setOnClickListener(new OnClickListener2() {
+        iv_forward.setOnClickListener(new OnCustomClickListener() {
             @Override
-            public void onClick2(View v) {
+            public void onCustomClick(View v) {
                 if (mWebHolder.canGoForward()) {
                     mWebHolder.goForward();
                 }

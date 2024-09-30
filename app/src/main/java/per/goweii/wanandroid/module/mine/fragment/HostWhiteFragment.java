@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import per.goweii.basic.core.base.BaseFragment;
-import per.goweii.basic.utils.listener.OnClickListener2;
+import per.goweii.basic.utils.listener.OnCustomClickListener;
 import per.goweii.wanandroid.R;
 import per.goweii.wanandroid.databinding.FragmentHostInterruptBinding;
 import per.goweii.wanandroid.module.mine.adapter.HostInterruptAdapter;
@@ -57,9 +57,9 @@ public class HostWhiteFragment extends BaseFragment implements RvScrollTopUtils.
         });
         mAdapter.setOnCheckedChangeListener((position, isChecked) -> mAdapter.getData().get(position).setEnable(isChecked));
         View footer = LayoutInflater.from(getViewContext()).inflate(R.layout.rv_item_host_interrupt_footer, null);
-        footer.setOnClickListener(new OnClickListener2() {
+        footer.setOnClickListener(new OnCustomClickListener() {
             @Override
-            public void onClick2(View v) {
+            public void onCustomClick(View v) {
                 AddHostDialog.show(getViewContext(), data -> mAdapter.addData(new HostEntity(data, true)));
             }
         });
