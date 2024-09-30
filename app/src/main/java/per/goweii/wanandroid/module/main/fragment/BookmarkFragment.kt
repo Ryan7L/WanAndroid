@@ -34,23 +34,24 @@ class BookmarkFragment : BaseFragment<BookmarkPresenter,BookmarkView>(), Bookmar
     private lateinit var binding: FragmentBookmarkBinding
     private var offset = 0
     private val perPageCount = 20
-    override fun onCreateView(
+
+    override fun initRootView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentBookmarkBinding.inflate(inflater, container, false)
         mRootView = binding.root
-        mViewCreated = true
 
         return mRootView
     }
 
-    override fun getLayoutRes(): Int = R.layout.fragment_bookmark
 
-    override fun initPresenter(): BookmarkPresenter = BookmarkPresenter()
+    override fun setUpPresenter() {
+     presenter   = BookmarkPresenter()
+    }
 
-    override fun initView() {
+    override fun initViews() {
         SmartRefreshUtils.with(binding.srl).pureScrollMode()
         binding.srl.setOnMultiListener(object : SimpleOnMultiListener() {
             override fun onFooterMoving(
@@ -93,7 +94,7 @@ class BookmarkFragment : BaseFragment<BookmarkPresenter,BookmarkView>(), Bookmar
         }
     }
 
-    override fun loadData() {
+    override fun bindData() {
         toLoading(binding.msv)
     }
 
@@ -107,17 +108,17 @@ class BookmarkFragment : BaseFragment<BookmarkPresenter,BookmarkView>(), Bookmar
         super.onInvisible()
     }
 
-    override fun isRegisterEventBus(): Boolean = true
-
+    override val isRegisterEventBus: Boolean
+        get() = true
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onReadLaterEvent(event: ReadLaterEvent) {
         if (!isAdded) return
         offset = 0
-        presenter.getList(0, perPageCount)
+        presenter!!.getList(0, perPageCount)
     }
 
     private fun getPageList() {
-        presenter.getList(offset, perPageCount)
+        presenter!!.getList(offset, perPageCount)
     }
 
     override fun getBookmarkListSuccess(list: List<ReadLaterModel>) {

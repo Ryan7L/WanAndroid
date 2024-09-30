@@ -36,17 +36,16 @@ class MessageReadedFragment : BaseFragment<MessageReadedPresenter,MessageReadedV
     }
 
     private lateinit var binding: FragmentMessageReadedBinding
-    override fun onCreateView(
+
+    override fun initRootView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentMessageReadedBinding.inflate(inflater, container, false)
         mRootView = binding.root
-        mViewCreated = true
         return mRootView
     }
-
     private lateinit var mSmartRefreshUtils: SmartRefreshUtils
     private lateinit var mAdapter: MessageReadedAdapter
 
@@ -63,30 +62,32 @@ class MessageReadedFragment : BaseFragment<MessageReadedPresenter,MessageReadedV
         }
         if (mAdapter.data.isEmpty()) {
             currPage = PAGE_START
-            presenter.getMessageReadList(currPage)
+            presenter!!.getMessageReadList(currPage)
         }
     }
 
-    override fun isRegisterEventBus(): Boolean {
-        return true
-    }
+
+    override val isRegisterEventBus: Boolean
+        get() = true
 
     override fun getLayoutRes() = R.layout.fragment_message_readed
 
-    override fun initPresenter() = MessageReadedPresenter()
+    override fun setUpPresenter() {
+        presenter= MessageReadedPresenter()
+    }
 
-    override fun initView() {
+    override fun initViews() {
         mSmartRefreshUtils = SmartRefreshUtils.with(binding.srl)
         mSmartRefreshUtils.pureScrollMode()
         mSmartRefreshUtils.setRefreshListener {
             currPage = PAGE_START
-            presenter.getMessageReadList(currPage)
+            presenter!!.getMessageReadList(currPage)
         }
         binding.rv.layoutManager = LinearLayoutManager(viewContext)
         mAdapter = MessageReadedAdapter()
         mAdapter.setEnableLoadMore(false)
         mAdapter.setOnLoadMoreListener({
-            presenter.getMessageReadList(currPage)
+            presenter!!.getMessageReadList(currPage)
         }, binding.rv)
         mAdapter.onItemChildClickListener =
             BaseQuickAdapter.OnItemChildClickListener { _, view, position ->
@@ -98,7 +99,7 @@ class MessageReadedFragment : BaseFragment<MessageReadedPresenter,MessageReadedV
                     }
 
                     R.id.tv_delete -> {
-                        presenter.delete(item)
+                        presenter!!.delete(item)
                     }
                 }
             }
@@ -106,7 +107,7 @@ class MessageReadedFragment : BaseFragment<MessageReadedPresenter,MessageReadedV
         MultiStateUtils.setEmptyAndErrorClick(binding.msv, SimpleListener {
             MultiStateUtils.toLoading(binding.msv)
             currPage = PAGE_START
-            presenter.getMessageReadList(currPage)
+            presenter!!.getMessageReadList(currPage)
         })
         val parent = rootView?.parent
         if (parent is ViewPager) {
@@ -122,7 +123,7 @@ class MessageReadedFragment : BaseFragment<MessageReadedPresenter,MessageReadedV
         }
     }
 
-    override fun loadData() {
+    override fun bindData() {
     }
 
     override fun onVisible(isFirstVisible: Boolean) {
@@ -130,7 +131,7 @@ class MessageReadedFragment : BaseFragment<MessageReadedPresenter,MessageReadedV
         if (isFirstVisible) {
             MultiStateUtils.toLoading(binding.msv)
             currPage = PAGE_START
-            presenter.getMessageReadList(currPage)
+            presenter!!.getMessageReadList(currPage)
         }
     }
 

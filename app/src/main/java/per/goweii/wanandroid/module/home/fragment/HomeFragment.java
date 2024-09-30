@@ -142,12 +142,11 @@ public class HomeFragment extends BaseFragment<HomePresenter,HomeView> implement
         return new HomeFragment();
     }
 
-    @Nullable
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    protected View initRootView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         mRootView = binding.getRoot();
-        mViewCreated = true;
         msv = binding.msv;
         abc = binding.abc;
         dl = binding.dl;
@@ -253,19 +252,14 @@ public class HomeFragment extends BaseFragment<HomePresenter,HomeView> implement
         return true;
     }
 
-    @Override
-    protected int getLayoutRes() {
-        return R.layout.fragment_home;
-    }
 
-    @Nullable
     @Override
-    protected HomePresenter initPresenter() {
-        return new HomePresenter();
+    protected void setUpPresenter() {
+        presenter =  new HomePresenter();
     }
 
     @Override
-    protected void initView() {
+    protected void initViews() {
         abc.setOnRightIconClickListener(new OnActionBarChildClickListener() {
             @Override
             public void onClick(View v) {
@@ -330,7 +324,7 @@ public class HomeFragment extends BaseFragment<HomePresenter,HomeView> implement
         MultiStateUtils.setEmptyAndErrorClick(msv, new SimpleListener() {
             @Override
             public void onResult() {
-                loadData();
+                bindData();
             }
         });
     }
@@ -574,7 +568,7 @@ public class HomeFragment extends BaseFragment<HomePresenter,HomeView> implement
     }
 
     @Override
-    protected void loadData() {
+    protected void bindData() {
         ConfigBean configBean = ConfigUtils.getInstance().getConfig();
         if (configBean.isEnableAtNow()) {
             updateActionBarByConfig(new HomeActionBarEvent(

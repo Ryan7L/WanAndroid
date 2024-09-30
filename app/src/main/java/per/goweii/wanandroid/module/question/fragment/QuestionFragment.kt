@@ -41,17 +41,17 @@ class QuestionFragment : BaseFragment<QuestionPresenter,QuestionView>(), Questio
     }
 
     private lateinit var binding: FragmentQuestionBinding
-    override fun onCreateView(
+
+    override fun initRootView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentQuestionBinding.inflate(inflater, container, false)
         mRootView = binding.root
         mViewCreated = true
         return mRootView
     }
-
     private lateinit var mSmartRefreshUtils: SmartRefreshUtils
     private lateinit var mAdapter: ArticleAdapter
 
@@ -75,7 +75,7 @@ class QuestionFragment : BaseFragment<QuestionPresenter,QuestionView>(), Questio
         }
         if (event.isLogin) {
             currPage = PAGE_START
-            presenter.getQuestionList(currPage)
+            presenter!!.getQuestionList(currPage)
         } else {
             mAdapter.notifyAllUnCollect()
         }
@@ -88,51 +88,52 @@ class QuestionFragment : BaseFragment<QuestionPresenter,QuestionView>(), Questio
         }
     }
 
-    override fun isRegisterEventBus() = true
+    override val isRegisterEventBus: Boolean
+        get() = true
 
-    override fun getLayoutRes(): Int = R.layout.fragment_question
+    override fun setUpPresenter() {
+        presenter = QuestionPresenter()
+    }
 
-    override fun initPresenter(): QuestionPresenter = QuestionPresenter()
-
-    override fun initView() {
+    override fun initViews() {
         mSmartRefreshUtils = SmartRefreshUtils.with(binding.srl)
         mSmartRefreshUtils.pureScrollMode()
         mSmartRefreshUtils.setRefreshListener {
             currPage = PAGE_START
-            presenter.getQuestionList(currPage)
+            presenter!!.getQuestionList(currPage)
         }
         binding.rv.layoutManager = LinearLayoutManager(viewContext)
         mAdapter = ArticleAdapter()
         mAdapter.setEnableLoadMore(false)
         mAdapter.setOnLoadMoreListener({
-            presenter.getQuestionList(currPage)
+            presenter!!.getQuestionList(currPage)
         }, binding.rv)
         mAdapter.setOnItemChildViewClickListener { _, v, position ->
             mAdapter.getItem(position)?.let { item ->
                 if (v.isChecked) {
-                    presenter.collect(item, v)
+                    presenter!!.collect(item, v)
                 } else {
-                    presenter.uncollect(item, v)
+                    presenter!!.uncollect(item, v)
                 }
             }
         }
         binding.rv.adapter = mAdapter
         setEmptyAndErrorClick(binding.msv, SimpleListener {
             MultiStateUtils.toLoading(binding.msv)
-            presenter.getQuestionList(currPage)
+            presenter!!.getQuestionList(currPage)
         })
     }
 
-    override fun loadData() {
+    override fun bindData() {
         MultiStateUtils.toLoading(binding.msv)
-        presenter.getQuestionListCache(PAGE_START)
+        presenter!!.getQuestionListCache(PAGE_START)
     }
 
     override fun onVisible(isFirstVisible: Boolean) {
         super.onVisible(isFirstVisible)
         if (isFirstVisible) {
             currPage = PAGE_START
-            presenter.getQuestionList(currPage)
+            presenter!!.getQuestionList(currPage)
         }
     }
 

@@ -51,12 +51,11 @@ public class CollectionArticleFragment extends BaseFragment<CollectionArticlePre
         return new CollectionArticleFragment();
     }
 
-    @Nullable
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    protected View initRootView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         FragmentCollectionArticleBinding binding = FragmentCollectionArticleBinding.inflate(inflater, container, false);
         mRootView = binding.getRoot();
-        mViewCreated = true;
         msv = binding.msv;
         srl = binding.srl;
         rv = binding.rv;
@@ -102,14 +101,13 @@ public class CollectionArticleFragment extends BaseFragment<CollectionArticlePre
         return R.layout.fragment_collection_article;
     }
 
-    @Nullable
     @Override
-    protected CollectionArticlePresenter initPresenter() {
-        return new CollectionArticlePresenter();
+    protected void setUpPresenter() {
+        presenter =  new CollectionArticlePresenter();
     }
 
     @Override
-    protected void initView() {
+    protected void initViews() {
         mSmartRefreshUtils = SmartRefreshUtils.with(srl);
         mSmartRefreshUtils.pureScrollMode();
         mSmartRefreshUtils.setRefreshListener(() -> {
@@ -141,7 +139,7 @@ public class CollectionArticleFragment extends BaseFragment<CollectionArticlePre
     }
 
     @Override
-    protected void loadData() {
+    protected void bindData() {
         MultiStateUtils.toLoading(msv);
         presenter.getCollectArticleListCache(currPage);
     }

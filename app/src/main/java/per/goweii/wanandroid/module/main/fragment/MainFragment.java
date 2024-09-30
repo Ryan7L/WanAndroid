@@ -15,7 +15,6 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import per.goweii.basic.core.adapter.TabFragmentPagerAdapter;
 import per.goweii.basic.core.base.BaseFragment;
-import per.goweii.basic.core.base.BasePresenter;
 import per.goweii.wanandroid.R;
 import per.goweii.wanandroid.databinding.FragmentMainBinding;
 import per.goweii.wanandroid.event.CloseSecondFloorEvent;
@@ -50,12 +49,11 @@ public class MainFragment extends BaseFragment {
         mTabFragmentPagerAdapter.notifyPageDataChanged();
     }
 
-    @Nullable
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    protected View initRootView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentMainBinding.inflate(inflater, container, false);
         mRootView = binding.getRoot();
-        mViewCreated = true;
         vp_tab = binding.vpTab;
         ll_bottom_bar = binding.llBottomBar;
         return mRootView;
@@ -66,19 +64,9 @@ public class MainFragment extends BaseFragment {
         return true;
     }
 
-    @Override
-    protected int getLayoutRes() {
-        return R.layout.fragment_main;
-    }
-
-    @Nullable
-    @Override
-    protected BasePresenter initPresenter() {
-        return null;
-    }
 
     @Override
-    protected void initView() {
+    protected void initViews() {
         mTabFragmentPagerAdapter = new TabFragmentPagerAdapter<>(getChildFragmentManager(), vp_tab, ll_bottom_bar, R.layout.tab_item_main);
         mMinePage = new TabFragmentPagerAdapter.Page<>(MineFragment.create(), new TabEntity("我的", R.drawable.ic_bottom_bar_mine, -1), new MainTabAdapter());
         mTabFragmentPagerAdapter.setPages(
@@ -108,7 +96,7 @@ public class MainFragment extends BaseFragment {
     }
 
     @Override
-    protected void loadData() {
+    protected void bindData() {
     }
 
     @Override

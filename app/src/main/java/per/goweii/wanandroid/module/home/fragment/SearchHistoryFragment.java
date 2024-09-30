@@ -58,12 +58,11 @@ public class SearchHistoryFragment extends BaseFragment<SearchHistoryPresenter,S
         return new SearchHistoryFragment();
     }
 
-    @Nullable
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    protected View initRootView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         FragmentSearchHistoryBinding binding = FragmentSearchHistoryBinding.inflate(inflater, container, false);
         mRootView = binding.getRoot();
-        mViewCreated = true;
         rv_hot = binding.rvHot;
         ll_history = binding.llHistory;
         rv_history = binding.rvHistory;
@@ -73,20 +72,13 @@ public class SearchHistoryFragment extends BaseFragment<SearchHistoryPresenter,S
         tv_down.setOnClickListener(this);
         return mRootView;
     }
-
     @Override
-    protected int getLayoutRes() {
-        return R.layout.fragment_search_history;
-    }
-
-    @Nullable
-    @Override
-    protected SearchHistoryPresenter initPresenter() {
-        return new SearchHistoryPresenter();
+    protected void setUpPresenter() {
+        presenter =  new SearchHistoryPresenter();
     }
 
     @Override
-    protected void initView() {
+    protected void initViews() {
         rv_hot.setNestedScrollingEnabled(false);
         rv_hot.setHasFixedSize(true);
         rv_hot.setLayoutManager(new FlexboxLayoutManager(getViewContext()));
@@ -193,7 +185,7 @@ public class SearchHistoryFragment extends BaseFragment<SearchHistoryPresenter,S
     }
 
     @Override
-    protected void loadData() {
+    protected void bindData() {
         presenter.getHotKeyList();
         mHistoryAdapter.setNewData(presenter.getHistory());
         changeHistoryVisible();
@@ -241,7 +233,7 @@ public class SearchHistoryFragment extends BaseFragment<SearchHistoryPresenter,S
     }
 
     @Override
-    protected void onClick2(View v) {
+    protected void onClickSpace(View v) {
         switch (v.getId()) {
             default:
                 break;

@@ -24,7 +24,6 @@ import per.goweii.wanandroid.databinding.FragmentWxBinding;
 import per.goweii.wanandroid.event.ScrollTopEvent;
 import per.goweii.wanandroid.module.main.model.ChapterBean;
 import per.goweii.wanandroid.module.wxarticle.presenter.WxPresenter;
-import per.goweii.wanandroid.module.wxarticle.view.WxArticleView;
 import per.goweii.wanandroid.module.wxarticle.view.WxView;
 import per.goweii.wanandroid.utils.MagicIndicatorUtils;
 import per.goweii.wanandroid.utils.RvScrollTopUtils;
@@ -49,30 +48,23 @@ public class WxFragment extends BaseFragment<WxPresenter, WxView> implements RvS
         return new WxFragment();
     }
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    protected View initRootView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         FragmentWxBinding binding = FragmentWxBinding.inflate(inflater, container, false);
         mRootView = binding.getRoot();
-        mViewCreated = true;
         ab = binding.ab;
         vp = binding.vp;
         return mRootView;
     }
 
-    @Override
-    protected int getLayoutRes() {
-        return R.layout.fragment_wx;
-    }
 
-    @Nullable
     @Override
-    protected WxPresenter initPresenter() {
-        return new WxPresenter();
+    protected void setUpPresenter() {
+        presenter =  new WxPresenter();
     }
 
     @Override
-    protected void initView() {
+    protected void initViews() {
         mAdapter = new MultiFragmentPagerAdapter<>(
                 getChildFragmentManager(),
                 new MultiFragmentPagerAdapter.FragmentCreator<ChapterBean, WxArticleFragment>() {
@@ -96,7 +88,7 @@ public class WxFragment extends BaseFragment<WxPresenter, WxView> implements RvS
     }
 
     @Override
-    protected void loadData() {
+    protected void bindData() {
         presenter.getWxArticleChapters();
     }
 

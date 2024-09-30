@@ -5,8 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,7 +22,6 @@ import per.goweii.basic.core.base.BaseFragment;
 import per.goweii.basic.core.utils.SmartRefreshUtils;
 import per.goweii.basic.ui.toast.ToastMaker;
 import per.goweii.basic.utils.listener.SimpleListener;
-import per.goweii.wanandroid.R;
 import per.goweii.wanandroid.common.Config;
 import per.goweii.wanandroid.databinding.FragmentUserArticleBinding;
 import per.goweii.wanandroid.event.ArticleShareEvent;
@@ -46,7 +43,7 @@ import per.goweii.wanandroid.widget.CollectView;
  * @date 2019/5/18
  * GitHub: https://github.com/goweii
  */
-public class UserArticleFragment extends BaseFragment<UserArticlePresenter,UserArticleView> implements UserArticleView {
+public class UserArticleFragment extends BaseFragment<UserArticlePresenter, UserArticleView> implements UserArticleView {
 
     private static final int PAGE_START = 0;
 
@@ -70,12 +67,10 @@ public class UserArticleFragment extends BaseFragment<UserArticlePresenter,UserA
         return new UserArticleFragment();
     }
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    protected View initRootView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentUserArticleBinding.inflate(inflater, container, false);
         mRootView = binding.getRoot();
-        mViewCreated = true;
         abc = binding.abc;
         msv = binding.msv;
         srl = binding.srl;
@@ -113,18 +108,12 @@ public class UserArticleFragment extends BaseFragment<UserArticlePresenter,UserA
     }
 
     @Override
-    protected int getLayoutRes() {
-        return R.layout.fragment_user_article;
-    }
-
-    @Nullable
-    @Override
-    protected UserArticlePresenter initPresenter() {
-        return new UserArticlePresenter();
+    protected void setUpPresenter() {
+        presenter = new UserArticlePresenter();
     }
 
     @Override
-    protected void initView() {
+    protected void initViews() {
         abc.getTitleTextView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -193,7 +182,7 @@ public class UserArticleFragment extends BaseFragment<UserArticlePresenter,UserA
     }
 
     @Override
-    protected void loadData() {
+    protected void bindData() {
         MultiStateUtils.toLoading(msv);
         currPage = PAGE_START;
         presenter.getUserArticleListCache(currPage);

@@ -60,12 +60,11 @@ public class SearchResultFragment extends BaseFragment<SearchResultPresenter,Sea
         return new SearchResultFragment();
     }
 
-    @Nullable
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    protected View initRootView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         FragmentSearchResultBinding binding = FragmentSearchResultBinding.inflate(inflater, container, false);
         mRootView = binding.getRoot();
-        mViewCreated = true;
         msv = binding.msv;
         srl = binding.srl;
         rv = binding.rv;
@@ -88,19 +87,14 @@ public class SearchResultFragment extends BaseFragment<SearchResultPresenter,Sea
         return true;
     }
 
-    @Override
-    protected int getLayoutRes() {
-        return R.layout.fragment_search_result;
-    }
 
-    @Nullable
     @Override
-    protected SearchResultPresenter initPresenter() {
-        return new SearchResultPresenter();
+    protected void setUpPresenter() {
+        presenter =  new SearchResultPresenter();
     }
 
     @Override
-    protected void initView() {
+    protected void initViews() {
         mSmartRefreshUtils = SmartRefreshUtils.with(srl);
         mSmartRefreshUtils.pureScrollMode();
         mSmartRefreshUtils.setRefreshListener(new SmartRefreshUtils.RefreshListener() {
@@ -151,7 +145,7 @@ public class SearchResultFragment extends BaseFragment<SearchResultPresenter,Sea
     }
 
     @Override
-    protected void loadData() {
+    protected void bindData() {
         MultiStateUtils.toLoading(msv);
     }
 

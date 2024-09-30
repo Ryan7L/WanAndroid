@@ -65,12 +65,10 @@ public class ProjectArticleFragment extends BaseFragment<ProjectArticlePresenter
         return fragment;
     }
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    protected View initRootView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         FragmentProjectArticleBinding binding = FragmentProjectArticleBinding.inflate(inflater, container, false);
         mRootView = binding.getRoot();
-        mViewCreated = true;
         msv = binding.msv;
         srl = binding.srl;
         rv = binding.rv;
@@ -120,18 +118,12 @@ public class ProjectArticleFragment extends BaseFragment<ProjectArticlePresenter
     }
 
     @Override
-    protected int getLayoutRes() {
-        return R.layout.fragment_project_article;
-    }
-
-    @Nullable
-    @Override
-    protected ProjectArticlePresenter initPresenter() {
-        return new ProjectArticlePresenter();
+    protected void setUpPresenter() {
+        presenter =  new ProjectArticlePresenter();
     }
 
     @Override
-    protected void initView() {
+    protected void initViews() {
         Bundle args = getArguments();
         if (args != null) {
             mChapterBean = (ChapterBean) args.getSerializable("chapterBean");
@@ -191,7 +183,7 @@ public class ProjectArticleFragment extends BaseFragment<ProjectArticlePresenter
     }
 
     @Override
-    protected void loadData() {
+    protected void bindData() {
         if (mChapterBean != null) {
             MultiStateUtils.toLoading(msv);
             presenter.getProjectArticleListCache(mChapterBean.getId(), currPage);

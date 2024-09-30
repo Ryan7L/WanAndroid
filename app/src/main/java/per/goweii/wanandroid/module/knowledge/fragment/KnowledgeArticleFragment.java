@@ -68,12 +68,11 @@ public class KnowledgeArticleFragment extends BaseFragment<KnowledgeArticlePrese
         return fragment;
     }
 
-    @Nullable
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    protected View initRootView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         FragmentKnowledgeArticleBinding binding = FragmentKnowledgeArticleBinding.inflate(inflater, container, false);
         mRootView = binding.getRoot();
-        mViewCreated = true;
         msv = binding.msv;
         srl = binding.srl;
         rv = binding.rv;
@@ -122,19 +121,14 @@ public class KnowledgeArticleFragment extends BaseFragment<KnowledgeArticlePrese
         return true;
     }
 
-    @Override
-    protected int getLayoutRes() {
-        return R.layout.fragment_knowledge_article;
-    }
 
-    @Nullable
     @Override
-    protected KnowledgeArticlePresenter initPresenter() {
-        return new KnowledgeArticlePresenter();
+    protected void setUpPresenter() {
+        presenter =  new KnowledgeArticlePresenter();
     }
 
     @Override
-    protected void initView() {
+    protected void initViews() {
         Bundle args = getArguments();
         if (args != null) {
             mChapterBean = (ChapterBean) args.getSerializable("chapterBean");
@@ -193,7 +187,7 @@ public class KnowledgeArticleFragment extends BaseFragment<KnowledgeArticlePrese
     }
 
     @Override
-    protected void loadData() {
+    protected void bindData() {
         if (mChapterBean != null) {
             MultiStateUtils.toLoading(msv);
             presenter.getKnowledgeArticleListCache(mChapterBean.getId(), currPage);

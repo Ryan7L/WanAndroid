@@ -49,30 +49,22 @@ public class ProjectFragment extends BaseFragment<ProjectPresenter,ProjectView> 
         return new ProjectFragment();
     }
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    protected View initRootView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         FragmentProjectBinding binding = FragmentProjectBinding.inflate(inflater, container, false);
         mRootView = binding.getRoot();
-        mViewCreated = true;
         ab = binding.ab;
         vp = binding.vp;
         return mRootView;
     }
 
     @Override
-    protected int getLayoutRes() {
-        return R.layout.fragment_project;
-    }
-
-    @Nullable
-    @Override
-    protected ProjectPresenter initPresenter() {
-        return new ProjectPresenter();
+    protected void setUpPresenter() {
+        presenter =  new ProjectPresenter();
     }
 
     @Override
-    protected void initView() {
+    protected void initViews() {
         mAdapter = new MultiFragmentPagerAdapter<>(
                 getChildFragmentManager(),
                 new MultiFragmentPagerAdapter.FragmentCreator<ChapterBean, ProjectArticleFragment>() {
@@ -96,7 +88,7 @@ public class ProjectFragment extends BaseFragment<ProjectPresenter,ProjectView> 
     }
 
     @Override
-    protected void loadData() {
+    protected void bindData() {
         presenter.getProjectChapters();
     }
 

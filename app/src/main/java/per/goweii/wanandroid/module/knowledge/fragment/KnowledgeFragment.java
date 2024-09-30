@@ -45,30 +45,23 @@ public class KnowledgeFragment extends BaseFragment<KnowledgePresenter,Knowledge
         return new KnowledgeFragment();
     }
 
-    @Nullable
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    protected View initRootView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         FragmentKnowledgeNavigationChildBinding binding = FragmentKnowledgeNavigationChildBinding.inflate(inflater, container, false);
         mRootView = binding.getRoot();
-        mViewCreated = true;
         msv = binding.msv;
         rv = binding.rv;
         return mRootView;
     }
 
     @Override
-    protected int getLayoutRes() {
-        return R.layout.fragment_knowledge_navigation_child;
-    }
-
-    @Nullable
-    @Override
-    protected KnowledgePresenter initPresenter() {
-        return new KnowledgePresenter();
+    protected void setUpPresenter() {
+        presenter =  new KnowledgePresenter();
     }
 
     @Override
-    protected void initView() {
+    protected void initViews() {
         rv.setLayoutManager(new LinearLayoutManager(getViewContext()));
         mAdapter = new KnowledgeAdapter();
         mAdapter.setEnableLoadMore(false);
@@ -89,7 +82,7 @@ public class KnowledgeFragment extends BaseFragment<KnowledgePresenter,Knowledge
     }
 
     @Override
-    protected void loadData() {
+    protected void bindData() {
         MultiStateUtils.toLoading(msv);
         presenter.getKnowledgeListCache();
     }

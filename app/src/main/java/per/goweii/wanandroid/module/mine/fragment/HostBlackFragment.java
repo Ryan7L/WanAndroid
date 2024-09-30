@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import per.goweii.basic.core.base.BaseFragment;
-import per.goweii.basic.core.base.BasePresenter;
 import per.goweii.basic.utils.listener.OnClickListener2;
 import per.goweii.wanandroid.R;
 import per.goweii.wanandroid.databinding.FragmentHostInterruptBinding;
@@ -39,29 +38,19 @@ public class HostBlackFragment extends BaseFragment implements RvScrollTopUtils.
         return new HostBlackFragment();
     }
 
-    @Nullable
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    protected View initRootView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         FragmentHostInterruptBinding binding = FragmentHostInterruptBinding.inflate(inflater, container, false);
         mRootView = binding.getRoot();
-        mViewCreated = true;
         rv = binding.rv;
         return mRootView;
     }
 
-    @Override
-    protected int getLayoutRes() {
-        return R.layout.fragment_host_interrupt;
-    }
 
-    @Nullable
-    @Override
-    protected BasePresenter initPresenter() {
-        return null;
-    }
 
     @Override
-    protected void initView() {
+    protected void initViews() {
         rv.setLayoutManager(new LinearLayoutManager(getViewContext()));
         mAdapter = new HostInterruptAdapter();
         RvConfigUtils.init(mAdapter);
@@ -83,7 +72,7 @@ public class HostBlackFragment extends BaseFragment implements RvScrollTopUtils.
     }
 
     @Override
-    protected void loadData() {
+    protected void bindData() {
         List<HostEntity> list = SettingUtils.getInstance().getHostBlackIntercept();
         List<HostEntity> newList = new ArrayList<>(list);
         mAdapter.setNewData(newList);

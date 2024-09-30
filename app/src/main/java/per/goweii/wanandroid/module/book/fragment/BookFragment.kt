@@ -9,7 +9,6 @@ import com.scwang.smart.refresh.layout.api.RefreshFooter
 import com.scwang.smart.refresh.layout.constant.RefreshState
 import per.goweii.basic.core.base.BaseFragment
 import per.goweii.basic.core.utils.SmartRefreshUtils
-import per.goweii.wanandroid.R
 import per.goweii.wanandroid.databinding.FragmentBookBinding
 import per.goweii.wanandroid.event.CloseSecondFloorEvent
 import per.goweii.wanandroid.module.book.activity.BookDetailsActivity
@@ -24,22 +23,23 @@ import per.goweii.wanandroid.widget.refresh.SimpleOnMultiListener
 class BookFragment : BaseFragment<BookPresenter, BookView>(), BookView {
     private lateinit var mAdapter: BookAdapter
 
-    override fun getLayoutRes(): Int = R.layout.fragment_book
 
-    override fun initPresenter(): BookPresenter = BookPresenter()
+    override fun setUpPresenter() {
+        presenter = BookPresenter()
+    }
+
     private lateinit var binding: FragmentBookBinding
-    override fun onCreateView(
+    override fun initRootView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentBookBinding.inflate(inflater, container, false)
         mRootView = binding.root
-        mViewCreated = true
         return mRootView
     }
 
-    override fun initView() {
+    override fun initViews() {
         SmartRefreshUtils.with(binding.srl).pureScrollMode()
         binding.srl.setOnMultiListener(object : SimpleOnMultiListener() {
             override fun onFooterMoving(
@@ -76,25 +76,21 @@ class BookFragment : BaseFragment<BookPresenter, BookView>(), BookView {
         binding.rv.adapter = mAdapter
         MultiStateUtils.setEmptyAndErrorClick(binding.msv) {
             MultiStateUtils.toLoading(binding.msv)
-            presenter.getList()
+            presenter!!.getList()
         }
     }
 
-    override fun loadData() {
+    override fun bindData() {
         MultiStateUtils.toLoading(binding.msv)
     }
 
     override fun onVisible(isFirstVisible: Boolean) {
         super.onVisible(isFirstVisible)
-        presenter.getList()
+        presenter!!.getList()
     }
 
-    override fun onInvisible() {
-        super.onInvisible()
-    }
-
-    override fun isRegisterEventBus(): Boolean = false
-
+    override val isRegisterEventBus: Boolean
+        get() = false
     override fun getBookListSuccess(list: List<BookBean>) {
         mAdapter.setNewData(list)
         if (list.isEmpty()) {

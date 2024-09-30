@@ -35,17 +35,15 @@ class MessageUnreadFragment : BaseFragment<MessageUnreadPresenter,MessageUnreadV
     }
 
     private lateinit var binding: FragmentMessageUnreadBinding
-    override fun onCreateView(
+
+    override fun initRootView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentMessageUnreadBinding.inflate(inflater, container, false)
         mRootView = binding.root
-        mViewCreated = true
-        return mRootView
-    }
-
+        return mRootView    }
     private lateinit var mSmartRefreshUtils: SmartRefreshUtils
     private lateinit var mAdapter: MessageUnreadAdapter
 
@@ -62,30 +60,31 @@ class MessageUnreadFragment : BaseFragment<MessageUnreadPresenter,MessageUnreadV
         }
         if (mAdapter.data.isEmpty()) {
             currPage = PAGE_START
-            presenter.getMessageUnreadList(currPage)
+            presenter!!.getMessageUnreadList(currPage)
         }
     }
 
-    override fun isRegisterEventBus(): Boolean {
-        return true
+
+    override val isRegisterEventBus: Boolean
+        get() = true
+
+
+    override fun setUpPresenter() {
+     presenter   = MessageUnreadPresenter()
     }
 
-    override fun getLayoutRes() = R.layout.fragment_message_unread
-
-    override fun initPresenter() = MessageUnreadPresenter()
-
-    override fun initView() {
+    override fun initViews() {
         mSmartRefreshUtils = SmartRefreshUtils.with(binding.srl)
         mSmartRefreshUtils.pureScrollMode()
         mSmartRefreshUtils.setRefreshListener {
             currPage = PAGE_START
-            presenter.getMessageUnreadList(currPage)
+            presenter!!.getMessageUnreadList(currPage)
         }
         binding.rv.layoutManager = LinearLayoutManager(viewContext)
         mAdapter = MessageUnreadAdapter()
         mAdapter.setEnableLoadMore(false)
         mAdapter.setOnLoadMoreListener({
-            presenter.getMessageUnreadList(currPage)
+            presenter!!.getMessageUnreadList(currPage)
         }, binding.rv)
         mAdapter.onItemClickListener = BaseQuickAdapter.OnItemClickListener { _, _, position ->
             mAdapter.getItem(position)?.let {
@@ -93,14 +92,14 @@ class MessageUnreadFragment : BaseFragment<MessageUnreadPresenter,MessageUnreadV
             }
         }
         binding.rv.adapter = mAdapter
-        MultiStateUtils.setEmptyAndErrorClick(binding.msv, SimpleListener {
+        MultiStateUtils.setEmptyAndErrorClick(binding.msv) {
             MultiStateUtils.toLoading(binding.msv)
             currPage = PAGE_START
-            presenter.getMessageUnreadList(currPage)
-        })
+            presenter!!.getMessageUnreadList(currPage)
+        }
     }
 
-    override fun loadData() {
+    override fun bindData() {
     }
 
     override fun onVisible(isFirstVisible: Boolean) {
@@ -108,7 +107,7 @@ class MessageUnreadFragment : BaseFragment<MessageUnreadPresenter,MessageUnreadV
         if (isFirstVisible) {
             MultiStateUtils.toLoading(binding.msv)
             currPage = PAGE_START
-            presenter.getMessageUnreadList(currPage)
+            presenter!!.getMessageUnreadList(currPage)
         }
     }
 

@@ -12,8 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.core.widget.NestedScrollView;
 
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
@@ -55,7 +53,7 @@ import per.goweii.wanandroid.utils.UserUtils;
  * @date 2019/5/12
  * GitHub: https://github.com/goweii
  */
-public class MineFragment extends BaseFragment<MinePresenter,MineView> implements MineView {
+public class MineFragment extends BaseFragment<MinePresenter, MineView> implements MineView {
     ImageView aiv_notification;
     TextView tv_notification;
     SmartRefreshLayout srl;
@@ -78,12 +76,11 @@ public class MineFragment extends BaseFragment<MinePresenter,MineView> implement
         return new MineFragment();
     }
 
-    @Nullable
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    protected View initRootView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         FragmentMineBinding binding = FragmentMineBinding.inflate(inflater, container, false);
         mRootView = binding.getRoot();
-        mViewCreated = true;
         aiv_notification = binding.ab.findViewById(R.id.aiv_notification);
         tv_notification = binding.ab.findViewById(R.id.tv_notification);
         srl = binding.srl;
@@ -146,19 +143,14 @@ public class MineFragment extends BaseFragment<MinePresenter,MineView> implement
         return true;
     }
 
-    @Override
-    protected int getLayoutRes() {
-        return R.layout.fragment_mine;
-    }
 
-    @Nullable
     @Override
-    protected MinePresenter initPresenter() {
-        return new MinePresenter();
+    protected void setUpPresenter() {
+        presenter = new MinePresenter();
     }
 
     @Override
-    protected void initView() {
+    protected void initViews() {
         aiv_notification.setOnClickListener(v -> {
             if (UserUtils.getInstance().doIfLogin(getViewContext())) {
                 MessageActivity.start(requireContext());
@@ -208,7 +200,7 @@ public class MineFragment extends BaseFragment<MinePresenter,MineView> implement
     }
 
     @Override
-    protected void loadData() {
+    protected void bindData() {
         refreshUserInfo();
         loadNotificationCount();
     }
@@ -266,7 +258,7 @@ public class MineFragment extends BaseFragment<MinePresenter,MineView> implement
     }
 
     @Override
-    protected void onClick2(View v) {
+    protected void onClickSpace(View v) {
         switch (v.getId()) {
             default:
                 break;

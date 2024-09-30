@@ -2,11 +2,13 @@ package per.goweii.basic.core.surface.fragment;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import per.goweii.basic.core.R;
 import per.goweii.basic.core.base.BaseFragment;
-import per.goweii.basic.core.mvp.IPresenter;
 
 /**
  * 描述：
@@ -24,18 +26,14 @@ public class NotFoundFragment extends BaseFragment {
         return fragment;
     }
 
+
     @Override
-    protected int getLayoutRes() {
-        return R.layout.basic_core_fragment_not_found;
+    protected View initRootView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.basic_core_fragment_not_found, container, false);
     }
 
     @Override
-    protected IPresenter initPresenter() {
-        return null;
-    }
-
-    @Override
-    protected void initView() {
+    protected void initViews() {
         TextView tvMsg = findViewById(R.id.basic_core_tv_msg);
         Bundle args = getArguments();
         if (args != null) {
@@ -47,6 +45,6 @@ public class NotFoundFragment extends BaseFragment {
     }
 
     @Override
-    protected void loadData() {
+    protected void bindData() {
     }
 }

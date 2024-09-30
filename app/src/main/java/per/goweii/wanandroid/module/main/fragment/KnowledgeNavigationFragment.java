@@ -13,7 +13,6 @@ import androidx.viewpager.widget.ViewPager;
 import per.goweii.actionbarex.ActionBarEx;
 import per.goweii.basic.core.adapter.FixedFragmentPagerAdapter;
 import per.goweii.basic.core.base.BaseFragment;
-import per.goweii.basic.core.mvp.IPresenter;
 import per.goweii.basic.utils.listener.SimpleCallback;
 import per.goweii.wanandroid.R;
 import per.goweii.wanandroid.common.Config;
@@ -44,30 +43,18 @@ public class KnowledgeNavigationFragment extends BaseFragment implements RvScrol
         return new KnowledgeNavigationFragment();
     }
 
-    @Nullable
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    protected View initRootView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentKnowledgeNavigationBinding.inflate(inflater, container, false);
         mRootView = binding.getRoot();
-        mViewCreated = true;
         ab = binding.ab;
         vp = binding.vp;
         return mRootView;
     }
 
     @Override
-    protected int getLayoutRes() {
-        return R.layout.fragment_knowledge_navigation;
-    }
-
-    @Nullable
-    @Override
-    protected IPresenter initPresenter() {
-        return null;
-    }
-
-    @Override
-    protected void initView() {
+    protected void initViews() {
         mAdapter = new FixedFragmentPagerAdapter(getChildFragmentManager());
         mAdapter.setTitles("体系", "导航");
         mAdapter.setFragmentList(
@@ -84,7 +71,7 @@ public class KnowledgeNavigationFragment extends BaseFragment implements RvScrol
     }
 
     @Override
-    protected void loadData() {
+    protected void bindData() {
     }
 
     @Override

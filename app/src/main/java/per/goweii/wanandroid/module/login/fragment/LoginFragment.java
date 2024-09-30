@@ -46,12 +46,11 @@ public class LoginFragment extends BaseFragment<LoginPresenter,LoginView> implem
         return new LoginFragment();
     }
 
-    @Nullable
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    protected View initRootView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         FragmentLoginBinding binding = FragmentLoginBinding.inflate(inflater, container, false);
         mRootView = binding.getRoot();
-        mViewCreated = true;
         ll_go_register = binding.llGoRegister;
         piv_account = binding.pivLoginAccount;
         piv_password = binding.pivLoginPassword;
@@ -62,14 +61,8 @@ public class LoginFragment extends BaseFragment<LoginPresenter,LoginView> implem
     }
 
     @Override
-    protected int getLayoutRes() {
-        return R.layout.fragment_login;
-    }
-
-    @Nullable
-    @Override
-    protected LoginPresenter initPresenter() {
-        return new LoginPresenter();
+    protected void setUpPresenter() {
+        presenter =  new LoginPresenter();
     }
 
     @Override
@@ -79,7 +72,7 @@ public class LoginFragment extends BaseFragment<LoginPresenter,LoginView> implem
     }
 
     @Override
-    protected void initView() {
+    protected void initViews() {
         piv_password.setOnPwdFocusChangedListener(new PasswordInputView.OnPwdFocusChangedListener() {
             @Override
             public void onFocusChanged(boolean focus) {
@@ -89,7 +82,7 @@ public class LoginFragment extends BaseFragment<LoginPresenter,LoginView> implem
     }
 
     @Override
-    protected void loadData() {
+    protected void bindData() {
     }
 
     @Override
@@ -121,7 +114,7 @@ public class LoginFragment extends BaseFragment<LoginPresenter,LoginView> implem
     }
 
     @Override
-    protected boolean onClick1(View v) {
+    protected boolean onClickContinuously(View v) {
         switch (v.getId()) {
             default:
                 return false;

@@ -42,30 +42,23 @@ public class NaviFragment extends BaseFragment<NaviPresenter,NaviView> implement
         return new NaviFragment();
     }
 
-    @Nullable
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    protected View initRootView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         FragmentKnowledgeNavigationChildBinding binding = FragmentKnowledgeNavigationChildBinding.inflate(inflater, container, false);
         mRootView = binding.getRoot();
-        mViewCreated = true;
         msv = binding.msv;
         rv = binding.rv;
         return mRootView;
     }
 
     @Override
-    protected int getLayoutRes() {
-        return R.layout.fragment_knowledge_navigation_child;
-    }
-
-    @Nullable
-    @Override
-    protected NaviPresenter initPresenter() {
-        return new NaviPresenter();
+    protected void setUpPresenter() {
+        presenter =  new NaviPresenter();
     }
 
     @Override
-    protected void initView() {
+    protected void initViews() {
         rv.setLayoutManager(new LinearLayoutManager(getViewContext()));
         mAdapter = new NaviAdapter();
         mAdapter.setEnableLoadMore(false);
@@ -78,7 +71,7 @@ public class NaviFragment extends BaseFragment<NaviPresenter,NaviView> implement
     }
 
     @Override
-    protected void loadData() {
+    protected void bindData() {
         MultiStateUtils.toLoading(msv);
         presenter.getKnowledgeListCache();
     }

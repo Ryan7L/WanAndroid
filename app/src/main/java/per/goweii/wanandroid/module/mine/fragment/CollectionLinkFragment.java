@@ -58,12 +58,11 @@ public class CollectionLinkFragment extends BaseFragment<CollectionLinkPresenter
         return new CollectionLinkFragment();
     }
 
-    @Nullable
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    protected View initRootView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         FragmentCollectionLinkBinding binding = FragmentCollectionLinkBinding.inflate(inflater, container, false);
         mRootView = binding.getRoot();
-        mViewCreated = true;
         msv = binding.msv;
         srl = binding.srl;
         rv = binding.rv;
@@ -98,18 +97,12 @@ public class CollectionLinkFragment extends BaseFragment<CollectionLinkPresenter
     }
 
     @Override
-    protected int getLayoutRes() {
-        return R.layout.fragment_collection_link;
-    }
-
-    @Nullable
-    @Override
-    protected CollectionLinkPresenter initPresenter() {
-        return new CollectionLinkPresenter();
+    protected void setUpPresenter() {
+        presenter =  new CollectionLinkPresenter();
     }
 
     @Override
-    protected void initView() {
+    protected void initViews() {
         mSmartRefreshUtils = SmartRefreshUtils.with(srl);
         mSmartRefreshUtils.pureScrollMode();
         mSmartRefreshUtils.setRefreshListener(() -> presenter.getCollectLinkList(true));
@@ -186,7 +179,7 @@ public class CollectionLinkFragment extends BaseFragment<CollectionLinkPresenter
     }
 
     @Override
-    protected void loadData() {
+    protected void bindData() {
         MultiStateUtils.toLoading(msv);
         presenter.getCollectLinkListCache();
     }

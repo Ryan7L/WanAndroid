@@ -67,12 +67,11 @@ public class WxArticleFragment extends BaseFragment<WxArticlePresenter,WxArticle
         return fragment;
     }
 
-    @Nullable
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    protected View initRootView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         FragmentWxArticleBinding binding = FragmentWxArticleBinding.inflate(inflater, container, false);
         mRootView = binding.getRoot();
-        mViewCreated = true;
         msv = binding.msv;
         srl = binding.srl;
         rv = binding.rv;
@@ -121,19 +120,14 @@ public class WxArticleFragment extends BaseFragment<WxArticlePresenter,WxArticle
         return true;
     }
 
-    @Override
-    protected int getLayoutRes() {
-        return R.layout.fragment_wx_article;
-    }
 
-    @Nullable
     @Override
-    protected WxArticlePresenter initPresenter() {
-        return new WxArticlePresenter();
+    protected void setUpPresenter() {
+        presenter =  new WxArticlePresenter();
     }
 
     @Override
-    protected void initView() {
+    protected void initViews() {
         Bundle args = getArguments();
         if (args != null) {
             mChapterBean = (ChapterBean) args.getSerializable("chapterBean");
@@ -183,7 +177,7 @@ public class WxArticleFragment extends BaseFragment<WxArticlePresenter,WxArticle
     }
 
     @Override
-    protected void loadData() {
+    protected void bindData() {
         if (mChapterBean != null) {
             MultiStateUtils.toLoading(msv);
             presenter.getWxArticleListCache(mChapterBean.getId(), currPage);

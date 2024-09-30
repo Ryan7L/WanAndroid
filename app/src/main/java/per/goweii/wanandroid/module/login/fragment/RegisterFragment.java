@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import per.goweii.basic.core.base.BaseFragment;
@@ -30,7 +29,7 @@ import per.goweii.wanandroid.widget.SubmitView;
  * @date 2019/5/16
  * GitHub: https://github.com/goweii
  */
-public class RegisterFragment extends BaseFragment<RegisterPresenter,RegisterView> implements RegisterView {
+public class RegisterFragment extends BaseFragment<RegisterPresenter, RegisterView> implements RegisterView {
 
     //@BindView(R.id.ll_go_login)
     LinearLayout ll_go_login;
@@ -49,12 +48,11 @@ public class RegisterFragment extends BaseFragment<RegisterPresenter,RegisterVie
         return new RegisterFragment();
     }
 
-    @Nullable
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    protected View initRootView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         FragmentRegisterBinding binding = FragmentRegisterBinding.inflate(inflater, container, false);
         mRootView = binding.getRoot();
-        mViewCreated = true;
         ll_go_login = binding.llGoLogin;
         piv_account = binding.pivRegisterAccount;
         piv_password = binding.pivRegisterPassword;
@@ -66,14 +64,8 @@ public class RegisterFragment extends BaseFragment<RegisterPresenter,RegisterVie
     }
 
     @Override
-    protected int getLayoutRes() {
-        return R.layout.fragment_register;
-    }
-
-    @Nullable
-    @Override
-    protected RegisterPresenter initPresenter() {
-        return new RegisterPresenter();
+    protected void setUpPresenter() {
+        presenter = new RegisterPresenter();
     }
 
     @Override
@@ -83,7 +75,7 @@ public class RegisterFragment extends BaseFragment<RegisterPresenter,RegisterVie
     }
 
     @Override
-    protected void initView() {
+    protected void initViews() {
         piv_password.setOnPwdFocusChangedListener(new PasswordInputView.OnPwdFocusChangedListener() {
             @Override
             public void onFocusChanged(boolean focus) {
@@ -99,7 +91,7 @@ public class RegisterFragment extends BaseFragment<RegisterPresenter,RegisterVie
     }
 
     @Override
-    protected void loadData() {
+    protected void bindData() {
     }
 
     @Override
@@ -133,7 +125,7 @@ public class RegisterFragment extends BaseFragment<RegisterPresenter,RegisterVie
     }
 
     @Override
-    protected boolean onClick1(View v) {
+    protected boolean onClickContinuously(View v) {
         switch (v.getId()) {
             default:
                 return false;
