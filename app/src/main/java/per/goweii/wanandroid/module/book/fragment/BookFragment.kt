@@ -91,6 +91,7 @@ class BookFragment : BaseFragment<BookPresenter, BookView>(), BookView {
 
     override val isRegisterEventBus: Boolean
         get() = false
+
     override fun getBookListSuccess(list: List<BookBean>) {
         mAdapter.setNewData(list)
         if (list.isEmpty()) {

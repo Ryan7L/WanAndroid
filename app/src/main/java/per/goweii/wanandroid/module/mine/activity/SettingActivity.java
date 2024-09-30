@@ -45,7 +45,7 @@ import per.goweii.wanandroid.utils.web.HostInterceptUtils;
  * @date 2019/5/17
  * GitHub: https://github.com/goweii
  */
-public class SettingActivity extends BaseActivity<SettingPresenter,SettingView> implements SettingView {
+public class SettingActivity extends BaseActivity<SettingPresenter, SettingView> implements SettingView {
 
     private static final int REQ_CODE_PERMISSION = 1;
 
@@ -106,7 +106,7 @@ public class SettingActivity extends BaseActivity<SettingPresenter,SettingView> 
     @Nullable
     @Override
     protected void setUpPresenter() {
-        presenter =  new SettingPresenter();
+        presenter = new SettingPresenter();
     }
 
     @Override

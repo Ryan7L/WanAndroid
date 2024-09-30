@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 
-import androidx.annotation.Nullable;
-
 import java.io.File;
 
 import per.goweii.anypermission.AnyPermission;
@@ -24,7 +22,6 @@ public class InstallApkActivity extends BaseActivity {
         intent.putExtra(APK_PATH, apk.getPath());
         context.startActivity(intent);
     }
-
 
 
     @Override

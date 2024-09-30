@@ -5,8 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,7 +14,6 @@ import java.util.List;
 
 import per.goweii.basic.core.base.BaseFragment;
 import per.goweii.basic.ui.toast.ToastMaker;
-import per.goweii.wanandroid.R;
 import per.goweii.wanandroid.databinding.FragmentKnowledgeNavigationChildBinding;
 import per.goweii.wanandroid.module.navigation.adapter.NaviAdapter;
 import per.goweii.wanandroid.module.navigation.model.NaviBean;
@@ -31,7 +28,7 @@ import per.goweii.wanandroid.utils.UrlOpenUtils;
  * @date 2019/5/12
  * GitHub: https://github.com/goweii
  */
-public class NaviFragment extends BaseFragment<NaviPresenter,NaviView> implements RvScrollTopUtils.ScrollTop, NaviView {
+public class NaviFragment extends BaseFragment<NaviPresenter, NaviView> implements RvScrollTopUtils.ScrollTop, NaviView {
 
     MultiStateView msv;
     RecyclerView rv;
@@ -54,7 +51,7 @@ public class NaviFragment extends BaseFragment<NaviPresenter,NaviView> implement
 
     @Override
     protected void setUpPresenter() {
-        presenter =  new NaviPresenter();
+        presenter = new NaviPresenter();
     }
 
     @Override

@@ -23,6 +23,7 @@ class ArticleListFragment : BaseFragment<ArticleListPresenter, ArticleListView>(
     ): View {
         return inflater.inflate(R.layout.fragment_article_list, container, false)
     }
+
     override fun setUpPresenter() {
         presenter = ArticleListPresenter()
     }

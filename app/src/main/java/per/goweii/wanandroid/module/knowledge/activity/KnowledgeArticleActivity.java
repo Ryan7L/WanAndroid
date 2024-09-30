@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.text.TextUtils;
 
-import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
 
 import com.kennyc.view.MultiStateView;
@@ -18,7 +17,6 @@ import java.util.List;
 import per.goweii.actionbarex.common.ActionBarCommon;
 import per.goweii.basic.core.adapter.MultiFragmentPagerAdapter;
 import per.goweii.basic.core.base.BaseActivity;
-import per.goweii.wanandroid.R;
 import per.goweii.wanandroid.common.Config;
 import per.goweii.wanandroid.databinding.ActivityKnowledgeArticleBinding;
 import per.goweii.wanandroid.event.ScrollTopEvent;
@@ -36,7 +34,7 @@ import per.goweii.wanandroid.utils.router.Router;
  * @date 2019/5/12
  * GitHub: https://github.com/goweii
  */
-public class KnowledgeArticleActivity extends BaseActivity<KnowledgePresenter,KnowledgeView> implements KnowledgeView {
+public class KnowledgeArticleActivity extends BaseActivity<KnowledgePresenter, KnowledgeView> implements KnowledgeView {
 
     ActionBarCommon abc;
     MultiStateView msv;
@@ -107,7 +105,7 @@ public class KnowledgeArticleActivity extends BaseActivity<KnowledgePresenter,Kn
 
     @Override
     protected void setUpPresenter() {
-        presenter =  new KnowledgePresenter();
+        presenter = new KnowledgePresenter();
     }
 
     @Override

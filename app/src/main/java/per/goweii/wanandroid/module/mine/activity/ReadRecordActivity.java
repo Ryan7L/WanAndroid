@@ -40,7 +40,7 @@ import per.goweii.wanandroid.utils.UrlOpenUtils;
  * @date 2019/5/17
  * GitHub: https://github.com/goweii
  */
-public class ReadRecordActivity extends BaseActivity<ReadRecordPresenter,ReadRecordView> implements ReadRecordView {
+public class ReadRecordActivity extends BaseActivity<ReadRecordPresenter, ReadRecordView> implements ReadRecordView {
 
     ActionBarCommon abc;
     MultiStateView msv;
@@ -85,11 +85,10 @@ public class ReadRecordActivity extends BaseActivity<ReadRecordPresenter,ReadRec
     }
 
 
-
     @Nullable
     @Override
     protected void setUpPresenter() {
-        presenter =  new ReadRecordPresenter();
+        presenter = new ReadRecordPresenter();
     }
 
     @Override

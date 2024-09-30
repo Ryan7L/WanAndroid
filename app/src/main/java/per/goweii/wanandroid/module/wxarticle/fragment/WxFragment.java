@@ -5,8 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
 
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator;
@@ -60,7 +58,7 @@ public class WxFragment extends BaseFragment<WxPresenter, WxView> implements RvS
 
     @Override
     protected void setUpPresenter() {
-        presenter =  new WxPresenter();
+        presenter = new WxPresenter();
     }
 
     @Override

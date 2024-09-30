@@ -11,7 +11,6 @@ import per.goweii.basic.core.base.BaseFragment
 import per.goweii.basic.core.utils.SmartRefreshUtils
 import per.goweii.basic.ui.toast.ToastMaker
 import per.goweii.basic.utils.listener.SimpleListener
-import per.goweii.wanandroid.R
 import per.goweii.wanandroid.databinding.FragmentQuestionBinding
 import per.goweii.wanandroid.event.CollectionEvent
 import per.goweii.wanandroid.event.LoginEvent
@@ -29,7 +28,7 @@ import per.goweii.wanandroid.utils.RvScrollTopUtils.ScrollTop
  * @author CuiZhen
  * @date 2020/3/25
  */
-class QuestionFragment : BaseFragment<QuestionPresenter,QuestionView>(), QuestionView, ScrollTop {
+class QuestionFragment : BaseFragment<QuestionPresenter, QuestionView>(), QuestionView, ScrollTop {
 
     companion object {
         private const val PAGE_START = 1
@@ -52,6 +51,7 @@ class QuestionFragment : BaseFragment<QuestionPresenter,QuestionView>(), Questio
         mViewCreated = true
         return mRootView
     }
+
     private lateinit var mSmartRefreshUtils: SmartRefreshUtils
     private lateinit var mAdapter: ArticleAdapter
 

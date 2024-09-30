@@ -5,8 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,7 +20,6 @@ import per.goweii.basic.core.base.BaseFragment;
 import per.goweii.basic.core.utils.SmartRefreshUtils;
 import per.goweii.basic.ui.toast.ToastMaker;
 import per.goweii.basic.utils.listener.SimpleListener;
-import per.goweii.wanandroid.R;
 import per.goweii.wanandroid.databinding.FragmentKnowledgeArticleBinding;
 import per.goweii.wanandroid.event.CollectionEvent;
 import per.goweii.wanandroid.event.LoginEvent;
@@ -43,7 +40,7 @@ import per.goweii.wanandroid.widget.CollectView;
  * @date 2019/5/12
  * GitHub: https://github.com/goweii
  */
-public class KnowledgeArticleFragment extends BaseFragment<KnowledgeArticlePresenter,KnowledgeArticleView> implements KnowledgeArticleView {
+public class KnowledgeArticleFragment extends BaseFragment<KnowledgeArticlePresenter, KnowledgeArticleView> implements KnowledgeArticleView {
 
     private static final int PAGE_START = 0;
 
@@ -124,7 +121,7 @@ public class KnowledgeArticleFragment extends BaseFragment<KnowledgeArticlePrese
 
     @Override
     protected void setUpPresenter() {
-        presenter =  new KnowledgeArticlePresenter();
+        presenter = new KnowledgeArticlePresenter();
     }
 
     @Override

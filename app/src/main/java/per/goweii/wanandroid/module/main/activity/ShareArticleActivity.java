@@ -9,8 +9,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
-
 import per.goweii.actionbarex.common.ActionBarCommon;
 import per.goweii.basic.core.base.BaseActivity;
 import per.goweii.basic.ui.toast.ToastMaker;
@@ -33,7 +31,7 @@ import per.goweii.wanandroid.utils.web.view.WebContainer;
  * @date 2019/5/17
  * GitHub: https://github.com/goweii
  */
-public class ShareArticleActivity extends BaseActivity<ShareArticlePresenter,ShareArticleView> implements ShareArticleView {
+public class ShareArticleActivity extends BaseActivity<ShareArticlePresenter, ShareArticleView> implements ShareArticleView {
 
     private static final String TAG = ShareArticleActivity.class.getSimpleName();
 
@@ -79,7 +77,7 @@ public class ShareArticleActivity extends BaseActivity<ShareArticlePresenter,Sha
 
     @Override
     protected void setUpPresenter() {
-        presenter =  new ShareArticlePresenter();
+        presenter = new ShareArticlePresenter();
     }
 
     @Override

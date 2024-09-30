@@ -10,8 +10,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -37,7 +35,7 @@ import per.goweii.wanandroid.utils.SettingUtils;
  * @date 2019/5/11
  * GitHub: https://github.com/goweii
  */
-public class SearchHistoryFragment extends BaseFragment<SearchHistoryPresenter,SearchHistoryView> implements SearchHistoryView {
+public class SearchHistoryFragment extends BaseFragment<SearchHistoryPresenter, SearchHistoryView> implements SearchHistoryView {
 
     //@BindView(R.id.rv_hot)
     RecyclerView rv_hot;
@@ -72,9 +70,10 @@ public class SearchHistoryFragment extends BaseFragment<SearchHistoryPresenter,S
         tv_down.setOnClickListener(this);
         return mRootView;
     }
+
     @Override
     protected void setUpPresenter() {
-        presenter =  new SearchHistoryPresenter();
+        presenter = new SearchHistoryPresenter();
     }
 
     @Override

@@ -3,8 +3,6 @@ package per.goweii.wanandroid.module.main.activity;
 import android.content.Context;
 import android.content.Intent;
 
-import androidx.annotation.Nullable;
-
 import per.goweii.basic.core.base.BaseActivity;
 
 public class BringToFrontActivity extends BaseActivity {

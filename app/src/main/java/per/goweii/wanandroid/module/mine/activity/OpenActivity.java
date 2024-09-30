@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -48,7 +47,6 @@ public class OpenActivity extends BaseActivity {
         srl = binding.srl;
         rv = binding.rv;
     }
-
 
 
     @Override

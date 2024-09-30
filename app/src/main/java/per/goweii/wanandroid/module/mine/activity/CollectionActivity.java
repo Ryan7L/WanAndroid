@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
@@ -45,7 +44,6 @@ public class CollectionActivity extends BaseActivity {
         ab = binding.ab;
         vp = binding.vp;
     }
-
 
 
     @Override

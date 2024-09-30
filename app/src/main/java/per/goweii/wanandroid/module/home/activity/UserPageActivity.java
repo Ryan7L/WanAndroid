@@ -10,7 +10,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -58,7 +57,7 @@ import per.goweii.wanandroid.utils.router.Router;
  * @date 2019/5/18
  * GitHub: https://github.com/goweii
  */
-public class UserPageActivity extends BaseActivity<UserPagePresenter,UserPageView> implements UserPageView {
+public class UserPageActivity extends BaseActivity<UserPagePresenter, UserPageView> implements UserPageView {
 
     private static final int PAGE_START = 1;
     MultiStateView msv;
@@ -135,7 +134,7 @@ public class UserPageActivity extends BaseActivity<UserPagePresenter,UserPageVie
 
     @Override
     protected void setUpPresenter() {
-        presenter =  new UserPagePresenter();
+        presenter = new UserPagePresenter();
     }
 
     @Override

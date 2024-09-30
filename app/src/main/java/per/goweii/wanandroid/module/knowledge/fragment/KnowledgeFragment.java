@@ -5,8 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,7 +15,6 @@ import java.util.List;
 import per.goweii.basic.core.base.BaseFragment;
 import per.goweii.basic.ui.toast.ToastMaker;
 import per.goweii.basic.utils.listener.SimpleListener;
-import per.goweii.wanandroid.R;
 import per.goweii.wanandroid.databinding.FragmentKnowledgeNavigationChildBinding;
 import per.goweii.wanandroid.module.knowledge.activity.KnowledgeArticleActivity;
 import per.goweii.wanandroid.module.knowledge.adapter.KnowledgeAdapter;
@@ -32,7 +29,7 @@ import per.goweii.wanandroid.utils.RvScrollTopUtils;
  * @date 2019/5/12
  * GitHub: https://github.com/goweii
  */
-public class KnowledgeFragment extends BaseFragment<KnowledgePresenter,KnowledgeView> implements RvScrollTopUtils.ScrollTop, KnowledgeView {
+public class KnowledgeFragment extends BaseFragment<KnowledgePresenter, KnowledgeView> implements RvScrollTopUtils.ScrollTop, KnowledgeView {
 
     //@BindView(R.id.msv)
     MultiStateView msv;
@@ -57,7 +54,7 @@ public class KnowledgeFragment extends BaseFragment<KnowledgePresenter,Knowledge
 
     @Override
     protected void setUpPresenter() {
-        presenter =  new KnowledgePresenter();
+        presenter = new KnowledgePresenter();
     }
 
     @Override

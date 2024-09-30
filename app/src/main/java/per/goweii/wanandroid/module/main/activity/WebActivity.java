@@ -11,7 +11,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import java.net.URLEncoder;
 import java.util.Arrays;
@@ -105,7 +104,7 @@ public class WebActivity extends BaseActivity<WebPresenter, WebView> implements 
 
     @Override
     protected void setUpPresenter() {
-        presenter =  new WebPresenter();
+        presenter = new WebPresenter();
     }
 
     @Override

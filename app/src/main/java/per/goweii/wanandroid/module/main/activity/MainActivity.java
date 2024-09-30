@@ -58,7 +58,7 @@ import per.goweii.wanandroid.utils.UrlOpenUtils;
 import per.goweii.wanandroid.utils.UserUtils;
 import per.goweii.wanandroid.utils.wanpwd.WanPwdParser;
 
-public class MainActivity extends BaseActivity<MainPresenter,MainView> implements MainView {
+public class MainActivity extends BaseActivity<MainPresenter, MainView> implements MainView {
 
     private static final int REQ_CODE_PERMISSION = 1;
 
@@ -108,11 +108,10 @@ public class MainActivity extends BaseActivity<MainPresenter,MainView> implement
     }
 
 
-
     @Nullable
     @Override
     protected void setUpPresenter() {
-        presenter =  new MainPresenter();
+        presenter = new MainPresenter();
     }
 
     @Override

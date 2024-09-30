@@ -49,7 +49,7 @@ import per.goweii.wanandroid.utils.router.Router;
  * @date 2019/5/17
  * GitHub: https://github.com/goweii
  */
-public class AboutMeActivity extends BaseActivity<AboutMePresenter,AboutMeView> implements AboutMeView {
+public class AboutMeActivity extends BaseActivity<AboutMePresenter, AboutMeView> implements AboutMeView {
 
     private static final int REQUEST_CODE_PERMISSION = 1;
 
@@ -113,7 +113,7 @@ public class AboutMeActivity extends BaseActivity<AboutMePresenter,AboutMeView> 
 
     @Override
     protected void setUpPresenter() {
-        presenter =  new AboutMePresenter();
+        presenter = new AboutMePresenter();
     }
 
     @Override

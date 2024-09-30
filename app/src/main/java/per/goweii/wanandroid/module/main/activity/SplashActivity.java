@@ -1,7 +1,5 @@
 package per.goweii.wanandroid.module.main.activity;
 
-import androidx.annotation.Nullable;
-
 import per.goweii.basic.core.base.BaseActivity;
 import per.goweii.wanandroid.R;
 
@@ -11,7 +9,6 @@ import per.goweii.wanandroid.R;
  * GitHub: https://github.com/goweii
  */
 public class SplashActivity extends BaseActivity {
-
 
 
     @Override

@@ -5,8 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -46,7 +44,6 @@ public class HostBlackFragment extends BaseFragment implements RvScrollTopUtils.
         rv = binding.rv;
         return mRootView;
     }
-
 
 
     @Override

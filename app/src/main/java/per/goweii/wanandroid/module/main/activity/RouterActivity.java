@@ -8,7 +8,6 @@ import android.os.Handler;
 import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import per.goweii.basic.core.base.BaseActivity;
 import per.goweii.basic.utils.LogUtils;
@@ -32,7 +31,6 @@ public class RouterActivity extends BaseActivity implements SwipeBackAbility.Dir
     public SwipeBackDirection swipeBackDirection() {
         return SwipeBackDirection.NONE;
     }
-
 
 
     @Override

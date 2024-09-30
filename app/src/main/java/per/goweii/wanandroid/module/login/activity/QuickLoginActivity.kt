@@ -19,7 +19,7 @@ import per.goweii.wanandroid.module.login.presenter.QuickLoginPresenter
 import per.goweii.wanandroid.module.login.view.QuickLoginView
 import per.goweii.wanandroid.utils.biometric.BiometricHelper
 
-class QuickLoginActivity : BaseActivity<QuickLoginPresenter,QuickLoginView>(), QuickLoginView,
+class QuickLoginActivity : BaseActivity<QuickLoginPresenter, QuickLoginView>(), QuickLoginView,
     SwipeBackAbility.Direction {
     companion object {
         private const val PARAMS_OPEN_OR_USE = "openOrUse"
@@ -70,13 +70,12 @@ class QuickLoginActivity : BaseActivity<QuickLoginPresenter,QuickLoginView>(), Q
     private lateinit var biometricHelper: BiometricHelper
 
 
-
     override fun initContentView() {
         setContentView(View(this))
     }
 
     override fun setUpPresenter() {
-        presenter =  QuickLoginPresenter()
+        presenter = QuickLoginPresenter()
     }
 
     override fun initViews() {

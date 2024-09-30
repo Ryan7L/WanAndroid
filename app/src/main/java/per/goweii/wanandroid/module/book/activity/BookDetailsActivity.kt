@@ -27,7 +27,7 @@ import per.goweii.wanandroid.utils.MultiStateUtils.Companion.toError
 import per.goweii.wanandroid.utils.UrlOpenUtils
 import kotlin.math.abs
 
-class BookDetailsActivity : BaseActivity<BookDetailsPresenter,BookDetailsView>(), BookDetailsView {
+class BookDetailsActivity : BaseActivity<BookDetailsPresenter, BookDetailsView>(), BookDetailsView {
     companion object {
         private const val PAGE_START = 0
         private const val PARAM_BOOK = "book"
@@ -50,7 +50,6 @@ class BookDetailsActivity : BaseActivity<BookDetailsPresenter,BookDetailsView>()
     private lateinit var adapter: BookChapterAdapter
 
     private var currPage = PAGE_START
-
 
 
     override fun setUpPresenter() {

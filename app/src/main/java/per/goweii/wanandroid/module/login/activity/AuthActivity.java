@@ -32,7 +32,7 @@ import per.goweii.wanandroid.widget.ParallaxStackLayout;
  * @date 2019/5/15
  * GitHub: https://github.com/goweii
  */
-public class AuthActivity extends BaseActivity<AuthPresenter,AuthView> implements AuthView, SwipeBackAbility.Direction {
+public class AuthActivity extends BaseActivity<AuthPresenter, AuthView> implements AuthView, SwipeBackAbility.Direction {
 
     private static final int REQ_CODE_OPEN_QUICK_LOGIN = 1;
     private static final int REQ_CODE_USE_QUICK_LOGIN = 2;
@@ -80,10 +80,9 @@ public class AuthActivity extends BaseActivity<AuthPresenter,AuthView> implement
     }
 
 
-
     @Override
     protected void setUpPresenter() {
-        presenter =  new AuthPresenter();
+        presenter = new AuthPresenter();
     }
 
     @Override

@@ -5,8 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
 
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator;
@@ -33,7 +31,7 @@ import per.goweii.wanandroid.utils.RvScrollTopUtils;
  * @date 2019/5/12
  * GitHub: https://github.com/goweii
  */
-public class ProjectFragment extends BaseFragment<ProjectPresenter,ProjectView> implements RvScrollTopUtils.ScrollTop, ProjectView {
+public class ProjectFragment extends BaseFragment<ProjectPresenter, ProjectView> implements RvScrollTopUtils.ScrollTop, ProjectView {
 
     //@BindView(R.id.ab)
     ActionBarEx ab;
@@ -60,7 +58,7 @@ public class ProjectFragment extends BaseFragment<ProjectPresenter,ProjectView> 
 
     @Override
     protected void setUpPresenter() {
-        presenter =  new ProjectPresenter();
+        presenter = new ProjectPresenter();
     }
 
     @Override

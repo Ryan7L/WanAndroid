@@ -28,7 +28,8 @@ import per.goweii.wanandroid.utils.UrlOpenUtils
  * @author CuiZhen
  * @date 2020/5/16
  */
-class MessageReadedFragment : BaseFragment<MessageReadedPresenter,MessageReadedView>(), MessageReadedView {
+class MessageReadedFragment : BaseFragment<MessageReadedPresenter, MessageReadedView>(),
+    MessageReadedView {
 
     companion object {
         const val PAGE_START = 1
@@ -46,6 +47,7 @@ class MessageReadedFragment : BaseFragment<MessageReadedPresenter,MessageReadedV
         mRootView = binding.root
         return mRootView
     }
+
     private lateinit var mSmartRefreshUtils: SmartRefreshUtils
     private lateinit var mAdapter: MessageReadedAdapter
 
@@ -73,7 +75,7 @@ class MessageReadedFragment : BaseFragment<MessageReadedPresenter,MessageReadedV
     override fun getLayoutRes() = R.layout.fragment_message_readed
 
     override fun setUpPresenter() {
-        presenter= MessageReadedPresenter()
+        presenter = MessageReadedPresenter()
     }
 
     override fun initViews() {

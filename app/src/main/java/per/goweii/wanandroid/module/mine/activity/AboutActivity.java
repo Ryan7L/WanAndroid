@@ -7,8 +7,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
-
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
 import per.goweii.actionbarex.common.ActionBarCommon;
@@ -31,7 +29,7 @@ import per.goweii.wanandroid.widget.LogoAnimView;
  * @date 2019/5/17
  * GitHub: https://github.com/goweii
  */
-public class AboutActivity extends BaseActivity<AboutPresenter,AboutView> implements AboutView {
+public class AboutActivity extends BaseActivity<AboutPresenter, AboutView> implements AboutView {
 
     ActionBarCommon abc;
     TextView tv_version_name;
@@ -64,7 +62,7 @@ public class AboutActivity extends BaseActivity<AboutPresenter,AboutView> implem
 
     @Override
     protected void setUpPresenter() {
-        presenter =  new AboutPresenter();
+        presenter = new AboutPresenter();
     }
 
     @Override

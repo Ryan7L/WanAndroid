@@ -7,8 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
@@ -46,7 +44,7 @@ import per.goweii.wanandroid.utils.UrlOpenUtils;
  * @date 2019/5/17
  * GitHub: https://github.com/goweii
  */
-public class CollectionLinkFragment extends BaseFragment<CollectionLinkPresenter,CollectionLinkView> implements RvScrollTopUtils.ScrollTop, CollectionLinkView {
+public class CollectionLinkFragment extends BaseFragment<CollectionLinkPresenter, CollectionLinkView> implements RvScrollTopUtils.ScrollTop, CollectionLinkView {
 
     MultiStateView msv;
     SmartRefreshLayout srl;
@@ -98,7 +96,7 @@ public class CollectionLinkFragment extends BaseFragment<CollectionLinkPresenter
 
     @Override
     protected void setUpPresenter() {
-        presenter =  new CollectionLinkPresenter();
+        presenter = new CollectionLinkPresenter();
     }
 
     @Override

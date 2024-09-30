@@ -3,7 +3,6 @@ package per.goweii.wanandroid.module.mine.activity;
 import android.content.Context;
 import android.content.Intent;
 
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -39,7 +38,7 @@ import per.goweii.wanandroid.widget.CollectView;
  * @date 2019/5/17
  * GitHub: https://github.com/goweii
  */
-public class MineShareActivity extends BaseActivity<MineSharePresenter,MineShareView> implements MineShareView {
+public class MineShareActivity extends BaseActivity<MineSharePresenter, MineShareView> implements MineShareView {
 
     public static final int PAGE_START = 1;
 
@@ -104,7 +103,7 @@ public class MineShareActivity extends BaseActivity<MineSharePresenter,MineShare
 
     @Override
     protected void setUpPresenter() {
-        presenter =  new MineSharePresenter();
+        presenter = new MineSharePresenter();
     }
 
     @Override

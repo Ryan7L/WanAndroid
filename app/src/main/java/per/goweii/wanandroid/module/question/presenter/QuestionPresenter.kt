@@ -34,23 +34,26 @@ class QuestionPresenter : BasePresenter<QuestionView>() {
     }
 
     fun getQuestionList(page: Int) {
-        QuestionRequest.getQuestionList(getRxLife()!!, page, object : RequestListener<ArticleListBean> {
-            override fun onStart() {}
-            override fun onSuccess(code: Int, data: ArticleListBean) {
-                if (isAttach) {
-                    baseView.getQuestionListSuccess(code, data)
+        QuestionRequest.getQuestionList(
+            getRxLife()!!,
+            page,
+            object : RequestListener<ArticleListBean> {
+                override fun onStart() {}
+                override fun onSuccess(code: Int, data: ArticleListBean) {
+                    if (isAttach) {
+                        baseView.getQuestionListSuccess(code, data)
+                    }
                 }
-            }
 
-            override fun onFailed(code: Int, msg: String) {
-                if (isAttach) {
-                    baseView.getQuestionListFail(code, msg)
+                override fun onFailed(code: Int, msg: String) {
+                    if (isAttach) {
+                        baseView.getQuestionListFail(code, msg)
+                    }
                 }
-            }
 
-            override fun onError(handle: ExceptionHandle) {}
-            override fun onFinish() {}
-        })
+                override fun onError(handle: ExceptionHandle) {}
+                override fun onFinish() {}
+            })
     }
 
     fun collect(item: ArticleBean, v: CollectView) {

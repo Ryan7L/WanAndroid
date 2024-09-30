@@ -48,7 +48,7 @@ import per.goweii.wanandroid.utils.UrlOpenUtils
  * @author CuiZhen
  * @date 2020/2/26
  */
-class ScanActivity : BaseActivity<ScanPresenter,ScanView>(), ScanView, SwipeBackAbility.Direction,
+class ScanActivity : BaseActivity<ScanPresenter, ScanView>(), ScanView, SwipeBackAbility.Direction,
     SwipeBackAbility.Transformer {
     private lateinit var binding: ActivityScanBinding
 
@@ -94,9 +94,8 @@ class ScanActivity : BaseActivity<ScanPresenter,ScanView>(), ScanView, SwipeBack
     override fun swipeBackTransformer(): SwipeBackTransformer? = null
 
 
-
     override fun setUpPresenter() {
-        presenter= ScanPresenter()
+        presenter = ScanPresenter()
     }
 
     override fun initViews() {

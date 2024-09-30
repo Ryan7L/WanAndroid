@@ -11,7 +11,6 @@ import com.kennyc.view.MultiStateView;
 
 import per.goweii.actionbarex.common.ActionBarCommon;
 import per.goweii.basic.core.base.BaseActivity;
-import per.goweii.wanandroid.R;
 import per.goweii.wanandroid.databinding.ActivityCoinRankBinding;
 import per.goweii.wanandroid.module.home.activity.UserPageActivity;
 import per.goweii.wanandroid.module.main.model.CoinInfoBean;
@@ -27,7 +26,7 @@ import per.goweii.wanandroid.utils.RvConfigUtils;
  * @date 2019/8/31
  * GitHub: https://github.com/goweii
  */
-public class CoinRankActivity extends BaseActivity<CoinRankPresenter,CoinRankView> implements CoinRankView {
+public class CoinRankActivity extends BaseActivity<CoinRankPresenter, CoinRankView> implements CoinRankView {
 
     private static final int PAGE_START = 1;
 
@@ -52,11 +51,10 @@ public class CoinRankActivity extends BaseActivity<CoinRankPresenter,CoinRankVie
     }
 
 
-
     @Nullable
     @Override
     protected void setUpPresenter() {
-        presenter =  new CoinRankPresenter();
+        presenter = new CoinRankPresenter();
     }
 
     @Override

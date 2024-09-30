@@ -40,7 +40,7 @@ import per.goweii.wanandroid.utils.UrlOpenUtils;
  * @date 2019/5/17
  * GitHub: https://github.com/goweii
  */
-public class ReadLaterActivity extends BaseActivity<ReadLaterPresenter,ReadLaterView> implements ReadLaterView {
+public class ReadLaterActivity extends BaseActivity<ReadLaterPresenter, ReadLaterView> implements ReadLaterView {
 
     ActionBarCommon abc;
     MultiStateView msv;
@@ -83,11 +83,10 @@ public class ReadLaterActivity extends BaseActivity<ReadLaterPresenter,ReadLater
     }
 
 
-
     @Nullable
     @Override
     protected void setUpPresenter() {
-        presenter =  new ReadLaterPresenter();
+        presenter = new ReadLaterPresenter();
     }
 
     @Override

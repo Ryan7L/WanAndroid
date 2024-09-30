@@ -103,7 +103,7 @@ import per.goweii.wanandroid.widget.refresh.SimpleOnMultiListener;
  * @date 2019/5/11
  * GitHub: https://github.com/goweii
  */
-public class HomeFragment extends BaseFragment<HomePresenter,HomeView> implements RvScrollTopUtils.ScrollTop, HomeView {
+public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implements RvScrollTopUtils.ScrollTop, HomeView {
 
     private static final int PAGE_START = 0;
     //@BindView(R.id.msv)
@@ -255,7 +255,7 @@ public class HomeFragment extends BaseFragment<HomePresenter,HomeView> implement
 
     @Override
     protected void setUpPresenter() {
-        presenter =  new HomePresenter();
+        presenter = new HomePresenter();
     }
 
     @Override

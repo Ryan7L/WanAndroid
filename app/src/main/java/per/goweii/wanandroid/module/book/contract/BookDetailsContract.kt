@@ -40,26 +40,30 @@ class BookDetailsPresenter : BasePresenter<BookDetailsView>() {
     }
 
     fun getChapters(id: Int, page: Int) {
-        BookRequest.getBookChapterList(getRxLife(), id, page, object : RequestListener<ArticleListBean> {
-            override fun onStart() {
-            }
-
-            override fun onSuccess(code: Int, data: ArticleListBean) {
-                fillReadRecord(data)
-            }
-
-            override fun onFailed(code: Int, msg: String?) {
-                if (isAttach) {
-                    baseView.getBookChaptersFailed()
+        BookRequest.getBookChapterList(
+            getRxLife(),
+            id,
+            page,
+            object : RequestListener<ArticleListBean> {
+                override fun onStart() {
                 }
-            }
 
-            override fun onError(handle: ExceptionHandle?) {
-            }
+                override fun onSuccess(code: Int, data: ArticleListBean) {
+                    fillReadRecord(data)
+                }
 
-            override fun onFinish() {
-            }
-        })
+                override fun onFailed(code: Int, msg: String?) {
+                    if (isAttach) {
+                        baseView.getBookChaptersFailed()
+                    }
+                }
+
+                override fun onError(handle: ExceptionHandle?) {
+                }
+
+                override fun onFinish() {
+                }
+            })
     }
 
     private fun fillReadRecord(data: ArticleListBean) = mainScope.launch {

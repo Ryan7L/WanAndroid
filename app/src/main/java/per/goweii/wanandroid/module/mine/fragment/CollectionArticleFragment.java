@@ -5,8 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -36,7 +34,7 @@ import per.goweii.wanandroid.utils.UrlOpenUtils;
  * @date 2019/5/17
  * GitHub: https://github.com/goweii
  */
-public class CollectionArticleFragment extends BaseFragment<CollectionArticlePresenter,CollectionArticleView> implements RvScrollTopUtils.ScrollTop, CollectionArticleView {
+public class CollectionArticleFragment extends BaseFragment<CollectionArticlePresenter, CollectionArticleView> implements RvScrollTopUtils.ScrollTop, CollectionArticleView {
 
     public static final int PAGE_START = 0;
 
@@ -103,7 +101,7 @@ public class CollectionArticleFragment extends BaseFragment<CollectionArticlePre
 
     @Override
     protected void setUpPresenter() {
-        presenter =  new CollectionArticlePresenter();
+        presenter = new CollectionArticlePresenter();
     }
 
     @Override

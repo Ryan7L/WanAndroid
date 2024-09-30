@@ -11,7 +11,6 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import per.goweii.basic.core.base.BaseFragment
 import per.goweii.basic.core.utils.SmartRefreshUtils
-import per.goweii.wanandroid.R
 import per.goweii.wanandroid.databinding.FragmentBookmarkBinding
 import per.goweii.wanandroid.db.model.ReadLaterModel
 import per.goweii.wanandroid.event.CloseSecondFloorEvent
@@ -28,7 +27,7 @@ import per.goweii.wanandroid.utils.RvConfigUtils
 import per.goweii.wanandroid.utils.UrlOpenUtils
 import per.goweii.wanandroid.widget.refresh.SimpleOnMultiListener
 
-class BookmarkFragment : BaseFragment<BookmarkPresenter,BookmarkView>(), BookmarkView {
+class BookmarkFragment : BaseFragment<BookmarkPresenter, BookmarkView>(), BookmarkView {
 
     private lateinit var mAdapter: BookmarkAdapter
     private lateinit var binding: FragmentBookmarkBinding
@@ -48,7 +47,7 @@ class BookmarkFragment : BaseFragment<BookmarkPresenter,BookmarkView>(), Bookmar
 
 
     override fun setUpPresenter() {
-     presenter   = BookmarkPresenter()
+        presenter = BookmarkPresenter()
     }
 
     override fun initViews() {
@@ -110,6 +109,7 @@ class BookmarkFragment : BaseFragment<BookmarkPresenter,BookmarkView>(), Bookmar
 
     override val isRegisterEventBus: Boolean
         get() = true
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onReadLaterEvent(event: ReadLaterEvent) {
         if (!isAdded) return
