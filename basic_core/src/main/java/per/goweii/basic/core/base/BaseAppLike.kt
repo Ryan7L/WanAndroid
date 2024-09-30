@@ -1,37 +1,31 @@
-package per.goweii.basic.core.base;
+package per.goweii.basic.core.base
 
-import android.app.Application;
-import android.content.Context;
-import android.content.res.Configuration;
+import android.app.Application
+import android.content.Context
+import android.content.res.Configuration
 
-/**
- * 描述：
- *
- * @author Cuizhen
- * @date 2019/3/13
- */
-public class BaseAppLike implements AppLike {
-    @Override
-    public void attachBaseContext(Context context) {
+open class BaseAppLike: AppLike {
+    override fun attachBaseContext(context: Context) {
+        
     }
 
-    @Override
-    public void onCreate(Application app) {
+    override fun onCreate(app: Application?) {
+        
     }
 
-    @Override
-    public void onConfigurationChanged(Application app, Configuration newConfig) {
+    override fun onConfigurationChanged(app: Application, newConfig: Configuration?) {
+        
     }
 
-    @Override
-    public void onTerminate(Application app) {
+    override fun onTerminate(app: Application) {
+        
     }
 
-    @Override
-    public void onLowMemory(Application app) {
+    override fun onLowMemory(app: Application) {
+        
     }
 
-    @Override
-    public void onTrimMemory(Application app, int level) {
+    override fun onTrimMemory(app: Application, level: Int) {
+        
     }
 }

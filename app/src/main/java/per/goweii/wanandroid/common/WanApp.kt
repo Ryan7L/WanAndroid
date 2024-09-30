@@ -1,6 +1,6 @@
 package per.goweii.wanandroid.common
 
-import per.goweii.basic.core.base.BaseApp
+import BaseApp
 import per.goweii.basic.utils.InitTaskRunner
 
 class WanApp : BaseApp() {

@@ -1,25 +1,19 @@
-package per.goweii.basic.core.base;
+package per.goweii.basic.core.base
 
-import android.app.Application;
-import android.content.Context;
-import android.content.res.Configuration;
+import android.app.Application
+import android.content.Context
+import android.content.res.Configuration
 
-/**
- * 描述：
- *
- * @author Cuizhen
- * @date 2019/3/13
- */
 interface AppLike {
-    void attachBaseContext(Context context);
+    fun attachBaseContext(context: Context)
 
-    void onCreate(Application app);
+    fun onCreate(app: Application?)
 
-    void onConfigurationChanged(Application app, Configuration newConfig);
+    fun onConfigurationChanged(app: Application, newConfig: Configuration?)
 
-    void onTerminate(Application app);
+    fun onTerminate(app: Application)
 
-    void onLowMemory(Application app);
+    fun onLowMemory(app: Application)
 
-    void onTrimMemory(Application app, int level);
+    fun onTrimMemory(app: Application, level: Int)
 }
