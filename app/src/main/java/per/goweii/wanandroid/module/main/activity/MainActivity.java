@@ -108,7 +108,6 @@ public class MainActivity extends BaseActivity<MainPresenter, MainView> implemen
     }
 
 
-    @Nullable
     @Override
     protected void setUpPresenter() {
         presenter = new MainPresenter();
@@ -200,12 +199,7 @@ public class MainActivity extends BaseActivity<MainPresenter, MainView> implemen
         presenter.getConfig();
         presenter.getAdvert();
         presenter.update();
-        getWindow().getDecorView().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                presenter.getReadLaterArticle();
-            }
-        }, 500L);
+        getWindow().getDecorView().postDelayed(() -> presenter.getReadLaterArticle(), 500L);
 
         RecommendManager.getInstance().load();
     }
@@ -213,12 +207,7 @@ public class MainActivity extends BaseActivity<MainPresenter, MainView> implemen
     @Override
     protected void onStart() {
         super.onStart();
-        vp.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                CopiedTextProcessor.getInstance().process();
-            }
-        }, 500L);
+        vp.postDelayed(() -> CopiedTextProcessor.getInstance().process(), 500L);
     }
 
     @Override
@@ -414,31 +403,23 @@ public class MainActivity extends BaseActivity<MainPresenter, MainView> implemen
 
     private void download(final String url, final String urlBackup, final boolean isForce) {
         PredefinedTaskQueen.Task task = mPredefinedTaskQueen.get(sTaskDownload);
-        task.runnable(new Function1<PredefinedTaskQueen.Completion, Unit>() {
-            @Override
-            public Unit invoke(PredefinedTaskQueen.Completion completion) {
-                mRuntimeRequester = PermissionUtils.request(new RequestListener() {
-                    @Override
-                    public void onSuccess() {
-                        DownloadDialog.with(getActivity(), isForce, url, urlBackup, new DownloadDialog.OnDismissListener() {
-                            @Override
-                            public void onDismiss() {
-                                completion.complete();
-                            }
-                        });
-                    }
+        task.runnable(completion -> {
+            mRuntimeRequester = PermissionUtils.request(new RequestListener() {
+                @Override
+                public void onSuccess() {
+                    DownloadDialog.with(getActivity(), isForce, url, urlBackup, completion::complete);
+                }
 
-                    @Override
-                    public void onFailed() {
-                        if (isForce) {
-                            download(url, urlBackup, true);
-                        } else {
-                            completion.complete();
-                        }
+                @Override
+                public void onFailed() {
+                    if (isForce) {
+                        download(url, urlBackup, true);
+                    } else {
+                        completion.complete();
                     }
-                }, getViewContext(), REQ_CODE_PERMISSION, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE);
-                return null;
-            }
+                }
+            }, getViewContext(), REQ_CODE_PERMISSION, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE);
+            return null;
         });
     }
 
@@ -466,22 +447,19 @@ public class MainActivity extends BaseActivity<MainPresenter, MainView> implemen
             mPredefinedTaskQueen.get(sTaskAdvert).complete();
             return;
         }
-        mPredefinedTaskQueen.get(sTaskAdvert).runnable(new Function1<PredefinedTaskQueen.Completion, Unit>() {
-            @Override
-            public Unit invoke(PredefinedTaskQueen.Completion completion) {
-                new AdvertDialog(MainActivity.this).setAdvertBean(advertBean).addOnVisibleChangeListener(new Layer.OnVisibleChangedListener() {
-                    @Override
-                    public void onShow(@NonNull Layer layer) {
-                        ADUtils.getInstance().setAdShown();
-                    }
+        mPredefinedTaskQueen.get(sTaskAdvert).runnable(completion -> {
+            new AdvertDialog(MainActivity.this).setAdvertBean(advertBean).addOnVisibleChangeListener(new Layer.OnVisibleChangedListener() {
+                @Override
+                public void onShow(@NonNull Layer layer) {
+                    ADUtils.getInstance().setAdShown();
+                }
 
-                    @Override
-                    public void onDismiss(@NonNull Layer layer) {
-                        completion.complete();
-                    }
-                }).show();
-                return null;
-            }
+                @Override
+                public void onDismiss(@NonNull Layer layer) {
+                    completion.complete();
+                }
+            }).show();
+            return null;
         });
     }
 
@@ -492,40 +470,29 @@ public class MainActivity extends BaseActivity<MainPresenter, MainView> implemen
 
     @Override
     public void getReadLaterArticleSuccess(ReadLaterModel readLaterModel) {
-        mPredefinedTaskQueen.get(sTaskReadLater).runnable(new Function1<PredefinedTaskQueen.Completion, Unit>() {
-            @Override
-            public Unit invoke(PredefinedTaskQueen.Completion completion) {
-                if (!SettingUtils.getInstance().isShowReadLaterNotification()) {
-                    completion.complete();
-                    return null;
-                }
-                new NotificationLayer(MainActivity.this).setContentView(R.layout.dialog_read_later_notification).addOnBindDataListener(new Layer.OnBindDataListener() {
-                    @Override
-                    public void onBindData(@NonNull Layer layer) {
-                        View child = layer.requireView(R.id.dialog_read_later_notification);
-                        child.setPadding(0, DisplayInfoUtils.getInstance().getStatusBarHeight(), 0, 0);
-                        TextView tv_title = layer.requireView(R.id.dialog_read_later_notification_tv_title);
-                        TextView tv_desc = layer.requireView(R.id.dialog_read_later_notification_tv_desc);
-                        tv_title.setText("是否继续阅读？");
-                        tv_desc.setText(readLaterModel.getTitle());
-                    }
-                }).addOnClickToDismissListener(new Layer.OnClickListener() {
-                    @Override
-                    public void onClick(@NonNull Layer layer, @NonNull View view) {
-                        UrlOpenUtils.Companion.with(readLaterModel.getLink()).open(getViewContext());
-                    }
-                }, R.id.dialog_read_later_notification_ll_content).addOnDismissListener(new Layer.OnDismissListener() {
-                    @Override
-                    public void onPreDismiss(@NonNull Layer layer) {
-                    }
-
-                    @Override
-                    public void onPostDismiss(@NonNull Layer layer) {
-                        completion.complete();
-                    }
-                }).show();
+        mPredefinedTaskQueen.get(sTaskReadLater).runnable(completion -> {
+            if (!SettingUtils.getInstance().isShowReadLaterNotification()) {
+                completion.complete();
                 return null;
             }
+            new NotificationLayer(MainActivity.this).setContentView(R.layout.dialog_read_later_notification).addOnBindDataListener(layer -> {
+                View child = layer.requireView(R.id.dialog_read_later_notification);
+                child.setPadding(0, DisplayInfoUtils.getInstance().getStatusBarHeight(), 0, 0);
+                TextView tv_title = layer.requireView(R.id.dialog_read_later_notification_tv_title);
+                TextView tv_desc = layer.requireView(R.id.dialog_read_later_notification_tv_desc);
+                tv_title.setText("是否继续阅读？");
+                tv_desc.setText(readLaterModel.getTitle());
+            }).addOnClickToDismissListener((layer, view) -> UrlOpenUtils.Companion.with(readLaterModel.getLink()).open(getViewContext()), R.id.dialog_read_later_notification_ll_content).addOnDismissListener(new Layer.OnDismissListener() {
+                @Override
+                public void onPreDismiss(@NonNull Layer layer) {
+                }
+
+                @Override
+                public void onPostDismiss(@NonNull Layer layer) {
+                    completion.complete();
+                }
+            }).show();
+            return null;
         });
     }
 
@@ -534,3 +501,4 @@ public class MainActivity extends BaseActivity<MainPresenter, MainView> implemen
         mPredefinedTaskQueen.get(sTaskReadLater).complete();
     }
 }
+

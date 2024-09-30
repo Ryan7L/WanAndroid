@@ -83,7 +83,7 @@ dependencies {
         api(libs.room.compiler)
         api(libs.lifecycle.compiler)
     }
-
+    implementation (libs.logger)
     //该依赖用于解决一个报错问题：https://stackoverflow.com/questions/56639529/duplicate-class-com-google-common-util-concurrent-listenablefuture-found-in-modu
     implementation(libs.guavanolistenablefuture)
 

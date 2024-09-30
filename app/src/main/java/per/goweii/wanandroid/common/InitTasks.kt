@@ -6,6 +6,10 @@ package per.goweii.wanandroid.common
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
+import com.orhanobut.logger.AndroidLogAdapter
+import com.orhanobut.logger.FormatStrategy
+import com.orhanobut.logger.Logger
+import com.orhanobut.logger.PrettyFormatStrategy
 import com.scwang.smart.refresh.footer.ClassicsFooter
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.tencent.smtt.sdk.QbSdk
@@ -266,5 +270,25 @@ class ReadingModeTask : AsyncInitTask() {
 
     override fun level(): Int {
         return 3
+    }
+}
+
+class LoggerInitTask : AsyncInitTask() {
+    override fun init(application: Application) {
+        val formatStrategy: FormatStrategy = PrettyFormatStrategy.newBuilder()
+            .showThreadInfo(false) // （可选）是否显示线程信息。默认 true
+            .methodCount(0) // （可选）显示多少个方法行。默认2
+            .methodOffset(7) // （可选）隐藏内部方法调用直至偏移量。默认5
+            .tag("WanAndroid") // （可选）每个日志的全局标签。默认PRETTY_LOGGER
+            .build()
+        Logger.addLogAdapter(AndroidLogAdapter(formatStrategy))
+    }
+
+    override fun onlyMainProcess(): Boolean {
+        return true
+    }
+
+    override fun level(): Int {
+        return 0
     }
 }

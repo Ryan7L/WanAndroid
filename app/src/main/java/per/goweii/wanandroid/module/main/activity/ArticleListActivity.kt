@@ -12,21 +12,15 @@ import per.goweii.wanandroid.module.main.model.ChapterBean
  */
 class ArticleListActivity : BaseActivity<BasePresenter<BaseView>, BaseView>() {
 
-    companion object {
-        @JvmStatic
-        fun start(chapterBean: ChapterBean) {
-
-        }
-    }
+//    companion object {
+//        @JvmStatic
+//        fun start(chapterBean: ChapterBean) {
+//
+//        }
+//    }
 
     override fun initContentView() {
         setContentView(R.layout.activity_article_list)
     }
 
-
-    override fun initViews() {
-    }
-
-    override fun bindData() {
-    }
 }

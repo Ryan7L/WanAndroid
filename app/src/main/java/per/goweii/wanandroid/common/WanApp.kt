@@ -21,6 +21,7 @@ class WanApp : BaseApp() {
             .add(X5InitTask())
             .add(CrashInitTask())
             .add(ReadingModeTask())
+            .add(LoggerInitTask())
             .run()
     }
 }

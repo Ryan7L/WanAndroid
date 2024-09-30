@@ -108,7 +108,7 @@ public class MineShareActivity extends BaseActivity<MineSharePresenter, MineShar
 
     @Override
     protected void initViews() {
-        abc.setOnRightIconClickListener(v -> ShareArticleActivity.start(getViewContext()));
+        abc.setOnRightIconClickListener(v -> ShareArticleActivity.start(getViewContext(),"",""));
         abc.getTitleTextView().setOnClickListener(v -> {
             long currClickTime = System.currentTimeMillis();
             if (currClickTime - lastClickTime <= Config.SCROLL_TOP_DOUBLE_CLICK_DELAY) {

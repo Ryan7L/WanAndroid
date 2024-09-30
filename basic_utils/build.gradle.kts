@@ -12,7 +12,7 @@ android {
 }
 
 dependencies {
-    api(libs.ponyo.log)
+//    api(libs.ponyo.log)
     api(libs.ponyo.crash)
-
+    api (libs.logger)
 }

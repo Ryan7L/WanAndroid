@@ -14,20 +14,20 @@ abstract class MvpActivity<P : IPresenter<V>, V : IView> : CacheActivity(), IVie
 
     }
 
-    protected abstract fun initViews()
-    protected abstract fun bindData()
+    protected open fun initViews(){}
+    protected open fun bindData(){}
 
     /**
      * 点击事件，可连续点击
      */
-    protected open fun onClickContinuously(v: View): Boolean {
+    protected open fun onClickContinuously(v: View?): Boolean {
         return false
     }
 
     /**
      * 点击事件，500毫秒第一次
      */
-    protected open fun onClickSpace(v: View) {
+    protected open fun onClickSpace(v: View?) {
     }
 
     protected open fun initWindowConfig() {}

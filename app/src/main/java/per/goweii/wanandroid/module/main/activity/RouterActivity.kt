@@ -1,150 +1,104 @@
-package per.goweii.wanandroid.module.main.activity;
+package per.goweii.wanandroid.module.main.activity
 
-import android.app.Activity;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
-import android.os.Handler;
-import android.text.TextUtils;
+import android.content.Intent
+import android.net.Uri
+import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import per.goweii.basic.core.base.App
+import per.goweii.basic.core.base.BaseActivity
+import per.goweii.basic.core.base.BasePresenter
+import per.goweii.basic.core.base.BaseView
+import per.goweii.basic.utils.LogUtils
+import per.goweii.swipeback.SwipeBackAbility
+import per.goweii.swipeback.SwipeBackDirection
+import per.goweii.wanandroid.utils.UrlOpenUtils
 
-import androidx.annotation.NonNull;
-
-import per.goweii.basic.core.base.BaseActivity;
-import per.goweii.basic.utils.LogUtils;
-import per.goweii.swipeback.SwipeBackAbility;
-import per.goweii.swipeback.SwipeBackDirection;
-import per.goweii.wanandroid.common.WanApp;
-import per.goweii.wanandroid.utils.UrlOpenUtils;
-
-/**
- * @author CuiZhen
- * @date 2019/5/7
- * GitHub: https://github.com/goweii
- */
-public class RouterActivity extends BaseActivity implements SwipeBackAbility.Direction, Runnable {
-
-    private static final String TAG = RouterActivity.class.getSimpleName();
-    private Handler mHandler = null;
-
-    @NonNull
-    @Override
-    public SwipeBackDirection swipeBackDirection() {
-        return SwipeBackDirection.NONE;
+private const val TAG = "RouterActivity"
+class RouterActivity: BaseActivity<BasePresenter<BaseView>,BaseView>(),SwipeBackAbility.Direction,Runnable {
+    private var handler: Handler? = null
+    override fun swipeBackDirection(): SwipeBackDirection {
+        return SwipeBackDirection.NONE
     }
 
-
-    @Override
-    protected void initViews() {
-
-    }
-
-    @Override
-    protected void bindData() {
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Activity ma = WanApp.findActivity(MainActivity.class);
-        LogUtils.i(TAG, "findActivity=" + ma);
-        if (ma == null) {
-            LogUtils.i(TAG, "start MainActivity");
-            MainActivity.start(getViewContext());
-            afterMainActivityStarted();
-        } else {
-            parseIntent(getIntent());
-            finish();
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val activity = App.findActivity(MainActivity::class.java)
+        LogUtils.i(TAG, "findActivity=$activity")
+        activity?.let {
+            parseIntent(intent)
+            finish()
+        } ?: {
+            LogUtils.i(TAG, "start MainActivity")
+            MainActivity.start(viewContext)
+            afterMainActivityStarted()
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        if (mHandler != null) {
-            mHandler.removeCallbacks(this);
-        }
-        super.onDestroy();
+    override fun onDestroy() {
+        handler?.removeCallbacks(this)
+        super.onDestroy()
+    }
+    private fun afterMainActivityStarted(){
+        handler = Handler(Looper.getMainLooper())
+        handler?.postDelayed(this,100)
     }
 
-    private void afterMainActivityStarted() {
-        mHandler = new Handler();
-        mHandler.postDelayed(this, 100);
+    override fun run() {
+        val activity = App.findActivity(MainActivity::class.java)
+        LogUtils.i(TAG, "findActivity=$activity")
+        activity?.let {
+            parseIntent(intent)
+            finish()
+        } ?: handler?.postDelayed(this,100)
     }
-
-    @Override
-    public void run() {
-        Activity ma = WanApp.findActivity(MainActivity.class);
-        LogUtils.i(TAG, "findActivity=" + ma);
-        if (ma == null) {
-            mHandler.postDelayed(this, 100);
-        } else {
-            parseIntent(getIntent());
-            finish();
-        }
-    }
-
-    private void parseIntent(Intent intent) {
-        String action = intent.getAction();
-        LogUtils.d(TAG, "action=" + intent.getAction());
+    private fun parseIntent(intent: Intent){
+        val action = intent.action
+        LogUtils.d(TAG, "action=$action")
         if (action == null) {
-            return;
+            return
         }
-        switch (action) {
-            default:
-                break;
-            case Intent.ACTION_VIEW:
-                handleOpenUrl(intent.getData());
-                break;
-            case Intent.ACTION_SEND:
-                handleShareText(intent.getStringExtra(Intent.EXTRA_TEXT));
-                break;
+        when(action){
+            Intent.ACTION_VIEW -> handleOpenUrl(intent.data)
+            Intent.ACTION_SEND -> handleShareText(intent.getStringExtra(Intent.EXTRA_TEXT))
+            else -> {}
         }
     }
-
-    private void handleOpenUrl(Uri data) {
-        LogUtils.d(TAG, "data=" + data);
-        if (data == null) {
-            return;
+    private fun handleOpenUrl(data: Uri?){
+        LogUtils.d(TAG, "data=$data")
+        data?:return
+        val scheme = data.scheme
+        if (scheme != "http" && scheme != "https"){
+            return
         }
-        String scheme = data.getScheme();
-        if (!TextUtils.equals(scheme, "http") && !TextUtils.equals(scheme, "https")) {
-            return;
-        }
-        UrlOpenUtils.Companion
-                .with(data.toString())
-                .open(getViewContext());
+        UrlOpenUtils.with(data.toString())
+            .open(viewContext)
     }
-
-    private void handleShareText(String sharedText) {
+    private fun handleShareText(text: String?) {
         try {
-            LogUtils.d(TAG, "sharedText=" + sharedText);
-            if (TextUtils.isEmpty(sharedText)) {
-                return;
+            LogUtils.d(TAG, "sharedText=$text")
+            text ?: return
+            if (text.isEmpty()) {
+                return
             }
-            int urlStartIndex = sharedText.indexOf("https://");
+            var urlStartIndex = text.indexOf("https://")
             if (urlStartIndex < 0) {
-                urlStartIndex = sharedText.indexOf("http://");
+                urlStartIndex = text.indexOf("http://")
             }
             if (urlStartIndex < 0) {
-                return;
+                return
             }
-            String msg = "";
-            if (urlStartIndex > 0) {
-                msg = sharedText.substring(0, urlStartIndex - 1);
+            val msg = if (urlStartIndex > 0) {
+                text.substring(0, urlStartIndex - 1)
+            } else {
+                ""
             }
-            LogUtils.d(TAG, "sharedMsg=" + msg);
-            StringBuilder urlBuilder = new StringBuilder();
-            for (int i = urlStartIndex; i < sharedText.length(); i++) {
-                char c = sharedText.charAt(i);
-                if (c == ' ') {
-                    break;
-                }
-                urlBuilder.append(c);
-            }
-            String url = urlBuilder.toString();
-            LogUtils.d(TAG, "sharedUrl=" + url);
-            ShareArticleActivity.start(getViewContext(), msg, url);
-        } catch (Exception e) {
-            e.printStackTrace();
+            LogUtils.d(TAG, "sharedMsg=$msg")
+            val url = text.substring(urlStartIndex).takeWhile { it != ' ' }
+            LogUtils.d(TAG, "sharedUrl=$url")
+            viewContext?.let { ShareArticleActivity.start(it, msg, url) }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 }

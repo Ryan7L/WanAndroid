@@ -1,72 +1,73 @@
-package per.goweii.wanandroid.module.main.activity;
+package per.goweii.wanandroid.module.main.activity
 
-import android.content.Context;
-import android.content.Intent;
-import android.text.TextUtils;
+import android.content.Context
+import android.content.Intent
+import per.goweii.anypermission.AnyPermission
+import per.goweii.anypermission.RequestListener
+import per.goweii.basic.core.base.App
+import per.goweii.basic.core.base.BaseActivity
+import per.goweii.basic.core.base.BasePresenter
+import per.goweii.basic.core.base.BaseView
+import per.goweii.basic.utils.LogUtils
+import per.goweii.wanandroid.utils.ThemeUtils
+import java.io.File
 
-import java.io.File;
+class InstallApkActivity : BaseActivity<BasePresenter<BaseView>, BaseView>() {
 
-import per.goweii.anypermission.AnyPermission;
-import per.goweii.anypermission.RequestListener;
-import per.goweii.basic.core.base.BaseActivity;
-import per.goweii.basic.utils.LogUtils;
-import per.goweii.wanandroid.common.WanApp;
-import per.goweii.wanandroid.utils.ThemeUtils;
+    companion object {
+        private const val APK_PATH = "apk_path"
 
-public class InstallApkActivity extends BaseActivity {
-    private static final String APK_PATH = "apk_path";
-    private File apkFile;
-
-    public static void start(Context context, File apk) {
-        Intent intent = new Intent(context, InstallApkActivity.class);
-        intent.putExtra(APK_PATH, apk.getPath());
-        context.startActivity(intent);
-    }
-
-
-    @Override
-    protected void initViews() {
-        String apkPath = getIntent().getStringExtra(APK_PATH);
-        if (TextUtils.isEmpty(apkPath)) {
-            finish();
-            return;
-        }
-        apkFile = new File(apkPath);
-        if (!apkFile.exists()) {
-            finish();
+        @JvmStatic
+        fun start(context: Context, apk: File) {
+            val intent = Intent(context, InstallApkActivity::class.java)
+            intent.putExtra(APK_PATH, apk.path)
+            context.startActivity(intent)
         }
     }
 
-    @Override
-    protected void bindData() {
+    private var apkFile: File? = null
+
+    override fun initViews() {
+        val path = intent.getStringExtra(APK_PATH)
+        if (path.isNullOrEmpty()) {
+            finish()
+            return
+        }
+        apkFile = File(path)
+        apkFile?.let {
+            if (!it.exists()) {
+                finish()
+            }
+        }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (!apkFile.exists()) {
-            finish();
-            return;
-        }
-        AnyPermission.with(this)
+    override fun bindData() {
+    }
+
+    override fun onResume() {
+        super.onResume()
+        apkFile?.let {
+            if (!it.exists()) {
+                finish()
+                return
+            }
+            AnyPermission.with(this)
                 .install(apkFile)
-                .request(new RequestListener() {
-                    @Override
-                    public void onSuccess() {
-                        LogUtils.d("ThemeUtils", "installApk");
-                        ThemeUtils.setWillInstall();
-                        if (!ThemeUtils.isDefLauncher(getApplicationContext())) {
-                            WanApp.finishAllActivity();
-                            ThemeUtils.resetLauncher(getApplicationContext());
-                            InstallApkActivity.start(InstallApkActivity.this, apkFile);
+                .request(object : RequestListener {
+                    override fun onSuccess() {
+                        LogUtils.d("ThemeUtils", "installApk")
+                        if (!ThemeUtils.isDefLauncher(applicationContext)) {
+                            App.finishAllActivity()
+                            ThemeUtils.resetLauncher(applicationContext)
+                            start(this@InstallApkActivity, it)
                         }
                     }
 
-                    @Override
-                    public void onFailed() {
-                        ThemeUtils.setNotInstall();
-                        finish();
+                    override fun onFailed() {
+                        ThemeUtils.setNotInstall()
+                        finish()
                     }
-                });
+                })
+        }
     }
 }

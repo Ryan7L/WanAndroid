@@ -188,7 +188,9 @@ open class App : Application(), Application.ActivityLifecycleCallbacks {
         activities.add(activity)
     }
 
-    override fun onActivityStarted(activity: Activity) {}
+    override fun onActivityStarted(activity: Activity) {
+
+    }
 
     override fun onActivityResumed(activity: Activity) {}
 

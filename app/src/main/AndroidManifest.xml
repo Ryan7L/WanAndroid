@@ -32,10 +32,10 @@
             android:name=".module.main.activity.SplashActivity"
             android:configChanges="keyboard|keyboardHidden|screenSize|fontScale|density|orientation"
             android:theme="@style/AppTheme.Splash" />
-        <activity
-            android:name=".module.main.activity.BringToFrontActivity"
-            android:configChanges="keyboard|keyboardHidden|screenSize|fontScale|density|orientation"
-            android:theme="@style/AppTheme.Router" />
+<!--        <activity-->
+<!--            android:name=".module.main.activity.BringToFrontActivity"-->
+<!--            android:configChanges="keyboard|keyboardHidden|screenSize|fontScale|density|orientation"-->
+<!--            android:theme="@style/AppTheme.Router" />-->
         <activity
             android:name=".module.main.activity.RouterActivity"
             android:configChanges="keyboard|keyboardHidden|screenSize|fontScale|density|orientation"

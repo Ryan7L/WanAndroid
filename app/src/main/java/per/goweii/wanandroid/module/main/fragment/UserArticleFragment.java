@@ -127,7 +127,7 @@ public class UserArticleFragment extends BaseFragment<UserArticlePresenter, User
         abc.setOnRightIconClickListener(new OnActionBarChildClickListener() {
             @Override
             public void onClick(View v) {
-                ShareArticleActivity.start(getViewContext());
+                ShareArticleActivity.start(getViewContext(),"","");
             }
         });
         mSmartRefreshUtils = SmartRefreshUtils.with(srl);
